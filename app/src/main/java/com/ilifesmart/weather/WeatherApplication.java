@@ -2,13 +2,9 @@ package com.ilifesmart.weather;
 
 import android.app.Application;
 import android.content.Context;
-import android.util.Log;
 
-import com.baidu.location.BDAbstractLocationListener;
-import com.baidu.location.BDLocation;
 import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
-import com.baidu.mapapi.map.BaiduMap;
 import com.ilifesmart.interfaces.MyLocationListener;
 
 public class WeatherApplication extends Application {
