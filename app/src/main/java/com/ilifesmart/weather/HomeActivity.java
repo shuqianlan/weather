@@ -3,16 +3,19 @@ package com.ilifesmart.weather;
 import android.Manifest;
 import android.content.pm.PackageManager;
 import android.os.Build;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
 
-import java.lang.reflect.Array;
+import com.ilifesmart.WeatherApplication;
+
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
+
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+import butterknife.internal.Utils;
 
 public class HomeActivity extends AppCompatActivity {
 
@@ -30,6 +33,7 @@ public class HomeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+        ButterKnife.bind(this);
     }
 
     @Override
@@ -37,7 +41,7 @@ public class HomeActivity extends AppCompatActivity {
         super.onStart();
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            for (int i = mPermissions.size()-1; i >= 0 ; i--) {
+            for (int i = mPermissions.size() - 1; i >= 0; i--) {
                 if (checkSelfPermission(mPermissions.get(i)) == PackageManager.PERMISSION_GRANTED) {
                     if (mPermissions.get(i).equals(Manifest.permission.ACCESS_FINE_LOCATION)) {
                         WeatherApplication.startLocation();
@@ -46,13 +50,11 @@ public class HomeActivity extends AppCompatActivity {
                 }
             }
 
-
             if (mPermissions.size() > 0) {
                 String[] permissions = mPermissions.toArray(new String[mPermissions.size()]);
                 requestPermissions(permissions, REQUEST_PERMISSION_CODE);
             }
         }
-
     }
 
     @Override
@@ -68,5 +70,11 @@ public class HomeActivity extends AppCompatActivity {
                 }
             }
         }
+    }
+
+    @OnClick(R.id.start)
+    public void onViewClicked() {
+        Log.d(TAG, "onViewClicked: realtime_url " + com.ilifesmart.net.Utils.getRealTimeWeatherUrl(120.2,30.3));
+        Log.d(TAG, "onViewClicked: forecast_url " + com.ilifesmart.net.Utils.getForecastWeatherUrl(120.2,30.3));
     }
 }

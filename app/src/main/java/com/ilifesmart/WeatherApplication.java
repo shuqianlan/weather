@@ -1,4 +1,4 @@
-package com.ilifesmart.weather;
+package com.ilifesmart;
 
 import android.app.Application;
 import android.content.Context;

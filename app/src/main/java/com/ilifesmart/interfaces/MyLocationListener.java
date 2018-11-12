@@ -10,6 +10,7 @@ public class MyLocationListener extends BDAbstractLocationListener {
 
     private double mLatitude;
     private double mLongitude;
+    private static String lat_longitude = "120.15,30.28";
 
     @Override
     public void onReceiveLocation(BDLocation bdLocation) {
