@@ -7,7 +7,7 @@ import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
 import com.ilifesmart.interfaces.MyLocationListener;
 
-public class WeatherApplication extends Application {
+public class ToolsApplication extends Application {
 
     public static final String TAG = "Application";
     private static LocationClient mLocationClient;
