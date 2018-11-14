@@ -1,4 +1,4 @@
-package com.ilifesmart.weather;
+package com.ilifesmart;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
@@ -6,16 +6,16 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
+import android.view.View;
 
-import com.ilifesmart.WeatherApplication;
+import com.ilifesmart.weather.R;
+import com.ilifesmart.weather.WeatherActivity;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import butterknife.internal.Utils;
 
 public class HomeActivity extends AppCompatActivity {
 
@@ -72,9 +72,16 @@ public class HomeActivity extends AppCompatActivity {
         }
     }
 
-    @OnClick(R.id.start)
-    public void onViewClicked() {
-        Log.d(TAG, "onViewClicked: realtime_url " + com.ilifesmart.net.Utils.getRealTimeWeatherUrl(120.2,30.3));
-        Log.d(TAG, "onViewClicked: forecast_url " + com.ilifesmart.net.Utils.getForecastWeatherUrl(120.2,30.3));
+    @OnClick({R.id.weather})
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.weather:
+                onWeather();
+                break;
+        }
+    }
+
+    private void onWeather() {
+        startActivity(WeatherActivity.newIntent(this));
     }
 }

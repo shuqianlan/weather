@@ -16,16 +16,16 @@ public class WeatherApplication extends Application {
 
     private double mLatitude;
     private double mLongitude;
-    private Context mApplicationContext;
+
+    private static Context mContext;
 
     @Override
     public void onCreate() {
         super.onCreate();
 
-        mApplicationContext = getApplicationContext();
+        mContext = getApplicationContext();
         mLocationClient = new LocationClient(getApplicationContext());
         mLocationClient.registerLocationListener(mLocationListener);
-
 
         option.setLocationMode(LocationClientOption.LocationMode.Hight_Accuracy);
         option.setCoorType("GCJ02"); // 经纬度坐标类型.
@@ -36,7 +36,6 @@ public class WeatherApplication extends Application {
         option.setWifiCacheTimeOut(5*60*1000);
         option.setEnableSimulateGps(false);
         mLocationClient.setLocOption(option);
-
     }
 
     public static boolean isInLocating() {
@@ -54,4 +53,9 @@ public class WeatherApplication extends Application {
     public static void stopLocation() {
         mLocationClient.stop();
     }
+
+    public static Context getContext() {
+        return mContext;
+    }
+
 }
