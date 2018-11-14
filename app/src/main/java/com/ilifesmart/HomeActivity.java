@@ -44,7 +44,7 @@ public class HomeActivity extends AppCompatActivity {
             for (int i = mPermissions.size() - 1; i >= 0; i--) {
                 if (checkSelfPermission(mPermissions.get(i)) == PackageManager.PERMISSION_GRANTED) {
                     if (mPermissions.get(i).equals(Manifest.permission.ACCESS_FINE_LOCATION)) {
-                        WeatherApplication.startLocation();
+                        ToolsApplication.startLocation();
                     }
                     mPermissions.remove(i);
                 }
@@ -65,7 +65,7 @@ public class HomeActivity extends AppCompatActivity {
             for (int index = 0; index < permissions.length; index++) {
                 if (grantResults[index] == PackageManager.PERMISSION_GRANTED) {
                     if (permissions[index].equals(Manifest.permission.ACCESS_FINE_LOCATION)) {
-                        WeatherApplication.startLocation();
+                        ToolsApplication.startLocation();
                     }
                 }
             }
