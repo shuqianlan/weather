@@ -6,23 +6,19 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
-import android.widget.Toast;
 
+import com.ilifesmart.interfaces.Response;
 import com.ilifesmart.net.Utils;
 
-import java.io.IOException;
+import java.util.List;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import okhttp3.Call;
-import okhttp3.Callback;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
 
 public class WeatherActivity extends AppCompatActivity {
 
     public static final String TAG = "Weather";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,7 +49,7 @@ public class WeatherActivity extends AppCompatActivity {
 
     private void onRealTime() {
         String url = Utils.getRealTimeWeatherUrl(120.2, 30.3);
-        Utils.netCallGet(url, new com.ilifesmart.interfaces.Response() {
+        Utils.netCallGet(url, new Response() {
             @Override
             public void onSuccess(String msg) {
                 Log.d(TAG, "onSuccess: realtime " + msg);
@@ -63,11 +59,13 @@ public class WeatherActivity extends AppCompatActivity {
 
     private void onForecast() {
         String url = Utils.getForecastWeatherUrl(120.2, 30.3);
-        Utils.netCallGet(url, new com.ilifesmart.interfaces.Response() {
+        Log.d(TAG, "onForecast: url " + url);
+        Utils.netCallGet(url, new Response() {
             @Override
             public void onSuccess(String msg) {
                 Log.d(TAG, "onSuccess: forecast " + msg);
             }
         });
     }
+
 }

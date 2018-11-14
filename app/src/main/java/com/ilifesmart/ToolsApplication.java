@@ -14,9 +14,6 @@ public class ToolsApplication extends Application {
     private static LocationClientOption option = new LocationClientOption();
     private static MyLocationListener mLocationListener = new MyLocationListener();
 
-    private double mLatitude;
-    private double mLongitude;
-
     private static Context mContext;
 
     @Override

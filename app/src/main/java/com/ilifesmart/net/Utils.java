@@ -29,14 +29,12 @@ public class Utils {
 
     public static String getForecastWeatherUrl(double longitude, double latitude) {
         return new StringBuilder().append(WEATHER_CAIYUN_PRE_URL)
+                .append(WEATHER_CAIYUN_KEY).append("/")
                 .append(longitude).append(",").append(latitude).append("/")
                 .append("forecast.json")
                 .toString()
                 .trim();
     }
-
-
-
 
     private static OkHttpClient getOKHttpClientInstance() {
         if (sClient == null) {
