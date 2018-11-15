@@ -8,4 +8,8 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="VerticalSeekBarStyle" parent="Widget.AppCompat.SeekBar">
+        <item name="android:progressDrawable">@drawable/drawable_vertical_seekbar</item>
+        <item name="android:thumb">@drawable/drawable_seekbar_thumb</item>
+    </style>
 </resources>

@@ -8,6 +8,7 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
+import com.ilifesmart.test.SeekBarActivity;
 import com.ilifesmart.weather.R;
 import com.ilifesmart.weather.WeatherActivity;
 
@@ -72,16 +73,22 @@ public class HomeActivity extends AppCompatActivity {
         }
     }
 
-    @OnClick({R.id.weather})
+    @OnClick({R.id.weather,R.id.seekbar})
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.weather:
                 onWeather();
+                break;
+            case R.id.seekbar:
+                onSeekBar();
                 break;
         }
     }
 
     private void onWeather() {
         startActivity(WeatherActivity.newIntent(this));
+    }
+    private void onSeekBar() {
+        startActivity(SeekBarActivity.newIntent(this));
     }
 }

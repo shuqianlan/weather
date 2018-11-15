@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.ilifesmart.test.SeekBarActivity">
+
+    <com.ilifesmart.ui.VerticalSeekBarWrapper
+        android:id="@+id/seekBarContainer2"
+        android:layout_width="274.6dp"
+        android:layout_height="397.33dp"
+        android:background="@drawable/background_linear_gradient"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:minWidth="10dp">
+
+        <com.ilifesmart.ui.VerticalSeekBar
+            android:id="@+id/seekBar"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:splitTrack="false"
+            style="@style/VerticalSeekBarStyle"
+            android:progress="50"
+            android:paddingHorizontal="0dp"
+            app:seekBarRotation="CW270"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/progress"
+            android:text="50%"
+            android:paddingLeft="40dp"
+            android:textSize="46.67sp"
+            android:layout_gravity="left|center_vertical"
+            android:gravity="end|center_vertical"
+            android:textColor="@color/seekbar_progress"
+            />
+    </com.ilifesmart.ui.VerticalSeekBarWrapper>
+
+</android.support.constraint.ConstraintLayout>
