@@ -28,7 +28,6 @@
     <uses-permission android:name="android.permission.READ_CONTACTS" />
 
     <application
-
         android:name="com.ilifesmart.ToolsApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -54,7 +53,10 @@
             android:process=":remote" />
 
         <activity android:name=".WeatherActivity" />
-        <activity android:name="com.ilifesmart.test.SeekBarActivity"></activity>
+        <activity android:name="com.ilifesmart.test.SeekBarActivity" />
+        <activity android:name="com.ilifesmart.notification.NotificationActivity" />
+        <activity android:name="com.ilifesmart.Rotate3DActivity" />
+        <activity android:name="com.ilifesmart.aop.CheckOnClickActivity"></activity>
     </application>
 
 </manifest>

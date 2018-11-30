@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:layout_marginHorizontal="40dp"
+    tools:context="com.ilifesmart.notification.NotificationActivity">
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="@drawable/stroke_background"
+        android:id="@+id/send_notification_high"
+        android:text="High Notification"
+        android:layout_gravity="center"
+        />
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="@drawable/stroke_background"
+        android:id="@+id/send_notification_def"
+        android:text="Default Notification"
+        android:layout_gravity="center"
+        />
+
+</LinearLayout>

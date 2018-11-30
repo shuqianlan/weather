@@ -39,6 +39,30 @@
                 android:text="SeekBar"
                 android:layout_gravity="center"
                 />
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:background="@drawable/stroke_background"
+                android:id="@+id/notification"
+                android:text="notification"
+                android:layout_gravity="center"
+                />
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:background="@drawable/stroke_background"
+                android:id="@+id/rotate"
+                android:text="Rotate3D"
+                android:layout_gravity="center"
+                />
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:background="@drawable/stroke_background"
+                android:id="@+id/aop_test"
+                android:text="AOP"
+                android:layout_gravity="center"
+                />
         </LinearLayout>
     </ScrollView>
 

@@ -1,13 +1,13 @@
 apply plugin: 'com.android.application'
+apply plugin: 'android-aspectjx'
 
 android {
     compileSdkVersion 28
     defaultConfig {
         applicationId "com.ilifesmart.weather"
         minSdkVersion 21
-        targetSdkVersion 28
         versionCode 1
-        versionName "1.0"
+        versionName "1.0.3"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
         javaCompileOptions {
@@ -22,7 +22,6 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-
     sourceSets {
         main {
             jniLibs.srcDirs = ['libs']
@@ -34,6 +33,11 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
 
+    aspectjx {
+        exclude 'android.support'
+        exclude '*'
+    }
+
     buildToolsVersion '28.0.3'
 }
 
@@ -43,7 +47,6 @@ dependencies {
     //        exclude group: 'com.android.support',  module: 'support-annotations'
     //    })
     implementation 'com.android.support.constraint:constraint-layout:1.1.3'
-    implementation 'com.android.support:design:28.0.0'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
@@ -52,4 +55,8 @@ dependencies {
     implementation 'com.squareup.okhttp3:okhttp:3.11.0'
     implementation 'com.squareup.okio:okio:2.1.0'
     implementation 'com.android.support:appcompat-v7:28.0.0'
+    implementation 'com.android.support:design:28.0.0'
+//    provided("com.tinkerpatch.tinker:tinker-android-anno:1.9.9")
+    implementation("com.tinkerpatch.sdk:tinkerpatch-android-sdk:1.2.9")
+    api 'org.aspectj:aspectjrt:1.8.9'
 }
