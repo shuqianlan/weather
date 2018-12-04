@@ -1,6 +1,7 @@
 package com.ilifesmart.aop;
 
 import android.util.Log;
+import android.widget.TextView;
 
 import com.ilifesmart.utils.DebouncedClickPredictor;
 import com.ilifesmart.utils.Utils;
@@ -17,27 +18,15 @@ import org.aspectj.lang.annotation.Pointcut;
 public class AspectTest {
     public static final String TAG = "AspectTest";
 
-    @Before("execution(* com.ilifesmart.aop.CheckOnClickActivity.onCreate(..))")
-    public void logForActivity() {
-        Log.d(TAG, "logForActivity: xxxxx ");
-    };
+    // call
+    // getTarget：获取真实对象.
+    @Around("call(* android.widget.TextView.setText(CharSequence))")
+    public void setTextViewTitle(ProceedingJoinPoint jPoint, CharSequence text) throws Throwable {
+        final Object object = jPoint.getTarget();
 
-//    @Before("logForActivity")
-//    public void log(JoinPoint joinPoint) {
-//        Log.d(TAG, "log: " + joinPoint.toShortString());
-//    }
-//
-    @Around("execution(* android.view.View.OnClickListener.onClick(..))")
-    public void onClickListener(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
-        Log.d(TAG, "onClickListener: OnClick ..");
-        if (!Utils.isDoubleClick()) {
-            proceedingJoinPoint.proceed();
+        if (object instanceof TextView) {
+            jPoint.proceed();
+            Log.d(TAG, "setTextViewTitle: ---- " + ((TextView)object).getText().toString());
         }
-    }
-
-    @Before("execution(* android.app.Activity.on**(..)))")
-    public void onActivityMethodBefore(JoinPoint joinPoint) throws Throwable {
-        String key = joinPoint.getSignature().toString();
-        Log.d(TAG, "onActivityMethodBefore: " + key);
     }
 }
