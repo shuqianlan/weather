@@ -63,6 +63,30 @@
                 android:text="AOP"
                 android:layout_gravity="center"
                 />
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:background="@drawable/stroke_background"
+                android:id="@+id/thread_test"
+                android:text="Thread"
+                android:layout_gravity="center"
+                />
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:background="@drawable/stroke_background"
+                android:id="@+id/framelayout"
+                android:text="FrameLayout"
+                android:layout_gravity="center"
+                />
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:background="@drawable/stroke_background"
+                android:id="@+id/compass"
+                android:text="Compass"
+                android:layout_gravity="center"
+                />
         </LinearLayout>
     </ScrollView>
 

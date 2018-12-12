@@ -11,8 +11,12 @@ import android.view.View;
 import android.widget.Button;
 
 import com.ilifesmart.aop.CheckOnClickActivity;
+import com.ilifesmart.compass.CompassActivity;
+import com.ilifesmart.framelayout.FrameLayoutActivity;
 import com.ilifesmart.notification.NotificationActivity;
 import com.ilifesmart.test.SeekBarActivity;
+import com.ilifesmart.thread.ThreadTestActivity;
+import com.ilifesmart.utils.Utils;
 import com.ilifesmart.weather.R;
 import com.ilifesmart.weather.WeatherActivity;
 
@@ -101,7 +105,7 @@ public class HomeActivity extends AppCompatActivity {
         }
     }
 
-    @OnClick({R.id.weather, R.id.seekbar, R.id.notification, R.id.rotate, R.id.aop_test})
+    @OnClick({R.id.weather, R.id.seekbar, R.id.notification, R.id.rotate, R.id.aop_test, R.id.thread_test, R.id.framelayout, R.id.compass})
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.weather:
@@ -118,6 +122,15 @@ public class HomeActivity extends AppCompatActivity {
                 break;
             case R.id.aop_test:
                 onAop();
+                break;
+            case R.id.thread_test:
+                onThread();
+                break;
+            case R.id.framelayout:
+                onFrameLayout();
+                break;
+            case R.id.compass:
+                onCompass();
                 break;
         }
     }
@@ -140,5 +153,18 @@ public class HomeActivity extends AppCompatActivity {
 
     public void onAop() {
         startActivity(CheckOnClickActivity.newIntent(this));
+    }
+
+    public void onThread() {
+        startActivity(ThreadTestActivity.newIntent(this));
+    }
+
+    public void onFrameLayout() {
+        startActivity(FrameLayoutActivity.newIntent(this));
+    }
+
+    public void onCompass() {
+        Log.d(TAG, "onCompass: ------ ");
+        startActivity(Utils.newIntent(this, CompassActivity.class));
     }
 }
