@@ -117,6 +117,7 @@ public class EmbeddedCompassView extends View {
 
 	private int positionX;
 	private int positionY;
+	private Point lastPoint;
 	private boolean isSticking;
 
 	@Override
@@ -125,21 +126,30 @@ public class EmbeddedCompassView extends View {
 		super.onTouchEvent(event);
 		switch (event.getActionMasked()) {
 			case MotionEvent.ACTION_DOWN:
+				if (isInOutSideCircle((int)event.getX(), (int)event.getY())) {
+					isSticking = true;
+				}
+				break;
 			case MotionEvent.ACTION_MOVE:
-				isSticking = true;
-//
-//				positionX = getNearPositionX((int) event.getX());
-//				positionY = getNearPositionY((int) event.getY());
 				break;
 			default:
 				isSticking=false;
 		}
 
-		mCurrPoint = getNearPosition((int) event.getX(), (int) event.getY());
-		positionX = mCurrPoint.x;
-		positionY = mCurrPoint.y;
-		Log.d(TAG, "onTouchEvent: isSticking " + isSticking);
+		if (isSticking) {
+			if (isInOutSideCircle((int)event.getX(), (int)event.getY())) {
+				mCurrPoint = getNearPosition((int) event.getX(), (int) event.getY());
+				positionX = mCurrPoint.x;
+				positionY = mCurrPoint.y;
+				lastPoint = mCurrPoint;
+			} else {
+				positionX = lastPoint.x;
+				positionY = lastPoint.y;
+			}
+		}
 		invalidate();
+
+		Log.d(TAG, "onTouchEvent: isSticking " + isSticking);
 		return true;
 	}
 
