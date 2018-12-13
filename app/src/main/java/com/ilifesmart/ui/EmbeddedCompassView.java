@@ -1,24 +1,25 @@
 package com.ilifesmart.ui;
 
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.Point;
-import android.graphics.Rect;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
-import com.baidu.mapapi.map.Circle;
-import com.ilifesmart.ToolsApplication;
 import com.ilifesmart.weather.R;
 
 public class EmbeddedCompassView extends View {
+	public interface OnAngleChangeListener {
+		void onAngleChanged(double angle);//[0~pi]
+	}
 
+	private OnAngleChangeListener listener;
 	public static final String TAG = "EmbededCompassView";
 	private Paint mOutSideCirclePaint;
 	private Paint mStickCirclePaint;
@@ -30,6 +31,9 @@ public class EmbeddedCompassView extends View {
 	private int mOutsideRadius;
 	private int mThresholdRadius;
 	private int mStickRadius;
+	private int mOutSideRadiusStrokeColor;
+	private int mArrowColor;
+	private int mStickColor;
 
 	public EmbeddedCompassView(Context context) {
 		this(context, null);
@@ -41,18 +45,26 @@ public class EmbeddedCompassView extends View {
 
 	public EmbeddedCompassView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
 		super(context, attrs, defStyleAttr);
-		initialize();
+		initialize(attrs);
 	}
 
-	private void initialize() {
+	private void initialize(AttributeSet attrs) {
 		mOutSideCirclePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
 		mOutSideCirclePaint.setStyle(Paint.Style.STROKE);
 		mOutSideCirclePaint.setStrokeWidth(4);
-		mOutSideCirclePaint.setColor(Color.DKGRAY);
 
 		mStickCirclePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
 		mStickCirclePaint.setStyle(Paint.Style.FILL_AND_STROKE);
-		mStickCirclePaint.setColor(Color.LTGRAY);
+
+		if (attrs != null) {
+			TypedArray arr = getContext().obtainStyledAttributes(attrs, R.styleable.EmbeddedCompassView);
+			mOutSideRadiusStrokeColor = arr.getColor(R.styleable.EmbeddedCompassView_outSideRadiusStrokerColor, Color.DKGRAY);
+			mArrowColor = arr.getColor(R.styleable.EmbeddedCompassView_arrowColor, Color.DKGRAY);
+			mStickColor = arr.getColor(R.styleable.EmbeddedCompassView_stickColor, Color.LTGRAY);
+
+			arr.recycle();
+		}
+		mStickCirclePaint.setColor(mStickColor);
 	}
 
 	@Override
@@ -70,6 +82,7 @@ public class EmbeddedCompassView extends View {
 
 	@Override
 	protected void onDraw(Canvas canvas) {
+		mOutSideCirclePaint.setColor(mOutSideRadiusStrokeColor);
 		canvas.drawCircle(mCenterX, mCenterY, mOutsideRadius, mOutSideCirclePaint);
 
 		if (isSticking) {
@@ -86,6 +99,7 @@ public class EmbeddedCompassView extends View {
 	}
 
 	private void onDrawArrow(Canvas canvas, int positionX, int positionY) {
+		mOutSideCirclePaint.setColor(mArrowColor);
 		Path path = new Path();
 		int arrowA = 15;
 		int arrowB = 30;
@@ -122,45 +136,63 @@ public class EmbeddedCompassView extends View {
 
 	@Override
 	public boolean onTouchEvent(MotionEvent event) {
-		Point mCurrPoint;
+		int downX = (int)event.getX();
+		int downY = (int)event.getY();
 		super.onTouchEvent(event);
+
 		switch (event.getActionMasked()) {
 			case MotionEvent.ACTION_DOWN:
-				if (isInOutSideCircle((int)event.getX(), (int)event.getY())) {
+				if (isInOutSideCircle(downX, downY)) {
 					isSticking = true;
+					positionX = downX;
+					positionY = downY;
 				}
 				break;
 			case MotionEvent.ACTION_MOVE:
+				if (isSticking) {
+					if (isInOutSideCircle(downX, downY)) {
+						positionX = downX;
+						positionY = downY;
+					} else {
+						double dist = Math.sqrt((downX - mCenterX) * (downX - mCenterX) + (downY - mCenterY) * (downY - mCenterY));
+						positionX = (int) (((downX - mCenterX) * (mThresholdRadius - mStickRadius)) / dist + mCenterX);
+						positionY = (int) (((downY - mCenterY) * (mThresholdRadius - mStickRadius)) / dist + mCenterY);
+					}
+				}
 				break;
-			default:
-				isSticking=false;
+			case MotionEvent.ACTION_UP:
+			case MotionEvent.ACTION_CANCEL:
+				if (isSticking) {
+					isSticking = false;
+					invalidate();
+				}
+				break;
 		}
 
 		if (isSticking) {
-			if (isInOutSideCircle((int)event.getX(), (int)event.getY())) {
-				mCurrPoint = getNearPosition((int) event.getX(), (int) event.getY());
-				positionX = mCurrPoint.x;
-				positionY = mCurrPoint.y;
-				lastPoint = mCurrPoint;
-			} else {
-				positionX = lastPoint.x;
-				positionY = lastPoint.y;
+			invalidate();
+
+			if (listener != null) {
+				double dist = Math.sqrt((positionX - mCenterX) * (positionX - mCenterX) + (positionY - mCenterY) * (positionY - mCenterY));
+				double angle = Math.acos((positionX-mCenterX)/dist);
+				listener.onAngleChanged(angle);
 			}
 		}
-		invalidate();
-
-		Log.d(TAG, "onTouchEvent: isSticking " + isSticking);
 		return true;
-	}
-
-	private Point getNearPosition(int touchX, int touchY) {
-		// TODO:获取合适的Point
-		return new Point(touchX, touchY);
 	}
 
 	private boolean isInOutSideCircle(int positionX, int positionY) {
 		int pow2 = (int)( Math.pow((positionX-mCenterX), 2) + Math.pow((positionY-mCenterY), 2));
 		int distance = (int) Math.sqrt(pow2);
 		return ((distance+mStickRadius) <= mThresholdRadius);
+	}
+
+	public OnAngleChangeListener getListener() {
+		return listener;
+	}
+
+	public EmbeddedCompassView setListener(OnAngleChangeListener listener) {
+		this.listener = listener;
+		return this;
 	}
 }

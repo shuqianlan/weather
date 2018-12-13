@@ -12,4 +12,10 @@
         <item name="android:progressDrawable">@drawable/drawable_vertical_seekbar</item>
         <item name="android:thumb">@drawable/drawable_seekbar_thumb</item>
     </style>
+
+    <declare-styleable name="EmbeddedCompassView">
+        <attr name="outSideRadiusStrokerColor" format="color" />
+        <attr name="arrowColor" format="color" />
+        <attr name="stickColor" format="color" />
+    </declare-styleable>
 </resources>
