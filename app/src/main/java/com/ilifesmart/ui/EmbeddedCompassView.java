@@ -181,6 +181,7 @@ public class EmbeddedCompassView extends View {
 		return true;
 	}
 
+	// 判断是否落在圆内.
 	private boolean isInOutSideCircle(int positionX, int positionY) {
 		int pow2 = (int)( Math.pow((positionX-mCenterX), 2) + Math.pow((positionY-mCenterY), 2));
 		int distance = (int) Math.sqrt(pow2);
