@@ -131,7 +131,6 @@ public class EmbeddedCompassView extends View {
 
 	private int positionX;
 	private int positionY;
-	private Point lastPoint;
 	private boolean isSticking;
 
 	@Override
