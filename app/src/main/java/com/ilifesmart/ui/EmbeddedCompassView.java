@@ -4,15 +4,19 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.Point;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
 import com.ilifesmart.weather.R;
+
+import java.util.Arrays;
 
 public class EmbeddedCompassView extends View {
 	public interface OnAngleChangeListener {
@@ -96,6 +100,20 @@ public class EmbeddedCompassView extends View {
 		} else {
 			onDrawArrow(canvas, mCenterX, mCenterY);
 		}
+
+		Log.d(TAG, "onDraw: ---------------- ");
+		Matrix matrix = getMatrix();
+		float[] values = new float[9];
+		int location[] = new int[2];
+		matrix.getValues(values);
+		Log.d(TAG, "onDraw: values " + Arrays.toString(values));
+		location[0] = (int) values[2];
+		location[1] = (int) values[5];
+		Log.d(TAG, "onDraw: location1 " + Arrays.toString(location));
+
+		int[] location2 = new int[2];
+		getLocationOnScreen(location2);
+		Log.d(TAG, "onDraw: location2 " + Arrays.toString(location2));
 	}
 
 	private void onDrawArrow(Canvas canvas, int positionX, int positionY) {

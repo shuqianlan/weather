@@ -13,6 +13,7 @@ import android.widget.Button;
 import com.ilifesmart.aop.CheckOnClickActivity;
 import com.ilifesmart.compass.CompassActivity;
 import com.ilifesmart.framelayout.FrameLayoutActivity;
+import com.ilifesmart.miclock.MiClockActivity;
 import com.ilifesmart.notification.NotificationActivity;
 import com.ilifesmart.test.SeekBarActivity;
 import com.ilifesmart.thread.ThreadTestActivity;
@@ -105,7 +106,7 @@ public class HomeActivity extends AppCompatActivity {
         }
     }
 
-    @OnClick({R.id.weather, R.id.seekbar, R.id.notification, R.id.rotate, R.id.aop_test, R.id.thread_test, R.id.framelayout, R.id.compass})
+    @OnClick({R.id.weather, R.id.seekbar, R.id.notification, R.id.rotate, R.id.aop_test, R.id.thread_test, R.id.framelayout, R.id.compass, R.id.miclock})
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.weather:
@@ -131,6 +132,9 @@ public class HomeActivity extends AppCompatActivity {
                 break;
             case R.id.compass:
                 onCompass();
+                break;
+            case R.id.miclock:
+                onMiClock();
                 break;
         }
     }
@@ -166,5 +170,9 @@ public class HomeActivity extends AppCompatActivity {
     public void onCompass() {
         Log.d(TAG, "onCompass: ------ ");
         startActivity(Utils.newIntent(this, CompassActivity.class));
+    }
+
+    public void onMiClock() {
+        startActivity(Utils.newIntent(this, MiClockActivity.class));
     }
 }
