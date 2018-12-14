@@ -1,11 +1,13 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+
+        <item name="android:windowFullscreen">true</item>
     </style>
 
     <style name="VerticalSeekBarStyle" parent="Widget.AppCompat.SeekBar">
@@ -17,5 +19,19 @@
         <attr name="outSideRadiusStrokerColor" format="color" />
         <attr name="arrowColor" format="color" />
         <attr name="stickColor" format="color" />
+    </declare-styleable>
+
+    <declare-styleable name="MiClockView">
+        <attr name="hourTextSize" format="dimension" />
+        <attr name="hourTextColor" format="color" />
+        <attr name="outSideRadiusStrokeColor" format="color" />
+        <attr name="outSideRadiusStrokeWidth" format="dimension" />
+        <attr name="secondTriangleColor" format="color" />
+        <attr name="hourMarkColor" format="color" />
+        <attr name="minuteMarkColor" format="color" />
+        <attr name="sweepStartColor" format="color" />
+        <attr name="sweepEndColor" format="color" />
+        <attr name="backgroundColor" format="color" />
+        <attr name="centerCircleColor" format="color" />
     </declare-styleable>
 </resources>

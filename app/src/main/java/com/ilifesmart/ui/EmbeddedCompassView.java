@@ -38,6 +38,7 @@ public class EmbeddedCompassView extends View {
 	private int mOutSideRadiusStrokeColor;
 	private int mArrowColor;
 	private int mStickColor;
+	private Path mArrowPath;
 
 	public EmbeddedCompassView(Context context) {
 		this(context, null);
@@ -69,6 +70,7 @@ public class EmbeddedCompassView extends View {
 			arr.recycle();
 		}
 		mStickCirclePaint.setColor(mStickColor);
+		mArrowPath = new Path();
 	}
 
 	@Override
@@ -100,51 +102,36 @@ public class EmbeddedCompassView extends View {
 		} else {
 			onDrawArrow(canvas, mCenterX, mCenterY);
 		}
-
-		Log.d(TAG, "onDraw: ---------------- ");
-		Matrix matrix = getMatrix();
-		float[] values = new float[9];
-		int location[] = new int[2];
-		matrix.getValues(values);
-		Log.d(TAG, "onDraw: values " + Arrays.toString(values));
-		location[0] = (int) values[2];
-		location[1] = (int) values[5];
-		Log.d(TAG, "onDraw: location1 " + Arrays.toString(location));
-
-		int[] location2 = new int[2];
-		getLocationOnScreen(location2);
-		Log.d(TAG, "onDraw: location2 " + Arrays.toString(location2));
 	}
 
 	private void onDrawArrow(Canvas canvas, int positionX, int positionY) {
 		mOutSideCirclePaint.setColor(mArrowColor);
-		Path path = new Path();
 		int arrowA = 15;
 		int arrowB = 30;
 
 		// left
-		path.moveTo(positionX-mStickRadius+arrowB, positionY-arrowA);
-		path.lineTo(positionX-mStickRadius+arrowA, positionY);
-		path.lineTo(positionX-mStickRadius+arrowB, positionY+arrowA);
-		canvas.drawPath(path, mOutSideCirclePaint);
+		mArrowPath.moveTo(positionX-mStickRadius+arrowB, positionY-arrowA);
+		mArrowPath.lineTo(positionX-mStickRadius+arrowA, positionY);
+		mArrowPath.lineTo(positionX-mStickRadius+arrowB, positionY+arrowA);
+		canvas.drawPath(mArrowPath, mOutSideCirclePaint);
 
 		// right
-		path.moveTo(positionX+mStickRadius-arrowB, positionY-arrowA);
-		path.lineTo(positionX+mStickRadius-arrowA, positionY);
-		path.lineTo(positionX+mStickRadius-arrowB, positionY+arrowA);
-		canvas.drawPath(path, mOutSideCirclePaint);
+		mArrowPath.moveTo(positionX+mStickRadius-arrowB, positionY-arrowA);
+		mArrowPath.lineTo(positionX+mStickRadius-arrowA, positionY);
+		mArrowPath.lineTo(positionX+mStickRadius-arrowB, positionY+arrowA);
+		canvas.drawPath(mArrowPath, mOutSideCirclePaint);
 
 		//top
-		path.moveTo(positionX-arrowA, positionY-mStickRadius+arrowB);
-		path.lineTo(positionX, positionY-mStickRadius+arrowA);
-		path.lineTo(positionX+arrowA, positionY-mStickRadius+arrowB);
-		canvas.drawPath(path, mOutSideCirclePaint);
+		mArrowPath.moveTo(positionX-arrowA, positionY-mStickRadius+arrowB);
+		mArrowPath.lineTo(positionX, positionY-mStickRadius+arrowA);
+		mArrowPath.lineTo(positionX+arrowA, positionY-mStickRadius+arrowB);
+		canvas.drawPath(mArrowPath, mOutSideCirclePaint);
 
 		//bottom
-		path.moveTo(positionX-arrowA, positionY+mStickRadius-arrowB);
-		path.lineTo(positionX, positionY+mStickRadius-arrowA);
-		path.lineTo(positionX+arrowA, positionY+mStickRadius-arrowB);
-		canvas.drawPath(path, mOutSideCirclePaint);
+		mArrowPath.moveTo(positionX-arrowA, positionY+mStickRadius-arrowB);
+		mArrowPath.lineTo(positionX, positionY+mStickRadius-arrowA);
+		mArrowPath.lineTo(positionX+arrowA, positionY+mStickRadius-arrowB);
+		canvas.drawPath(mArrowPath, mOutSideCirclePaint);
 	}
 
 	private int positionX;

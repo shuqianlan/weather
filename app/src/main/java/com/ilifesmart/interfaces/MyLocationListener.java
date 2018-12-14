@@ -29,7 +29,7 @@ public class MyLocationListener extends BDAbstractLocationListener {
                 mLongitude = bdLocation.getLongitude();
             }
         } else {
-            Log.d(TAG, "onReceiveLocation: bdLocation " + bdLocation);
+//            Log.d(TAG, "onReceiveLocation: bdLocation " + bdLocation);
         }
 
     }
