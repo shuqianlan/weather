@@ -1,7 +1,9 @@
 package com.ilifesmart.ui;
 
+import android.animation.ValueAnimator;
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.graphics.Camera;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Matrix;
@@ -13,6 +15,7 @@ import android.graphics.SweepGradient;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 
 import com.ilifesmart.utils.DensityUtils;
@@ -72,6 +75,12 @@ public class MiClockView extends View {
 	private Path mMinuteMarkPath = new Path();
 	private Rect mTextRect = new Rect();
 	private Matrix mSweepGradientMatrix;
+	private Matrix mCameraMatrix;
+
+	private Camera mCamera;
+	private float mCameraRotateX;
+	private float mCameraRotateY;
+	private ValueAnimator mShakeAnim;
 
 	public MiClockView(Context context) {
 		this(context, null);
@@ -135,7 +144,10 @@ public class MiClockView extends View {
 		mBackgroundPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
 		mBackgroundPaint.setStyle(Paint.Style.FILL);
 		mBackgroundPaint.setColor(mBackgroundColor);
+
 		mSweepGradientMatrix = new Matrix();
+		mCameraMatrix = new Matrix();
+		mCamera = new Camera();
 	}
 
 	@Override
@@ -161,12 +173,29 @@ public class MiClockView extends View {
 	@Override
 	protected void onDraw(Canvas canvas) {
 		getRealTime();
+		setCameraRotate(canvas);
 		drawBackGroundColor(canvas);
 		drawBGArea(canvas);
 		drawScale(canvas);
 		drawSecond(canvas);
 		drawHourMinute(canvas);
 		invalidate();
+	}
+
+	private void setCameraRotate(Canvas canvas) {
+		mCameraMatrix.reset();
+		mCamera.save();
+		mCamera.rotateX(mCameraRotateX);
+		mCamera.rotateY(mCameraRotateY);
+		mCamera.getMatrix(mCameraMatrix);
+		mCamera.restore();
+
+		//camera在view左上角那个点，故旋转默认是以左上角为中心旋转
+		//故在动作之前pre将matrix向左移动getWidth()/2长度，向上移动getHeight()/2长度
+		mCameraMatrix.preTranslate(-mCenterX/2, -mCenterY/2);
+		//在动作之后post再回到原位
+		mCameraMatrix.postTranslate(mCenterX/2, mCenterY/2);
+		canvas.concat(mCameraMatrix);//matrix与canvas预安排
 	}
 
 	private void drawBackGroundColor(Canvas canvas) {
@@ -273,5 +302,21 @@ public class MiClockView extends View {
 		mMinuteDegree = mCurrMinute/60*360-90; // 因draw时是偏移了90°
 		mSecondDegree = mCurrSeconds/60*360;
 		mSweepDegree = mSecondDegree-90;  		 // 因draw时是偏移了90°
+	}
+
+	@Override
+	public boolean onTouchEvent(MotionEvent event) {
+//		return super.onTouchEvent(event);
+
+		switch (event.getActionMasked()) {
+			case MotionEvent.ACTION_DOWN:
+				break;
+			case MotionEvent.ACTION_MOVE:
+				break;
+			case MotionEvent.ACTION_UP:
+				break;
+		}
+
+		return true;
 	}
 }
