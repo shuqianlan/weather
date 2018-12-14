@@ -16,3 +16,6 @@ Weather
 
 ## EmbeddedCompassView(万向轮)
 
+## EmbeddedViewStackContainer(FrameLayout)
+
+> 避免多个Activity, 适用于同一Style的View.
