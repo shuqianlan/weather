@@ -1,5 +1,7 @@
 package com.ilifesmart.ui;
 
+import android.animation.PropertyValuesHolder;
+import android.animation.TimeInterpolator;
 import android.animation.ValueAnimator;
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -9,6 +11,7 @@ import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Path;
+import android.graphics.Point;
 import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.SweepGradient;
@@ -17,16 +20,16 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.animation.BounceInterpolator;
 
 import com.ilifesmart.utils.DensityUtils;
 import com.ilifesmart.weather.R;
 
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Calendar;
 
 public class MiClockView extends View {
-
-	public static final String TAG = "MiClockView";
 	private int mMaxHourTextWidth;
 	private int mSuitableTextAngle;
 	private int mCenterX;
@@ -76,10 +79,14 @@ public class MiClockView extends View {
 	private Rect mTextRect = new Rect();
 	private Matrix mSweepGradientMatrix;
 	private Matrix mCameraMatrix;
+	private final float MAX_CAMER_ROTATE = 10;
+	private float mMaxCanvasTranslate;
 
 	private Camera mCamera;
 	private float mCameraRotateX;
 	private float mCameraRotateY;
+	private float mCanvasTranslateX;
+	private float mCanvasTranslateY;
 	private ValueAnimator mShakeAnim;
 
 	public MiClockView(Context context) {
@@ -168,6 +175,7 @@ public class MiClockView extends View {
 		mSuitableTextAngle = (int) Math.ceil(Math.toDegrees(Math.acos((mOutSideRadius*mOutSideRadius*2.0-mMaxHourTextWidth*mMaxHourTextWidth)/(2*mOutSideRadius*mOutSideRadius))));
 		mSecondRadius = (int) (mOutSideRadius * 0.7);
 		mSweepGradient = new SweepGradient(mCenterX, mCenterY, new int[] {mSweepStartColor, mSweepEndColor}, new float[]{0.75f, 1});
+		mMaxCanvasTranslate = 0.02f * mOutSideRadius;
 	}
 
 	@Override
@@ -184,6 +192,9 @@ public class MiClockView extends View {
 
 	private void setCameraRotate(Canvas canvas) {
 		mCameraMatrix.reset();
+		float[] matrix = new float[9];
+		mCameraMatrix.getValues(matrix);
+
 		mCamera.save();
 		mCamera.rotateX(mCameraRotateX);
 		mCamera.rotateY(mCameraRotateY);
@@ -192,10 +203,10 @@ public class MiClockView extends View {
 
 		//camera在view左上角那个点，故旋转默认是以左上角为中心旋转
 		//故在动作之前pre将matrix向左移动getWidth()/2长度，向上移动getHeight()/2长度
-		mCameraMatrix.preTranslate(-mCenterX/2, -mCenterY/2);
+		mCameraMatrix.preTranslate(-mCenterX, -mCenterY);
 		//在动作之后post再回到原位
-		mCameraMatrix.postTranslate(mCenterX/2, mCenterY/2);
-		canvas.concat(mCameraMatrix);//matrix与canvas预安排
+		mCameraMatrix.postTranslate(mCenterX, mCenterY);
+		canvas.concat(mCameraMatrix); // A = A * B;
 	}
 
 	private void drawBackGroundColor(Canvas canvas) {
@@ -220,6 +231,8 @@ public class MiClockView extends View {
 
 	private void drawScale(Canvas canvas) {
 		// 绘制渐变色扫射
+		canvas.save();
+		// canvas.translate(mCanvasTranslateX, mCanvasTranslateY);
 		mSweepGradientMatrix.setRotate(mSweepDegree, mCenterX, mCenterY);
 		mSweepGradient.setLocalMatrix(mSweepGradientMatrix);
 		mSweepPaint.setShader(mSweepGradient);
@@ -228,7 +241,6 @@ public class MiClockView extends View {
 		canvas.drawArc(mCenterX-mSecondRadiusTmp, mCenterY-mSecondRadiusTmp, mCenterX+mSecondRadiusTmp, mCenterY+mSecondRadiusTmp, 0, 360, false, mSweepPaint);
 
 		// 绘制尺度线
-		canvas.save();
 		for (int i = 0; i < 200; i++) {
 			canvas.drawLine(mCenterX, mCenterY-mSecondRadius, mCenterX, mCenterY-mSecondRadius-(int)(0.15*mOutSideRadius), mSecondPaint);
 			canvas.rotate(1.8f, mCenterX, mCenterY);
@@ -239,6 +251,7 @@ public class MiClockView extends View {
 	private void drawSecond(Canvas canvas) {
 		// 绘制秒钟的三角标
 		canvas.save();
+		// canvas.translate(mCanvasTranslateX, mCanvasTranslateY);
 		canvas.rotate(mSecondDegree, mCenterX, mCenterY); //以圆心旋转角度.
 		if (mSecondTrianglePath.isEmpty()) {
 			mSecondTrianglePath.reset();
@@ -255,6 +268,7 @@ public class MiClockView extends View {
 	private void drawHourMinute(Canvas canvas) {
 		// 绘制时标
 		canvas.save();
+		// canvas.translate(mCanvasTranslateX, mCanvasTranslateY);
 		canvas.rotate(mHourDegree, mCenterX, mCenterY);
 		if (mHourMarkPath.isEmpty()) {
 			mHourMarkPath.reset();
@@ -269,6 +283,7 @@ public class MiClockView extends View {
 
 		// 绘制分标
 		canvas.save();
+		// canvas.translate(mCanvasTranslateX, mCanvasTranslateY);
 		canvas.rotate(mMinuteDegree, mCenterX, mCenterY);
 
 		if (mMinuteMarkPath.isEmpty()) {
@@ -306,17 +321,102 @@ public class MiClockView extends View {
 
 	@Override
 	public boolean onTouchEvent(MotionEvent event) {
-//		return super.onTouchEvent(event);
+		super.onTouchEvent(event);
 
 		switch (event.getActionMasked()) {
 			case MotionEvent.ACTION_DOWN:
-				break;
+				if (mShakeAnim != null && mShakeAnim.isRunning()) {
+					mShakeAnim.cancel();
+				}
 			case MotionEvent.ACTION_MOVE:
+				getCameraRotate(event);
+				getCanvasTranslate(event);
 				break;
 			case MotionEvent.ACTION_UP:
+				startShakeAnim(); // 自定义属性部分.
 				break;
 		}
 
 		return true;
+	}
+
+	private float[] getPercent(float offsetX, float offsetY) {
+		float[] result = new float[2];
+		float nx = offsetX / mOutSideRadius;
+		float ny = offsetY / mOutSideRadius;
+
+		if (nx >= 1) {
+			nx = 1;
+		} else if (nx <= -1) {
+			nx = -1;
+		}
+
+		if (ny >= 1) {
+			ny = 1;
+		} else if (ny <= -1) {
+			ny = -1;
+		}
+
+		result[0] = nx;
+		result[1] = ny;
+
+		return result;
+	}
+
+	private void getCameraRotate(MotionEvent event) {
+		float rotateX = -(event.getY() - mCenterY);
+		float rotateY = (event.getX() - mCenterX);
+		float[] result = getPercent(rotateX, rotateY);
+		mCameraRotateX = result[0] * MAX_CAMER_ROTATE;
+		mCameraRotateY = result[1] * MAX_CAMER_ROTATE;
+	}
+
+	private void getCanvasTranslate(MotionEvent event) {
+		float rotateX = -(event.getX() - mCenterX);
+		float rotateY = -(event.getY() - mCenterY);
+		float[] result = getPercent(rotateX, rotateY);
+		mCanvasTranslateX = result[0] * mMaxCanvasTranslate;
+		mCanvasTranslateY = result[1] * mMaxCanvasTranslate;
+	}
+
+	private void startShakeAnim() {
+		final String cameraRotateXName = "cameraRotateX";
+		final String cameraRotateYName = "cameraRotateY";
+		final String canvasTranslateXName = "canvasTranslateX";
+		final String canvasTranslateYName = "canvasTranslateY";
+
+		PropertyValuesHolder cameraRotateXHolder = PropertyValuesHolder.ofFloat(cameraRotateXName, mCameraRotateX, 0);
+		PropertyValuesHolder cameraRotateYHolder = PropertyValuesHolder.ofFloat(cameraRotateYName, mCameraRotateY, 0);
+		PropertyValuesHolder canvasTranslateXHolder = PropertyValuesHolder.ofFloat(canvasTranslateXName, mCanvasTranslateX, 0);
+		PropertyValuesHolder canvasTranslateYHolder = PropertyValuesHolder.ofFloat(canvasTranslateYName, mCanvasTranslateY, 0);
+
+		mShakeAnim = ValueAnimator.ofPropertyValuesHolder(cameraRotateXHolder, cameraRotateYHolder, canvasTranslateXHolder, canvasTranslateYHolder);
+		mShakeAnim.setDuration(1000);
+		mShakeAnim.setInterpolator(new TimeInterpolator() {
+			@Override
+			public float getInterpolation(float input) {
+				//http://inloop.github.io/interpolator/ 动画函数.
+				float f = 0.571429f;
+				return (float) (Math.pow(2, -2 * input) * Math.sin((input - f / 4) * (2 * Math.PI) / f) + 1); // 比自带的BounceInterpolation效果要好.
+			}
+		});
+		mShakeAnim.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+			@Override
+			public void onAnimationUpdate(ValueAnimator animation) {
+				if (animation.getAnimatedValue(cameraRotateXName) != null) {
+					mCameraRotateX = (float) animation.getAnimatedValue(cameraRotateXName);
+				}
+				if (animation.getAnimatedValue(cameraRotateYName) != null) {
+					mCameraRotateY = (float) animation.getAnimatedValue(cameraRotateYName);
+				}
+				if (animation.getAnimatedValue(canvasTranslateXName) != null) {
+					mCanvasTranslateX = (float) animation.getAnimatedValue(canvasTranslateXName);
+				}
+				if (animation.getAnimatedValue(canvasTranslateYName) != null) {
+					mCanvasTranslateY = (float) animation.getAnimatedValue(canvasTranslateYName);
+				}
+			}
+		});
+		mShakeAnim.start();
 	}
 }

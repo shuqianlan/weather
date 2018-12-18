@@ -2,6 +2,7 @@ package com.ilifesmart;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
+import android.content.res.Resources;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -23,6 +24,7 @@ import com.ilifesmart.weather.WeatherActivity;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -63,6 +65,22 @@ public class HomeActivity extends AppCompatActivity {
         Log.d(TAG, "onCreatView: length " + length);
 
         onUpdateView();
+
+        // 获取其它国家key的字符串资源.
+//        Resources res = getResources();
+//        if (res != null) {
+//            String result1 = res.getString(R.string.def_name);
+//            String result2 = null;
+//            String lang = res.getConfiguration().locale.getLanguage();
+//            if (lang.equals("zh")) {
+//                res.getConfiguration().locale = Locale.ENGLISH;
+//                res.updateConfiguration(res.getConfiguration(), res.getDisplayMetrics());
+//                result2 = res.getString(R.string.def_name);
+//            }
+//
+//            Log.d(TAG, "onCreatView: result " + result1 + " result2 " + result2);
+//            Log.d(TAG, "onCreatView: ge");
+//        }
     }
 
     private void onUpdateView() {
