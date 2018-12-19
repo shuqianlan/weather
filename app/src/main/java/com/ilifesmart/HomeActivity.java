@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.Button;
 
 import com.ilifesmart.aop.CheckOnClickActivity;
+import com.ilifesmart.cam3drotate.CameraRotateActivity;
 import com.ilifesmart.compass.CompassActivity;
 import com.ilifesmart.framelayout.FrameLayoutActivity;
 import com.ilifesmart.miclock.MiClockActivity;
@@ -124,7 +125,7 @@ public class HomeActivity extends AppCompatActivity {
         }
     }
 
-    @OnClick({R.id.weather, R.id.seekbar, R.id.notification, R.id.rotate, R.id.aop_test, R.id.thread_test, R.id.framelayout, R.id.compass, R.id.miclock})
+    @OnClick({R.id.weather, R.id.seekbar, R.id.notification, R.id.rotate, R.id.aop_test, R.id.thread_test, R.id.framelayout, R.id.compass, R.id.miclock, R.id.camrotate})
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.weather:
@@ -153,6 +154,9 @@ public class HomeActivity extends AppCompatActivity {
                 break;
             case R.id.miclock:
                 onMiClock();
+                break;
+            case R.id.camrotate:
+                onCamRotate();
                 break;
         }
     }
@@ -192,5 +196,9 @@ public class HomeActivity extends AppCompatActivity {
 
     public void onMiClock() {
         startActivity(Utils.newIntent(this, MiClockActivity.class));
+    }
+
+    public void onCamRotate() {
+        startActivity(Utils.newIntent(this, CameraRotateActivity.class));
     }
 }

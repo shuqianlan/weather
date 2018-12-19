@@ -64,6 +64,8 @@
         </activity>
         <activity android:name="com.ilifesmart.miclock.MiClockActivity">
         </activity>
+        <activity android:name="com.ilifesmart.cam3drotate.CameraRotateActivity">
+        </activity>
     </application>
 
 </manifest>

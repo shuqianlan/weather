@@ -203,9 +203,10 @@ public class MiClockView extends View {
 
 		//camera在view左上角那个点，故旋转默认是以左上角为中心旋转
 		//故在动作之前pre将matrix向左移动getWidth()/2长度，向上移动getHeight()/2长度
-		mCameraMatrix.preTranslate(-mCenterX, -mCenterY);
+		mCameraMatrix.preTranslate(-mCenterX, -mCenterY); // T
 		//在动作之后post再回到原位
-		mCameraMatrix.postTranslate(mCenterX, mCenterY);
+		mCameraMatrix.postTranslate(mCenterX, mCenterY); // -T
+		// 矩阵运算 mCameraMatrix = (-T)*(mCameraMatrix * T)
 		canvas.concat(mCameraMatrix); // A = A * B;
 	}
 
@@ -215,6 +216,8 @@ public class MiClockView extends View {
 
 	private void drawBGArea(Canvas canvas) {
 		// 绘制时钟数字
+		canvas.save();
+		canvas.translate(mCanvasTranslateX, mCanvasTranslateY); // 保持偏移感
 		mTextPaint.getTextBounds("12", 0, "12".length(), mTextRect);
 		canvas.drawText("12", mCenterX, mCenterY-mOutSideRadius+mTextRect.height()/2, mTextPaint);
 
@@ -227,12 +230,13 @@ public class MiClockView extends View {
 		for (int i = 0; i < 4; i++) {
 			canvas.drawArc(mCenterX-mOutSideRadius-1, mCenterY-mOutSideRadius-1, mCenterX+mOutSideRadius+1, mCenterY+mOutSideRadius+1, mSuitableTextAngle/2+90*i, anyAngle, false, mOutRadiusPaint);
 		}
+		canvas.restore();
 	}
 
 	private void drawScale(Canvas canvas) {
 		// 绘制渐变色扫射
 		canvas.save();
-		// canvas.translate(mCanvasTranslateX, mCanvasTranslateY);
+		canvas.translate(mCanvasTranslateX, mCanvasTranslateY);
 		mSweepGradientMatrix.setRotate(mSweepDegree, mCenterX, mCenterY);
 		mSweepGradient.setLocalMatrix(mSweepGradientMatrix);
 		mSweepPaint.setShader(mSweepGradient);
@@ -251,7 +255,7 @@ public class MiClockView extends View {
 	private void drawSecond(Canvas canvas) {
 		// 绘制秒钟的三角标
 		canvas.save();
-		// canvas.translate(mCanvasTranslateX, mCanvasTranslateY);
+		canvas.translate(mCanvasTranslateX, mCanvasTranslateY);
 		canvas.rotate(mSecondDegree, mCenterX, mCenterY); //以圆心旋转角度.
 		if (mSecondTrianglePath.isEmpty()) {
 			mSecondTrianglePath.reset();
@@ -268,7 +272,7 @@ public class MiClockView extends View {
 	private void drawHourMinute(Canvas canvas) {
 		// 绘制时标
 		canvas.save();
-		// canvas.translate(mCanvasTranslateX, mCanvasTranslateY);
+		canvas.translate(mCanvasTranslateX, mCanvasTranslateY); // 偏移感
 		canvas.rotate(mHourDegree, mCenterX, mCenterY);
 		if (mHourMarkPath.isEmpty()) {
 			mHourMarkPath.reset();
@@ -283,7 +287,7 @@ public class MiClockView extends View {
 
 		// 绘制分标
 		canvas.save();
-		// canvas.translate(mCanvasTranslateX, mCanvasTranslateY);
+	  canvas.translate(mCanvasTranslateX, mCanvasTranslateY); // 偏移感
 		canvas.rotate(mMinuteDegree, mCenterX, mCenterY);
 
 		if (mMinuteMarkPath.isEmpty()) {
@@ -297,12 +301,15 @@ public class MiClockView extends View {
 		canvas.drawPath(mMinuteMarkPath, mMinutePaint);
 		canvas.restore();
 
+		canvas.save();
+		canvas.translate(mCanvasTranslateX, mCanvasTranslateY); // 偏移感
 		// 绘制圆心区小圆
 		mBackgroundPaint.setColor(mMinuteMaskColor);
-		canvas.drawCircle(mCenterX, mCenterY, mMinuteRadius*0.03f, mBackgroundPaint);
+		canvas.drawCircle(mCenterX, mCenterY, mMinuteRadius*0.06f, mBackgroundPaint);
 
 		mBackgroundPaint.setColor(mCenterCircleColor);
-		canvas.drawCircle(mCenterX, mCenterY, mMinuteRadius*0.015f, mBackgroundPaint);
+		canvas.drawCircle(mCenterX, mCenterY, mMinuteRadius*0.03f, mBackgroundPaint);
+		canvas.restore();
 	}
 
 	private void getRealTime() {
@@ -364,8 +371,8 @@ public class MiClockView extends View {
 	}
 
 	private void getCameraRotate(MotionEvent event) {
-		float rotateX = -(event.getY() - mCenterY);
-		float rotateY = (event.getX() - mCenterX);
+		float rotateX = -(event.getY() - mCenterY); // 绕X轴旋转，和y距离差有关，为负则压下为正则翘起
+		float rotateY = (event.getX() - mCenterX); //  绕y轴旋转，和x距离差有关，为正则压下为负则翘起
 		float[] result = getPercent(rotateX, rotateY);
 		mCameraRotateX = result[0] * MAX_CAMER_ROTATE;
 		mCameraRotateY = result[1] * MAX_CAMER_ROTATE;
@@ -375,8 +382,8 @@ public class MiClockView extends View {
 		float rotateX = -(event.getX() - mCenterX);
 		float rotateY = -(event.getY() - mCenterY);
 		float[] result = getPercent(rotateX, rotateY);
-		mCanvasTranslateX = result[0] * mMaxCanvasTranslate;
-		mCanvasTranslateY = result[1] * mMaxCanvasTranslate;
+		mCanvasTranslateX = result[0] * mMaxCanvasTranslate; // 保持偏离感，更加伪3D.否则只是摄像头的拉进旋转，不够幻象
+		mCanvasTranslateY = result[1] * mMaxCanvasTranslate; // 保持偏离感，更加伪3D.否则只是摄像头的拉进旋转，不够幻象
 	}
 
 	private void startShakeAnim() {
