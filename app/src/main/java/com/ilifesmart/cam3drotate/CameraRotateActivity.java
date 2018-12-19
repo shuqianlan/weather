@@ -1,7 +1,10 @@
 package com.ilifesmart.cam3drotate;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Camera;
 import android.graphics.Matrix;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Button;
@@ -32,6 +35,7 @@ public class CameraRotateActivity extends AppCompatActivity {
 
 	private Camera mCamera;
 	private Matrix mCameramatrix;
+	private Bitmap mBitmap;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -41,14 +45,19 @@ public class CameraRotateActivity extends AppCompatActivity {
 
 		mCamera = new Camera();
 		mCameramatrix = new Matrix();
+		mBitmap = ((BitmapDrawable)mImg.getDrawable()).getBitmap();
 	}
 
 	@OnClick(R.id.rotate_orgx)
 	public void onRotateOrgxClicked() {
 		mCamera.save();
 		mCameramatrix.reset();
+		mCamera.rotateY(45);
+		mCamera.getMatrix(mCameramatrix);
+		mCamera.restore();
 
-		
+		mCameramatrix.preTranslate(-mBitmap.getWidth()/2, 0);
+		mCameramatrix.postTranslate(mBitmap.getWidth()/2, 0);
 	}
 
 	@OnClick(R.id.rotate_x)

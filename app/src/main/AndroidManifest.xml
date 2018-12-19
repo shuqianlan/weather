@@ -66,6 +66,8 @@
         </activity>
         <activity android:name="com.ilifesmart.cam3drotate.CameraRotateActivity">
         </activity>
+        <activity android:name="com.ilifesmart.path.CircleActivity">
+        </activity>
     </application>
 
 </manifest>
