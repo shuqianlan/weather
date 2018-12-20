@@ -34,4 +34,10 @@
         <attr name="backgroundColor" format="color" />
         <attr name="centerCircleColor" format="color" />
     </declare-styleable>
+
+    <declare-styleable name="QualCircle">
+        <attr name="GradientStartColor" format="color" />
+        <attr name="GradientEndColor" format="color" />
+
+    </declare-styleable>
 </resources>
