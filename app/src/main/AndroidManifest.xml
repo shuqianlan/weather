@@ -68,6 +68,10 @@
         </activity>
         <activity android:name="com.ilifesmart.path.CircleActivity">
         </activity>
+        <activity android:name="com.ilifesmart.os.OSInfoActivity">
+        </activity>
+        <activity android:name="com.ilifesmart.viewpager.ViewPagerActivity">
+        </activity>
     </application>
 
 </manifest>

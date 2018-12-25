@@ -75,6 +75,7 @@ public class QualCircle extends View {
 		mDistanceOffsexX = DensityUtils.dp2px(getContext(), 120);
 
 		mCurrColor = getResources().getColor(R.color.colorPrimary);
+		mGradientEndColor = mGradientStartColor = mCurrColor;
 		if (attrs != null) {
 			TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.QualCircle);
 			mGradientStartColor = a.getColor(R.styleable.QualCircle_GradientStartColor, mCurrColor);
@@ -222,18 +223,19 @@ public class QualCircle extends View {
 				if (animation.getAnimatedValue() != null) {
 					float i = (float) animation.getAnimatedValue();
 
-					if (i < 4) {
+					if (i <= 4) {
 						float tmp = i / 4 * mAbsMaxOffsetX * num;
-						mPoints[index_1].x = mMinX_1 - tmp;
+						mPoints[index_1].x = mMinX_1 - tmp; // 8, 2
 						mPoints[index_1 + 1].x = mMinX_1 - tmp;
 						mPoints[index_1 + 2].x = mMinX_1 - tmp;
-					} else if (i < 8) {
+					} else if (i <= 8) {
 						float tmp = (1 - (i - 4) / 4) * mAbsMaxOffsetX * num;
 						mPoints[index_2].x = mMinX_2 + tmp;
 						mPoints[index_2 + 1].x = mMinX_2 + tmp;
-						mPoints[index_2 + 1].x = mMinX_2 + tmp;
-					} else if (i < 12) {
-						float tmp = (1 - (i - 8) / 4) * mAbsMaxOffsetX * num - distanceX*num;
+						mPoints[index_2 + 2].x = mMinX_2 + tmp;
+					} else if (i <= 12) {
+						float tmp2 = (i - 8) / 4;
+						float tmp = (1 - tmp2) * mAbsMaxOffsetX * num - tmp2*distanceX*num;
 						mPoints[index_1].x = mMinX_1 - tmp;
 						mPoints[index_1 + 1].x = mMinX_1 - tmp;
 						mPoints[index_1 + 2].x = mMinX_1 - tmp;
@@ -249,57 +251,6 @@ public class QualCircle extends View {
 						mPoints[index_1 + 1].x = mMinX_1;
 						mPoints[index_1 + 2].x = mMinX_1;
 					}
-//				}
-
-//					if (currDropIn) {
-//						if (i < 4) {
-//							mPoints[8].x = (mLeftMinDistanceX - i/4*mAbsMaxOffsetX);
-//							mPoints[9].x = (mLeftMinDistanceX - i/4*mAbsMaxOffsetX);
-//							mPoints[10].x =(mLeftMinDistanceX - i/4*mAbsMaxOffsetX);
-//						} else if (i < 8) {
-//							mPoints[2].x = (mRightMinDistanceX + (1-(i-4)/4)*mAbsMaxOffsetX);
-//							mPoints[3].x = (mRightMinDistanceX + (1-(i-4)/4)*mAbsMaxOffsetX);
-//							mPoints[4].x = (mRightMinDistanceX + (1-(i-4)/4)*mAbsMaxOffsetX);
-//						} else if (i < 12) {
-//							float tmp = (1-(i-8)/4)*mAbsMaxOffsetX;
-//							mPoints[8].x = mLeftMinDistanceX+distanceX-tmp;
-//							mPoints[9].x = mLeftMinDistanceX+distanceX-tmp;
-//							mPoints[10].x= mLeftMinDistanceX+distanceX-tmp;
-//						} else if (i < 13) {
-//							float tmp = i-12; // 0->1
-//							tmp = getOvsershoot(tmp);
-//							tmp *= distanceX;
-//							mPoints[8].x = mLeftMinDistanceX+distanceX-tmp;
-//							mPoints[9].x = mLeftMinDistanceX+distanceX-tmp;
-//							mPoints[10].x= mLeftMinDistanceX+distanceX-tmp;
-//						} else {
-//							mPoints[8].x = mPoints[9].x = mPoints[10].x = mLeftMinDistanceX;
-//						}
-//					} else {
-//						if (i < 4) {
-//							mPoints[2].x = (mRightMinDistanceX + i/4*mAbsMaxOffsetX);
-//							mPoints[3].x = (mRightMinDistanceX + i/4*mAbsMaxOffsetX);
-//							mPoints[4].x = (mRightMinDistanceX + i/4*mAbsMaxOffsetX);
-//						} else if (i < 8) {
-//							mPoints[8].x = (mLeftMinDistanceX - (1-(i-4)/4)*mAbsMaxOffsetX);
-//							mPoints[9].x = (mLeftMinDistanceX - (1-(i-4)/4)*mAbsMaxOffsetX);
-//							mPoints[10].x = (mLeftMinDistanceX - (1-(i-4)/4)*mAbsMaxOffsetX);
-//						} else if (i < 12) {
-//							float tmp = (1-(i-8)/4)*mAbsMaxOffsetX;
-//							mPoints[2].x = mRightMinDistanceX + tmp - distanceX;
-//							mPoints[3].x = mRightMinDistanceX + tmp - distanceX;
-//							mPoints[4].x = mRightMinDistanceX + tmp - distanceX;
-//						} else if (i < 13) {
-//							float tmp = i-12; // 0->1
-//							tmp = getOvsershoot(tmp);
-//							tmp *= distanceX;
-//							mPoints[2].x = mRightMinDistanceX-distanceX+tmp;
-//							mPoints[3].x = mRightMinDistanceX-distanceX+tmp;
-//							mPoints[4].x = mRightMinDistanceX-distanceX+tmp;
-//						} else {
-//							mPoints[2].x = mPoints[3].x = mPoints[4].x = mRightMinDistanceX;
-//						}
-//					}
 
 					if (i<=12) { // translationX
 						setTranslationX(mTranslationX + i / 12 * getDistanceOffsexX() * (currDropIn ? 1 : -1));

@@ -40,4 +40,9 @@
         <attr name="GradientEndColor" format="color" />
 
     </declare-styleable>
+
+    <declare-styleable name="RoundCornerImageView">
+        <attr name="radius" format="dimension" />
+        <attr name="hoverColor" format="color" />
+    </declare-styleable>
 </resources>

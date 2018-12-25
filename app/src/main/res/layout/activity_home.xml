@@ -111,6 +111,22 @@
                 android:text="Path"
                 android:layout_gravity="center"
                 />
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:background="@drawable/stroke_background"
+                android:id="@+id/osinfo"
+                android:text="OS"
+                android:layout_gravity="center"
+                />
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:background="@drawable/stroke_background"
+                android:id="@+id/viewpager"
+                android:text="ViewPager"
+                android:layout_gravity="center"
+                />
         </LinearLayout>
     </ScrollView>
 

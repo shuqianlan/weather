@@ -3,13 +3,16 @@ package com.ilifesmart.cam3drotate;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Camera;
+import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 
+import com.ilifesmart.ui.RoundCornerImageView;
 import com.ilifesmart.weather.R;
 
 import butterknife.BindView;
@@ -19,7 +22,7 @@ import butterknife.OnClick;
 public class CameraRotateActivity extends AppCompatActivity {
 
 	@BindView(R.id.img)
-	ImageView mImg;
+	RoundCornerImageView mImg;
 	@BindView(R.id.rotate_orgx)
 	Button RotateOrgx;
 	@BindView(R.id.rotate_x)
@@ -45,7 +48,7 @@ public class CameraRotateActivity extends AppCompatActivity {
 
 		mCamera = new Camera();
 		mCameramatrix = new Matrix();
-		mBitmap = ((BitmapDrawable)mImg.getDrawable()).getBitmap();
+//		mBitmap = ((BitmapDrawable)mImg.getDrawable()).getBitmap();
 	}
 
 	@OnClick(R.id.rotate_orgx)
@@ -62,14 +65,17 @@ public class CameraRotateActivity extends AppCompatActivity {
 
 	@OnClick(R.id.rotate_x)
 	public void onRotateXClicked() {
+		mImg.setHoverColorAndDrawable(Color.WHITE, R.drawable.item_viewpager_120switch_1);
 	}
 
 	@OnClick(R.id.rotate_orgy)
 	public void onRotateOrgyClicked() {
+		mImg.setHoverColorAndDrawable(Color.WHITE, R.drawable.item_viewpager_120switch_3);
 	}
 
 	@OnClick(R.id.rotate_y)
 	public void onRotateYClicked() {
+		mImg.setHoverColorAndDrawable(Color.RED, -99);
 	}
 
 	@OnClick(R.id.rotate_xy)

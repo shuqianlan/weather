@@ -25,4 +25,8 @@ public class Utils {
     public static Intent newIntent(Context context, Class<? extends AppCompatActivity> cls) {
         return new Intent(context, cls);
     }
+
+    public static void startActivity(Context context, Class<? extends AppCompatActivity> cls) {
+        context.startActivity(newIntent(context, cls));
+    }
 }

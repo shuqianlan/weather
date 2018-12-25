@@ -7,18 +7,17 @@
     android:layout_height="match_parent"
     tools:context="com.ilifesmart.cam3drotate.CameraRotateActivity">
 
-    <ImageView
+    <com.ilifesmart.ui.RoundCornerImageView
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_margin="20dp"
+        android:src="@drawable/item_viewpager_120switch_2"
         app:layout_constraintWidth_percent="0.6"
         app:layout_constraintDimensionRatio="h,75:86"
-        android:src="@drawable/colorlight3"
-        android:id="@+id/img"
-        android:scaleType="centerCrop"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        android:id="@+id/img"
         />
 
     <HorizontalScrollView
