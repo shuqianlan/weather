@@ -17,17 +17,21 @@ import android.graphics.drawable.Drawable;
 import android.support.v7.widget.AppCompatImageView;
 import android.util.AttributeSet;
 import android.view.View;
+import android.widget.ImageView;
 
 import com.ilifesmart.utils.DensityUtils;
 import com.ilifesmart.weather.R;
 
 public class RoundCornerImageView extends AppCompatImageView {
-	private static final ScaleType SCALE_TYPE = ScaleType.CENTER_CROP;
+	private static final ImageView.ScaleType SCALE_TYPE = ImageView.ScaleType.CENTER_CROP;
 	private int cornerRadius;
 	private int mHoverColor = Color.WHITE;
 
 	private RectF mBoundedRectF;
 	private RectF mDrawableRect;
+
+	private int resID;
+	private boolean once=true;
 
 	private Paint mColorPaint;
 	private Path mPath;
@@ -114,6 +118,24 @@ public class RoundCornerImageView extends AppCompatImageView {
 		invalidate();
 	}
 
+	public void setRoundCornerDrawable(int resID) {
+		recycleBitmap();
+
+		if (resID > 0) {
+			Bitmap bitmap = ImageResizer.decodeSampleBitmapFromResource(getResources(), resID, getWidth(), getHeight());
+			setImageDrawable(new BitmapDrawable(getResources(), bitmap));
+		} else {
+			setImageDrawable(null);
+		}
+	}
+
+	public void setRoundCornerHoverColor(int color) {
+		this.resID = -99;
+		this.mHoverColor = color;
+		recycleBitmap();
+		setImageDrawable(null);
+	}
+
 	private void recycleBitmap() {
 		Drawable drawable = getDrawable();
 		Bitmap bitmap;
@@ -127,5 +149,15 @@ public class RoundCornerImageView extends AppCompatImageView {
 	protected void onDetachedFromWindow() {
 		super.onDetachedFromWindow();
 		recycleBitmap();
+		once=false;
 	}
+
+	@Override
+	protected void onAttachedToWindow() {
+		super.onAttachedToWindow();
+		if (!once) {
+			setRoundCornerDrawable(resID);
+		}
+	}
+
 }
