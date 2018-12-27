@@ -47,8 +47,8 @@ public class CameraRotateActivity extends AppCompatActivity {
 	@BindView(R.id.group_4)
 	ConstraintLayout mCont4;
 
-	private final List<RoundCornerImageView> mImgList = new ArrayList<>();
-	private final List<ConstraintLayout> mContList = new ArrayList<>();
+	private final List<RoundCornerImageView> mImgList = new ArrayList<RoundCornerImageView>();
+	private final List<ConstraintLayout> mContList = new ArrayList<ConstraintLayout>();
 
 	private Camera mCamera;
 	private Matrix mCameramatrix;
@@ -66,7 +66,7 @@ public class CameraRotateActivity extends AppCompatActivity {
 		mContList.add(mCont4);
 
 		for(ConstraintLayout cont:mContList) {
-			mImgList.add(cont.findViewById(R.id.img));
+			mImgList.add((RoundCornerImageView) cont.findViewById(R.id.img));
 		}
 
 		mCamera = new Camera();
@@ -116,7 +116,7 @@ public class CameraRotateActivity extends AppCompatActivity {
 		mFrameCont.setVisibility(View.VISIBLE);
 
 		for (int i = 0; i < mImgList.size(); i++) {
-			mImgList.get(i).setCornerDrawable(R.drawable.item_viewpager_120switch_1);
+			mImgList.get(i).setImageDrawable(getDrawable(R.drawable.item_viewpager_120switch_1));
 		}
 //		mImg.setHoverColorAndDrawable(Color.WHITE, R.drawable.colorlight3);
 	}

@@ -12,7 +12,7 @@ import java.util.List;
  */
 
 public class EmbeddedViewStackContainer extends EmbeddedViewContainer {
-	protected List<EmbeddedView> viewList = Collections.synchronizedList(new ArrayList<>());
+	protected List<EmbeddedView> viewList = Collections.synchronizedList(new ArrayList<EmbeddedView>());
 	protected boolean singleViewMode = false;
 
 	public EmbeddedViewStackContainer(Context context) {

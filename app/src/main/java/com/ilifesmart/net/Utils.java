@@ -48,20 +48,20 @@ public class Utils {
         return sClient;
     }
 
-    public static void netCallGet(String url, Response cb) {
+    public static void netCallGet(String url, final Response cb) {
         OkHttpClient client = getOKHttpClientInstance();
         Request request = new Request.Builder().get().url(url).build();
         Call call = client.newCall(request);
         call.enqueue(new Callback() {
             @Override
-            public void onFailure(Call call, IOException e) {
+            public void onFailure(final Call call, IOException e) {
                 if (cb != null) {
                     cb.onFailure(e);
                 }
             }
 
             @Override
-            public void onResponse(Call call, okhttp3.Response response) throws IOException {
+            public void onResponse(final Call call, okhttp3.Response response) throws IOException {
                 String content = response.body().string();
                 if (cb != null) {
                     cb.onSuccess(content);

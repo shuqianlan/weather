@@ -29,17 +29,20 @@ public class CheckOnClickActivity extends AppCompatActivity implements View.OnCl
         setContentView(R.layout.activity_check_on_click);
         ButterKnife.bind(this);
 
-        mBtClickTest.setOnClickListener(this);
+//        mBtClickTest.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View v) {
-        Log.d(TAG, "before_setText ..");
-        mTextView.setText("HAHAHAHHAH ");
-        Log.d(TAG, "after_setText ..");
+        Log.d(TAG, "onClick: ------------ ");
+        setText();
     }
 
     public static Intent newIntent(Context context) {
         return new Intent(context, CheckOnClickActivity.class);
+    }
+
+    public String setText() {
+        return "XXXX";
     }
 }
