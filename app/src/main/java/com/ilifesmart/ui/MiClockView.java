@@ -30,6 +30,8 @@ import java.util.Arrays;
 import java.util.Calendar;
 
 public class MiClockView extends View {
+
+	public static final String TAG = "MiClockView";
 	private int mMaxHourTextWidth;
 	private int mSuitableTextAngle;
 	private int mCenterX;
@@ -105,6 +107,22 @@ public class MiClockView extends View {
 
 	private void initizlize(AttributeSet attrs) {
 		if (attrs != null) {
+
+			int attrCount = attrs.getAttributeCount();
+			for (int i = 0; i < attrCount; i++) {
+				String attrName = attrs.getAttributeName(i);
+				String attrValue = attrs.getAttributeValue(i);
+				Log.d(TAG, "attr: name " + attrName);
+				Log.d(TAG, "attr: value " + attrValue);
+
+				if (attrName.startsWith("@")) {
+					int resID = Integer.parseInt(attrName.substring(1));
+					Log.d(TAG, "initizlize: resName " + getContext().getResources().getResourceName(resID));
+					Log.d(TAG, "initizlize: resType " + getContext().getResources().getResourceTypeName(resID));
+					Log.d(TAG, "initizlize: entryName " + getContext().getResources().getResourceEntryName(resID));
+					Log.d(TAG, "initizlize: packageName " + getContext().getResources().getResourcePackageName(resID));
+				}
+			}
 			TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.MiClockView);
 			mOutSideStrokeWidth = DensityUtils.dp2px(getContext(), a.getDimension(R.styleable.MiClockView_outSideRadiusStrokeWidth, 2));
 			mOutSideStrokeColor = a.getColor(R.styleable.MiClockView_outSideRadiusStrokeColor, mOutSideStrokeColor);

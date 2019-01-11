@@ -14,11 +14,14 @@ import android.widget.Button;
 import com.ilifesmart.aop.CheckOnClickActivity;
 import com.ilifesmart.cam3drotate.CameraRotateActivity;
 import com.ilifesmart.compass.CompassActivity;
+import com.ilifesmart.fragment.DialogActivity;
 import com.ilifesmart.framelayout.FrameLayoutActivity;
+import com.ilifesmart.mapper.MapperActivity;
 import com.ilifesmart.miclock.MiClockActivity;
 import com.ilifesmart.notification.NotificationActivity;
 import com.ilifesmart.os.OSInfoActivity;
 import com.ilifesmart.path.CircleActivity;
+import com.ilifesmart.preference.SettingActivity;
 import com.ilifesmart.test.SeekBarActivity;
 import com.ilifesmart.thread.ThreadTestActivity;
 import com.ilifesmart.utils.Utils;
@@ -128,7 +131,7 @@ public class HomeActivity extends AppCompatActivity {
         }
     }
 
-    @OnClick({R.id.weather, R.id.seekbar, R.id.notification, R.id.rotate, R.id.aop_test, R.id.thread_test, R.id.framelayout, R.id.compass, R.id.miclock, R.id.camrotate, R.id.path, R.id.osinfo, R.id.viewpager})
+    @OnClick({R.id.weather, R.id.seekbar, R.id.notification, R.id.rotate, R.id.aop_test, R.id.thread_test, R.id.framelayout, R.id.compass, R.id.miclock, R.id.camrotate, R.id.path, R.id.osinfo, R.id.viewpager, R.id.mapper, R.id.dialog, R.id.preference})
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.weather:
@@ -170,6 +173,15 @@ public class HomeActivity extends AppCompatActivity {
             case R.id.viewpager:
                 Utils.startActivity(this, ViewPagerActivity.class);
                 break;
+            case R.id.mapper:
+                Utils.startActivity(this, MapperActivity.class);
+                break;
+            case R.id.dialog:
+                Utils.startActivity(this, DialogActivity.class);
+                break;
+            case R.id.preference:
+                Utils.startActivity(this, SettingActivity.class);
+                break;
         }
     }
 
@@ -202,7 +214,6 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     public void onCompass() {
-        Log.d(TAG, "onCompass: ------ ");
         startActivity(Utils.newIntent(this, CompassActivity.class));
     }
 

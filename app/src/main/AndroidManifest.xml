@@ -72,6 +72,17 @@
         </activity>
         <activity android:name="com.ilifesmart.viewpager.ViewPagerActivity">
         </activity>
+        <activity android:name="com.ilifesmart.mapper.MapperActivity">
+        </activity>
+        <activity android:name="com.ilifesmart.fragment.DialogActivity">
+        </activity>
+        <activity android:name="com.ilifesmart.preference.SettingActivity">
+        </activity>
+        <activity
+            android:name="com.ilifesmart.skin.SkinDemoActivity"
+            android:label="@string/title_activity_skin_demo"
+            android:theme="@style/AppTheme">
+        </activity>
     </application>
 
 </manifest>

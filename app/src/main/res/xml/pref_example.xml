@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <!--<PreferenceCategory-->
+        <!--android:title="第一组"-->
+        <!--android:summary="First"-->
+        <!--&gt;-->
+
+        <Preference
+            android:key="item-1"
+            android:title="应用"
+            android:summary="配置全局应用配置"
+            />
+        <Preference
+            android:key="item-2"
+            android:title="编辑器"
+            android:summary="配置编辑器"
+            />
+        <Preference
+            android:key="item-3"
+            android:title="代码风格"
+            android:summary="配置代码风格"
+            />
+        <Preference
+            android:key="item-4"
+            android:title="构建运行"
+            android:summary="配置运行配置"
+            />
+    <!--</PreferenceCategory>-->
+</PreferenceScreen>

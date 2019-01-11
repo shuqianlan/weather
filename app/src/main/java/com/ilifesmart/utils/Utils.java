@@ -22,11 +22,11 @@ public class Utils {
         return isDoubleClick;
     }
 
-    public static Intent newIntent(Context context, Class<? extends AppCompatActivity> cls) {
+    public static Intent newIntent(Context context, Class<? extends Activity> cls) {
         return new Intent(context, cls);
     }
 
-    public static void startActivity(Context context, Class<? extends AppCompatActivity> cls) {
+    public static void startActivity(Context context, Class<? extends Activity> cls) {
         context.startActivity(newIntent(context, cls));
     }
 }

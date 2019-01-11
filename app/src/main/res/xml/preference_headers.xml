@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory
+        android:summary="皮肤切换设置"
+        android:title="皮肤切换">
+
+        <SwitchPreference
+            android:key="BuildIn"
+            android:title="夜间模式"
+            android:summary="应用内换肤"
+            />
+    </PreferenceCategory>
+</PreferenceScreen>

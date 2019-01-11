@@ -14,6 +14,13 @@ import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
 import com.ilifesmart.interfaces.MyLocationListener;
 import com.ilifesmart.weather.R;
+import com.squareup.leakcanary.AndroidExcludedRefs;
+import com.squareup.leakcanary.DisplayLeakService;
+import com.squareup.leakcanary.ExcludedRefs;
+import com.squareup.leakcanary.LeakCanary;
+import com.squareup.leakcanary.RefWatcher;
+
+import static com.squareup.leakcanary.LeakCanary.refWatcher;
 
 public class ToolsApplication extends Application {
 
@@ -23,10 +30,30 @@ public class ToolsApplication extends Application {
     private static MyLocationListener mLocationListener = new MyLocationListener();
 
     private static Context mContext;
+    public static RefWatcher getRefWatcher(Context context) {
+        return refWatcher;
+    }
+    private static RefWatcher refWatcher;
 
     @Override
     public void onCreate() {
         super.onCreate();
+
+        if (LeakCanary.isInAnalyzerProcess(this)) {
+            // This process is dedicated to LeakCanary for heap analysis.
+            // You should not init your app in this process.
+            return;
+        }
+
+        ExcludedRefs excludedRefs = AndroidExcludedRefs.createAppDefaults()
+                .instanceField("android.view.inputmethod.InputMethodManager", "sInstance")
+                .instanceField("android.view.inputmethod.InputMethodManager", "mLastSrvView")
+                .instanceField("com.android.internal.policy.PhoneWindow$DecorView", "mContext")
+                .instanceField("android.support.v7.widget.SearchView$SearchAutoComplete", "mContext")
+                .build();
+        refWatcher = refWatcher(this).listenerServiceClass(DisplayLeakService.class)
+                .excludedRefs(excludedRefs)
+                .buildAndInstall();
 
         mContext = getApplicationContext();
         mLocationClient = new LocationClient(getApplicationContext());

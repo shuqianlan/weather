@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <EditTextPreference
+        android:capitalize="words"
+        android:defaultValue="--"
+        android:inputType="textCapWords"
+        android:key="example_text"
+        android:selectAllOnFocus="true"
+        android:singleLine="true"
+        android:title="Display Name"
+        />
+    <Preference
+        android:summary="么么哒"
+        android:title="Rair"
+        />
+</PreferenceScreen>

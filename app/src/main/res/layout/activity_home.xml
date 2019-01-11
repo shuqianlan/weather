@@ -127,6 +127,30 @@
                 android:text="ViewPager"
                 android:layout_gravity="center"
                 />
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:background="@drawable/stroke_background"
+                android:id="@+id/mapper"
+                android:text="Mapper"
+                android:layout_gravity="center"
+                />
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:background="@drawable/stroke_background"
+                android:id="@+id/dialog"
+                android:text="Dialog"
+                android:layout_gravity="center"
+                />
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:background="@drawable/stroke_background"
+                android:id="@+id/preference"
+                android:text="preference"
+                android:layout_gravity="center"
+                />
         </LinearLayout>
     </ScrollView>
 
