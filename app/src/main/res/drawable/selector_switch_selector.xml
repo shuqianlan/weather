@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android" >
+    <item >
+        <layer-list>
+            <item android:top="1.33dp" android:left="1.33dp" android:bottom="1.33dp" android:right="1.33dp">
+                <shape android:shape="rectangle">
+                    <gradient android:startColor="#FFFFDFA6"
+                              android:endColor="#FF422F11"
+                              android:angle="315"
+                              android:centerX="0.5"
+                              android:type="linear"
+                        />
+                </shape>
+            </item>
+        </layer-list>
+    </item>
+
+</selector>

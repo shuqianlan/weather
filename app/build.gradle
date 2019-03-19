@@ -61,3 +61,17 @@ dependencies {
     implementation 'com.android.support:appcompat-v7:28.0.0'
     implementation 'com.android.support:preference-v7:28.0.0'
 }
+
+class Version {
+    private int major;
+    private int mirror;
+
+    Version(int major, int mirror) {
+        this.major = major;
+        this.mirror = mirror;
+    }
+}
+
+//-------------------------------
+def ver = new Version(4, 3);
+println ver.major

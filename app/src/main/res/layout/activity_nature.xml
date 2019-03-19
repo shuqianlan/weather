@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.ilifesmart.nature.NatureActivity"
+    android:id="@+id/nature_cont"
+    android:paddingTop="44dp"
+    android:paddingBottom="38.67dp"
+    >
+
+    <com.ilifesmart.ui.MyConstrainLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:id="@+id/cont_1"
+        android:layout_marginHorizontal="13.33dp"
+        android:layout_weight="1"
+        />
+
+    <com.ilifesmart.ui.MyConstrainLayout
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:id="@+id/cont_2"
+        android:layout_height="match_parent"
+        android:layout_marginRight="13.33dp"
+        />
+
+    <com.ilifesmart.ui.MyConstrainLayout
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:id="@+id/cont_3"
+        android:layout_height="match_parent"
+        android:layout_marginRight="13.33dp"
+        />
+
+    <com.ilifesmart.ui.MyConstrainLayout
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:id="@+id/cont_4"
+        android:layout_height="match_parent"
+        android:layout_marginRight="13.33dp"
+        />
+</LinearLayout>

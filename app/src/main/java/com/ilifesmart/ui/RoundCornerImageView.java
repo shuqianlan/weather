@@ -20,6 +20,7 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.ilifesmart.utils.DensityUtils;
+import com.ilifesmart.utils.ImageResizer;
 import com.ilifesmart.weather.R;
 
 public class RoundCornerImageView extends AppCompatImageView {

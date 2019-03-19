@@ -151,6 +151,22 @@
                 android:text="preference"
                 android:layout_gravity="center"
                 />
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:background="@drawable/stroke_background"
+                android:id="@+id/nature_ui"
+                android:text="Nature_UI"
+                android:layout_gravity="center"
+                />
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:background="@drawable/stroke_background"
+                android:id="@+id/spider_web"
+                android:text="蛛网"
+                android:layout_gravity="center"
+                />
         </LinearLayout>
     </ScrollView>
 

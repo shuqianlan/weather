@@ -1,8 +1,8 @@
 package com.ilifesmart;
 
 import android.Manifest;
+import android.content.IntentFilter;
 import android.content.pm.PackageManager;
-import android.content.res.Resources;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -18,10 +18,12 @@ import com.ilifesmart.fragment.DialogActivity;
 import com.ilifesmart.framelayout.FrameLayoutActivity;
 import com.ilifesmart.mapper.MapperActivity;
 import com.ilifesmart.miclock.MiClockActivity;
+import com.ilifesmart.nature.NatureActivity;
 import com.ilifesmart.notification.NotificationActivity;
 import com.ilifesmart.os.OSInfoActivity;
 import com.ilifesmart.path.CircleActivity;
 import com.ilifesmart.preference.SettingActivity;
+import com.ilifesmart.receiver.NetChangedBroadcast;
 import com.ilifesmart.test.SeekBarActivity;
 import com.ilifesmart.thread.ThreadTestActivity;
 import com.ilifesmart.utils.Utils;
@@ -31,7 +33,6 @@ import com.ilifesmart.weather.WeatherActivity;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -56,6 +57,7 @@ public class HomeActivity extends AppCompatActivity {
 //    @BindView(R.id.imageview)
 //    ImageView mImageview;
 
+    private NetChangedBroadcast netChangeReceiver;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,6 +66,17 @@ public class HomeActivity extends AppCompatActivity {
 
         mWeather.setPressed(false);
         onCreatView();
+
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction("android.net.conn.CONNECTIVITY_CHANGE");
+        netChangeReceiver = new NetChangedBroadcast();
+        registerReceiver(netChangeReceiver, intentFilter);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver(netChangeReceiver);
     }
 
     private void onCreatView() {
@@ -131,7 +144,7 @@ public class HomeActivity extends AppCompatActivity {
         }
     }
 
-    @OnClick({R.id.weather, R.id.seekbar, R.id.notification, R.id.rotate, R.id.aop_test, R.id.thread_test, R.id.framelayout, R.id.compass, R.id.miclock, R.id.camrotate, R.id.path, R.id.osinfo, R.id.viewpager, R.id.mapper, R.id.dialog, R.id.preference})
+    @OnClick({R.id.weather, R.id.seekbar, R.id.notification, R.id.rotate, R.id.aop_test, R.id.thread_test, R.id.framelayout, R.id.compass, R.id.miclock, R.id.camrotate, R.id.path, R.id.osinfo, R.id.viewpager, R.id.mapper, R.id.dialog, R.id.preference, R.id.nature_ui, R.id.spider_web})
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.weather:
@@ -180,8 +193,14 @@ public class HomeActivity extends AppCompatActivity {
                 Utils.startActivity(this, DialogActivity.class);
                 break;
             case R.id.preference:
+//                ImageUtils.clearCachedDrawable();
                 Utils.startActivity(this, SettingActivity.class);
                 break;
+            case R.id.nature_ui:
+                Utils.startActivity(this, NatureActivity.class);
+                break;
+            case R.id.spider_web:
+                Utils.startActivity(this, SpiderWebActivity.class);
         }
     }
 

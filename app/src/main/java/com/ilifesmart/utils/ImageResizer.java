@@ -1,8 +1,9 @@
-package com.ilifesmart.ui;
+package com.ilifesmart.utils;
 
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.util.Log;
 
 import java.io.FileDescriptor;
 
@@ -18,7 +19,6 @@ public class ImageResizer {
         BitmapFactory.decodeResource(res, resId, options);
 
         options.inSampleSize = calculateInSampleSize(options, reqWidth, reqHeight);
-
         options.inJustDecodeBounds = false;
         return BitmapFactory.decodeResource(res, resId, options);
     }
@@ -29,7 +29,6 @@ public class ImageResizer {
         BitmapFactory.decodeFileDescriptor(fd, null, options);
 
         options.inSampleSize = calculateInSampleSize(options, reqWidth, reqHeight);
-
         options.inJustDecodeBounds = false;
         return BitmapFactory.decodeFileDescriptor(fd, null, options);
     }
