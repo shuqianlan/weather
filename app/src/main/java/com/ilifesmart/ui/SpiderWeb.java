@@ -23,8 +23,9 @@ public class SpiderWeb extends View implements GestureDetector.OnGestureListener
 
 	private int DEFAULT_MAX_POINTS_OFFSET = 200; // 两点间画线的最大距离
 	private int DEFAULT_POINT_ALPHA = 150;       // 线的最大alpha
-	private int DEFAULT_POINT_COUNTS = 30;       // 随机点数量
+	private int DEFAULT_POINT_COUNTS = 100;      // 随机点数量
 	private int DEFAULT_ACCELATION_STEP = 5;     // 步进偏移
+	private int DEFAULT_RANGE_INNER = 50;        // 步进偏移
 	private int DEFAULT_STROKE_WIDTH_LINE = 10;
 	private int DEFAULT_STROKE_WIDTH_POINT = 10;
 	private int DEFAULT_STROKE_WIDTH_TOUCH_POINT = 10;
@@ -55,6 +56,7 @@ public class SpiderWeb extends View implements GestureDetector.OnGestureListener
 		public int mLineColor = DEFAULT_LINE_COLOR;
 		public int mPointColor = DEFAULT_POINT_COLOR;
 		public int mTouchPointColor = DEFAULT_TOUCH_POINT_COLOR;
+		public int mRange = DEFAULT_RANGE_INNER;
 	}
 
 	private GestureDetector mGestureDetector;
@@ -149,7 +151,8 @@ public class SpiderWeb extends View implements GestureDetector.OnGestureListener
 			currPoint.y += currPoint.getYa();
 
 			if (mTouchX != -1 && mTouchY != -1) {
-				drawLine(canvas, currPoint, new CodePoint(mTouchX, mTouchY), mTouchPaint);
+				// 降速处理.
+				drawLine(canvas, currPoint, new CodePoint(mTouchX, mTouchY), mTouchPaint, 0.03);
 			}
 
 			if (currPoint.x >= mWidth || currPoint.x <= 0) {
@@ -173,12 +176,32 @@ public class SpiderWeb extends View implements GestureDetector.OnGestureListener
 	}
 
 	private void drawLine(Canvas canvas, CodePoint currPoint, CodePoint point, Paint paint) {
+		drawLine(canvas, currPoint, point, paint, 1.0);
+	}
+
+	private void drawLine(Canvas canvas, CodePoint currPoint, CodePoint point, Paint paint, double speedRatio) {
 		int offsetX = currPoint.x - point.x;
 		int offsetY = currPoint.y - point.y;
 		int distance = (int) Math.sqrt(offsetX *offsetX + offsetY * offsetY); // offsetX^2; ^是异或的意思
 
 		int alpha = (int)((1.0 - distance/(double)mConfig.mDotsMaxDistance) * mConfig.mLineMaxAlpha);
 		if (distance <= mConfig.mDotsMaxDistance && alpha > 0) {
+			if (paint == mTouchPaint && distance > (mConfig.mDotsMaxDistance - mConfig.mRange)) {
+
+				// x轴方向左快右慢
+				if (currPoint.x > mTouchX) {
+					currPoint.x -= speedRatio * offsetX;
+				} else {
+					currPoint.x += speedRatio * offsetX;
+				}
+				// y轴方向上快下慢
+				if (currPoint.y > mTouchY) {
+					currPoint.y -= speedRatio * offsetY;
+				} else {
+					currPoint.y += speedRatio * offsetY;
+				}
+
+			}
 			mLinePaint.setAlpha(alpha);
 			canvas.drawLine(currPoint.x, currPoint.y, point.x, point.y, paint);
 		}

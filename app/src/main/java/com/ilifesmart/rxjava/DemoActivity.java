@@ -10,13 +10,17 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
 import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
 import io.reactivex.ObservableOnSubscribe;
 import io.reactivex.ObservableSource;
+import io.reactivex.Observer;
 import io.reactivex.Single;
 import io.reactivex.SingleObserver;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -26,6 +30,7 @@ import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
 import io.reactivex.functions.Predicate;
 import io.reactivex.schedulers.Schedulers;
+import io.reactivex.subjects.PublishSubject;
 import okhttp3.Call;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -49,7 +54,10 @@ public class DemoActivity extends AppCompatActivity {
 //		ObservableOnBuffer();
 //		ObservableOnInterval();
 //		observableOnWindow();
-		rxjavaDemotest();
+//		rxjavaDemotest();
+//		observableOnScan();
+//		observableOnToList();
+		observableOnSubject();
 	}
 
 	private void testDemo() {
@@ -192,17 +200,17 @@ public class DemoActivity extends AppCompatActivity {
 
 	// flatmap
 	private void observableOnFlatMap() {
-		Observable.create(new ObservableOnSubscribe<Object>() {
+		Observable.create(new ObservableOnSubscribe<Integer>() {
 			@Override
-			public void subscribe(ObservableEmitter<Object> emitter) {
+			public void subscribe(ObservableEmitter<Integer> emitter) {
 				emitter.onNext(1);
 				emitter.onNext(2);
 				emitter.onNext(3);
 			}
 		})
-		.flatMap(new Function<Object, ObservableSource<?>>() {
+		.flatMap(new Function<Object, ObservableSource<String>>() {
 			@Override
-			public ObservableSource<?> apply(Object o) throws Exception {
+			public ObservableSource<String> apply(Object o) throws Exception {
 				List<String> list = new ArrayList<>();
 				for (int i = 0; i < 3; i++) {
 					list.add("I am value " + i);
@@ -214,10 +222,10 @@ public class DemoActivity extends AppCompatActivity {
 		})
 		.subscribeOn(Schedulers.io())
 		.observeOn(AndroidSchedulers.mainThread())
-		.subscribe(new Consumer<Object>() {
+		.subscribe(new Consumer<String>() {
 			@Override
-			public void accept(Object o) {
-				Log.d(TAG, "accept: " + (String)o);
+			public void accept(String o) {
+				Log.d(TAG, "accept: " + o);
 			}
 		});
 
@@ -286,8 +294,8 @@ public class DemoActivity extends AppCompatActivity {
 
 	// buffer 指定长度和步进的buffer
 	private void ObservableOnBuffer() {
-		Observable.just(1, 2, 3, 4, 5)
-						.buffer(3, 2)
+		Observable.range(1, 5)
+						.buffer(3)
 						.subscribe(new Consumer<List<Integer>>() {
 							@Override
 							public void accept(List<Integer> integers) throws Exception {
@@ -478,6 +486,102 @@ public class DemoActivity extends AppCompatActivity {
 			});
 	}
 
+	// timer
+	private void observableOnTimer() {
+		Observable.timer(3, TimeUnit.SECONDS).subscribe(new Consumer<Long>() {
+			@Override
+			public void accept(Long aLong) throws Exception {
+				Log.d(TAG, "Timer_accept: " + aLong);
+			}
+		});
+		Log.d(TAG, "observableOnTimer: timer_start ");
+	}
+
+	// Scan
+	private void observableOnScan() {
+		Observable.range(1, 5)
+						.scan(new BiFunction<Integer, Integer, Integer>() {
+							@Override
+							public Integer apply(Integer integer, Integer integer2) throws Exception {
+								return integer + integer2;
+							}
+						})
+						.subscribe(new Consumer<Integer>() {
+							@Override
+							public void accept(Integer integer) throws Exception {
+								Log.d(TAG, "Scan_accept: feibonaqie " + integer);
+							}
+						});
+	}
+
+	// Map
+	private void observableOnToList() {
+		Observable.range(1, 5)
+						.toList() // 仅转List
+						.subscribe(new Consumer<List<Integer>>() {
+							@Override
+							public void accept(List<Integer> integers) throws Exception {
+								Log.d(TAG, "accept: " + integers);
+							}
+						});
+
+		Observable.range(1, 5)
+						.toMap(new Function<Integer, String>() {
+							@Override
+							public String apply(Integer integer) {
+								return "Item-" + integer; // 此处返回的是Key; Value:integer
+							}
+						})
+						.subscribe(new Consumer<Map<String, Integer>>() {
+							@Override
+							public void accept(Map<String, Integer> objectIntegerMap) throws Exception {
+								Log.d(TAG, "accept: " + objectIntegerMap);
+							}
+						});
+	}
+
+	// subject
+	private void observableOnSubject() {
+		Executor executor = Executors.newFixedThreadPool(5);
+
+		PublishSubject<Integer> subject = PublishSubject.create();
+		subject.subscribe(new Observer<Integer>() {
+			@Override
+			public void onSubscribe(Disposable d) {
+				Log.d(TAG, "onSubscribe: ");
+			}
+
+			@Override
+			public void onNext(Integer integer) {
+				Log.d(TAG, "onNext: " + integer);
+			}
+
+			@Override
+			public void onError(Throwable e) {
+				Log.d(TAG, "onError: " + e.getMessage());
+			}
+
+			@Override
+			public void onComplete() {
+				Log.d(TAG, "onComplete: ");
+			}
+		});
+
+		Observable.range(1, 5).subscribe(new Consumer<Integer>() {
+			@Override
+			public void accept(Integer integer) throws Exception {
+				executor.execute(()->{
+					try {
+						Thread.sleep(integer * 1000);
+						subject.onNext(integer);
+					} catch(Exception ex) {
+						ex.printStackTrace();
+					}
+				});
+			}
+		});
+	}
+
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
@@ -486,7 +590,5 @@ public class DemoActivity extends AppCompatActivity {
 			mDisposable.dispose();
 		}
 	}
-
-
 
 }
