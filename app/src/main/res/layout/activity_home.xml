@@ -185,6 +185,60 @@
                 android:textAllCaps="false"
                 android:layout_gravity="center"
                 />
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:background="@drawable/stroke_background"
+                android:id="@+id/progress"
+                android:text="窗帘百分比"
+                android:textAllCaps="false"
+                android:layout_gravity="center"
+                />
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:background="@drawable/stroke_background"
+                android:id="@+id/ViewGroup"
+                android:text="自定义容器"
+                android:textAllCaps="false"
+                android:layout_gravity="center"
+                />
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:background="@drawable/stroke_background"
+                android:id="@+id/live"
+                android:text="进程保活"
+                android:textAllCaps="false"
+                android:layout_gravity="center"
+                />
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:background="@drawable/stroke_background"
+                android:id="@+id/curtain"
+                android:text="Nature Curtain"
+                android:textAllCaps="false"
+                android:layout_gravity="center"
+                />
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:background="@drawable/stroke_background"
+                android:id="@+id/barrage"
+                android:text="弹幕"
+                android:textAllCaps="false"
+                android:layout_gravity="center"
+                />
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:background="@drawable/stroke_background"
+                android:id="@+id/bluetooth"
+                android:text="BLE"
+                android:textAllCaps="false"
+                android:layout_gravity="center"
+                />
         </LinearLayout>
     </ScrollView>
 

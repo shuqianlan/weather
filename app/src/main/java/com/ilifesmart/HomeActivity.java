@@ -1,6 +1,7 @@
 package com.ilifesmart;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.os.Build;
@@ -12,10 +13,16 @@ import android.view.View;
 import android.widget.Button;
 
 import com.ilifesmart.aop.CheckOnClickActivity;
+import com.ilifesmart.barrage.BarrageActivity;
+import com.ilifesmart.ble.BluetoothActivity;
+import com.ilifesmart.broad.ScreenBroadcastListener;
 import com.ilifesmart.cam3drotate.CameraRotateActivity;
 import com.ilifesmart.compass.CompassActivity;
 import com.ilifesmart.fragment.DialogActivity;
 import com.ilifesmart.framelayout.FrameLayoutActivity;
+import com.ilifesmart.group.GroupActivity;
+import com.ilifesmart.live.KeepLiveService;
+import com.ilifesmart.live.ProgressLiveActivity;
 import com.ilifesmart.mapper.MapperActivity;
 import com.ilifesmart.miclock.MiClockActivity;
 import com.ilifesmart.mvvm.MVVMActivity;
@@ -73,6 +80,23 @@ public class HomeActivity extends AppCompatActivity {
         intentFilter.addAction("android.net.conn.CONNECTIVITY_CHANGE");
         netChangeReceiver = new NetChangedBroadcast();
         registerReceiver(netChangeReceiver, intentFilter);
+
+        final ScreenBroadcastListener.ScreenManager screenManager = ScreenBroadcastListener.ScreenManager.getInstance(this);
+        ScreenBroadcastListener listener = new ScreenBroadcastListener(this);
+        listener.registerListener(new ScreenBroadcastListener.ScreenStateListener() {
+            @Override
+            public void onScreenOn() {
+                Log.d(TAG, "onScreenOn: --------------------- ON");
+//                screenManager.finishActivity();
+                startService(new Intent(HomeActivity.this, KeepLiveService.class));
+            }
+
+            @Override
+            public void onScreenOff() {
+                Log.d(TAG, "onScreenOn: --------------------- OFF");
+//                screenManager.startActivity();
+            }
+        });
     }
 
     @Override
@@ -146,7 +170,7 @@ public class HomeActivity extends AppCompatActivity {
         }
     }
 
-    @OnClick({R.id.weather, R.id.seekbar, R.id.notification, R.id.rotate, R.id.aop_test, R.id.thread_test, R.id.framelayout, R.id.compass, R.id.miclock, R.id.camrotate, R.id.path, R.id.osinfo, R.id.viewpager, R.id.mapper, R.id.dialog, R.id.preference, R.id.nature_ui, R.id.spider_web, R.id.mvvm, R.id.rxjava})
+    @OnClick({R.id.weather, R.id.seekbar, R.id.notification, R.id.rotate, R.id.aop_test, R.id.thread_test, R.id.framelayout, R.id.compass, R.id.miclock, R.id.camrotate, R.id.path, R.id.osinfo, R.id.viewpager, R.id.mapper, R.id.dialog, R.id.preference, R.id.nature_ui, R.id.spider_web, R.id.mvvm, R.id.rxjava, R.id.progress, R.id.ViewGroup, R.id.live, R.id.curtain, R.id.barrage, R.id.bluetooth})
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.weather:
@@ -210,6 +234,23 @@ public class HomeActivity extends AppCompatActivity {
             case R.id.rxjava:
                 Utils.startActivity(this, DemoActivity.class);
                 break;
+            case R.id.progress:
+                Utils.startActivity(this, ProgressActivity.class);
+                break;
+            case R.id.ViewGroup:
+                Utils.startActivity(this, GroupActivity.class);
+                break;
+            case R.id.live:
+                Utils.startActivity(this, ProgressLiveActivity.class);
+                break;
+            case R.id.curtain:
+                Utils.startActivity(this, NatureCurtainActivity.class);
+                break;
+            case R.id.barrage:
+                Utils.startActivity(this, BarrageActivity.class);
+                break;
+            case R.id.bluetooth:
+                Utils.startActivity(this, BluetoothActivity.class);
         }
     }
 

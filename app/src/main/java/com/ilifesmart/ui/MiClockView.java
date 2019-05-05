@@ -11,22 +11,17 @@ import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Path;
-import android.graphics.Point;
 import android.graphics.Rect;
-import android.graphics.RectF;
 import android.graphics.SweepGradient;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.animation.BounceInterpolator;
 
 import com.ilifesmart.utils.DensityUtils;
 import com.ilifesmart.weather.R;
 
-import java.text.SimpleDateFormat;
-import java.util.Arrays;
 import java.util.Calendar;
 
 public class MiClockView extends View {
@@ -193,6 +188,7 @@ public class MiClockView extends View {
 		mSuitableTextAngle = (int) Math.ceil(Math.toDegrees(Math.acos((mOutSideRadius*mOutSideRadius*2.0-mMaxHourTextWidth*mMaxHourTextWidth)/(2*mOutSideRadius*mOutSideRadius))));
 		mSecondRadius = (int) (mOutSideRadius * 0.7);
 		mSweepGradient = new SweepGradient(mCenterX, mCenterY, new int[] {mSweepStartColor, mSweepEndColor}, new float[]{0.75f, 1});
+
 		mMaxCanvasTranslate = 0.02f * mOutSideRadius;
 	}
 

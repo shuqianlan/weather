@@ -15,6 +15,14 @@
     <uses-permission android:name="android.permission.GET_ACCOUNTS"/>
     <uses-permission android:name="android.permission.READ_PROFILE"/>
     <uses-permission android:name="android.permission.READ_CONTACTS"/>
+    <!-- 蓝牙权限 -->
+    <uses-permission android:name="android.permission.BLUETOOTH"/>
+    <!-- 蓝牙设置权限 -->
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+
+    <uses-feature
+        android:name="android.hardware.bluetooth_le"
+        android:required="false"/>
 
     <application
         android:name="com.ilifesmart.ToolsApplication"
@@ -24,6 +32,20 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name="com.ilifesmart.ble.BluetoothActivity">
+        </activity>
+        <activity android:name="com.ilifesmart.barrage.BarrageActivity">
+        </activity>
+        <activity android:name="com.ilifesmart.NatureCurtainActivity">
+        </activity>
+        <activity android:name="com.ilifesmart.live.ProgressLiveActivity">
+        </activity>
+        <activity android:name="com.ilifesmart.live.SinglePixelActivity">
+        </activity>
+        <activity android:name="com.ilifesmart.group.GroupActivity">
+        </activity>
+        <activity android:name="com.ilifesmart.ProgressActivity">
+        </activity>
         <activity android:name="com.ilifesmart.rxjava.DemoActivity">
         </activity>
         <activity android:name="com.ilifesmart.mvvm.MVVMActivity">

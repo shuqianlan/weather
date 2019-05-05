@@ -4,19 +4,14 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Path;
-import android.graphics.Point;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
 import com.ilifesmart.weather.R;
-
-import java.util.Arrays;
 
 public class EmbeddedCompassView extends View {
 	public interface OnAngleChangeListener {
@@ -109,25 +104,30 @@ public class EmbeddedCompassView extends View {
 		int arrowA = 15;
 		int arrowB = 30;
 
+
 		// left
+		mArrowPath.reset();
 		mArrowPath.moveTo(positionX-mStickRadius+arrowB, positionY-arrowA);
 		mArrowPath.lineTo(positionX-mStickRadius+arrowA, positionY);
 		mArrowPath.lineTo(positionX-mStickRadius+arrowB, positionY+arrowA);
 		canvas.drawPath(mArrowPath, mOutSideCirclePaint);
 
 		// right
+		mArrowPath.reset();
 		mArrowPath.moveTo(positionX+mStickRadius-arrowB, positionY-arrowA);
 		mArrowPath.lineTo(positionX+mStickRadius-arrowA, positionY);
 		mArrowPath.lineTo(positionX+mStickRadius-arrowB, positionY+arrowA);
 		canvas.drawPath(mArrowPath, mOutSideCirclePaint);
 
 		//top
+		mArrowPath.reset();
 		mArrowPath.moveTo(positionX-arrowA, positionY-mStickRadius+arrowB);
 		mArrowPath.lineTo(positionX, positionY-mStickRadius+arrowA);
 		mArrowPath.lineTo(positionX+arrowA, positionY-mStickRadius+arrowB);
 		canvas.drawPath(mArrowPath, mOutSideCirclePaint);
 
 		//bottom
+		mArrowPath.reset();
 		mArrowPath.moveTo(positionX-arrowA, positionY+mStickRadius-arrowB);
 		mArrowPath.lineTo(positionX, positionY+mStickRadius-arrowA);
 		mArrowPath.lineTo(positionX+arrowA, positionY+mStickRadius-arrowB);

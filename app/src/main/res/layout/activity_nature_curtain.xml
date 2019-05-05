@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.ilifesmart.NatureCurtainActivity">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:layout_margin="20dp"
+        >
+        <com.ilifesmart.ui.VerticalCurtain
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/screen"
+            />
+    </FrameLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/progress"
+        android:text="0%"
+        android:gravity="center"
+        />
+    <SeekBar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:max="100"
+        android:min="0"
+        android:progress="0"
+        android:id="@+id/seekbar"
+        />
+</LinearLayout>
