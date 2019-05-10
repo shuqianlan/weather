@@ -121,11 +121,6 @@ public class BlockLayout extends LinearLayout {
 
 	}
 
-	@Override
-	protected void onDisplayHint(int hint) {
-		super.onDisplayHint(hint);
-	}
-
 	public void setHeaderTitle(String title) {
 		if (TextUtils.isEmpty(title)) {
 			title = "模块操作";
