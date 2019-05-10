@@ -24,6 +24,7 @@ import com.ilifesmart.weather.R;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -31,11 +32,15 @@ import butterknife.OnClick;
 
 public class BluetoothActivity extends AppCompatActivity {
 
+	public static final String TAG = "BluetoothActivity";
+
 	@BindView(R.id.ble_recyclerview)
 	RecyclerView mBleRecyclerview;
 	private BluetoothAdapter mBluetoothAdapter;
 	private int BLUETOOTH_REQUEST_CODE = 20086;
 	private BluetoothAdapter.LeScanCallback mLeScanCallback;
+
+	public final static UUID UUID_QUANLIGHT = UUID.fromString("ec963a75-839c-4986-a0e5-b130491c5552");
 
 	private BleAdapter mUIAdapter;
 
@@ -53,22 +58,24 @@ public class BluetoothActivity extends AppCompatActivity {
 			@Override
 			public void onLeScan(BluetoothDevice device, int rssi, byte[] scanRecord) {
 				mUIAdapter.addDevice(device);
-				Log.d("BLE", "onLeScan: device " + device + " rssi " + rssi + " record " + new String(scanRecord));
 			}
 		};
 
-//		mBleRecyclerview.setAdapter();
 		mBleRecyclerview.setAdapter(mUIAdapter);
 		mBleRecyclerview.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL,false));
 	}
 
 	@OnClick(R.id.blue_cap)
 	public void onBluetoothCapacity() {
-		if (!getPackageManager().hasSystemFeature(PackageManager.FEATURE_BLUETOOTH_LE)) {
+		if (!isHasBluetoothCapacity()) {
 			makeToastShow("无蓝牙能力!");
 		} else {
 			makeToastShow("有蓝牙能力");
 		}
+	}
+
+	private boolean isHasBluetoothCapacity() {
+		return getPackageManager().hasSystemFeature(PackageManager.FEATURE_BLUETOOTH_LE);
 	}
 
 	public void makeToastShow(String msg) {
@@ -76,12 +83,42 @@ public class BluetoothActivity extends AppCompatActivity {
 	}
 
 	public void enableBluetooth() {
-		if (mBluetoothAdapter == null || !mBluetoothAdapter.isEnabled()) {
-			Intent i = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-			startActivityForResult(i, BLUETOOTH_REQUEST_CODE);
+		if (isHasBluetoothCapacity()) {
+			if (mBluetoothAdapter == null || !mBluetoothAdapter.isEnabled()) {
+				Intent i = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+				startActivityForResult(i, BLUETOOTH_REQUEST_CODE);
+			} else {
+				makeToastShow("蓝牙已打开");
+				startBLEScan();
+			}
 		} else {
-			makeToastShow("蓝牙已打开");
+			makeToastShow("设备不支持蓝牙!");
 		}
+	}
+
+	@Override
+	protected void onResume() {
+		super.onResume();
+		Log.d(TAG, "onResume: -----------> ");
+		enableBluetooth();
+	}
+
+	@Override
+	protected void onStart() {
+		super.onStart();
+		Log.d(TAG, "onStart: ------------->");
+	}
+
+	@Override
+	protected void onPause() {
+		super.onPause();
+		Log.d(TAG, "onPause: ------------->");
+		stopBLEScan();
+	}
+
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
 	}
 
 	@Override
@@ -91,6 +128,7 @@ public class BluetoothActivity extends AppCompatActivity {
 		if (requestCode == BLUETOOTH_REQUEST_CODE) {
 			if (resultCode == RESULT_OK) {
 				makeToastShow("蓝牙已打开");
+				startBLEScan();
 			} else {
 				makeToastShow("蓝牙未打开");
 			}
@@ -99,12 +137,15 @@ public class BluetoothActivity extends AppCompatActivity {
 
 	private void startBLEScan() {
 		if (mBluetoothAdapter != null) {
-			mBluetoothAdapter.startLeScan(mLeScanCallback);
+			//
+			Log.d(TAG, "startBLEScan: ..");
+			mBluetoothAdapter.startLeScan(new UUID[]{UUID_QUANLIGHT},mLeScanCallback);
 		}
 	}
 
 	private void stopBLEScan() {
 		if (mBluetoothAdapter != null) {
+			Log.d(TAG, "stopBLEScan: ..");
 			mBluetoothAdapter.stopLeScan(mLeScanCallback);
 		}
 	}
@@ -124,16 +165,25 @@ public class BluetoothActivity extends AppCompatActivity {
 		stopBLEScan();
 	}
 
-	public void connect2Gatt() {
-
+	public void connect2Gatt(BluetoothDevice device) {
+		Intent i = new Intent(this, Bluetooth2Activity.class);
+		i.putExtra(Bluetooth2Activity.EXTRA_ARGS, device);
+		startActivity(i);
 	}
 
 	public class BleItem extends RecyclerView.ViewHolder implements View.OnClickListener {
 		private BluetoothDevice mBluetoothDevice;
 
+		@BindView(R.id.ble_name)
+		public TextView mBleName;
+
+		@BindView(R.id.ble_adress)
+		public TextView mBleAddress;
+
 		public BleItem(@NonNull View itemView) {
 			super(itemView);
 			itemView.setOnClickListener(this);
+			ButterKnife.bind(this, itemView);
 		}
 
 		void onBind(BluetoothDevice device) {
@@ -142,18 +192,20 @@ public class BluetoothActivity extends AppCompatActivity {
 			Log.d("BleItem", "onBind: address " + device.getAddress());
 
 			String name = device.getName();
-			String address = device.getAddress();
-			String title = address;
-			if (!TextUtils.isEmpty(name)) {
-				title += " ("+name+")";
+			if (TextUtils.isEmpty(name)) {
+				name = "Nane";
 			}
-			((TextView)(this.itemView)).setText(title);
+			String address = device.getAddress();
+			mBleName.setText(name);
+			mBleAddress.setText(address);
 		};
 
 		@Override
 		public void onClick(View v) {
-			Log.d("BleItem", "onBind: name " + mBluetoothDevice.getName());
-			Log.d("BleItem", "onClick: blueDevice " + mBluetoothDevice);
+//			BluetoothDevice device = mBluetoothAdapter.getRemoteDevice(mBluetoothDevice.getAddress());// 基于此，所以只需传递address即可找到BluetoothDevice对象
+//			Log.d(TAG, "onClick: device.address " + device.getAddress());
+//			Log.d(TAG, "onClick: mBluetoothDevice.address " + mBluetoothDevice.getAddress());
+			connect2Gatt(mBluetoothDevice);
 		}
 	}
 
@@ -172,7 +224,7 @@ public class BluetoothActivity extends AppCompatActivity {
 		@NonNull
 		@Override
 		public BleItem onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-			View v = LayoutInflater.from(viewGroup.getContext()).inflate(android.R.layout.simple_list_item_1, viewGroup, false);
+			View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.ble_item_device, viewGroup, false);
 			return new BleItem(v);
 		}
 

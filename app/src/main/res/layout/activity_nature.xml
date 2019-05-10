@@ -7,39 +7,150 @@
     android:layout_height="match_parent"
     tools:context="com.ilifesmart.nature.NatureActivity"
     android:id="@+id/nature_cont"
-    android:paddingTop="44dp"
-    android:paddingBottom="38.67dp"
+    android:paddingTop="40dp"
+    android:paddingBottom="40dp"
+    android:background="@android:color/holo_red_dark"
     >
 
-    <com.ilifesmart.ui.MyConstrainLayout
+    <com.ilifesmart.ui.BlockLayout
         android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:id="@+id/cont_1"
-        android:layout_marginHorizontal="13.33dp"
         android:layout_weight="1"
-        />
+        android:id="@+id/cont_1"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_height="match_parent"
+        >
+        
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="4"
+            >
 
-    <com.ilifesmart.ui.MyConstrainLayout
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="1"
+                android:gravity="center"
+                android:layout_gravity="center"
+                />
+        </FrameLayout>
+    </com.ilifesmart.ui.BlockLayout>
+
+    <com.ilifesmart.ui.BlockLayout
         android:layout_width="0dp"
         android:layout_weight="1"
         android:id="@+id/cont_2"
+        android:layout_marginRight="20dp"
         android:layout_height="match_parent"
-        android:layout_marginRight="13.33dp"
-        />
+        >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            >
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:text="1"
+                />
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:text="2"
+                />
+        </LinearLayout>
 
-    <com.ilifesmart.ui.MyConstrainLayout
+    </com.ilifesmart.ui.BlockLayout>
+
+    <com.ilifesmart.ui.BlockLayout
         android:layout_width="0dp"
         android:layout_weight="1"
         android:id="@+id/cont_3"
         android:layout_height="match_parent"
-        android:layout_marginRight="13.33dp"
-        />
+        android:layout_marginRight="20dp"
+        >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            >
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:text="1"
+                />
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:text="2"
+                />
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:text="3"
+                />
+        </LinearLayout>
 
-    <com.ilifesmart.ui.MyConstrainLayout
+    </com.ilifesmart.ui.BlockLayout>
+
+    <com.ilifesmart.ui.BlockLayout
         android:layout_width="0dp"
         android:layout_weight="1"
         android:id="@+id/cont_4"
         android:layout_height="match_parent"
-        android:layout_marginRight="13.33dp"
-        />
+        android:layout_marginRight="20dp"
+        >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="4"
+            android:orientation="vertical"
+            android:background="#55FFFF00"
+            >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1">
+
+                <FrameLayout
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="match_parent"
+                    android:background="#11FF0000"
+                    />
+                <FrameLayout
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:background="#44FF0000"
+                    android:layout_height="match_parent"
+                    />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1">
+
+                <FrameLayout
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="match_parent"
+                    android:background="#88FF0000"
+                    />
+                <FrameLayout
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="match_parent"
+                    android:background="#CCFF0000"
+                    />
+            </LinearLayout>
+        </LinearLayout>
+    </com.ilifesmart.ui.BlockLayout>
+
 </LinearLayout>
