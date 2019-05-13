@@ -18,6 +18,7 @@ import com.ilifesmart.ble.BluetoothActivity;
 import com.ilifesmart.broad.ScreenBroadcastListener;
 import com.ilifesmart.cam3drotate.CameraRotateActivity;
 import com.ilifesmart.compass.CompassActivity;
+import com.ilifesmart.fold.FoldActivity;
 import com.ilifesmart.fragment.DialogActivity;
 import com.ilifesmart.framelayout.FrameLayoutActivity;
 import com.ilifesmart.group.GroupActivity;
@@ -170,7 +171,7 @@ public class HomeActivity extends AppCompatActivity {
         }
     }
 
-    @OnClick({R.id.weather, R.id.seekbar, R.id.notification, R.id.rotate, R.id.aop_test, R.id.thread_test, R.id.framelayout, R.id.compass, R.id.miclock, R.id.camrotate, R.id.path, R.id.osinfo, R.id.viewpager, R.id.mapper, R.id.dialog, R.id.preference, R.id.nature_ui, R.id.spider_web, R.id.mvvm, R.id.rxjava, R.id.progress, R.id.ViewGroup, R.id.live, R.id.curtain, R.id.barrage, R.id.bluetooth})
+    @OnClick({R.id.weather, R.id.seekbar, R.id.notification, R.id.rotate, R.id.aop_test, R.id.thread_test, R.id.framelayout, R.id.compass, R.id.miclock, R.id.camrotate, R.id.path, R.id.osinfo, R.id.viewpager, R.id.mapper, R.id.dialog, R.id.preference, R.id.nature_ui, R.id.spider_web, R.id.mvvm, R.id.rxjava, R.id.progress, R.id.ViewGroup, R.id.live, R.id.curtain, R.id.barrage, R.id.bluetooth, R.id.fold})
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.weather:
@@ -251,6 +252,10 @@ public class HomeActivity extends AppCompatActivity {
                 break;
             case R.id.bluetooth:
                 Utils.startActivity(this, BluetoothActivity.class);
+                break;
+            case R.id.fold:
+                Utils.startActivity(this, FoldActivity.class);
+                break;
         }
     }
 

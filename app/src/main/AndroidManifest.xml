@@ -30,6 +30,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name="com.ilifesmart.fold.FoldActivity">
+        </activity>
         <activity android:name="com.ilifesmart.ble.Bluetooth2Activity">
         </activity>
         <activity android:name="com.ilifesmart.ble.BluetoothActivity">
@@ -52,7 +54,9 @@
         </activity>
         <activity android:name="com.ilifesmart.SpiderWebActivity">
         </activity>
-        <activity android:name="com.ilifesmart.nature.NatureActivity" android:screenOrientation="landscape">
+        <activity
+            android:name="com.ilifesmart.nature.NatureActivity"
+            android:screenOrientation="landscape">
         </activity>
         <activity android:name="com.ilifesmart.HomeActivity">
             <intent-filter>
