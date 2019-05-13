@@ -1,14 +1,15 @@
 package com.ilifesmart.model;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class FoldData<T> {
 	private String title = "Item-0";
 	private String disp = ":伊甸园 :地狱";
 	private boolean isSelected;
+	private T element;
 	private List<FoldData<T>> mods = new ArrayList<>();
-
 
 	/*
 	* String: key：T.uuid(唯一匹配)
@@ -60,4 +61,22 @@ public class FoldData<T> {
 		return this;
 	}
 
+	public T getElement() {
+		return element;
+	}
+
+	public FoldData setElement(T element) {
+		this.element = element;
+		return this;
+	}
+
+	@Override
+	public String toString() {
+		return new StringBuilder()
+						.append("title:").append(title)
+						.append(",disp:").append(disp)
+						.append(",isSelected:").append(isSelected)
+						.append(",moids:").append(Arrays.toString(mods.toArray()))
+						.toString();
+	}
 }

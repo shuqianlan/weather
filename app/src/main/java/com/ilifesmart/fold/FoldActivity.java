@@ -5,11 +5,11 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -65,12 +65,22 @@ public class FoldActivity extends AppCompatActivity {
 		setContentView(R.layout.activity_fold);
 		ButterKnife.bind(this);
 
-		FoldAdapter adapter = new FoldAdapter();
+		FoldAdapter adapter = new FoldAdapter(new OnItemClickCallback() {
+			@Override
+			public void onItemClick(FoldData data) {
+				Log.d("6666", "onItemClick: data " + data);
+			}
+		});
 		mFoldContainer.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
 		mFoldContainer.setAdapter(adapter);
 	}
 
 	private class FoldAdapter extends RecyclerView.Adapter<FoldItem> {
+
+		private OnItemClickCallback cb;
+		public FoldAdapter(OnItemClickCallback callback) {
+			this.cb = callback;
+		}
 
 		@NonNull
 		@Override
@@ -81,7 +91,7 @@ public class FoldActivity extends AppCompatActivity {
 
 		@Override
 		public void onBindViewHolder(@NonNull FoldItem foldItem, int i) {
-			foldItem.onBind(mFoldData.get(i));
+			foldItem.onBind(mFoldData.get(i), cb);
 		}
 
 		@Override
@@ -90,7 +100,7 @@ public class FoldActivity extends AppCompatActivity {
 		}
 	}
 
-	public class FoldItem extends RecyclerView.ViewHolder implements CompoundButton.OnCheckedChangeListener {
+	public class FoldItem extends RecyclerView.ViewHolder {
 
 		@BindView(R.id.layout_item_0)
 		LinearLayout mCont0;
@@ -103,19 +113,17 @@ public class FoldActivity extends AppCompatActivity {
 
 		@BindView(R.id.layout_item_3)
 		LinearLayout mCont3;
+
 		private boolean isExpand;
 
 		private FoldData mFoldData;
+		private OnItemClickCallback cb;
 		public FoldItem(@NonNull View itemView) {
 			super(itemView);
 			ButterKnife.bind(this, itemView);
-			((CheckBox)mCont0.findViewById(R.id.fold_item_check_box)).setOnCheckedChangeListener(this);
-			((CheckBox)mCont1.findViewById(R.id.fold_item_check_box)).setOnCheckedChangeListener(this);
-			((CheckBox)mCont2.findViewById(R.id.fold_item_check_box)).setOnCheckedChangeListener(this);
-			((CheckBox)mCont3.findViewById(R.id.fold_item_check_box)).setOnCheckedChangeListener(this);
 		}
 
-		public void onBind(FoldData<String> data) {
+		public void onBind(FoldData<String> data, OnItemClickCallback cb) {
 			mFoldData = data;
 			updateUI(data, mCont0);
 			switch(data.getMods().size()) {
@@ -131,13 +139,9 @@ public class FoldActivity extends AppCompatActivity {
 					updateUI(data.getMods().get(0), mCont1);
 					mCont1.setTag(data.getMods().get(0));
 					mCont1.setVisibility(View.VISIBLE);
-
 			}
-		}
 
-		@Override
-		public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-			buttonView.setChecked(isChecked);
+			this.cb = cb;
 		}
 
 		private void updateUI(FoldData data, LinearLayout v) {
@@ -149,7 +153,7 @@ public class FoldActivity extends AppCompatActivity {
 		@OnClick({R.id.layout_item_0,R.id.layout_item_1,R.id.layout_item_2,R.id.layout_item_3})
 		public void onClick(View v) {
 			CheckBox checkBox;
-			int selected = 0;
+			int selected = -1;
 			switch (v.getId()) {
 				case R.id.layout_item_0:
 					isExpand = !isExpand;
@@ -178,6 +182,10 @@ public class FoldActivity extends AppCompatActivity {
 					setChecked(checkBox, !checkBox.isChecked());
 					selected = 2;
 					break;
+			}
+
+			if ((selected >= 0) && cb != null) {
+				cb.onItemClick(mFoldData);
 			}
 
 		}
