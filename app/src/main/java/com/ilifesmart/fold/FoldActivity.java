@@ -14,6 +14,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.ilifesmart.model.FoldData;
+import com.ilifesmart.model.MOBase;
 import com.ilifesmart.weather.R;
 
 import java.util.ArrayList;
@@ -32,28 +33,28 @@ public class FoldActivity extends AppCompatActivity {
 
 		List<FoldData> emptyData = new ArrayList<>();
 		List<FoldData<String>> OneData = new ArrayList<>();
-		OneData.add(new FoldData<>());
+		OneData.add(new FoldData.FoldBuilder<MOBase>().build());
 
 		List<FoldData<String>> TwoData = new ArrayList<>();
-		TwoData.add(new FoldData<>());
-		TwoData.add(new FoldData<>());
+		TwoData.add(new FoldData.FoldBuilder<MOBase>().build());
+		TwoData.add(new FoldData.FoldBuilder<MOBase>().build());
 
 		List<FoldData<String>> ThreeData = new ArrayList<>();
-		ThreeData.add(new FoldData<>());
-		ThreeData.add(new FoldData<>());
-		ThreeData.add(new FoldData<>());
+		ThreeData.add(new FoldData.FoldBuilder<MOBase>().build());
+		ThreeData.add(new FoldData.FoldBuilder<MOBase>().build());
+		ThreeData.add(new FoldData.FoldBuilder<MOBase>().build());
 
-		mFoldData.add(new FoldData().setTitle("测试1").setSelected(true).setMods(emptyData));
-		mFoldData.add(new FoldData().setTitle("测试2").setSelected(false).setMods(emptyData));
+		mFoldData.add(new FoldData.FoldBuilder<MOBase>().title("测试1").selected(true).mods(emptyData).build());
+		mFoldData.add(new FoldData.FoldBuilder<MOBase>().title("测试2").selected(true).mods(emptyData).build());
 
-		mFoldData.add(new FoldData().setTitle("测试3").setSelected(true).setMods(OneData));
-		mFoldData.add(new FoldData().setTitle("测试4").setSelected(false).setMods(OneData));
+		mFoldData.add(new FoldData.FoldBuilder<MOBase>().title("测试3").selected(true).mods(OneData).build());
+		mFoldData.add(new FoldData.FoldBuilder<MOBase>().title("测试4").selected(false).mods(OneData).build());
 
-		mFoldData.add(new FoldData().setTitle("测试5").setSelected(true).setMods(TwoData));
-		mFoldData.add(new FoldData().setTitle("测试6").setSelected(false).setMods(TwoData));
+		mFoldData.add(new FoldData.FoldBuilder<MOBase>().title("测试5").selected(false).mods(TwoData).build());
+		mFoldData.add(new FoldData.FoldBuilder<MOBase>().title("测试6").selected(true).mods(TwoData).build());
 
-		mFoldData.add(new FoldData().setTitle("测试7").setSelected(true).setMods(ThreeData));
-		mFoldData.add(new FoldData().setTitle("测试8").setSelected(false).setMods(ThreeData));
+		mFoldData.add(new FoldData.FoldBuilder<MOBase>().title("测试7").selected(true).mods(ThreeData).build());
+		mFoldData.add(new FoldData.FoldBuilder<MOBase>().title("测试8").selected(true).mods(ThreeData).build());
 	}
 
 	@BindView(R.id.foldContainer)
