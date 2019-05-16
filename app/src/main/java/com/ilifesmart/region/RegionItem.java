@@ -1,15 +1,17 @@
-package com.ilifesmart.file;
+package com.ilifesmart.region;
 
 public class RegionItem {
 
 	private final String name;
 	private final String code;
-	private final String category;
+	private final String parent;
+	private final int index;
 
 	private RegionItem(Builder builder) {
 		this.name = builder.name;
 		this.code = builder.code;
-		this.category = builder.category;
+		this.parent = builder.parent;
+		this.index = builder.index;
 	}
 
 	public String getName() {
@@ -20,14 +22,19 @@ public class RegionItem {
 		return code;
 	}
 
-	public String getCategory() {
-		return category;
+	public String getParent() {
+		return parent;
+	}
+
+	public int getIndex() {
+		return index;
 	}
 
 	public static class Builder {
 		private String name;
 		private String code;
-		private String category;
+		private String parent;
+		private int index;
 
 		public Builder name(String name) {
 			this.name = name;
@@ -39,8 +46,13 @@ public class RegionItem {
 			return this;
 		}
 
-		public Builder category(String category) {
-			this.category = category;
+		public Builder parent(String category) {
+			this.parent = category;
+			return this;
+		}
+
+		public Builder index(int index) {
+			this.index = index;
 			return this;
 		}
 
@@ -54,7 +66,7 @@ public class RegionItem {
 		return new StringBuilder()
 						.append("name: ").append(name)
 						.append(",code: ").append(code)
-						.append(",category: ").append(category)
+						.append(",parent: ").append(parent)
 						.toString();
 	}
 }

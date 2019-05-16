@@ -10,7 +10,7 @@ import android.util.Log;
 
 import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
-import com.ilifesmart.file.RegionMgr;
+import com.ilifesmart.region.RegionMgr;
 import com.ilifesmart.interfaces.MyLocationListener;
 
 public class ToolsApplication extends Application {
@@ -47,7 +47,7 @@ public class ToolsApplication extends Application {
 //                .buildAndInstall();
 
         mContext = getApplicationContext();
-        RegionMgr.getInstance(mContext);
+        RegionMgr.getInstance(mContext).initialize();
         mLocationClient = new LocationClient(getApplicationContext());
         mLocationClient.registerLocationListener(mLocationListener);
 

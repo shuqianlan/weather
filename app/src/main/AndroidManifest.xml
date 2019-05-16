@@ -30,6 +30,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name="com.ilifesmart.region.RegionActivity">
+        </activity>
         <activity android:name="com.ilifesmart.fold.FoldActivity">
         </activity>
         <activity android:name="com.ilifesmart.ble.Bluetooth2Activity">
@@ -102,9 +104,7 @@
         <activity android:name="com.ilifesmart.preference.SettingActivity">
         </activity>
         <activity
-            android:name="com.ilifesmart.skin.SkinDemoActivity"
-            android:label="@string/title_activity_skin_demo"
-            android:theme="@style/AppTheme">
+            android:name="com.ilifesmart.skin.SkinDemoActivity">
         </activity>
     </application>
 

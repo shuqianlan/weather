@@ -248,6 +248,15 @@
                 android:textAllCaps="false"
                 android:layout_gravity="center"
                 />
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:background="@drawable/stroke_background"
+                android:id="@+id/region"
+                android:text="Region"
+                android:textAllCaps="false"
+                android:layout_gravity="center"
+                />
         </LinearLayout>
     </ScrollView>
 
