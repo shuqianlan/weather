@@ -21,8 +21,6 @@ public class RegionMgr {
 	private static RegionMgr _instance;
 	public static final String TOPKEY = "0";
 
-	private Context mContext;
-
 	public static RegionMgr getInstance() {
 		if (_instance == null) {
 			synchronized (mLock) {
@@ -41,7 +39,7 @@ public class RegionMgr {
 			@Override
 			public void run() {
 				try {
-					InputStreamReader inputReader = new InputStreamReader( mContext.getAssets().open("config/region/china_region_code.csv") );
+					InputStreamReader inputReader = new InputStreamReader( context.getAssets().open("config/region/china_region_code.csv") );
 					BufferedReader bufReader = new BufferedReader(inputReader);
 					String line="";
 					while(!TextUtils.isEmpty(line = bufReader.readLine())) {

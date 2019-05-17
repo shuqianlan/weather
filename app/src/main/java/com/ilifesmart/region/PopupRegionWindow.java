@@ -32,6 +32,15 @@ import butterknife.OnClick;
 
 public class PopupRegionWindow extends PopupWindow {
 
+	/*
+	* 知识点:
+	* 1. window默认无焦点，setFocusable(true);
+	* 2. 背景变暗/恢复正常，设置底Activity的alpha
+	* 3. 当前contentView的位置 showAsDropDown
+	* 4. Window的动画样式 setAnimationStyle(int style)
+	* 5. 仿京东快递(VX小程序)
+	* */
+
 	public static final String TAG = "PopupRegionWindow";
 	private Context mContext;
 
@@ -163,13 +172,6 @@ public class PopupRegionWindow extends PopupWindow {
 
 	private TabLayout.Tab newTab(int text, String tag) {
 		return newTab(mContext.getString(text), tag);
-	}
-
-	private String getTabBeanCode(int index) {
-		if (mTablayout.getTabCount() > index) {
-			return getTabBeanCode(mTablayout.getTabAt(index));
-		}
-		return null;
 	}
 
 	private String getTabBeanCode(TabLayout.Tab tab) {
