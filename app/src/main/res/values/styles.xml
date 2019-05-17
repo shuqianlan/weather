@@ -70,4 +70,9 @@
     <declare-styleable name="BlockLayout">
         <attr name="headTitle" format="string" />
     </declare-styleable>
+
+    <style name="popupRegionAnimation" parent="android:Animation">
+        <item name="android:windowEnterAnimation">@anim/pop_up</item>
+        <item name="android:windowExitAnimation">@anim/pop_down</item>
+    </style>
 </resources>

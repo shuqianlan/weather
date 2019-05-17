@@ -33,7 +33,7 @@ import com.ilifesmart.os.OSInfoActivity;
 import com.ilifesmart.path.CircleActivity;
 import com.ilifesmart.preference.SettingActivity;
 import com.ilifesmart.receiver.NetChangedBroadcast;
-import com.ilifesmart.region.RegionActivity;
+import com.ilifesmart.region.RegionDemoActivity;
 import com.ilifesmart.rxjava.DemoActivity;
 import com.ilifesmart.test.SeekBarActivity;
 import com.ilifesmart.thread.ThreadTestActivity;
@@ -258,7 +258,7 @@ public class HomeActivity extends AppCompatActivity {
                 Utils.startActivity(this, FoldActivity.class);
                 break;
             case R.id.region:
-                Utils.startActivity(this, RegionActivity.class);
+                Utils.startActivity(this, RegionDemoActivity.class);
                 break;
         }
     }

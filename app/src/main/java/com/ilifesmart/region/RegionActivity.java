@@ -8,7 +8,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,7 +33,7 @@ public class RegionActivity extends AppCompatActivity {
 	private List<RegionItem> regions = new ArrayList<>();
 
 	private RegionAdapter mRegionAdapter;
-	private RegionHolder lastHolder;
+	private String regionCode;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -45,8 +44,8 @@ public class RegionActivity extends AppCompatActivity {
 		mTablayout.addOnTabSelectedListener(new TabLayout.BaseOnTabSelectedListener() {
 			@Override
 			public void onTabSelected(TabLayout.Tab tab) {
-				Log.d("holder", "onTabSelected: ---> ");
-				notiDataChanged(tab.getPosition(), tab.getTag().toString());
+				ItemBean bean = (ItemBean) tab.getTag();
+				notiDataChanged(tab.getPosition(), bean.category, bean.selected);
 			}
 
 			@Override
@@ -76,8 +75,7 @@ public class RegionActivity extends AppCompatActivity {
 	}
 
 	private TabLayout.Tab newTab(String text, String tag) {
-		TabLayout.Tab tab = mTablayout.newTab().setText(text).setTag(tag);
-		tab.select();
+		TabLayout.Tab tab = mTablayout.newTab().setText(text).setTag(new ItemBean(tag, null));
 		mTablayout.addTab(tab);
 		return tab;
 	}
@@ -93,9 +91,10 @@ public class RegionActivity extends AppCompatActivity {
 	private void notiItemChanged(int index, String code, String name) {
 		if (mTablayout.getTabAt(index-1) != null) {
 			mTablayout.getTabAt(index-1).setText(name);
+			((ItemBean)mTablayout.getTabAt(index-1).getTag()).selected = code;
 		}
 
-		for (int i = mTablayout.getTabCount(); i > index ; i--) {
+		for (int i = mTablayout.getTabCount()-1; i >= index ; i--) {
 			mTablayout.removeTabAt(i);
 		}
 
@@ -110,7 +109,9 @@ public class RegionActivity extends AppCompatActivity {
 		tab.select();
 	}
 
-	private void notiDataChanged(int index, String code) {
+	public static final String TAG = "Holder";
+	private void notiDataChanged(int index, String code, String currCode) {
+		regionCode = currCode;
 		regions = RegionMgr.getInstance(this).getRegions(index, code);
 		mRegionAdapter.notifyDataSetChanged();
 	}
@@ -132,7 +133,7 @@ public class RegionActivity extends AppCompatActivity {
 		public void onBind(RegionItem bean) {
 			this.bean = bean;
 			mTextView.setText(bean.getName());
-			mSelected.setVisibility(View.INVISIBLE);
+			mSelected.setVisibility((!TextUtils.isEmpty(regionCode) && regionCode.equals(getCode())) ? View.VISIBLE : View.INVISIBLE);
 		}
 
 		@OnClick(R.id.region_item)
@@ -172,6 +173,16 @@ public class RegionActivity extends AppCompatActivity {
 		@Override
 		public int getItemCount() {
 			return regions.size();
+		}
+	}
+
+	private class ItemBean {
+		String category;
+		String selected;
+
+		public ItemBean(String category, String selected) {
+			this.category = category;
+			this.selected = selected;
 		}
 	}
 }

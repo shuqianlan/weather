@@ -2,6 +2,7 @@ package com.ilifesmart.region;
 
 import android.content.Context;
 import android.text.TextUtils;
+import android.util.Log;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -63,8 +64,9 @@ public class RegionMgr {
 		}
 
 		String[] splits = line.split(",");
-		boolean isCounty = splits.length == 9 && !TextUtils.isEmpty(splits[7]);
+		boolean isCounty = splits.length == 9 && !TextUtils.isEmpty(splits[8]);
 
+		Log.d("RegionMgr", "dealStringInfo: " + isCounty + " splits " +splits + " line: " + line);
 		if (isCounty) {
 			RegionItem county_bean = new RegionItem.Builder().name(splits[8]).code(splits[2]).parent(splits[1]).index(2).build();
 			RegionItem city_bean = new RegionItem.Builder().name(splits[6]).code(splits[1]).parent(splits[0]).index(1).build();
@@ -122,7 +124,8 @@ public class RegionMgr {
 	public List<RegionItem> getRegions(int index) {
 		return getRegions(index, null);
 	}
-		public List<RegionItem> getRegions(int index, String code) {
+
+	public List<RegionItem> getRegions(int index, String code) {
 		List<RegionItem> items = new ArrayList<>();
 
 		switch (index) {
@@ -137,6 +140,7 @@ public class RegionMgr {
 				break;
 		}
 
+		Log.d("RegionMgr", "getRegions: items " + items);
 		return items;
 	}
 
