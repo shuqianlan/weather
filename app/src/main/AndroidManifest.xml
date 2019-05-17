@@ -32,8 +32,6 @@
         android:theme="@style/AppTheme">
         <activity android:name="com.ilifesmart.region.RegionDemoActivity">
         </activity>
-        <activity android:name="com.ilifesmart.region.RegionActivity">
-        </activity>
         <activity android:name="com.ilifesmart.fold.FoldActivity">
         </activity>
         <activity android:name="com.ilifesmart.ble.Bluetooth2Activity">

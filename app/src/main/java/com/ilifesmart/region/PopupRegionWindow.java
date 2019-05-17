@@ -48,6 +48,7 @@ public class PopupRegionWindow extends PopupWindow {
 	private String regionCode;
 
 	private OnRegionSelectedListener mSelectedListener;
+	private static final int MAX_TABS = 3;
 	private int mWindowWidth;
 	private int mWindowHeight;
 
@@ -67,7 +68,7 @@ public class PopupRegionWindow extends PopupWindow {
 		setFocusable(true);
 		setAnimationStyle(R.style.popupRegionAnimation);
 		setBackgroundDrawable(new ColorDrawable(Color.WHITE));
-		View v = LayoutInflater.from(context).inflate(R.layout.activity_region, null, false);
+		View v = LayoutInflater.from(context).inflate(R.layout.popup_region_window, null, false);
 		setContentView(v);
 
 		ButterKnife.bind(this, v);
@@ -121,11 +122,11 @@ public class PopupRegionWindow extends PopupWindow {
 			code = RegionMgr.TOPKEY;
 		}
 
-		RegionItem bean = (code.equals(RegionMgr.TOPKEY)) ? null : RegionMgr.getInstance(mContext).getRegionItem(code);
+		RegionItem bean = (code.equals(RegionMgr.TOPKEY)) ? null : RegionMgr.getInstance().getRegionItem(code);
 		if (bean != null) {
 			String cityCode = bean.getParent();
-			RegionItem city_bean = RegionMgr.getInstance(mContext).getRegionItem(cityCode);
-			RegionItem province_bean = RegionMgr.getInstance(mContext).getRegionItem(city_bean.getParent());
+			RegionItem city_bean = RegionMgr.getInstance().getRegionItem(cityCode);
+			RegionItem province_bean = RegionMgr.getInstance().getRegionItem(city_bean.getParent());
 
 			newTab(province_bean.getName(), province_bean.getParent(), province_bean.getCode());
 			newTab(city_bean.getName(), city_bean.getParent(), city_bean.getCode());
@@ -164,6 +165,39 @@ public class PopupRegionWindow extends PopupWindow {
 		return newTab(mContext.getString(text), tag);
 	}
 
+	private String getTabBeanCode(int index) {
+		if (mTablayout.getTabCount() > index) {
+			return getTabBeanCode(mTablayout.getTabAt(index));
+		}
+		return null;
+	}
+
+	private String getTabBeanCode(TabLayout.Tab tab) {
+		ItemBean bean = (ItemBean) tab.getTag();
+		return bean.selected;
+	}
+
+	private String getTabBeanDispName(int index) {
+		return getTabBeanDispName(mTablayout.getTabAt(index));
+	}
+
+	private String getTabBeanDispName(TabLayout.Tab tab) {
+		if (tab == null) {
+			return "";
+		}
+		RegionItem bean = RegionMgr.getInstance().getRegionItem(getTabBeanCode(tab));
+		return (bean != null) ? bean.getDispName() : "";
+	}
+
+	private String getName() {
+		StringBuilder builder = new StringBuilder();
+		for (int i = 0; i < MAX_TABS; i++) {
+			builder.append(getTabBeanDispName(i));
+		}
+
+		return builder.toString();
+	}
+
 	private void notiItemChanged(int index, String code, String name) {
 		if (mTablayout.getTabAt(index-1) != null) {
 			mTablayout.getTabAt(index-1).setText(name);
@@ -175,7 +209,7 @@ public class PopupRegionWindow extends PopupWindow {
 		}
 
 		TabLayout.Tab tab = null;
-		if (index < 3) {
+		if (index < MAX_TABS) {
 			tab = newTab(R.string.pls_select, code);
 		}
 
@@ -187,11 +221,11 @@ public class PopupRegionWindow extends PopupWindow {
 
 	private void notiDataChanged(int index, String code, String currCode) {
 		regionCode = currCode;
-		regions = RegionMgr.getInstance(mContext).getRegions(index, code);
+		regions = RegionMgr.getInstance().getRegions(index, code);
 		mRegionAdapter.notifyDataSetChanged();
 	}
 
-	public class RegionHolder extends RecyclerView.ViewHolder {
+	public final class RegionHolder extends RecyclerView.ViewHolder {
 		private RegionItem bean;
 
 		@BindView(R.id.text)
@@ -216,7 +250,7 @@ public class PopupRegionWindow extends PopupWindow {
 			mSelected.setVisibility(View.VISIBLE);
 			notiItemChanged(getIndex(), getCode(), getName());
 			if (bean.getIndex() == 2) {
-				onDismiss(true);
+				onDismiss(getCode());
 			}
 		}
 
@@ -233,7 +267,7 @@ public class PopupRegionWindow extends PopupWindow {
 		}
 	}
 
-	private class RegionAdapter extends RecyclerView.Adapter<RegionHolder> {
+	private final class RegionAdapter extends RecyclerView.Adapter<RegionHolder> {
 
 		@NonNull
 		@Override
@@ -253,7 +287,7 @@ public class PopupRegionWindow extends PopupWindow {
 		}
 	}
 
-	private class ItemBean {
+	private final class ItemBean {
 		String category;
 		String selected;
 
@@ -269,17 +303,16 @@ public class PopupRegionWindow extends PopupWindow {
 
 	@OnClick(R.id.head_cont)
 	public void onClickCancel() {
-		onDismiss(false);
+		onDismiss(null);
 	}
 
-	private void onDismiss(boolean exit) {
-		if (exit) {
-			String text = new StringBuilder().append(mTablayout.getTabAt(0).getText()).append(mTablayout.getTabAt(1).getText()).append(mTablayout.getTabAt(2).getText()).toString();
-			String code = ((ItemBean)mTablayout.getTabAt(2).getTag()).selected;
+	private void onDismiss(String code) {
+		if (!TextUtils.isEmpty(code)) {
 			if (mSelectedListener != null) {
-				mSelectedListener.onRegionSelected(code, text);
+				mSelectedListener.onRegionSelected(code, getName());
 			}
 		}
 		dismiss();
 	}
+
 }

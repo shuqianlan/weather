@@ -1,11 +1,29 @@
 package com.ilifesmart.region;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class RegionItem {
+
+	/*
+	* name:   当前名称
+	* code:   当前区域代码
+	* parent: 上级区域代码
+	* index:  层级深度(0:省级,1:市级,2:县/区级)
+	* */
 
 	private final String name;
 	private final String code;
 	private final String parent;
 	private final int index;
+
+	/* 文档中无效的UI显示名称,允许层级显示，最终结果置为"" */
+	private static final Map<String,String> map = new HashMap<>();
+
+	static {
+		map.put("市辖区", "");
+		map.put("县", "");
+	}
 
 	private RegionItem(Builder builder) {
 		this.name = builder.name;
@@ -16,6 +34,11 @@ public class RegionItem {
 
 	public String getName() {
 		return name;
+	}
+
+	public String getDispName() {
+		String result = map.get(name);
+		return (result == null) ? name : result;
 	}
 
 	public String getCode() {

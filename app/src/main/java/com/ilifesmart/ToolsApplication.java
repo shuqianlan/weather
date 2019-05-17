@@ -47,7 +47,7 @@ public class ToolsApplication extends Application {
 //                .buildAndInstall();
 
         mContext = getApplicationContext();
-        RegionMgr.getInstance(mContext).initialize();
+        RegionMgr.getInstance().initialize(mContext);
         mLocationClient = new LocationClient(getApplicationContext());
         mLocationClient.registerLocationListener(mLocationListener);
 

@@ -1,8 +1,8 @@
 package com.ilifesmart.region;
 
 import android.content.Context;
+import android.os.AsyncTask;
 import android.text.TextUtils;
-import android.util.Log;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -23,39 +23,40 @@ public class RegionMgr {
 
 	private Context mContext;
 
-	public static RegionMgr getInstance(Context context) {
+	public static RegionMgr getInstance() {
 		if (_instance == null) {
 			synchronized (mLock) {
 				if (_instance == null) {
-					_instance = new RegionMgr(context);
+					_instance = new RegionMgr();
 				}
 			}
 		}
 		return _instance;
 	}
 
-	private RegionMgr(Context context) {
-		this.mContext = context;
-		initialize();
-	}
+	private RegionMgr() { }
 
-	public void initialize() {
-		try {
-			InputStreamReader inputReader = new InputStreamReader( mContext.getAssets().open("config/region/china_region_code.csv") );
-			BufferedReader bufReader = new BufferedReader(inputReader);
-			String line="";
-			String Result="";
-			while(!TextUtils.isEmpty(line = bufReader.readLine())) {
-				dealStringInfo(line);
+	public void initialize(Context context) {
+		AsyncTask.THREAD_POOL_EXECUTOR.execute(new Runnable() {
+			@Override
+			public void run() {
+				try {
+					InputStreamReader inputReader = new InputStreamReader( mContext.getAssets().open("config/region/china_region_code.csv") );
+					BufferedReader bufReader = new BufferedReader(inputReader);
+					String line="";
+					while(!TextUtils.isEmpty(line = bufReader.readLine())) {
+						dealStringInfo(line);
+					}
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
+		});
 	}
 
 	/*
 	* splits
+	* Note: 不包含街道名称.
 	* 0:省总code,1:市总code,2:县总code,3:省code,4:省名称,5:市code,6:市名称或市辖区,7:县code,8:县名称
 	* */
 	private void dealStringInfo(String line) {
@@ -66,7 +67,6 @@ public class RegionMgr {
 		String[] splits = line.split(",");
 		boolean isCounty = splits.length == 9 && !TextUtils.isEmpty(splits[8]);
 
-		Log.d("RegionMgr", "dealStringInfo: " + isCounty + " splits " +splits + " line: " + line);
 		if (isCounty) {
 			RegionItem county_bean = new RegionItem.Builder().name(splits[8]).code(splits[2]).parent(splits[1]).index(2).build();
 			RegionItem city_bean = new RegionItem.Builder().name(splits[6]).code(splits[1]).parent(splits[0]).index(1).build();
@@ -140,7 +140,6 @@ public class RegionMgr {
 				break;
 		}
 
-		Log.d("RegionMgr", "getRegions: items " + items);
 		return items;
 	}
 
@@ -162,6 +161,10 @@ public class RegionMgr {
 
 	public RegionItem getRegionItem(String code) {
 		synchronized (mLock) {
+			if (TextUtils.isEmpty(code)) {
+				return null;
+			}
+
 			RegionItem bean = getRegionItem(sTopMap, code);
 			if (bean == null) {
 				bean = getRegionItem(sProvinceMap, code);
@@ -173,4 +176,6 @@ public class RegionMgr {
 			return bean;
 		}
 	}
+
+
 }
