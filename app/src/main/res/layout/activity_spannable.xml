@@ -96,6 +96,13 @@
                 android:id="@+id/clickle_span"
                 android:text="ClickableSpan"
                 />
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:id="@+id/round_radius_span"
+                android:text="圆角标签"
+                />
         </TableRow>
     </TableLayout>
 </LinearLayout>

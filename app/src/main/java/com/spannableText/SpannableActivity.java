@@ -129,9 +129,9 @@ public class SpannableActivity extends AppCompatActivity {
 
 	@OnClick(R.id.image)
 	public void onMImageClicked() {
-		Drawable drawable = getDrawable(R.drawable.lingdai);
+		Drawable drawable = getDrawable(R.drawable.stroke_background);
 		drawable.setBounds(0, 0, 40, 40);
-		ImageSpan span = new ImageSpan(drawable);
+		ImageSpan span = new ImageSpan(drawable, ImageSpan.ALIGN_BOTTOM);
 		SpannableString string = new SpannableString(EXAMPLETEXT.concat("123"));
 		string.setSpan(span, 1, 10, Spanned.SPAN_INCLUSIVE_INCLUSIVE);
 		mSpanExample.setText(string);
@@ -145,6 +145,15 @@ public class SpannableActivity extends AppCompatActivity {
 		mSpanExample.setMovementMethod(LinkMovementMethod.getInstance());
 		mSpanExample.setText(string);
 		mSpanExample.callOnClick();
+	}
+
+	@OnClick(R.id.round_radius_span)
+	public void onRoundRadiusClicked() {
+		RoundRadiusTagSpan span = new RoundRadiusTagSpan();
+		SpannableString string = new SpannableString(EXAMPLETEXT);
+		string.setSpan(span, 0, 2, Spanned.SPAN_INCLUSIVE_INCLUSIVE);
+		mSpanExample.setMovementMethod(LinkMovementMethod.getInstance());
+		mSpanExample.setText(string);
 	}
 
 }
