@@ -1,7 +1,7 @@
 package com.ilifesmart.utils;
 
 import android.content.Context;
-import android.util.DisplayMetrics;
+import android.graphics.Point;
 import android.util.TypedValue;
 import android.view.WindowManager;
 
@@ -35,12 +35,9 @@ public class DensityUtils {
 
     public static void getWindowSize(Context context, int[] result) {
         WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
-        DisplayMetrics dm = new DisplayMetrics();
-        wm.getDefaultDisplay().getMetrics(dm);
-        int width = dm.widthPixels;         // 屏幕宽度（像素）
-        int height = dm.heightPixels;       // 屏幕高度（像素）
-
-        result[0] = width;
-        result[1] = height;
+        Point point = new Point();
+        wm.getDefaultDisplay().getRealSize(point);
+        result[0] = point.x;
+        result[1] = point.y;
     }
 }

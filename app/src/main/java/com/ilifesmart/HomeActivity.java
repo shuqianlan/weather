@@ -41,6 +41,7 @@ import com.ilifesmart.utils.Utils;
 import com.ilifesmart.viewpager.ViewPagerActivity;
 import com.ilifesmart.weather.R;
 import com.ilifesmart.weather.WeatherActivity;
+import com.spannableText.SpannableActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -172,7 +173,7 @@ public class HomeActivity extends AppCompatActivity {
         }
     }
 
-    @OnClick({R.id.weather, R.id.seekbar, R.id.notification, R.id.rotate, R.id.aop_test, R.id.thread_test, R.id.framelayout, R.id.compass, R.id.miclock, R.id.camrotate, R.id.path, R.id.osinfo, R.id.viewpager, R.id.mapper, R.id.dialog, R.id.preference, R.id.nature_ui, R.id.spider_web, R.id.mvvm, R.id.rxjava, R.id.progress, R.id.ViewGroup, R.id.live, R.id.curtain, R.id.barrage, R.id.bluetooth, R.id.fold, R.id.region})
+    @OnClick({R.id.weather, R.id.seekbar, R.id.notification, R.id.rotate, R.id.aop_test, R.id.thread_test, R.id.framelayout, R.id.compass, R.id.miclock, R.id.camrotate, R.id.path, R.id.osinfo, R.id.viewpager, R.id.mapper, R.id.dialog, R.id.preference, R.id.nature_ui, R.id.spider_web, R.id.mvvm, R.id.rxjava, R.id.progress, R.id.ViewGroup, R.id.live, R.id.curtain, R.id.barrage, R.id.bluetooth, R.id.fold, R.id.region, R.id.span_text})
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.weather:
@@ -259,6 +260,9 @@ public class HomeActivity extends AppCompatActivity {
                 break;
             case R.id.region:
                 Utils.startActivity(this, RegionDemoActivity.class);
+                break;
+            case R.id.span_text:
+                Utils.startActivity(this, SpannableActivity.class);
                 break;
         }
     }

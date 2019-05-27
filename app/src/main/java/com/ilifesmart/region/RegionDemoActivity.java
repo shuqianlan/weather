@@ -29,7 +29,7 @@ public class RegionDemoActivity extends AppCompatActivity {
 		window.setRegionCode(code).setOnRegionSelectedListener(new PopupRegionWindow.OnRegionSelectedListener() {
 			@Override
 			public void onRegionSelected(String code, String name) {
-				mRegionDemoTop.setText(name);
+				mRegionDemoTop.setText(name.concat("(").concat(code).concat(")"));
 				RegionDemoActivity.this.code = code;
 			}
 		}).show();

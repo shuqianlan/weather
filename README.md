@@ -18,4 +18,6 @@ Weather
 
 ## EmbeddedViewStackContainer(FrameLayout)
 
+## 区域选择器
+	
 > 避免多个Activity, 适用于同一Style的View.

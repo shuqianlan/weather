@@ -22,6 +22,15 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:background="@drawable/stroke_background"
+                android:id="@+id/span_text"
+                android:text="富文本"
+                android:textAllCaps="false"
+                android:layout_gravity="center"
+                />
 
             <Button
                 android:layout_width="match_parent"
