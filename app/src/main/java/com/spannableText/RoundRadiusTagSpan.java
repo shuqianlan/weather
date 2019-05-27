@@ -16,7 +16,7 @@ public class RoundRadiusTagSpan extends ReplacementSpan {
 	public RoundRadiusTagSpan() {
 		this.mRadius = 10;
 		this.bgColor = Color.RED;
-		this.textColor = Color.WHITE;
+		this.textColor = Color.GRAY;
 	}
 
 	@Override

@@ -151,8 +151,8 @@ public class SpannableActivity extends AppCompatActivity {
 	public void onRoundRadiusClicked() {
 		RoundRadiusTagSpan span = new RoundRadiusTagSpan();
 		SpannableString string = new SpannableString(EXAMPLETEXT);
-		string.setSpan(span, 0, 2, Spanned.SPAN_INCLUSIVE_INCLUSIVE);
 		mSpanExample.setMovementMethod(LinkMovementMethod.getInstance());
+		string.setSpan(span, 0, 2, Spanned.SPAN_INCLUSIVE_INCLUSIVE);
 		mSpanExample.setText(string);
 	}
 
