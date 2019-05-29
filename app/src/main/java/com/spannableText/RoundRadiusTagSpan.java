@@ -8,6 +8,7 @@ import android.text.style.ReplacementSpan;
 
 public class RoundRadiusTagSpan extends ReplacementSpan {
 
+	public static final String TAG = "RoundRadiusTagSpan";
 	private int mRadius;
 	private int bgColor;
 	private int textColor;
@@ -25,6 +26,12 @@ public class RoundRadiusTagSpan extends ReplacementSpan {
 		return mSize + 5;
 	}
 
+
+	/*
+	* y:baseline
+	* top: top
+	* bottom: bottom
+	* */
 	@Override
 	public void draw( Canvas canvas, CharSequence text, int start, int end, float x, int top, int y, int bottom,  Paint paint) {
 		int defaultColor = paint.getColor();//保存文字颜色
@@ -35,7 +42,7 @@ public class RoundRadiusTagSpan extends ReplacementSpan {
 		paint.setStyle(Paint.Style.STROKE);
 		paint.setStrokeWidth(5);
 		paint.setAntiAlias(true);
-		RectF rectF = new RectF(x + 2.5f, y + 2.5f + paint.ascent(), x + mSize, y + paint.descent());
+		RectF rectF = new RectF(x, y - 2.5f - mRadius + paint.ascent(), x + mSize + 2.5f, y + paint.descent() + mRadius + 2.5f);
 		//设置文字背景矩形，x为span其实左上角相对整个TextView的x值，y为span左上角相对整个View的y值。
 		// paint.ascent()获得文字上边缘，paint.descent()获得文字下边缘
 		//x+2.5f解决线条粗细不一致问题
