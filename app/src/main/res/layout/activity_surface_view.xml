@@ -9,5 +9,12 @@
 
     <com.ilifesmart.ui.WarriorSurfaceView
         android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        />
+
+    <com.ilifesmart.ui.SpiderSurfaceView
+        android:layout_width="match_parent"
         android:layout_height="match_parent"/>
+
 </android.support.constraint.ConstraintLayout>
