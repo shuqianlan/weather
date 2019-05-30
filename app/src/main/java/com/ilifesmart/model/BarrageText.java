@@ -5,7 +5,7 @@ public class BarrageText {
 	private int x;
 	private int y;
 	private int color;
-	private int fontSize;
+	private int textSize;
 	private int speed;
 
 	public BarrageText setText(String str) {
@@ -25,11 +25,6 @@ public class BarrageText {
 
 	public BarrageText setTextColor(int color) {
 		this.color = color;
-		return this;
-	}
-
-	public BarrageText setTextSize(int fontSize) {
-		this.fontSize = fontSize;
 		return this;
 	}
 
@@ -55,11 +50,16 @@ public class BarrageText {
 		return color;
 	}
 
-	public int getFontSize() {
-		return fontSize;
-	}
-
 	public int getSpeed() {
 		return speed;
+	}
+
+	public int getTextSize() {
+		return textSize;
+	}
+
+	public BarrageText setTextSize(int textSize) {
+		this.textSize = textSize;
+		return this;
 	}
 }

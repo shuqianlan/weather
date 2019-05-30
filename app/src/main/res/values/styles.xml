@@ -15,37 +15,6 @@
         <item name="android:thumb">@drawable/drawable_seekbar_thumb</item>
     </style>
 
-    <declare-styleable name="EmbeddedCompassView">
-        <attr name="outSideRadiusStrokerColor" format="color"/>
-        <attr name="arrowColor" format="color"/>
-        <attr name="stickColor" format="color"/>
-    </declare-styleable>
-
-    <declare-styleable name="MiClockView">
-        <attr name="hourTextSize" format="dimension"/>
-        <attr name="hourTextColor" format="color"/>
-        <attr name="outSideRadiusStrokeColor" format="color"/>
-        <attr name="outSideRadiusStrokeWidth" format="dimension"/>
-        <attr name="secondTriangleColor" format="color"/>
-        <attr name="hourMarkColor" format="color"/>
-        <attr name="minuteMarkColor" format="color"/>
-        <attr name="sweepStartColor" format="color"/>
-        <attr name="sweepEndColor" format="color"/>
-        <attr name="backgroundColor" format="color"/>
-        <attr name="centerCircleColor" format="color"/>
-    </declare-styleable>
-
-    <declare-styleable name="QualCircle">
-        <attr name="GradientStartColor" format="color"/>
-        <attr name="GradientEndColor" format="color"/>
-
-    </declare-styleable>
-
-    <declare-styleable name="RoundCornerImageView">
-        <attr name="radius" format="dimension"/>
-        <attr name="hoverColor" format="color"/>
-    </declare-styleable>
-
     <style name="ProgressBarStyle" parent="Widget.AppCompat.ProgressBar.Horizontal">
         <item name="android:indeterminateDrawable">@drawable/loading_dialogfragment_rotation</item>
         <item name="android:indeterminateOnly">true</item>
@@ -55,24 +24,12 @@
 
     </style>
 
-    <declare-styleable name="SpiderWeb">
-        <attr name="dotsCount" format="dimension" />
-        <attr name="lintColor" format="color" />
-        <attr name="pointColor" format="color" />
-        <attr name="touchPointColor" format="color" />
-
-    </declare-styleable>
-
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar"/>
-
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light"/>
-
-    <declare-styleable name="BlockLayout">
-        <attr name="headTitle" format="string" />
-    </declare-styleable>
 
     <style name="popupRegionAnimation" parent="android:Animation">
         <item name="android:windowEnterAnimation">@anim/pop_up</item>
         <item name="android:windowExitAnimation">@anim/pop_down</item>
     </style>
+    
 </resources>

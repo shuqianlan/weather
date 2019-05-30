@@ -10,7 +10,7 @@ import android.view.SurfaceView;
 public abstract class MySurfaceView extends SurfaceView implements SurfaceHolder.Callback {
 
 	protected Context mContext;
-	private SurfaceHolder mHolder;
+	protected SurfaceHolder mHolder;
 	private MySurfaceView.LoopThread thread;
 
 	protected MySurfaceView(Context context) {
@@ -45,6 +45,7 @@ public abstract class MySurfaceView extends SurfaceView implements SurfaceHolder
 
 	@Override
 	public void surfaceDestroyed(SurfaceHolder holder) {
+		mHolder.removeCallback(this);
 		thread.isRunning = false;
 		try {
 			thread.join();
