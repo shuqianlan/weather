@@ -86,7 +86,7 @@ public class BarrageView extends MySurfaceView {
 		mRandom = new Random();
 		mTextPaint = new TextPaint(Paint.ANTI_ALIAS_FLAG);
 		setZOrderOnTop(true);
-		mHolder.setFormat(PixelFormat.TRANSLUCENT);
+		mHolder.setFormat(PixelFormat.TRANSPARENT);
 
 		if (attrs != null) {
 			TypedArray a = mContext.obtainStyledAttributes(attrs, R.styleable.BarrageView);
@@ -144,12 +144,12 @@ public class BarrageView extends MySurfaceView {
 
 		mTextPaint.setTextSize(size);
 		Paint.FontMetrics fontMetrics = mTextPaint.getFontMetrics();
-		int textHeight = (int)(fontMetrics.descent - fontMetrics.ascent)/2 + BARRAGE_MAGIN;
 
-		if (y < textHeight) {
-			y = textHeight;
-		} else if (y > mContHeight) {
-			y = mContHeight-textHeight;
+		int halfHeight = (int)(fontMetrics.descent - fontMetrics.ascent)/2 + BARRAGE_MAGIN;
+		if (y < halfHeight) {
+			y = halfHeight;
+		} else if (y > (mContHeight-halfHeight)) {
+			y = mContHeight-halfHeight;
 		}
 		barrages.add(new BarrageText().setText(text).setX(mContWidth).setSpeed(speed).setTextColor(color).setY(y).setTextSize(size));
 	}
