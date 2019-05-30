@@ -78,7 +78,9 @@ public abstract class MySurfaceView extends SurfaceView implements SurfaceHolder
 				try {
 					synchronized (mSurfaceHolder) {
 						canvas = mSurfaceHolder.lockCanvas(null); // surfaceview会保留之前的图形，此处清空之前的图形
-						doDraw(canvas, paint);
+						if (canvas != null) { // TODO:中断信号
+							doDraw(canvas, paint);
+						}
 					}
 				} catch (Exception ex) {
 					ex.printStackTrace();
