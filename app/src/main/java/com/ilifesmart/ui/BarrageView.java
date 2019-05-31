@@ -20,7 +20,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
-public class BarrageView extends MySurfaceView {
+public class BarrageView extends CustomSurfaceView {
 
 	private List<BarrageText> barrages = Collections.synchronizedList(new ArrayList<>());
 
@@ -129,7 +129,6 @@ public class BarrageView extends MySurfaceView {
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
-
 	}
 
 	public void sendBarrage() {

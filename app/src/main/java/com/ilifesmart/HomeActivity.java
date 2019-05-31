@@ -13,7 +13,7 @@ import android.view.View;
 import android.widget.Button;
 
 import com.ilifesmart.aop.CheckOnClickActivity;
-import com.ilifesmart.barrage.BarrageActivity;
+import com.ilifesmart.barrage.VideoActivity;
 import com.ilifesmart.ble.BluetoothActivity;
 import com.ilifesmart.broad.ScreenBroadcastListener;
 import com.ilifesmart.cam3drotate.CameraRotateActivity;
@@ -251,7 +251,7 @@ public class HomeActivity extends AppCompatActivity {
                 Utils.startActivity(this, NatureCurtainActivity.class);
                 break;
             case R.id.barrage:
-                Utils.startActivity(this, BarrageActivity.class);
+                Utils.startActivity(this, VideoActivity.class);
                 break;
             case R.id.bluetooth:
                 Utils.startActivity(this, BluetoothActivity.class);

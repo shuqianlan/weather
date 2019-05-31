@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class SpiderSurfaceView extends MySurfaceView implements GestureDetector.OnGestureListener {
+public class SpiderSurfaceView extends CustomSurfaceView implements GestureDetector.OnGestureListener {
 
 	public static final String TAG = "SpiderWeb";
 
