@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.util.AttributeSet;
+import android.view.Surface;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
@@ -28,7 +29,7 @@ public abstract class MySurfaceView extends SurfaceView implements SurfaceHolder
 		mHolder = getHolder();
 		mHolder.addCallback(this);
 
-		thread = new LoopThread(context, mHolder);
+		thread = new LoopThread();
 	}
 
 	@Override
@@ -56,16 +57,14 @@ public abstract class MySurfaceView extends SurfaceView implements SurfaceHolder
 	}
 
 	public class LoopThread extends Thread {
-		SurfaceHolder mSurfaceHolder;
-		Context mContext;
 		boolean isRunning;
 		Paint paint;
+		private final Surface mSurface;
 
-		public LoopThread(Context context, SurfaceHolder holder) {
-			this.mContext = context;
-			this.mSurfaceHolder = holder;
+		public LoopThread() {
 			paint = new Paint(Paint.ANTI_ALIAS_FLAG);
 			isRunning = false;
+			mSurface = mHolder.getSurface();
 		}
 
 		@Override
@@ -76,16 +75,17 @@ public abstract class MySurfaceView extends SurfaceView implements SurfaceHolder
 
 			while (isRunning) {
 				try {
-					synchronized (mSurfaceHolder) {
-						canvas = mSurfaceHolder.lockCanvas(null); // surfaceview会保留之前的图形，此处清空之前的图形
-						if (canvas != null) { // TODO:中断信号
+					synchronized (mSurface) {
+						canvas = mHolder.lockCanvas(null);
+						if (canvas != null) {
 							doDraw(canvas, paint);
+						}
+						if (mHolder.getSurface().isValid()) {
+							mHolder.unlockCanvasAndPost(canvas);
 						}
 					}
 				} catch (Exception ex) {
 					ex.printStackTrace();
-				} finally {
-					mSurfaceHolder.unlockCanvasAndPost(canvas); // canvas生效
 				}
 			}
 		}

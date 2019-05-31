@@ -146,7 +146,7 @@ public class BarrageView extends MySurfaceView {
 		mTextPaint.setTextSize(size);
 		Paint.FontMetrics fontMetrics = mTextPaint.getFontMetrics();
 
-		int halfHeight = (int)(fontMetrics.descent - fontMetrics.ascent)/2 + BARRAGE_MAGIN;
+		int halfHeight = (int)(fontMetrics.bottom - fontMetrics.top)/2 + BARRAGE_MAGIN;
 		if (y < halfHeight) {
 			y = halfHeight;
 		} else if (y > (mContHeight-halfHeight)) {
