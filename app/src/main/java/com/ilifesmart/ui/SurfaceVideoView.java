@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.res.AssetFileDescriptor;
 import android.media.MediaPlayer;
 import android.os.Build;
+import android.support.annotation.RequiresApi;
 import android.support.constraint.ConstraintLayout;
 import android.text.TextUtils;
 import android.util.AttributeSet;
@@ -52,6 +53,8 @@ public class SurfaceVideoView extends FrameLayout implements MediaPlayer.OnPrepa
 	ImageView mState;
 	@BindView(R.id.control_area)
 	ConstraintLayout mControlArea;
+//	@BindView(R.id.thumbnail)
+//	ImageView mThumbNail;
 
 	public SurfaceVideoView(Context context) {
 		this(context, null);
@@ -74,7 +77,6 @@ public class SurfaceVideoView extends FrameLayout implements MediaPlayer.OnPrepa
 	private void initialize(Context context) {
 		SurfaceHolder holder = mVideo.getHolder();
 		holder.addCallback(this);
-
 		int[] array = new int[2];
 		DensityUtils.getWindowSize(context, array);
 		mWindWidth = array[0];
@@ -123,6 +125,7 @@ public class SurfaceVideoView extends FrameLayout implements MediaPlayer.OnPrepa
 			}
 		});
 		resetMediaPlayer();
+
 	}
 
 	private void onClose() {
@@ -258,5 +261,16 @@ public class SurfaceVideoView extends FrameLayout implements MediaPlayer.OnPrepa
 		if (!TextUtils.isEmpty(barrage)) {
 			mBarrage.sendBarrage(barrage);
 		}
+	}
+
+	@RequiresApi(api = Build.VERSION_CODES.M)
+	public void setVideoSpeed(float speed) {
+		if (player != null) {
+			player.setPlaybackParams(player.getPlaybackParams().setSpeed(speed));
+		}
+	}
+
+	public void setBarrageClosed(boolean closed) {
+		mBarrage.setBarrageClosed(closed);
 	}
 }

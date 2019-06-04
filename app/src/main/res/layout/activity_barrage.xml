@@ -20,36 +20,76 @@
         android:layout_marginVertical="10dp"
         >
         <TableRow>
-            <Button
-                android:id="@+id/play"
-                android:layout_width="0dp"
+            <CheckBox
+                android:id="@+id/barrage_switch"
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
                 android:background="@drawable/stroke_background"
                 android:layout_marginLeft="2dp"
-                android:text="播放"
-                android:visibility="invisible"
+                android:text="弹幕开关"
+                />
+            <EditText
+                android:id="@+id/barrage_content"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:background="@drawable/stroke_background"
+                android:layout_marginLeft="2dp"
+                android:hint="弹幕护体"
                 />
             <Button
                 android:id="@+id/send"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
                 android:background="@drawable/stroke_background"
                 android:text="发射"
                 android:layout_marginLeft="2dp"
                 />
+        </TableRow>
+        <TableRow>
             <Button
-                android:id="@+id/pause"
+                android:id="@+id/speed_1"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:background="@drawable/stroke_background"
-                android:text="暂停"
-                android:visibility="invisible"
-                android:layout_marginHorizontal="2dp"
+                android:layout_marginLeft="2dp"
+                android:text="倍速(0.5)"
+                />
+            <Button
+                android:id="@+id/speed_2"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/stroke_background"
+                android:layout_marginLeft="2dp"
+                android:text="倍速(1.0)"
+                />
+            <Button
+                android:id="@+id/speed_3"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/stroke_background"
+                android:layout_marginLeft="2dp"
+                android:text="倍速(1.5)"
+                />
+            <Button
+                android:id="@+id/speed_4"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/stroke_background"
+                android:layout_marginLeft="2dp"
+                android:text="倍速(2.0)"
                 />
         </TableRow>
     </TableLayout>
 
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/thumbnail"
+        android:src="@drawable/play"
+        />
 </LinearLayout>

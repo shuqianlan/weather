@@ -33,6 +33,7 @@ public class BarrageView extends CustomSurfaceView {
 	private Random mRandom;
 	private TextPaint mTextPaint;
 	private int mContWidth, mContHeight;
+	private boolean isBarrageClosed;
 
 	private static final List<Integer> colors = new ArrayList<>();
 	static {
@@ -108,20 +109,22 @@ public class BarrageView extends CustomSurfaceView {
 	public void doDraw(Canvas canvas, Paint paint) {
 		canvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
 
-		for (int i = 0; i < barrages.size(); i++) {
-			BarrageText bean = barrages.get(i);
-			int textWidth = (int) paint.measureText(bean.getText());
-			if ((bean.getX()+textWidth+BARRAGE_SPEED) < 0) {
-				barrages.remove(i);
-				continue;
+		if (!isBarrageClosed) {
+			for (int i = 0; i < barrages.size(); i++) {
+				BarrageText bean = barrages.get(i);
+				int textWidth = (int) paint.measureText(bean.getText());
+				if ((bean.getX()+textWidth+BARRAGE_SPEED) < 0) {
+					barrages.remove(i);
+					continue;
+				}
+
+				paint.setColor(bean.getColor());
+				paint.setTextAlign(Paint.Align.LEFT);
+				paint.setTextSize(bean.getTextSize());
+				canvas.drawText(bean.getText(), bean.getX(), bean.getY(), paint);
+
+				bean.setX(bean.getX()-bean.getSpeed()); // 刷新位置
 			}
-
-			paint.setColor(bean.getColor());
-			paint.setTextAlign(Paint.Align.LEFT);
-			paint.setTextSize(bean.getTextSize());
-			canvas.drawText(bean.getText(), bean.getX(), bean.getY(), paint);
-
-			bean.setX(bean.getX()-bean.getSpeed()); // 刷新位置
 		}
 
 		try {
@@ -129,6 +132,10 @@ public class BarrageView extends CustomSurfaceView {
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
+	}
+
+	public void setBarrageClosed(boolean closed) {
+		this.isBarrageClosed = closed;
 	}
 
 	public void sendBarrage() {

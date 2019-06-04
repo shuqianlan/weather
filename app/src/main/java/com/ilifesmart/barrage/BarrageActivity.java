@@ -91,14 +91,6 @@ public class BarrageActivity extends AppCompatActivity {
 		mBarrage.sendBarrage();
 	}
 
-	@OnClick(R.id.play)
-	public void onPlayVideo() {
-	}
-
-	@OnClick(R.id.pause)
-	public void onPauseVideo() {
-	}
-
 	@Override
 	protected void onPause() {
 		super.onPause();
