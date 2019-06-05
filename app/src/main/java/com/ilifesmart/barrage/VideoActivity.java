@@ -1,15 +1,10 @@
 package com.ilifesmart.barrage;
 
-import android.content.res.AssetFileDescriptor;
-import android.graphics.Bitmap;
-import android.media.MediaMetadataRetriever;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -46,22 +41,6 @@ public class VideoActivity extends AppCompatActivity {
 
 		String filePath = "video/Rise_of_Ascended.mp4";
 		mVideoCont.setVideoPath(filePath);
-
-		MediaMetadataRetriever retriever = new MediaMetadataRetriever();
-
-		try {
-			AssetFileDescriptor descriptor = getResources().getAssets().openFd(filePath);
-//				retriever.setDataSource(descriptor.getFileDescriptor());
-			Uri uri = Uri.parse("file:///android_asset/video/Rise_of_Ascended.mp4");
-			Log.d("BBBB", "onCreate: uri " + (uri != null));
-			retriever.setDataSource(this, uri);
-			Bitmap mp = retriever.getFrameAtTime(2000);
-			Log.d("BBBB", "onCreate: mp " + (mp != null));
-			mThumbnail.setImageBitmap(mp);
-		} catch (Exception ex) {
-			ex.printStackTrace();
-		}
-
 	}
 
 	@Override

@@ -136,6 +136,7 @@ public class BarrageView extends CustomSurfaceView {
 
 	public void setBarrageClosed(boolean closed) {
 		this.isBarrageClosed = closed;
+		barrages.clear();
 	}
 
 	public void sendBarrage() {

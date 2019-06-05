@@ -3,8 +3,11 @@ package com.ilifesmart.ui;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.AssetFileDescriptor;
+import android.graphics.Bitmap;
 import android.media.MediaPlayer;
+import android.os.AsyncTask;
 import android.os.Build;
+import android.os.Environment;
 import android.support.annotation.RequiresApi;
 import android.support.constraint.ConstraintLayout;
 import android.text.TextUtils;
@@ -19,7 +22,11 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 
 import com.ilifesmart.utils.DensityUtils;
+import com.ilifesmart.utils.Utils;
 import com.ilifesmart.weather.R;
+
+import java.io.File;
+import java.io.InputStream;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -28,6 +35,10 @@ import butterknife.OnClick;
 public class SurfaceVideoView extends FrameLayout implements MediaPlayer.OnPreparedListener, SurfaceHolder.Callback {
 
 	public static final String TAG = "VideoArea";
+	private final float VISIBLE_MIN_ALPHA = 0.1f;
+	private final float VISIBLE_MAX_ALPHA = 0.9f;
+	private final int   VISIBLE_CONTROL_AREA_DURATION = 3000;
+	private final int   CONTROL_AREA_DISAPPEAR_DURATION = 200;
 
 	private MediaPlayer player;
 	private Thread mThread;
@@ -36,6 +47,7 @@ public class SurfaceVideoView extends FrameLayout implements MediaPlayer.OnPrepa
 	private int mWindWidth;
 	private int mWindHeight;
 	private boolean isPrepared;
+	private String copyPath;
 
 	@BindView(R.id.video)
 	SurfaceView mVideo;
@@ -53,8 +65,8 @@ public class SurfaceVideoView extends FrameLayout implements MediaPlayer.OnPrepa
 	ImageView mState;
 	@BindView(R.id.control_area)
 	ConstraintLayout mControlArea;
-//	@BindView(R.id.thumbnail)
-//	ImageView mThumbNail;
+	@BindView(R.id.thumbnail)
+	ImageView mThumbNail;
 
 	public SurfaceVideoView(Context context) {
 		this(context, null);
@@ -106,6 +118,10 @@ public class SurfaceVideoView extends FrameLayout implements MediaPlayer.OnPrepa
 						mVideoCont.post(new Runnable() {
 							@Override
 							public void run() {
+								if (mThumbNail.getVisibility() != View.GONE) {
+									mThumbNail.setVisibility(GONE);
+								}
+
 								int pastedTime = player.getCurrentPosition();
 								int duration = player.getDuration();
 
@@ -125,7 +141,6 @@ public class SurfaceVideoView extends FrameLayout implements MediaPlayer.OnPrepa
 			}
 		});
 		resetMediaPlayer();
-
 	}
 
 	private void onClose() {
@@ -134,6 +149,28 @@ public class SurfaceVideoView extends FrameLayout implements MediaPlayer.OnPrepa
 			player = null;
 		}
 		setKeepScreenOn(false);
+	}
+
+	private void autoSetVideoThumbnail() {
+		AsyncTask.THREAD_POOL_EXECUTOR.execute(new Runnable() {
+			@Override
+			public void run() {
+				try {
+					InputStream in = getResources().getAssets().open(filePath);
+					copyPath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MOVIES).getAbsolutePath() + File.separator + "video.mp4";
+					Bitmap mp = Utils.getVideoThumbnail(in, copyPath);
+					in.close();
+
+					mThumbNail.post(()->{
+										mThumbNail.setImageBitmap(mp);
+									}
+					);
+				} catch(Exception ex) {
+					ex.printStackTrace();
+				}
+			}
+		});
+
 	}
 
 	private String getDurationString(int time) {
@@ -172,19 +209,26 @@ public class SurfaceVideoView extends FrameLayout implements MediaPlayer.OnPrepa
 	}
 
 	@TargetApi(Build.VERSION_CODES.N)
-	public void setVideoPath(String filePath) {
-		player.reset();
-		isPrepared = false;
+	public void setVideoPath(String videoPath) {
+		AsyncTask.THREAD_POOL_EXECUTOR.execute(new Runnable() {
+			@Override
+			public void run() {
+				player.reset();
+				isPrepared = false;
 
-		this.filePath = filePath;
-		checkVideoExists();
-		try {
-			AssetFileDescriptor descriptor = getResources().getAssets().openFd(filePath);
-			player.setDataSource(descriptor);
-			player.prepareAsync();
-		} catch (Exception ex) {
-			ex.printStackTrace();
-		}
+				filePath = videoPath;
+
+				checkVideoExists();
+				autoSetVideoThumbnail();
+				try {
+					AssetFileDescriptor descriptor = getResources().getAssets().openFd(videoPath);
+					player.setDataSource(descriptor);
+					player.prepareAsync();
+				} catch (Exception ex) {
+					ex.printStackTrace();
+				}
+			}
+		});
 	}
 
 	private void setFrameContSize(int width, int height) {
@@ -212,20 +256,33 @@ public class SurfaceVideoView extends FrameLayout implements MediaPlayer.OnPrepa
 
 	@OnClick(R.id.control_area)
 	public void onControlAreaClicked() {
-		checkVideoPrepared();
+		if (mControlArea.getAlpha() < VISIBLE_MIN_ALPHA) {
+			mControlArea.setAlpha(1);
+			mControlArea.animate().cancel();
+		}
 
-		mState.setSelected(!mState.isSelected());
-		if (player != null) {
-			if (mState.isSelected()) {
-				if (!player.isPlaying()) {
-					player.start();
-				}
-			} else {
-				if (player.isPlaying()) {
-					player.pause();
+		mControlArea.animate().setStartDelay(VISIBLE_CONTROL_AREA_DURATION).setDuration(CONTROL_AREA_DISAPPEAR_DURATION).alpha(0);
+	}
+	
+	@OnClick(R.id.state)
+	public void OnStatus() {
+		if (mControlArea.getAlpha() > VISIBLE_MAX_ALPHA) {
+			checkVideoPrepared();
+			mState.setSelected(!mState.isSelected());
+			if (player != null) {
+				if (mState.isSelected()) {
+					if (!player.isPlaying()) {
+						player.start();
+					}
+				} else {
+					if (player.isPlaying()) {
+						player.pause();
+					}
 				}
 			}
 		}
+
+		onControlAreaClicked();
 	}
 
 	@Override
@@ -251,6 +308,18 @@ public class SurfaceVideoView extends FrameLayout implements MediaPlayer.OnPrepa
 
 	public void onDestroyed() {
 		isRunning = false;
+
+		AsyncTask.THREAD_POOL_EXECUTOR.execute(new Runnable() {
+			@Override
+			public void run() {
+				if (!TextUtils.isEmpty(copyPath)) {
+					File file = new File(copyPath);
+					if (file != null && file.isFile()) {
+						file.delete();
+					}
+				}
+			}
+		});
 	}
 
 	public void sendBarrage() {

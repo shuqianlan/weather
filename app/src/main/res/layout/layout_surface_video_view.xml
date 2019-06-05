@@ -3,12 +3,19 @@
              xmlns:app="http://schemas.android.com/apk/res-auto"
              android:id="@+id/video_cont"
              android:layout_width="match_parent"
-             android:layout_height="wrap_content">
+             android:layout_height="wrap_content"
+    >
 
     <SurfaceView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/video"
+        />
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/thumbnail"
         />
     <com.ilifesmart.ui.BarrageView
         android:id="@+id/barrage"
@@ -21,7 +28,7 @@
         android:layout_height="match_parent"
         android:background="#11ffffff"
         android:id="@+id/control_area"
-        android:clickable="true"
+        android:focusable="true"
         android:descendantFocusability="blocksDescendants"
         >
 

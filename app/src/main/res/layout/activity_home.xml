@@ -26,6 +26,16 @@
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:background="@drawable/stroke_background"
+                android:id="@+id/animation"
+                android:text="动画"
+                android:textAllCaps="false"
+                android:layout_gravity="center"
+                />
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:background="@drawable/stroke_background"
                 android:id="@+id/barrage"
                 android:text="弹幕"
                 android:textAllCaps="false"
