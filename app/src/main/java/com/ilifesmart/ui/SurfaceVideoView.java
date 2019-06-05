@@ -12,6 +12,7 @@ import android.support.annotation.RequiresApi;
 import android.support.constraint.ConstraintLayout;
 import android.text.TextUtils;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -87,6 +88,8 @@ public class SurfaceVideoView extends FrameLayout implements MediaPlayer.OnPrepa
 	}
 
 	private void initialize(Context context) {
+		resetMediaPlayer();
+
 		SurfaceHolder holder = mVideo.getHolder();
 		holder.addCallback(this);
 		int[] array = new int[2];
@@ -140,13 +143,14 @@ public class SurfaceVideoView extends FrameLayout implements MediaPlayer.OnPrepa
 				onClose();
 			}
 		});
-		resetMediaPlayer();
+
+		Log.d(TAG, "initialize: ~~");
 	}
 
 	private void onClose() {
 		if (player != null) {
 			player.release();
-			player = null;
+//			player = null;
 		}
 		setKeepScreenOn(false);
 	}
@@ -170,7 +174,6 @@ public class SurfaceVideoView extends FrameLayout implements MediaPlayer.OnPrepa
 				}
 			}
 		});
-
 	}
 
 	private String getDurationString(int time) {
@@ -210,10 +213,11 @@ public class SurfaceVideoView extends FrameLayout implements MediaPlayer.OnPrepa
 
 	@TargetApi(Build.VERSION_CODES.N)
 	public void setVideoPath(String videoPath) {
-		AsyncTask.THREAD_POOL_EXECUTOR.execute(new Runnable() {
-			@Override
-			public void run() {
-				player.reset();
+		Log.d(TAG, "setVideoPath: path " + videoPath);
+//		AsyncTask.THREAD_POOL_EXECUTOR.execute(new Runnable() {
+//			@Override
+//			public void run() {
+//				player.reset();
 				isPrepared = false;
 
 				filePath = videoPath;
@@ -227,8 +231,8 @@ public class SurfaceVideoView extends FrameLayout implements MediaPlayer.OnPrepa
 				} catch (Exception ex) {
 					ex.printStackTrace();
 				}
-			}
-		});
+//			}
+//		});
 	}
 
 	private void setFrameContSize(int width, int height) {
@@ -339,7 +343,7 @@ public class SurfaceVideoView extends FrameLayout implements MediaPlayer.OnPrepa
 		}
 	}
 
-	public void setBarrageClosed(boolean closed) {
-		mBarrage.setBarrageClosed(closed);
+	public void setBarrageClosed(boolean opened) {
+		mBarrage.setBarrageClosed(opened);
 	}
 }

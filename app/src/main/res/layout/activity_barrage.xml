@@ -27,6 +27,7 @@
                 android:background="@drawable/stroke_background"
                 android:layout_marginLeft="2dp"
                 android:text="弹幕开关"
+                android:checked="true"
                 />
             <EditText
                 android:id="@+id/barrage_content"
@@ -86,10 +87,11 @@
         </TableRow>
     </TableLayout>
 
-    <ImageView
+    <ListView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/thumbnail"
-        android:src="@drawable/play"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:id="@+id/videos"
         />
+
 </LinearLayout>
