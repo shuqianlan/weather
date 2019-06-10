@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.support.v7.app.AlertDialog;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 
@@ -74,13 +75,18 @@ public class Utils {
     }
 
     public static Bitmap getVideoThumbnail(InputStream in, String path, int time) {
+        if (TextUtils.isEmpty(path)) {
+            return null;
+        }
         copyFile(in, path);
 
         FFmpegMediaMetadataRetriever retriever = new FFmpegMediaMetadataRetriever();
         retriever.setDataSource(path);
         retriever.extractMetadata(FFmpegMediaMetadataRetriever.METADATA_KEY_ALBUM);
         retriever.extractMetadata(FFmpegMediaMetadataRetriever.METADATA_KEY_ARTIST);
+        Bitmap mp = retriever.getFrameAtTime(time, FFmpegMediaMetadataRetriever.OPTION_CLOSEST);
+        retriever.release();
 
-        return retriever.getFrameAtTime(time, FFmpegMediaMetadataRetriever.OPTION_CLOSEST);
+        return mp;
     }
 }

@@ -4,11 +4,13 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.Surface;
 import android.view.SurfaceHolder;
 
 public abstract class CustomSurfaceView extends MySurfaceView {
 	private LoopThread thread;
+	private boolean isDestroyed = false;
 
 	public CustomSurfaceView(Context context) {
 		this(context, null);
@@ -21,6 +23,8 @@ public abstract class CustomSurfaceView extends MySurfaceView {
 	public CustomSurfaceView(Context context, AttributeSet attrs, int defStyleAttr) {
 		super(context, attrs, defStyleAttr);
 		thread = new LoopThread();
+
+		isDestroyed= false;
 	}
 
 	@Override
@@ -62,17 +66,26 @@ public abstract class CustomSurfaceView extends MySurfaceView {
 						if (canvas != null) {
 							doDraw(canvas, paint);
 						}
-						if (mHolder.getSurface().isValid()) {
+						if (mSurface.isValid() && canvas != null && !isDestroyed) {
 							mHolder.unlockCanvasAndPost(canvas);
 						}
+
 					}
 				} catch (Exception ex) {
 					ex.printStackTrace();
 				}
 			}
 		}
-
 	}
 
 	public abstract void doDraw(Canvas canvas, Paint paint);
+
+	@Override
+	protected void onDetachedFromWindow() {
+		super.onDetachedFromWindow();
+		thread.isRunning = false;
+		isDestroyed = true;
+
+		Log.d("CustomSurfaceView", "onDetachedFromWindow: ");
+	}
 }

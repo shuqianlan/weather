@@ -15,7 +15,6 @@ import com.ilifesmart.weather.R;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 public class BarrageActivity extends AppCompatActivity {
 
@@ -86,7 +85,7 @@ public class BarrageActivity extends AppCompatActivity {
 
 	}
 
-	@OnClick(R.id.send)
+//	@OnClick(R.id.send)
 	public void onSendbarrage() {
 		mBarrage.sendBarrage();
 	}

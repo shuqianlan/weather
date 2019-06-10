@@ -1,11 +1,13 @@
 package com.ilifesmart.barrage;
 
+import android.database.DataSetObserver;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -27,6 +29,8 @@ import butterknife.OnCheckedChanged;
 import butterknife.OnClick;
 
 public class VideoActivity extends AppCompatActivity {
+
+	public static final String TAG = "VideoActivity";
 
 	@BindView(R.id.send)
 	Button mSend;
@@ -60,12 +64,19 @@ public class VideoActivity extends AppCompatActivity {
 		ButterKnife.bind(this);
 
 		mVideoCont.setVideoPath(filePath);
-		mVideos.setAdapter(new VideoAdapter());
+
+		VideoAdapter adapter = new VideoAdapter();
+		adapter.registerDataSetObserver(new DataSetObserver() {
+			@Override
+			public void onInvalidated() {
+				super.onInvalidated();
+			}
+		});
+		mVideos.setAdapter(adapter);
 	}
 
 	@Override
 	protected void onDestroy() {
-		mVideoCont.onDestroyed();
 		super.onDestroy();
 	}
 
@@ -127,14 +138,21 @@ public class VideoActivity extends AppCompatActivity {
 
 		@Override
 		public long getItemId(int position) {
-			return 0;
+			return position;
 		}
 
 		@Override
 		public View getView(int position, View convertView, ViewGroup parent) {
-			SurfaceVideoView v = new SurfaceVideoView(parent.getContext());
+			SurfaceVideoView v;
+			if (convertView == null) {
+				v = new SurfaceVideoView(parent.getContext());
+			} else {
+				v= (SurfaceVideoView) convertView;
+			}
 			v.setVideoPath(videos.get(position));
+			Log.d(TAG, "getView: setVideoPath video " + videos.get(position));
 			return v;
 		}
+
 	}
 }

@@ -31,9 +31,9 @@ public class SpannableActivity extends AppCompatActivity {
 	TextView mSpanExample;
 
 	/*
-	 * setSpan(obj,start,end,flag);
+	 * setSpan(obj,play,end,flag);
 	 * obj:样式
-	 * start: 字符串的起始位置
+	 * play: 字符串的起始位置
 	 * end: 字符串的结束位置
 	 * flag: 四中样式，是否包含收尾下标字符.
 	 * */

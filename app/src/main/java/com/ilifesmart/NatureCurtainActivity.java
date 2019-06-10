@@ -39,7 +39,7 @@ public class NatureCurtainActivity extends AppCompatActivity {
 
 			@Override
 			public void onStartTrackingTouch(SeekBar seekBar) {
-				Log.d(TAG, "onStartTrackingTouch: start " + seekBar.getProgress());
+				Log.d(TAG, "onStartTrackingTouch: play " + seekBar.getProgress());
 			}
 
 			@Override
