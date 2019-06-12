@@ -120,5 +120,6 @@ public class CircleProgressSurfaceView extends CustomSurfaceView {
 		} catch(Exception ex) {
 			ex.printStackTrace();
 		}
+
 	}
 }

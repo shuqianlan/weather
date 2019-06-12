@@ -6,6 +6,7 @@ import android.animation.LayoutTransition;
 import android.animation.ObjectAnimator;
 import android.animation.PropertyValuesHolder;
 import android.animation.ValueAnimator;
+import android.graphics.BlurMaskFilter;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -14,6 +15,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import com.ilifesmart.ui.BlurText;
 import com.ilifesmart.weather.R;
 
 import butterknife.BindView;
@@ -28,6 +30,8 @@ public class AnimationActivity extends AppCompatActivity {
 	LinearLayout mAdddel;
 	@BindView(R.id.auto)
 	LinearLayout mAuto;
+	@BindView(R.id.blur_text)
+	BlurText mBlurText;
 
 	private Animator mTelephoneAnimator;
 
@@ -41,12 +45,12 @@ public class AnimationActivity extends AppCompatActivity {
 	}
 
 	/*
-	* 自定义组内元素的动画效果
-	* APPEARING: 元素出现动画
-	* DISAPPEARING:元素消失动画
-	* CHANGE_APPEARING:元素出现时的其它元素的动画
-	* CHANGE_DISAPPEARING:元素消失时的其它元素的动画
-	* */
+	 * 自定义组内元素的动画效果
+	 * APPEARING: 元素出现动画
+	 * DISAPPEARING:元素消失动画
+	 * CHANGE_APPEARING:元素出现时的其它元素的动画
+	 * CHANGE_DISAPPEARING:元素消失时的其它元素的动画
+	 * */
 	private void initialize() {
 		LayoutTransition transition = new LayoutTransition();
 
@@ -117,6 +121,7 @@ public class AnimationActivity extends AppCompatActivity {
 				break;
 		}
 	}
+
 	/*
 	 * default:onAdd/Del动画
 	 * android:animateLayoutChanges="true"
@@ -137,6 +142,24 @@ public class AnimationActivity extends AppCompatActivity {
 	public void onDel(LinearLayout group) {
 		if (group.getChildCount() != 0) {
 			group.removeViewAt(group.getChildCount() - 1);
+		}
+	}
+
+	@OnClick({R.id.blur_inner, R.id.blur_outer, R.id.blur_normal, R.id.blur_solid})
+	public void onBlurStyle(View v) {
+		switch (v.getId()) {
+			case R.id.blur_inner:
+				mBlurText.setMaskFilter(BlurMaskFilter.Blur.INNER);
+				break;
+			case R.id.blur_outer:
+				mBlurText.setMaskFilter(BlurMaskFilter.Blur.OUTER);
+				break;
+			case R.id.blur_normal:
+				mBlurText.setMaskFilter(BlurMaskFilter.Blur.NORMAL);
+				break;
+			case R.id.blur_solid:
+				mBlurText.setMaskFilter(BlurMaskFilter.Blur.SOLID);
+				break;
 		}
 	}
 

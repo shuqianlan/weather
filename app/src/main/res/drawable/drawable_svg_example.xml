@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="200dp"
+    android:height="100dp"
+    android:viewportWidth="100"
+    android:viewportHeight="100"
+    >
+
+    <path android:name="bar"
+          android:pathData="M50,23 L100,25"
+          android:strokeWidth="2"
+          android:strokeColor="@android:color/holo_red_light"
+          android:trimPathStart="0"
+          android:trimPathEnd="0.2"
+          android:trimPathOffset="0.8"
+        />
+</vector>

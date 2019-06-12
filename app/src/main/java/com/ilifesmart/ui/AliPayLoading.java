@@ -114,15 +114,9 @@ public class AliPayLoading extends CustomSurfaceView {
 		canvas.drawPath(mDstPath, paint);
 
 		try {
-			if (progress <= 0.0000001) {
-				Log.d("TimeTag", "doDraw: start...");
-			} else if (progress > 2.000001) {
-				Log.d("TimeTag", "doDraw: end...");
-			}
-
-			Log.d("Surface", "doDraw: " + (System.currentTimeMillis() - doDrawMills));
+			Log.d("AliPay", "doDraw: progress " + progress);
 			Thread.sleep(3);
-			progress = ((delay.incrementAndGet())*4/200.0f);
+			progress = ((delay.incrementAndGet())%200*4/200.0f);
 		} catch(Exception ex) {
 			ex.printStackTrace();
 		}
