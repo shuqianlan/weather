@@ -39,7 +39,7 @@ public class ColorTextView extends AppCompatTextView {
 		if (animator != null) {
 			animator.cancel();
 		}
-		animator = new ValueAnimator().ofInt(0, w);
+		animator = new ValueAnimator().ofInt(0, char_width * 2);
 		animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
 			@Override
 			public void onAnimationUpdate(ValueAnimator animation) {
@@ -61,6 +61,8 @@ public class ColorTextView extends AppCompatTextView {
 		matrix.setTranslate(mDx, 0);
 		mHorizonalShader.setLocalMatrix(matrix);
 		mPaint.setShader(mHorizonalShader);
+
+		// 类似RecycylerView中的过场加载动画.
 		super.onDraw(canvas);
 	}
 }

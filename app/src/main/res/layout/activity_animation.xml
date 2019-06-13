@@ -1,229 +1,551 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context="com.ilifesmart.animation.AnimationActivity">
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
         >
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/telephone"
+            android:layout_height="match_parent"
             android:orientation="vertical"
             >
+
             <ImageView
+                android:id="@+id/sample"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/sample"
-                android:src="@drawable/telephone"
-                android:scaleType="centerCrop"
-                android:layout_gravity="center_horizontal"
                 android:layout_centerInParent="true"
+                android:layout_gravity="center_horizontal"
+                android:scaleType="centerCrop"
+                android:src="@drawable/telephone"
+                />
+
+            <Button
+                android:id="@+id/start_stop"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:text="Animation"
+                />
+
+            <LinearLayout
+                android:id="@+id/adddel"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:animateLayoutChanges="true"
+                android:background="@android:color/darker_gray"
+                android:orientation="horizontal"
+                />
+
+            <TableLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TableRow>
+
+                    <Button
+                        android:id="@+id/add"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="(Default)添加"
+                        android:textAllCaps="false"
+                        />
+
+                    <Button
+                        android:id="@+id/del"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="(Default)删除"
+                        android:textAllCaps="false"
+                        />
+                </TableRow>
+            </TableLayout>
+
+            <LinearLayout
+                android:id="@+id/auto"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:background="@android:color/darker_gray"
+                android:orientation="horizontal"
+                />
+
+            <TableLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TableRow>
+
+                    <Button
+                        android:id="@+id/add2"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="(Custom)添加"
+                        android:textAllCaps="false"
+                        />
+
+                    <Button
+                        android:id="@+id/del2"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="(Custom)删除"
+                        android:textAllCaps="false"
+                        />
+                </TableRow>
+            </TableLayout>
+
+            <android.support.constraint.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:text="圆形Loading"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    />
+
+                <com.ilifesmart.ui.CircleProgressSurfaceView
+                    android:id="@+id/path_measure"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_gravity="center_horizontal"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintDimensionRatio="h,1:1"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintWidth_percent="0.4"
+                    />
+
+            </android.support.constraint.ConstraintLayout>
+
+            <android.support.constraint.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="20dp"
+                >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:text="动效"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    />
+
+                <com.ilifesmart.ui.AliPayLoading
+                    android:id="@+id/alipay"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_gravity="center_horizontal"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintDimensionRatio="h,1:1"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintWidth_percent="0.4"
+                    />
+
+            </android.support.constraint.ConstraintLayout>
+
+            <com.ilifesmart.ui.BlurText
+                android:id="@+id/blur_text"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_gravity="center_horizontal"
+                android:padding="4dp"
+                />
+
+            <TableLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TableRow>
+
+                    <Button
+                        android:id="@+id/blur_inner"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:text="内发光(Inner)"
+                        android:textAllCaps="false"
+                        />
+
+                    <Button
+                        android:id="@+id/blur_solid"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:text="外发光(Solid)"
+                        android:textAllCaps="false"
+                        />
+
+                    <Button
+                        android:id="@+id/blur_normal"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:text="内外发光(Normal)"
+                        android:textAllCaps="false"
+                        />
+
+                    <Button
+                        android:id="@+id/blur_outer"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:text="仅发光(Outer)"
+                        android:textAllCaps="false"
+                        />
+                </TableRow>
+            </TableLayout>
+
+            <!-- Linear_Shader -->
+            <com.ilifesmart.ui.ColorTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:gravity="center_horizontal"
+                android:text="天下一统，老坛酸菜"
+                android:textSize="26sp"
+                />
+
+            <!-- Radial_Shader -->
+            <com.ilifesmart.ui.ColorImageView
+                android:layout_width="match_parent"
+                android:layout_height="60dp"/>
+
+            <TableLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TableRow>
+
+                    <Button
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="REPEAT"
+                        />
+
+                    <Button
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="CLAMP"
+                        />
+
+                    <Button
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="MIRROR"
+                        />
+                </TableRow>
+            </TableLayout>
+
+            <!-- xfermode -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/darker_gray"
+                >
+
+                <com.ilifesmart.ui.XfermodeView
+                    android:id="@+id/xfermode"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    />
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="测试效果与官方不一致(wtf)"
+                android:gravity="center"
+                />
+
+            <TableLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TableRow>
+
+                    <Button
+                        android:id="@+id/xfermode_clear"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="Clear"
+                        />
+
+                    <Button
+                        android:id="@+id/xfermode_src"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="Src"
+                        />
+
+                    <Button
+                        android:id="@+id/xfermode_dst"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="Dst"
+                        />
+
+                    <Button
+                        android:id="@+id/xfermode_srcover"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="SrcOver"
+                        />
+                </TableRow>
+
+                <TableRow>
+
+                    <Button
+                        android:id="@+id/xfermode_dstover"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="DstOver"
+                        />
+
+                    <Button
+                        android:id="@+id/xfermode_srcin"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="SrcIn"
+                        />
+
+                    <Button
+                        android:id="@+id/xfermode_dstin"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="DstIn"
+                        />
+
+                    <Button
+                        android:id="@+id/xfermode_srcout"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="SrcOut"
+                        />
+
+                </TableRow>
+
+                <TableRow>
+
+                    <Button
+                        android:id="@+id/xfermode_dstout"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="DstOut"
+                        />
+
+                    <Button
+                        android:id="@+id/xfermode_srcatop"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="SrcATop"
+                        />
+
+                    <Button
+                        android:id="@+id/xfermode_dstatop"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="DstATop"
+                        />
+
+                    <Button
+                        android:id="@+id/xfermode_xor"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="Xor"
+                        />
+                </TableRow>
+
+                <TableRow>
+
+                    <Button
+                        android:id="@+id/xfermode_darken"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="Darken"
+                        />
+
+                    <Button
+                        android:id="@+id/xfermode_lighten"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="LightEN"
+                        />
+
+                    <Button
+                        android:id="@+id/xfermode_multiply"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="Multiply"
+                        />
+
+                    <Button
+                        android:id="@+id/xfermode_screen"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="Screen"
+                        />
+
+                </TableRow>
+            </TableLayout>
+
+            <com.ilifesmart.ui.RectShapeView
+                android:layout_width="300px"
+                android:layout_height="300px"
+                android:background="@android:color/black"
+                />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:background="@android:color/black"
+                >
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="160dp"
+                    android:layout_centerInParent="true"
+                    android:id="@+id/custom_image"
+                    android:background="@android:color/darker_gray"
+                    android:scaleType="center"
+                    />
+            </RelativeLayout>
+
+            <TableLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/white"
+                android:layout_margin="10dp"
+                >
+                <TableRow>
+                    <ImageView
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/src_image_1"
+                        android:scaleType="centerInside"
+                        />
+                    <ImageView
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/blur_alpha_image_2"
+                        android:scaleType="centerInside"
+                        />
+                    <ImageView
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/blur_reshader_image_3"
+                        android:scaleType="centerInside"
+                        />
+
+                </TableRow>
+                <TableRow>
+
+                    <Button
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="Src"
+                        />
+
+                    <Button
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="Alpha(Blur)"
+                        />
+
+                    <Button
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="Color(Blur)"
+                        />
+
+                </TableRow>
+            </TableLayout>
+
+            <com.ilifesmart.ui.StrokeImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:scaleType="centerInside"
+                android:src="@drawable/bulb"
                 />
 
             <Button
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/start_stop"
-                android:text="Animation"
-                android:layout_alignParentBottom="true"
+                android:layout_height="60dp"
+                android:gravity="center"
+                android:text="------- 底线 -------"
                 />
+
         </LinearLayout>
+    </ScrollView>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            >
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:orientation="horizontal"
-                android:id="@+id/adddel"
-                android:background="@android:color/darker_gray"
-                android:animateLayoutChanges="true"
-                />
-            <TableLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-                <TableRow>
-                    <Button
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/add"
-                        android:text="(Default)添加"
-                        android:textAllCaps="false"
-                        />
-                    <Button
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/del"
-                        android:textAllCaps="false"
-                        android:text="(Default)删除"
-                        />
-                </TableRow>
-            </TableLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:orientation="horizontal"
-                android:id="@+id/auto"
-                android:background="@android:color/darker_gray"
-                />
-            <TableLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-                <TableRow>
-                    <Button
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/add2"
-                        android:textAllCaps="false"
-                        android:text="(Custom)添加"
-                        />
-                    <Button
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/del2"
-                        android:textAllCaps="false"
-                        android:text="(Custom)删除"
-                        />
-                </TableRow>
-            </TableLayout>
-
-            <android.support.constraint.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    android:layout_marginLeft="10dp"
-                    android:text="圆形Loading"
-                    />
-                <com.ilifesmart.ui.CircleProgressSurfaceView
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    app:layout_constraintWidth_percent="0.4"
-                    android:id="@+id/path_measure"
-                    android:layout_gravity="center_horizontal"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintDimensionRatio="h,1:1"
-                    />
-
-            </android.support.constraint.ConstraintLayout>
-
-            <android.support.constraint.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="20dp"
-                >
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    android:layout_marginLeft="10dp"
-                    android:text="动效"
-                    />
-                <com.ilifesmart.ui.AliPayLoading
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    app:layout_constraintWidth_percent="0.4"
-                    android:id="@+id/alipay"
-                    android:layout_gravity="center_horizontal"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintDimensionRatio="h,1:1"
-                    />
-
-            </android.support.constraint.ConstraintLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="20dp"
-                android:orientation="vertical"
-                >
-
-                <com.ilifesmart.ui.BlurText
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:padding="4dp"
-                    android:layout_gravity="center_horizontal"
-                    android:id="@+id/blur_text"
-                    />
-                <TableLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-                    <TableRow>
-                        <Button
-                            android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            android:layout_width="0dp"
-                            android:id="@+id/blur_inner"
-                            android:text="内发光(Inner)"
-                            android:textAllCaps="false"
-                            />
-                        <Button
-                            android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            android:layout_width="0dp"
-                            android:id="@+id/blur_solid"
-                            android:text="外发光(Solid)"
-                            android:textAllCaps="false"
-                            />
-                        <Button
-                            android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            android:layout_width="0dp"
-                            android:id="@+id/blur_normal"
-                            android:text="内外发光(Normal)"
-                            android:textAllCaps="false"
-                            />
-                        <Button
-                            android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            android:layout_width="0dp"
-                            android:id="@+id/blur_outer"
-                            android:text="仅发光(Outer)"
-                            android:textAllCaps="false"
-                            />
-                    </TableRow>
-                </TableLayout>
-            </LinearLayout>
-        </LinearLayout>
-
-        <com.ilifesmart.ui.ColorTextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="天下一统，老坛酸菜"
-            android:textSize="26sp"
-            android:gravity="center_horizontal"
-            android:layout_gravity="center_horizontal"
-            />
-    </LinearLayout>
-
-</ScrollView>
+</LinearLayout>

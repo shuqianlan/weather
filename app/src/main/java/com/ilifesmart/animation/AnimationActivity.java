@@ -6,9 +6,16 @@ import android.animation.LayoutTransition;
 import android.animation.ObjectAnimator;
 import android.animation.PropertyValuesHolder;
 import android.animation.ValueAnimator;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.BlurMaskFilter;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -16,7 +23,11 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.ilifesmart.ui.BlurText;
+import com.ilifesmart.ui.CustomDrawable;
+import com.ilifesmart.ui.XfermodeView;
 import com.ilifesmart.weather.R;
+
+import java.util.Arrays;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -32,6 +43,16 @@ public class AnimationActivity extends AppCompatActivity {
 	LinearLayout mAuto;
 	@BindView(R.id.blur_text)
 	BlurText mBlurText;
+	@BindView(R.id.xfermode)
+	XfermodeView mXfermode;
+	@BindView(R.id.custom_image)
+	ImageView mCustomImage;
+	@BindView(R.id.blur_reshader_image_3)
+	ImageView mShineImage;
+	@BindView(R.id.blur_alpha_image_2)
+	ImageView mShine2Image;
+	@BindView(R.id.src_image_1)
+	ImageView mShine1Image;
 
 	private Animator mTelephoneAnimator;
 
@@ -70,6 +91,33 @@ public class AnimationActivity extends AppCompatActivity {
 
 		transition.setAnimator(LayoutTransition.CHANGE_DISAPPEARING, null);
 		mAuto.setLayoutTransition(transition);
+
+		/* 自定义CustomDrawable */
+		Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.icon);
+		CustomDrawable drawable = new CustomDrawable(bitmap);
+		mCustomImage.setBackground(drawable);
+
+		/* 原始bulb图片 */
+		Bitmap srcBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.bulb);
+		mShine1Image.setImageBitmap(srcBitmap);
+
+		Paint alphaPaint = new Paint();
+		BlurMaskFilter filter = new BlurMaskFilter(6, BlurMaskFilter.Blur.NORMAL);
+		alphaPaint.setMaskFilter(filter);
+
+		/* 过滤alpha的bulb图片 */
+		int[] offset = new int[2];
+		Bitmap alphaBitmap = srcBitmap.extractAlpha(alphaPaint, offset);
+		mShine2Image.setImageBitmap(alphaBitmap);
+		Log.d("Demo", "initialize: offset " + Arrays.toString(offset)); // [-6,-6];即阴影半径
+
+		/* 重新着色的bulb图片 */
+		Bitmap shineBitmap = Bitmap.createBitmap(alphaBitmap.getWidth(), alphaBitmap.getHeight(), Bitmap.Config.ARGB_8888);
+		Canvas canvas = new Canvas(shineBitmap);
+		Paint paint1 = new Paint(Paint.ANTI_ALIAS_FLAG);
+		paint1.setColor(Color.CYAN);
+		canvas.drawBitmap(alphaBitmap, -offset[0], -offset[1], paint1);
+		mShineImage.setImageBitmap(shineBitmap);
 	}
 
 	@OnClick(R.id.start_stop)
@@ -159,6 +207,61 @@ public class AnimationActivity extends AppCompatActivity {
 				break;
 			case R.id.blur_solid:
 				mBlurText.setMaskFilter(BlurMaskFilter.Blur.SOLID);
+				break;
+		}
+	}
+
+
+	@OnClick({R.id.xfermode_clear, R.id.xfermode_src, R.id.xfermode_dst, R.id.xfermode_srcover, R.id.xfermode_dstover, R.id.xfermode_srcin, R.id.xfermode_dstin, R.id.xfermode_srcout, R.id.xfermode_dstout, R.id.xfermode_srcatop, R.id.xfermode_dstatop, R.id.xfermode_xor, R.id.xfermode_darken, R.id.xfermode_lighten, R.id.xfermode_multiply, R.id.xfermode_screen})
+	public void onXfermodeClicked(View view) {
+		switch (view.getId()) {
+			case R.id.xfermode_clear:
+				mXfermode.setXfermode(PorterDuff.Mode.CLEAR);
+				break;
+			case R.id.xfermode_src:
+				mXfermode.setXfermode(PorterDuff.Mode.SRC);
+				break;
+			case R.id.xfermode_dst:
+				mXfermode.setXfermode(PorterDuff.Mode.DST);
+				break;
+			case R.id.xfermode_srcover:
+				mXfermode.setXfermode(PorterDuff.Mode.SRC_OVER);
+				break;
+			case R.id.xfermode_dstover:
+				mXfermode.setXfermode(PorterDuff.Mode.DST_OVER);
+				break;
+			case R.id.xfermode_srcin:
+				mXfermode.setXfermode(PorterDuff.Mode.SRC_IN);
+				break;
+			case R.id.xfermode_dstin:
+				mXfermode.setXfermode(PorterDuff.Mode.DST_IN);
+				break;
+			case R.id.xfermode_srcout:
+				mXfermode.setXfermode(PorterDuff.Mode.SRC_OUT);
+				break;
+			case R.id.xfermode_dstout:
+				mXfermode.setXfermode(PorterDuff.Mode.DST_OUT);
+				break;
+			case R.id.xfermode_srcatop:
+				mXfermode.setXfermode(PorterDuff.Mode.SRC_ATOP);
+				break;
+			case R.id.xfermode_dstatop:
+				mXfermode.setXfermode(PorterDuff.Mode.DST_ATOP);
+				break;
+			case R.id.xfermode_xor:
+				mXfermode.setXfermode(PorterDuff.Mode.XOR);
+				break;
+			case R.id.xfermode_darken:
+				mXfermode.setXfermode(PorterDuff.Mode.DARKEN);
+				break;
+			case R.id.xfermode_lighten:
+				mXfermode.setXfermode(PorterDuff.Mode.LIGHTEN);
+				break;
+			case R.id.xfermode_multiply:
+				mXfermode.setXfermode(PorterDuff.Mode.MULTIPLY);
+				break;
+			case R.id.xfermode_screen:
+				mXfermode.setXfermode(PorterDuff.Mode.SCREEN);
 				break;
 		}
 	}
