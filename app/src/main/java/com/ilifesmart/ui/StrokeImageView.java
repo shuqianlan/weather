@@ -2,6 +2,7 @@ package com.ilifesmart.ui;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.BlurMaskFilter;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -42,7 +43,6 @@ public class StrokeImageView extends AppCompatImageView {
 		setStateDrawable(paint);
 	}
 
-
 	private void setStateDrawable(Paint paint) {
 		BitmapDrawable drawable = (BitmapDrawable) getDrawable();
 		Bitmap bitmap = drawable.getBitmap();
@@ -50,6 +50,15 @@ public class StrokeImageView extends AppCompatImageView {
 		Bitmap strokeBitmap = Bitmap.createBitmap(bitmap.getWidth(), bitmap.getHeight(), Bitmap.Config.ARGB_8888);
 		Canvas canvas = new Canvas(strokeBitmap);
 		canvas.drawBitmap(bitmap.extractAlpha(), 0, 0, paint);
+
+		/*
+		* Blur
+		* .NORMAL: Blur inside and outside the original border
+		* .SOLID:  Draw solid inside the border, blur outside.
+		* .OUTER:  Draw nothing inside the border, blur outside.
+		* .INNER:  Blur inside the border, draw nothing outside.
+		* */
+		BlurMaskFilter filter = new BlurMaskFilter(20, BlurMaskFilter.Blur.NORMAL);
 
 		StateListDrawable state = new StateListDrawable();
 		state.addState(new int[] {android.R.attr.state_pressed}, new BitmapDrawable(getResources(), strokeBitmap));

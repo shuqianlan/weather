@@ -22,6 +22,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import com.ilifesmart.ui.BlurImgageView;
 import com.ilifesmart.ui.BlurText;
 import com.ilifesmart.ui.CustomDrawable;
 import com.ilifesmart.ui.XfermodeView;
@@ -53,6 +54,8 @@ public class AnimationActivity extends AppCompatActivity {
 	ImageView mShine2Image;
 	@BindView(R.id.src_image_1)
 	ImageView mShine1Image;
+	@BindView(R.id.blur_image)
+	BlurImgageView mBlurImage;
 
 	private Animator mTelephoneAnimator;
 
@@ -198,19 +201,23 @@ public class AnimationActivity extends AppCompatActivity {
 		switch (v.getId()) {
 			case R.id.blur_inner:
 				mBlurText.setMaskFilter(BlurMaskFilter.Blur.INNER);
+				mBlurImage.setBlurMode(BlurMaskFilter.Blur.INNER);
 				break;
 			case R.id.blur_outer:
 				mBlurText.setMaskFilter(BlurMaskFilter.Blur.OUTER);
+				mBlurImage.setBlurMode(BlurMaskFilter.Blur.OUTER);
 				break;
 			case R.id.blur_normal:
 				mBlurText.setMaskFilter(BlurMaskFilter.Blur.NORMAL);
+				mBlurImage.setBlurMode(BlurMaskFilter.Blur.NORMAL);
 				break;
 			case R.id.blur_solid:
 				mBlurText.setMaskFilter(BlurMaskFilter.Blur.SOLID);
+				mBlurImage.setBlurMode(BlurMaskFilter.Blur.SOLID);
 				break;
 		}
-	}
 
+	}
 
 	@OnClick({R.id.xfermode_clear, R.id.xfermode_src, R.id.xfermode_dst, R.id.xfermode_srcover, R.id.xfermode_dstover, R.id.xfermode_srcin, R.id.xfermode_dstin, R.id.xfermode_srcout, R.id.xfermode_dstout, R.id.xfermode_srcatop, R.id.xfermode_dstatop, R.id.xfermode_xor, R.id.xfermode_darken, R.id.xfermode_lighten, R.id.xfermode_multiply, R.id.xfermode_screen})
 	public void onXfermodeClicked(View view) {
