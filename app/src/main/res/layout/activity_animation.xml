@@ -567,18 +567,191 @@
                 android:src="@drawable/bulb"
                 />
 
-            <ImageView
+            <com.ilifesmart.ui.GreenImageView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-
+                android:scaleType="centerInside"
+                android:src="@drawable/bulb"
+                android:layout_gravity="center"
+                app:age="child"
+                app:sex="man"
                 />
 
+            <com.ilifesmart.ui.FlowLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/simple_cont"
+                android:layout_gravity="center"
+                >
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Simple_1fafahflahfla fhalfhalfh qouroqp81r5ikfhjalfjlahflahffqhroqhfoahao1240gjskqwkfgjsnnnak8173thchla"
+                    android:padding="6dp"
+                    android:layout_marginLeft="6dp"
+                    android:background="@drawable/drawable_flowlayout_item_background"
+                    android:layout_marginTop="10dp"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Simple_2"
+                    android:padding="6dp"
+                    android:layout_marginLeft="6dp"
+                    android:background="@drawable/drawable_flowlayout_item_background"
+                    android:layout_marginTop="10dp"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Simple_3"
+                    android:layout_marginLeft="6dp"
+                    android:padding="6dp"
+                    android:background="@drawable/drawable_flowlayout_item_background"
+                    android:layout_marginTop="10dp"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Simple_4"
+                    android:padding="6dp"
+                    android:layout_marginLeft="6dp"
+                    android:background="@drawable/drawable_flowlayout_item_background"
+                    android:layout_marginTop="10dp"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Simple_1"
+                    android:padding="6dp"
+                    android:layout_marginLeft="6dp"
+                    android:background="@drawable/drawable_flowlayout_item_background"
+                    android:layout_marginTop="10dp"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Simple_2"
+                    android:padding="6dp"
+                    android:layout_marginLeft="6dp"
+                    android:background="@drawable/drawable_flowlayout_item_background"
+                    android:layout_marginTop="10dp"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Simple_3"
+                    android:padding="6dp"
+                    android:layout_marginLeft="6dp"
+                    android:background="@drawable/drawable_flowlayout_item_background"
+                    android:layout_marginTop="10dp"
+                    />
+
+                <!--<TextView-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:text="Simple_4"-->
+                    <!--android:padding="6dp"-->
+                    <!--android:layout_marginLeft="6dp"-->
+                    <!--android:background="@drawable/drawable_flowlayout_item_background"-->
+                    <!--android:layout_marginTop="10dp"-->
+                    <!--/>-->
+
+                <!--<TextView-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:text="Simple_1"-->
+                    <!--android:padding="6dp"-->
+                    <!--android:layout_marginLeft="6dp"-->
+                    <!--android:background="@drawable/drawable_flowlayout_item_background"-->
+                    <!--android:layout_marginTop="10dp"-->
+                    <!--/>-->
+
+                <!--<TextView-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:text="Simple_2"-->
+                    <!--android:layout_marginLeft="6dp"-->
+                    <!--android:padding="6dp"-->
+                    <!--android:background="@drawable/drawable_flowlayout_item_background"-->
+                    <!--android:layout_marginTop="10dp"-->
+                    <!--/>-->
+
+                <!--<TextView-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:text="Simple_3"-->
+                    <!--android:padding="6dp"-->
+                    <!--android:layout_marginLeft="6dp"-->
+                    <!--android:background="@drawable/drawable_flowlayout_item_background"-->
+                    <!--android:layout_marginTop="10dp"-->
+                    <!--/>-->
+
+                <!--<TextView-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:text="Simple_4"-->
+                    <!--android:padding="6dp"-->
+                    <!--android:layout_marginLeft="6dp"-->
+                    <!--android:background="@drawable/drawable_flowlayout_item_background"-->
+                    <!--android:layout_marginTop="10dp"-->
+                    <!--/>-->
+
+                <!--<TextView-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:text="Simple_1"-->
+                    <!--android:padding="6dp"-->
+                    <!--android:background="@drawable/drawable_flowlayout_item_background"-->
+                    <!--android:layout_marginTop="10dp"-->
+                    <!--android:layout_marginLeft="6dp"-->
+                    <!--/>-->
+
+                <!--<TextView-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:text="Simple_2"-->
+                    <!--android:padding="6dp"-->
+                    <!--android:background="@drawable/drawable_flowlayout_item_background"-->
+                    <!--android:layout_marginTop="10dp"-->
+                    <!--android:layout_marginLeft="6dp"-->
+                    <!--/>-->
+
+                <!--<TextView-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:text="Simple_3"-->
+                    <!--android:padding="6dp"-->
+                    <!--android:background="@drawable/drawable_flowlayout_item_background"-->
+                    <!--android:layout_marginTop="10dp"-->
+                    <!--android:layout_marginLeft="6dp"-->
+                    <!--/>-->
+
+                <!--<TextView-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:text="Simple_4"-->
+                    <!--android:padding="6dp"-->
+                    <!--android:background="@drawable/drawable_flowlayout_item_background"-->
+                    <!--android:layout_marginTop="10dp"-->
+                    <!--android:layout_marginLeft="6dp"-->
+                    <!--/>-->
+            </com.ilifesmart.ui.FlowLayout>
+
             <Button
+                android:layout_marginTop="100dp"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:gravity="center"
                 android:text="------- 底线 -------"
                 />
+
 
         </LinearLayout>
     </ScrollView>

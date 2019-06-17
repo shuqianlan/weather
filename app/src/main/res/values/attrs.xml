@@ -62,6 +62,19 @@
         <item name="android:thumb">@drawable/thumbdrawable</item>
         <item name="android:maxHeight">10dp</item>
         <item name="android:thumbOffset">0dp</item>
-    </style> 
+    </style>
+
+    <declare-styleable name="GreenImageView">
+        <attr name="GreenAppend" format="integer" />
+        <attr name="age">
+            <flag name="child" value="10" />
+            <flag name="young" value="18" />
+            <flag name="old"   value="60" />
+        </attr>
+        <attr name="sex">
+            <enum name="man" value="0" />
+            <enum name="woman" value="1" />
+        </attr>
+    </declare-styleable>
 
 </resources>

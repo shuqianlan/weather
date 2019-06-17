@@ -10,8 +10,12 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.StateListDrawable;
 import android.support.v7.widget.AppCompatImageView;
 import android.util.AttributeSet;
+import android.util.Log;
 
 public class StrokeImageView extends AppCompatImageView {
+
+	public static final String TAG = "StrokeImageView";
+
 	public StrokeImageView(Context context) {
 		this(context, null);
 	}
@@ -47,9 +51,12 @@ public class StrokeImageView extends AppCompatImageView {
 		BitmapDrawable drawable = (BitmapDrawable) getDrawable();
 		Bitmap bitmap = drawable.getBitmap();
 
+		Log.d(TAG, "setStateDrawable: byteCount (M) " + bitmap.getAllocationByteCount()/1024f/1024);
+
 		Bitmap strokeBitmap = Bitmap.createBitmap(bitmap.getWidth(), bitmap.getHeight(), Bitmap.Config.ARGB_8888);
 		Canvas canvas = new Canvas(strokeBitmap);
 		canvas.drawBitmap(bitmap.extractAlpha(), 0, 0, paint);
+		Log.d(TAG, "setStateDrawable: byteCount (M) " + strokeBitmap.getAllocationByteCount()/1024f/1024);
 
 		/*
 		* Blur
