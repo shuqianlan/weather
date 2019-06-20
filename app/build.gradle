@@ -15,6 +15,10 @@ android {
                 includeCompileClasspath = true
             }
         }
+
+        ndk {
+            abiFilters "armeabi-v7a"
+        }
     }
     buildTypes {
         release {
@@ -23,12 +27,12 @@ android {
         }
 
     }
-    sourceSets {
-        main {
-            jniLibs.srcDirs = ['libs']
-            jni.srcDirs = [] // disable automatic ndk-build
+    externalNativeBuild {
+        ndkBuild {
+            path file("src/main/jni/Android.mk")
         }
     }
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8

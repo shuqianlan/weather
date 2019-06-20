@@ -23,6 +23,7 @@ import com.ilifesmart.fold.FoldActivity;
 import com.ilifesmart.fragment.DialogActivity;
 import com.ilifesmart.framelayout.FrameLayoutActivity;
 import com.ilifesmart.group.GroupActivity;
+import com.ilifesmart.layout.AbstractActivity;
 import com.ilifesmart.live.KeepLiveService;
 import com.ilifesmart.live.ProgressLiveActivity;
 import com.ilifesmart.mapper.MapperActivity;
@@ -42,6 +43,8 @@ import com.ilifesmart.utils.Utils;
 import com.ilifesmart.viewpager.ViewPagerActivity;
 import com.ilifesmart.weather.R;
 import com.ilifesmart.weather.WeatherActivity;
+import com.ilifesmart.window.WindowDemoActivity;
+import com.jni.JniDemoActivity;
 import com.spannableText.SpannableActivity;
 import com.surfaceview.SurfaceViewActivity;
 
@@ -175,7 +178,7 @@ public class HomeActivity extends AppCompatActivity {
         }
     }
 
-    @OnClick({R.id.weather, R.id.seekbar, R.id.notification, R.id.rotate, R.id.aop_test, R.id.thread_test, R.id.framelayout, R.id.compass, R.id.miclock, R.id.camrotate, R.id.path, R.id.osinfo, R.id.viewpager, R.id.mapper, R.id.dialog, R.id.preference, R.id.nature_ui, R.id.spider_web, R.id.mvvm, R.id.rxjava, R.id.progress, R.id.ViewGroup, R.id.live, R.id.curtain, R.id.barrage, R.id.bluetooth, R.id.fold, R.id.region, R.id.span_text, R.id.custom_surfaceview, R.id.animation})
+    @OnClick({R.id.weather, R.id.seekbar, R.id.notification, R.id.rotate, R.id.aop_test, R.id.thread_test, R.id.framelayout, R.id.compass, R.id.miclock, R.id.camrotate, R.id.path, R.id.osinfo, R.id.viewpager, R.id.mapper, R.id.dialog, R.id.preference, R.id.nature_ui, R.id.spider_web, R.id.mvvm, R.id.rxjava, R.id.progress, R.id.ViewGroup, R.id.live, R.id.curtain, R.id.barrage, R.id.bluetooth, R.id.fold, R.id.region, R.id.span_text, R.id.custom_surfaceview, R.id.animation, R.id.window, R.id.abstract_layout, R.id.jni})
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.weather:
@@ -271,6 +274,15 @@ public class HomeActivity extends AppCompatActivity {
                 break;
             case R.id.animation:
                 Utils.startActivity(this, AnimationActivity.class);
+                break;
+            case R.id.window:
+                Utils.startActivity(this, WindowDemoActivity.class);
+                break;
+            case R.id.abstract_layout:
+                Utils.startActivity(this, AbstractActivity.class);
+                break;
+            case R.id.jni:
+                Utils.startActivity(this, JniDemoActivity.class);
                 break;
         }
     }

@@ -79,7 +79,7 @@ public class Utils {
             return null;
         }
         copyFile(in, path);
-
+        //implementation 'com.github.wseemann:FFmpegMediaMetadataRetriever-armeabi-v7a:1.0.14'
         FFmpegMediaMetadataRetriever retriever = new FFmpegMediaMetadataRetriever();
         retriever.setDataSource(path);
         retriever.extractMetadata(FFmpegMediaMetadataRetriever.METADATA_KEY_ALBUM);

@@ -2,9 +2,8 @@ package com.ilifesmart.thread;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.Handler;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
 import com.ilifesmart.weather.R;
@@ -22,6 +21,20 @@ public class ThreadTestActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_thread_test);
+
+        for (int i = 0; i < 20; i++) {
+            ThreadUtils.THREAD_POOL_EXECUTOR.execute(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        Thread.sleep(40000);
+                        Log.d("BBBB", "run: Name " + Thread.currentThread().getName());
+                    } catch(Exception ex) {
+                    	ex.printStackTrace();
+                    }
+                }
+            });
+        }
     }
 
     public static Intent newIntent(Context context) {

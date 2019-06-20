@@ -18,6 +18,7 @@
     <uses-permission android:name="android.permission.BLUETOOTH"/> <!-- 蓝牙设置权限 -->
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN"/> <!-- 设置屏幕效果(保持屏幕常亮或其它) -->
     <uses-permission android:name="android.permission.WAKE_LOCK"/>
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
 
     <uses-feature
         android:name="android.hardware.bluetooth_le"
@@ -31,6 +32,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name="com.jni.JniDemoActivity">
+        </activity>
+        <activity android:name="com.ilifesmart.layout.AbstractActivity">
+        </activity>
+        <activity android:name="com.ilifesmart.window.WindowDemoActivity">
+        </activity>
         <activity android:name="com.ilifesmart.animation.AnimationActivity">
         </activity>
         <activity android:name="com.ilifesmart.barrage.VideoActivity">
