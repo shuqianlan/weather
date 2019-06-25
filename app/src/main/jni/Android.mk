@@ -8,11 +8,11 @@
 # LOCAL_MODULE:生成的动态库名为"lib"+Name+".so"
 # LOCAL_LDLIBS: 此处未链接liblog.so
 
-
-
 LOCAL_PATH := $(call my-dir)
+
 include $(CLEAR_VARS)
 LOCAL_MODULE := Hello
-LOCAL_SRC_FILES := Hello.cpp
+LOCAL_SRC_FILES := com_jni_HelloNDK.cpp
+
 LOCAL_LDLIBS += -llog
 include $(BUILD_SHARED_LIBRARY)

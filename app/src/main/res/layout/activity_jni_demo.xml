@@ -10,29 +10,47 @@
     android:gravity="center"
     >
 
-    <TextView
+    <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/content"
+        android:id="@+id/c_print"
         android:gravity="center"
         android:layout_gravity="center_horizontal"
-        tools:text="HelloC"
-        android:layout_margin="10dp"
+        android:text="调用C函数(print)"
         />
 
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
-        android:id="@+id/call_from_c"
-        android:text="Call_from_C"
+        android:id="@+id/c_add"
+        android:text="调用C函数(add)"
         />
 
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
-        android:id="@+id/call_from_Java"
-        android:text="Call_from_Java"
+        android:id="@+id/c_string_append"
+        android:text="调用C函数(Append)"
+        />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/java_debug"
+        android:text="C调用Java函数(debug)"
+        />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/java_add"
+        android:text="C调用Java函数(add)"
+        />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/java_print"
+        android:text="C调用Java函数(print)"
         />
 </LinearLayout>
