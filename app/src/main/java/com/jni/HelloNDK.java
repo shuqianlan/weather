@@ -5,7 +5,7 @@ import android.util.Log;
 public class HelloNDK {
 
 	/*
-	 * jclass: 类
+	 * jclass:  类
 	 * jobject: 类对象
 	 *
 	 * */
