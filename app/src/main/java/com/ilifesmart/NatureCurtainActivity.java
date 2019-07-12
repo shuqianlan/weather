@@ -48,6 +48,7 @@ public class NatureCurtainActivity extends AppCompatActivity {
 			}
 		});
 
+
 	}
 
 }

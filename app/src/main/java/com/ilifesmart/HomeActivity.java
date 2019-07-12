@@ -4,6 +4,8 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
+import android.net.wifi.WifiInfo;
+import android.net.wifi.WifiManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -11,7 +13,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 import com.ilifesmart.animation.AnimationActivity;
 import com.ilifesmart.aop.CheckOnClickActivity;
 import com.ilifesmart.barrage.VideoActivity;
@@ -39,6 +43,7 @@ import com.ilifesmart.region.RegionDemoActivity;
 import com.ilifesmart.rxjava.DemoActivity;
 import com.ilifesmart.test.SeekBarActivity;
 import com.ilifesmart.thread.ThreadTestActivity;
+import com.ilifesmart.utils.NetWorkUtil;
 import com.ilifesmart.utils.Utils;
 import com.ilifesmart.viewpager.ViewPagerActivity;
 import com.ilifesmart.weather.R;
@@ -50,10 +55,6 @@ import com.surfaceview.SurfaceViewActivity;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 public class HomeActivity extends AppCompatActivity {
 
@@ -105,6 +106,13 @@ public class HomeActivity extends AppCompatActivity {
 //                screenManager.startActivity();
             }
         });
+
+        WifiManager manager = (WifiManager) getApplicationContext().getSystemService(WIFI_SERVICE);
+        WifiInfo info = manager.getConnectionInfo();
+        int freq = info.getFrequency();
+        Log.d(TAG, "onCreate: freq " + freq);
+        Log.d(TAG, "onCreate: is5G " + NetWorkUtil.is5GHz(freq));
+        Log.d(TAG, "onCreate: is2.4G " + NetWorkUtil.is24GHz(freq));
     }
 
     @Override
@@ -178,7 +186,7 @@ public class HomeActivity extends AppCompatActivity {
         }
     }
 
-    @OnClick({R.id.weather, R.id.seekbar, R.id.notification, R.id.rotate, R.id.aop_test, R.id.thread_test, R.id.framelayout, R.id.compass, R.id.miclock, R.id.camrotate, R.id.path, R.id.osinfo, R.id.viewpager, R.id.mapper, R.id.dialog, R.id.preference, R.id.nature_ui, R.id.spider_web, R.id.mvvm, R.id.rxjava, R.id.progress, R.id.ViewGroup, R.id.live, R.id.curtain, R.id.barrage, R.id.bluetooth, R.id.fold, R.id.region, R.id.span_text, R.id.custom_surfaceview, R.id.animation, R.id.window, R.id.abstract_layout, R.id.jni})
+    @OnClick({R.id.weather, R.id.seekbar, R.id.notification, R.id.rotate, R.id.aop_test, R.id.thread_test, R.id.framelayout, R.id.compass, R.id.miclock, R.id.camrotate, R.id.path, R.id.osinfo, R.id.viewpager, R.id.mapper, R.id.dialog, R.id.preference, R.id.nature_ui, R.id.spider_web, R.id.mvvm, R.id.rxjava, R.id.progress, R.id.ViewGroup, R.id.live, R.id.curtain, R.id.barrage, R.id.bluetooth, R.id.fold, R.id.region, R.id.span_text, R.id.custom_surfaceview, R.id.animation, R.id.window, R.id.abstract_layout, R.id.jni, R.id.miui_right_out})
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.weather:
@@ -284,6 +292,9 @@ public class HomeActivity extends AppCompatActivity {
             case R.id.jni:
                 Utils.startActivity(this, JniDemoActivity.class);
                 break;
+            case R.id.miui_right_out:
+                Utils.startActivity(this, MIUIActivity.class);
+                break;
         }
     }
 
@@ -326,4 +337,6 @@ public class HomeActivity extends AppCompatActivity {
     public void onCamRotate() {
         startActivity(Utils.newIntent(this, CameraRotateActivity.class));
     }
+
+
 }

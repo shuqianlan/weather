@@ -23,6 +23,15 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
             <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:background="@drawable/stroke_background"
+                    android:id="@+id/miui_right_out"
+                    android:text="仿小米右滑退出"
+                    android:textAllCaps="false"
+                    android:layout_gravity="center"
+            />
+            <Button
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:background="@drawable/stroke_background"
@@ -36,7 +45,7 @@
                 android:layout_height="60dp"
                 android:background="@drawable/stroke_background"
                 android:id="@+id/abstract_layout"
-                android:text="Anstract"
+                android:text="ViewStub"
                 android:textAllCaps="false"
                 android:layout_gravity="center"
                 />
@@ -45,7 +54,7 @@
                 android:layout_height="60dp"
                 android:background="@drawable/stroke_background"
                 android:id="@+id/window"
-                android:text="Window"
+                android:text="悬浮窗"
                 android:textAllCaps="false"
                 android:layout_gravity="center"
                 />

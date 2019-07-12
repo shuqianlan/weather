@@ -145,5 +145,15 @@ public class NetWorkUtil {
         return (info != null) && info.isConnected() && info.isAvailable();
 
     }
+
+    public static boolean is5GHz(int freq) {
+        return freq > 4900 && freq < 5900;
+    }
+
+    public static boolean is24GHz(int freq) {
+        return freq > 2400 && freq < 2500;
+    }
+
+
 }
 
