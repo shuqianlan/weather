@@ -18,7 +18,6 @@ public class LeChengResponse<T extends LeChengResponse.ResultBean> {
 
     public void setResult(T result) {
         this.result = result;
-
     }
 
     public static class ResultBean {

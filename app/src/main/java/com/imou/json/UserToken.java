@@ -1,6 +1,6 @@
 package com.imou.json;
 
-public class UserToken extends LeChengResponse {
+public class UserToken extends LeChengResponse<UserToken.UserTokenResultData> {
 
     /*
     * 由于返回值中Data的类型不确定，此处通过registerTypeAdapter解决.
