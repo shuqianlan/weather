@@ -8,6 +8,10 @@ import com.ilifesmart.reflect.ReflectDemo;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Semaphore;
@@ -67,6 +71,12 @@ public class MyClass {
 
 //		TestTool.testNoBus(); // 注解测试!
 		ReflectDemo.test();
+
+		List<String> strs = new ArrayList<>();
+		strs.add("Hello");
+		strs.add("Alo");
+		Collections.sort(strs);
+		System.out.println("strs: " + Arrays.toString(strs.toArray()));
 	}
 
 	/*
