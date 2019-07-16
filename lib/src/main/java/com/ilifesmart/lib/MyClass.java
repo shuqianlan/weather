@@ -77,6 +77,8 @@ public class MyClass {
 		strs.add("Alo");
 		Collections.sort(strs);
 		System.out.println("strs: " + Arrays.toString(strs.toArray()));
+
+		gsonDemo();
 	}
 
 	/*
@@ -110,5 +112,9 @@ public class MyClass {
 
 			executorService.execute(runable);
 		}
+	}
+
+	public static void gsonDemo() {
+
 	}
 }

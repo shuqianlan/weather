@@ -1,5 +1,6 @@
 package com.imou;
 
+import com.ilifesmart.utils.PersistentMgr;
 import com.imou.json.*;
 import com.imou.json.LeChengRequest;
 import io.reactivex.Flowable;
@@ -33,7 +34,7 @@ public class RemoteRepository {
 		mLeChengCamApi = mRetrofit.create(LeChengCameraApi.class);
 	}
 
-	public Flowable<UserToken> userLogin(String phone) {
+	public Flowable<UserTokenResponse> userLogin(String phone) {
 		UserBindSms body = new UserBindSms();
 		UserBindSms.UserBindSmsParams params = new UserBindSms.UserBindSmsParams();
 		params.setPhone(phone);
@@ -78,5 +79,24 @@ public class RemoteRepository {
 		body.setSystem(system);
 
 		return mLeChengCamApi.userBind(body);
+	}
+
+	public Flowable<DeviceOnlineResponsse> deviceOnline(String device) {
+		DeviceOnline body = new DeviceOnline();
+		DeviceOnline.DeviceOnlineParams params = new DeviceOnline.DeviceOnlineParams();
+
+		String token = PersistentMgr.readKV("IMOU_ExpiredTime_18158531684");
+		params.setDeviceId(device);
+		params.setToken(token);
+		Map<String,String> args = new HashMap<>();
+		args.put("deviceId", device);
+		args.put("token", token);
+		LeChengRequest.SystemBean system = SignHelper.createSystemBean(args);
+
+		body.setId("1.1");
+		body.setParams(params);
+		body.setSystem(system);
+
+		return mLeChengCamApi.deviceOnline(body);
 	}
 }

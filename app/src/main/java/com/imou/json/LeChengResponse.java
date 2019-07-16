@@ -1,8 +1,8 @@
 package com.imou.json;
 
-public class LeChengResponse<T extends LeChengResponse.ResultBean> {
+public class LeChengResponse<T> {
     protected String id;
-    protected T result;
+    protected ResultBean result;
 
     public String getId() {
         return id;
@@ -12,18 +12,18 @@ public class LeChengResponse<T extends LeChengResponse.ResultBean> {
         this.id = id;
     }
 
-    public T getResult() {
+    public ResultBean getResult() {
         return result;
     }
 
-    public void setResult(T result) {
+    public void setResult(ResultBean result) {
         this.result = result;
     }
 
-    public static class ResultBean {
+    public static class ResultBean<T> {
         private String code;
         private String msg;
-        private Object data;
+        private T data;
 
         public String getCode() {
             return code;
@@ -41,11 +41,11 @@ public class LeChengResponse<T extends LeChengResponse.ResultBean> {
             this.msg = msg;
         }
 
-        public Object getData() {
+        public T getData() {
             return data;
         }
 
-        public void setData(Object data) {
+        public void setData(T data) {
             this.data = data;
         }
 

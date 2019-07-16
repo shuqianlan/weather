@@ -26,6 +26,15 @@
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
                     android:background="@drawable/stroke_background"
+                    android:id="@+id/gson"
+                    android:text="Gson"
+                    android:textAllCaps="false"
+                    android:layout_gravity="center"
+            />
+            <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:background="@drawable/stroke_background"
                     android:id="@+id/imou"
                     android:text="乐橙"
                     android:textAllCaps="false"

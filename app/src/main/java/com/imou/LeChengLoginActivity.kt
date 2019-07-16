@@ -3,6 +3,8 @@ package com.imou
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
+import android.widget.Toast
+import com.ilifesmart.utils.PersistentMgr
 import com.ilifesmart.weather.R
 import io.reactivex.functions.Consumer
 
@@ -25,8 +27,10 @@ class LeChengLoginActivity : BaseActivity() {
             RxBus.getInstance().doSubscribe(flowable)
                 .subscribe(Consumer {
                     println("userBindSms result:$it")
+                    Toast.makeText(this@LeChengLoginActivity, "验证码发送成功", Toast.LENGTH_SHORT).show()
                 }, Consumer<Throwable> {
                     println("userBindSms Error:${it.message}")
+                    Toast.makeText(this@LeChengLoginActivity, "验证码发送失败", Toast.LENGTH_SHORT).show()
                 })
         }
 
@@ -52,6 +56,10 @@ class LeChengLoginActivity : BaseActivity() {
             RxBus.getInstance().doSubscribe(flowable)
                 .subscribe(Consumer{
                     println("userBind:$it")
+
+                    PersistentMgr.putKV("IMOU_ExpiredTime_"+phone.text.toString(), it.result.data.expiredTime);
+                    PersistentMgr.putKV("IMOU_UserToken_"+phone.text.toString(), it.result.data.userToken);
+                    this@LeChengLoginActivity.finish()
                 }, Consumer {
                     println("userBind:${it.message}")
                 })
