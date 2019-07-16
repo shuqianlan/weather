@@ -89,6 +89,7 @@ public class Gson2Activity extends AppCompatActivity {
         Result resultBean = fromJsonObject(reader, Person.class);
         Log.d(TAG, "initialize: Result<Person> " + resultBean);
 
+        // https://www.jianshu.com/p/e740196225a4
     }
 
     public static class Person {
