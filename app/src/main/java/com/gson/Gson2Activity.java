@@ -4,10 +4,14 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import com.google.common.reflect.TypeToken;
-import com.google.gson.Gson;
-import com.google.gson.annotations.SerializedName;
+import com.google.gson.*;
+import com.google.gson.annotations.*;
+import com.google.gson.stream.JsonReader;
+import com.google.gson.stream.JsonWriter;
 import com.ilifesmart.weather.R;
 
+import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.io.Reader;
 import java.io.StringReader;
 import java.lang.reflect.ParameterizedType;
@@ -86,17 +90,214 @@ public class Gson2Activity extends AppCompatActivity {
         String resultJSON = gson.toJson(result);
         StringReader reader = new StringReader(resultJSON);
         Log.d(TAG, "initialize: resultJSON: " + resultJSON);
-        Result resultBean = fromJsonObject(reader, Person.class);
-        Log.d(TAG, "initialize: Result<Person> " + resultBean);
+//        Result resultBean = fromJsonObject(reader, Person.class);
+//        Log.d(TAG, "initialize: Result<Person> " + resultBean);
 
         // https://www.jianshu.com/p/e740196225a4
+
+        // 流式反序列化
+        // 手动方式
+        Person person4 = new Person();
+        person4.setName("tesla");
+        person4.setAge(26);
+        String streamJson = gson.toJson(person4);
+        Log.d(TAG, "initialize: person4Json " + streamJson);
+        Person person3 = new Person();
+        JsonReader jsonReader = new JsonReader(new StringReader(streamJson));
+
+        try {
+            jsonReader.beginObject();
+            while (jsonReader.hasNext()) {
+                final String name = jsonReader.nextName();
+                switch (name) {
+                    case "name":
+                        person3.setName(jsonReader.nextString());
+                        break;
+                    case "age":
+                        person3.setAge(jsonReader.nextInt());
+                        break;
+                    case "address":
+                        person3.setAddress(jsonReader.nextString());
+                        break;
+                }
+            }
+            jsonReader.endObject();
+
+            Log.d(TAG, "initialize: person3 " + person3);
+        } catch(Exception ex) {
+        	ex.printStackTrace();
+        }
+
+        // 流式序列化
+        // 手动方式
+
+        try {
+            JsonWriter writer = new JsonWriter(new OutputStreamWriter(System.out));
+            writer.beginObject()
+                    .name("name").value(person3.getName())
+                    .name("age").value(person3.getAge())
+                    .name("address").value(person3.getAddress())
+                    .endObject();
+            writer.flush(); // I/System.out: {"name":"Tesila","age":24,"address":null}
+        } catch(Exception ex) {
+        	ex.printStackTrace();
+        }
+
+        // GsonBuilder (自定义规则)
+        Gson gson2 = new GsonBuilder()
+                .serializeNulls() // 序列化null值
+                .setDateFormat("yyyy-MM-dd")
+                .setVersion(1.5) // 设置版本号|对注解Since和Until有效
+                .disableInnerClassSerialization() // 禁止序列化内部类
+//                .excludeFieldsWithoutExposeAnnotation() // 过滤掉没有Expose的字段
+//                .generateNonExecutableJson()      // 生成不可执行的Json(多了 )]}' 这四个字符)
+//                .setPrettyPrinting()              // 格式化输出
+                .addSerializationExclusionStrategy(new ExclusionStrategy() {
+                    @Override
+                    public boolean shouldSkipField(FieldAttributes f) {
+                        Log.d(TAG, "shouldSkipField: f.name: " + f.getName());
+                        if (f.getName().equals("county")) {
+                            Log.d(TAG, "shouldSkipField: filterCountry!");
+                            return true;
+                        }
+
+                        Expose expose = f.getAnnotation(Expose.class);
+                        if (expose != null && expose.serialize() == false) {
+                            return true;
+                        }
+                        return false;
+                    }
+
+                    @Override
+                    public boolean shouldSkipClass(Class<?> clazz) {
+                        return false;
+                    }
+                })
+                .addDeserializationExclusionStrategy(new ExclusionStrategy() {
+                    @Override
+                    public boolean shouldSkipField(FieldAttributes f) {
+                        Log.d(TAG, "addDeserializationExclusionStrategy shouldSkipField f.name: " + f.getName());
+                        if (f.getName().equals("unionCode")) {
+                            Log.d(TAG, "shouldSkipField: filterUnionCode ----->");
+                            return true;
+                        }
+
+                        Expose expose = f.getAnnotation(Expose.class);
+                        if (expose != null && expose.deserialize() == false) {
+                            Log.d(TAG, "shouldSkipField: =========================");
+                            return true;
+                        }
+
+                        return false;
+                    }
+
+                    @Override
+                    public boolean shouldSkipClass(Class<?> clazz) {
+                        return false;
+                    }
+                })
+                .create();
+
+        // Expose字段过滤
+        String gson2Str = gson2.toJson(person4);
+
+        Log.d(TAG, "initialize: gson2Str " + gson2Str);
+        // ver:1.2 initialize: gson2Str {"unionCode":"2456"}
+        // ver:1.5 initialize: gson2Str {"county":"China"}
+        Person person5 = new Person();
+        person5.setName("wuzh");
+        person5.setAge(26);
+        person5.setAddress("hangzhou");
+        person5.setCounty("China");
+        person5.setUnionCode("310052");
+        String json5 = gson2.toJson(person5);
+        Person person5Result = gson2.fromJson(json5, Person.class);
+
+        Log.d(TAG, "initialize: json5: " + json5);
+        Log.d(TAG, "initialize: person5Result: " + person5Result);
+
+        Gson gson3 = new GsonBuilder()
+//                .registerTypeAdapter(Person.class, new TypeAdapter<Person>() {
+//                    @Override
+//                    public void write(JsonWriter out, Person value) throws IOException {
+//                        out.beginObject()
+//                                .name("name").value(value.name)
+//                                .name("age").value(value.age)
+//                                .name("address").value(value.address)
+//                                .name("unionCode").value(value.unionCode)
+//                                .name("county").value(value.county)
+//                                .endObject();
+//                    }
+//
+//                    @Override
+//                    public Person read(JsonReader in) throws IOException {
+//                        Person person = new Person();
+//                        in.beginObject();
+//                        while (in.hasNext()) {
+//                            switch (in.nextName()) {
+//                                case "name":
+//                                    person.setName(in.nextString());
+//                                    break;
+//                                case "age":
+//                                    person.setAge(in.nextInt());
+//                                    break;
+//                                case "address":
+//                                    person.setAddress(in.nextString());
+//                                    break;
+//                                case "unionCode":
+//                                    person.setUnionCode(in.nextString());
+//                                    break;
+//                                case "county":
+//                                    person.setCounty(in.nextString());
+//                                    break;
+//                            }
+//                        }
+//                        in.endObject();
+//                        return person;
+//                    }
+//                }.nullSafe())
+                // 此处类型必须是包装类型!
+                // 支持泛型，不支持继承
+                // 如果一个序列化对象本身带有泛型，且注册了typeAdapter。则toJson必须指定类型.
+                .registerTypeAdapter(Person.class, new JsonSerializer<Person>() {
+                    @Override
+                    public JsonElement serialize(Person src, Type typeOfSrc, JsonSerializationContext context) {
+                        return new JsonPrimitive(src.age); // 仅序列化age
+                    }
+                })
+                // 支持继承，不支持泛型
+                .registerTypeHierarchyAdapter(Number.class, new TypeAdapter<Integer>() {
+                    @Override
+                    public void write(JsonWriter out, Integer value) throws IOException {
+
+                    }
+
+                    @Override
+                    public Integer read(JsonReader in) throws IOException {
+                        return null;
+                    }
+                })
+                .create(); // 26
+
+        String gson3Str = gson3.toJson(person5);
+        Log.d(TAG, "initialize: gson3Str " + gson3Str);
+
     }
 
+    // @JsonAdapter(): 指定此类对应的序列化与反序列化对象. 不需要再注册registerTypeAdapter, 并内部默认调用nullSafe() || 注解的好处
     public static class Person {
         private String name;
         @SerializedName(value = "address", alternate = {"Address", "country"})
         private String address;
         private int age;
+
+        @Expose
+        @Until(1.3)
+        private String unionCode;
+
+        @Since(1.4)
+        @Expose(serialize = true, deserialize = false)
+        private String county = "China";
 
         public String getName() {
             return name;
@@ -122,12 +323,30 @@ public class Gson2Activity extends AppCompatActivity {
             this.age = age;
         }
 
+        public String getUnionCode() {
+            return unionCode;
+        }
+
+        public void setUnionCode(String unionCode) {
+            this.unionCode = unionCode;
+        }
+
+        public String getCounty() {
+            return county;
+        }
+
+        public void setCounty(String county) {
+            this.county = county;
+        }
+
         @Override
         public String toString() {
             return "Person{" +
                     "name='" + name + '\'' +
                     ", address='" + address + '\'' +
                     ", age=" + age +
+                    ", unionCode=" + unionCode +
+                    ", county=" + county +
                     '}';
         }
     }
