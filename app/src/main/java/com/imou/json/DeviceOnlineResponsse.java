@@ -1,67 +1,12 @@
 package com.imou.json;
 
+import com.google.gson.annotations.JsonAdapter;
+
 import java.util.List;
 
-public class DeviceOnlineResponsse {
+public class DeviceOnlineResponsse extends LeChengResponse<DeviceOnlineResponsse.DeviceOnlineData> {
 
-    protected String id;
-    protected UserTokenResponse.UserTokenResult result;
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public UserTokenResponse.UserTokenResult getResult() {
-        return result;
-    }
-
-    public void setResult(UserTokenResponse.UserTokenResult result) {
-        this.result = result;
-    }
-
-    public static class Result {
-        private DeviceOnlineData data;
-        private String code;
-        private String msg;
-
-        public DeviceOnlineData getData() {
-            return data;
-        }
-
-        public void setData(DeviceOnlineData data) {
-            this.data = data;
-        }
-
-        public String getCode() {
-            return code;
-        }
-
-        public void setCode(String code) {
-            this.code = code;
-        }
-
-        public String getMsg() {
-            return msg;
-        }
-
-        public void setMsg(String msg) {
-            this.msg = msg;
-        }
-
-        @Override
-        public String toString() {
-            return "DeviceOnlineResult{" +
-                    "data=" + data +
-                    ", code='" + code + '\'' +
-                    ", msg='" + msg + '\'' +
-                    '}';
-        }
-    }
-
+    @JsonAdapter(DeviceOnlineDataTypeAdapter.class)
     public static class DeviceOnlineData{
         private String deviceId;
         private String onLine;
@@ -99,35 +44,36 @@ public class DeviceOnlineResponsse {
                     ", channels=" + channels +
                     '}';
         }
-    }
 
-    public static class DeviceStatusChannel {
-        private String channelId;
-        private String onLine;
+        public static class DeviceStatusChannel {
+            private String channelId;
+            private String onLine;
 
-        public String getChannelId() {
-            return channelId;
+            public String getChannelId() {
+                return channelId;
+            }
+
+            public void setChannelId(String channelId) {
+                this.channelId = channelId;
+            }
+
+            public String getOnLine() {
+                return onLine;
+            }
+
+            public void setOnLine(String onLine) {
+                this.onLine = onLine;
+            }
+
+            @Override
+            public String toString() {
+                return "DeviceStatusChannel{" +
+                        "channelId='" + channelId + '\'' +
+                        ", onLine='" + onLine + '\'' +
+                        '}';
+            }
         }
 
-        public void setChannelId(String channelId) {
-            this.channelId = channelId;
-        }
-
-        public String getOnLine() {
-            return onLine;
-        }
-
-        public void setOnLine(String onLine) {
-            this.onLine = onLine;
-        }
-
-        @Override
-        public String toString() {
-            return "DeviceStatusChannel{" +
-                    "channelId='" + channelId + '\'' +
-                    ", onLine='" + onLine + '\'' +
-                    '}';
-        }
     }
 
     @Override

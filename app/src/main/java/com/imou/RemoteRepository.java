@@ -2,7 +2,6 @@ package com.imou;
 
 import com.ilifesmart.utils.PersistentMgr;
 import com.imou.json.*;
-import com.imou.json.LeChengRequest;
 import io.reactivex.Flowable;
 import retrofit2.Retrofit;
 
@@ -47,6 +46,18 @@ public class RemoteRepository {
 		body.setSystem(system);
 
 		return mLeChengCamApi.getUserToken(body);
+	}
+
+	public Flowable<AccessTokenResponse> accessToken() {
+		UserBindSms body = new UserBindSms();
+		LeChengRequest.ParamsBean params = new LeChengRequest.ParamsBean();
+		LeChengRequest.SystemBean system = SignHelper.createSystemBean(null);
+
+		body.setId("1.1");
+		body.setParams(params);
+		body.setSystem(system);
+
+		return mLeChengCamApi.accessToken(body);
 	}
 
 	public Flowable<LeChengResponse> userBindSms(String phone) {
@@ -98,5 +109,37 @@ public class RemoteRepository {
 		body.setSystem(system);
 
 		return mLeChengCamApi.deviceOnline(body);
+	}
+
+	public Flowable<DeviceListResponse> deviceList(String token, String queryRange) {
+		DevicesListRequest body = new DevicesListRequest();
+		DevicesListRequest.DeviceListParams params = new DevicesListRequest.DeviceListParams();
+		params.setToken(token);
+		params.setQueryRange(queryRange);
+		body.setId("1.1");
+		body.setParams(params);
+
+		Map<String,String> args = new HashMap<>();
+		args.put("queryRange", queryRange);
+		args.put("token", token);
+		LeChengRequest.SystemBean system = SignHelper.createSystemBean(args);
+		body.setSystem(system);
+		return mLeChengCamApi.deviceList(body);
+	}
+
+	public Flowable<DeviceListResponse> shareDeviceList(String token, String queryRange) {
+		DevicesListRequest body = new DevicesListRequest();
+		DevicesListRequest.DeviceListParams params = new DevicesListRequest.DeviceListParams();
+		params.setToken(token);
+		params.setQueryRange(queryRange);
+		body.setId("1.1");
+		body.setParams(params);
+
+		Map<String,String> args = new HashMap<>();
+		args.put("queryRange", queryRange);
+		args.put("token", token);
+		LeChengRequest.SystemBean system = SignHelper.createSystemBean(args);
+		body.setSystem(system);
+		return mLeChengCamApi.shareDeviceList(body);
 	}
 }

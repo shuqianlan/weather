@@ -6,6 +6,9 @@ import retrofit2.http.*;
 
 public interface LeChengCameraApi {
 
+    @POST("accessToken")
+    Flowable<AccessTokenResponse> accessToken(@Body UserBindSms body);
+
     @POST("userToken")
     Flowable<UserTokenResponse> getUserToken(@Body UserBindSms body);
 
@@ -18,4 +21,9 @@ public interface LeChengCameraApi {
     @POST("deviceOnline")
     Flowable<DeviceOnlineResponsse> deviceOnline(@Body DeviceOnline body);
 
+    @POST("deviceList")
+    Flowable<DeviceListResponse> deviceList(@Body DevicesListRequest body);
+
+    @POST("shareDeviceList")
+    Flowable<DeviceListResponse> shareDeviceList(@Body DevicesListRequest body);
 }

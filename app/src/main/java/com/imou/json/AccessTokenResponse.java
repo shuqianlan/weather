@@ -1,21 +1,19 @@
 package com.imou.json;
 
 import com.google.gson.annotations.JsonAdapter;
-import com.gson_demo.UserTokenResponseTypeAdapter;
 
-@JsonAdapter(UserTokenResponseTypeAdapter.class)
-public class UserTokenResponse extends LeChengResponse<UserTokenResponse.UserTokenResultData> {
-
-    public static class UserTokenResultData{
-        private String userToken;
+@JsonAdapter(AccessTokenResponseTypeAdapter.class)
+public class AccessTokenResponse extends LeChengResponse<AccessTokenResponse.ResultData> {
+    public static class ResultData {
+        private String accessToken;
         private long expireTime;
 
-        public String getUserToken() {
-            return userToken;
+        public String getAccessToken() {
+            return accessToken;
         }
 
-        public void setUserToken(String userToken) {
-            this.userToken = userToken;
+        public void setAccessToken(String accessToken) {
+            this.accessToken = accessToken;
         }
 
         public long getExpireTime() {
@@ -28,8 +26,8 @@ public class UserTokenResponse extends LeChengResponse<UserTokenResponse.UserTok
 
         @Override
         public String toString() {
-            return "UserTokenResultData{" +
-                    "userToken='" + userToken + '\'' +
+            return "ResultData{" +
+                    "accessToken='" + accessToken + '\'' +
                     ", expiredTime=" + expireTime +
                     '}';
         }
@@ -37,7 +35,7 @@ public class UserTokenResponse extends LeChengResponse<UserTokenResponse.UserTok
 
     @Override
     public String toString() {
-        return "UserTokenResponse{" +
+        return "AccessTokenResponse{" +
                 "id='" + id + '\'' +
                 ", result=" + result +
                 '}';

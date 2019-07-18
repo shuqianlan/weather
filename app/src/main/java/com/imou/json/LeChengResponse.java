@@ -1,5 +1,7 @@
 package com.imou.json;
 
+import android.text.TextUtils;
+
 public class LeChengResponse<T> {
     protected String id;
     protected ResultBean result;
@@ -59,8 +61,8 @@ public class LeChengResponse<T> {
         }
     }
 
-    public abstract static class ResultDataBean {
-
+    public boolean isSuccess() {
+        return !TextUtils.isEmpty(result.code);
     }
 
     @Override

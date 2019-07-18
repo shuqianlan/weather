@@ -5,9 +5,15 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import com.google.common.reflect.TypeToken;
 import com.google.gson.*;
-import com.google.gson.annotations.*;
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+import com.google.gson.annotations.Since;
+import com.google.gson.annotations.Until;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
+import com.gson_demo.DevicesResponse;
+import com.gson_demo.OauthResponse;
+import com.gson_demo.UserResponse;
 import com.ilifesmart.weather.R;
 
 import java.io.IOException;
@@ -16,8 +22,10 @@ import java.io.Reader;
 import java.io.StringReader;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.UUID;
 
 public class Gson2Activity extends AppCompatActivity {
 
@@ -282,9 +290,49 @@ public class Gson2Activity extends AppCompatActivity {
         String gson3Str = gson3.toJson(person5);
         Log.d(TAG, "initialize: gson3Str " + gson3Str);
 
+        // ------ 泛型类型测试(已验证OK)
+        OauthResponse oauth = new OauthResponse();
+        oauth.setId("1.0");
+        oauth.setMsg("success");
+        OauthResponse.UserToken token = new OauthResponse.UserToken();
+        token.setExpiredTime(System.currentTimeMillis()/1000);
+        token.setUserToken(UUID.randomUUID().toString());
+        oauth.setData(token);
+
+        UserResponse response = new UserResponse();
+        response.setData("");
+        response.setId("1.0");
+        response.setMsg("success");
+
+        DevicesResponse devices = new DevicesResponse();
+        devices.setId("1.0");
+        devices.setMsg("success");
+        List<DevicesResponse.DeviceBean> beans = new ArrayList<>();
+        for (int j = 0; j < 6; j++) {
+            DevicesResponse.DeviceBean deviceBean = new DevicesResponse.DeviceBean();
+            deviceBean.setClsType("Item-"+(j+1));
+            deviceBean.setHeatTs(System.currentTimeMillis() - 1000*j);
+            deviceBean.setName("Device-"+(j+1));
+            deviceBean.setUuid(UUID.randomUUID().toString());
+            beans.add(deviceBean);
+        }
+        devices.setData(beans);
+
+        String oauthJson = gson.toJson(oauth);
+        String responseJson = gson.toJson(response);
+        String devicesJson = gson.toJson(devices);
+
+        OauthResponse oauth_result = gson.fromJson(oauthJson, OauthResponse.class);
+        UserResponse  response_result = gson.fromJson(responseJson, UserResponse.class);
+        DevicesResponse devices_result = gson.fromJson(devicesJson, DevicesResponse.class);
+
+        Log.d(TAG, "initialize: oauth_result " + oauth_result);
+        Log.d(TAG, "initialize: response_result " + response_result);
+        Log.d(TAG, "initialize: devices_result " + devices_result);
+
     }
 
-    // @JsonAdapter(): 指定此类对应的序列化与反序列化对象. 不需要再注册registerTypeAdapter, 并内部默认调用nullSafe() || 注解的好处
+     // @JsonAdapter(xxx.class): 指定此类对应的序列化与反序列化对象. 不需要再注册registerTypeAdapter, 并内部默认调用nullSafe() || 注解的好处
     public static class Person {
         private String name;
         @SerializedName(value = "address", alternate = {"Address", "country"})
