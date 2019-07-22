@@ -8,4 +8,11 @@ open class BaseActivity : AppCompatActivity() {
         val i = Intent(this, T::class.java)
         startActivity(i)
     }
+
+    inline fun <reified T:AppCompatActivity> startActivity(content:String) {
+        val i = Intent(this, T::class.java)
+        i.putExtra(Intent.EXTRA_TEXT, content)
+        startActivity(i)
+    }
+
 }

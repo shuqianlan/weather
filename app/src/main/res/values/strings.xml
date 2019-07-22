@@ -11,4 +11,25 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_skin_demo">SkinDemoActivity</string>
 
+    <string name="common_loading">努力载入中..</string>
+    <string name="video_monitor_image_capture_success">截图成功</string>
+    <string name="video_monitor_image_capture_failed">截图失败</string>
+    <string name="video_monitor_video_record_failed">录制失败</string>
+    <string name="video_monitor_video_record_success">录制成功</string>
+    <string name="video_monitor_talk_open_error">对讲打开失败</string>
+    <string name="video_monitor_media_talk">开始对讲</string>
+    <string name="video_monitor_media_talk_close">对讲关闭</string>
+    <string name="video_monitor_media_talk_ready">对讲已准备好</string>
+    <string name="toast_device_ability_no_ptz">设备不具备云台能力级</string>
+    <string name="video_monitor_change_stream_normal">正在切换成"流畅"模式</string>
+    <string name="video_monitor_change_stream_hd">正在切换成"高清"模式</string>
+    <string name="video_monitor_load_talk_sound_error">缓冲或对讲中，无法开启声音</string>
+    <string name="video_monitor_sound_close">声音关闭</string>
+    <string name="video_monitor_sound_open">声音打开</string>
+    <string name="video_monitor_media_record">开始录制</string>
+
+    <string name="lecheng_login_admin">管理员模式</string>
+    <string name="lecheng_login_user">用户模式</string>
+
+    <string name="failed">失败</string>
 </resources>

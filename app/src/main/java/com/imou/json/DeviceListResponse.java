@@ -1,11 +1,10 @@
 package com.imou.json;
 
 import com.google.gson.annotations.JsonAdapter;
-import com.gson_demo.DevicesListTypeAdapter;
 
 import java.util.List;
 
-@JsonAdapter(DevicesListTypeAdapter.class)
+@JsonAdapter(DeviceListTypeAdapter.class)
 public class DeviceListResponse extends LeChengResponse<DeviceListResponse.DeviceListResultData> {
 
     public static class DeviceListResultData {
@@ -37,19 +36,64 @@ public class DeviceListResponse extends LeChengResponse<DeviceListResponse.Devic
         }
 
         public static class DeviceListBean {
-            private String deviceId;
-            private String status;
-            private String baseline;
-            private String deviceModel;
-            private String deviceCatalog;
             private String brand;
-            private String version;
-            private String name;
-            private String ability;
-            private boolean canBeUpgrade;
-            private String appId;
-            private int platForm;
             private List<DeviceListBeanChannel> channels;
+            private int streamPort;
+            private boolean canBeUpgrade;
+            private String status;
+            private String devLoginPassword;
+            private String deviceCatalog;
+            private String baseline;
+            private String appId;
+            private String deviceModel;
+            private String deviceId;
+            private int channelNum;
+            private String version;
+            private String ability;
+            private String name;
+            public int encryptMode;
+            public String devLoginName = "";
+            private int platForm;
+
+            public int getStreamPort() {
+                return streamPort;
+            }
+
+            public void setStreamPort(int streamPort) {
+                this.streamPort = streamPort;
+            }
+
+            public String getDevLoginPassword() {
+                return devLoginPassword;
+            }
+
+            public void setDevLoginPassword(String devLoginPassword) {
+                this.devLoginPassword = devLoginPassword;
+            }
+
+            public int getChannelNum() {
+                return channelNum;
+            }
+
+            public void setChannelNum(int channelNum) {
+                this.channelNum = channelNum;
+            }
+
+            public int getEncryptMode() {
+                return encryptMode;
+            }
+
+            public void setEncryptMode(int encryptMode) {
+                this.encryptMode = encryptMode;
+            }
+
+            public String getDevLoginName() {
+                return devLoginName;
+            }
+
+            public void setDevLoginName(String devLoginName) {
+                this.devLoginName = devLoginName;
+            }
 
             public String getDeviceId() {
                 return deviceId;
@@ -158,30 +202,44 @@ public class DeviceListResponse extends LeChengResponse<DeviceListResponse.Devic
             @Override
             public String toString() {
                 return "DeviceListBean{" +
-                        "deviceId='" + deviceId + '\'' +
-                        ", status='" + status + '\'' +
-                        ", baseline='" + baseline + '\'' +
-                        ", deviceModel='" + deviceModel + '\'' +
-                        ", deviceCatalog='" + deviceCatalog + '\'' +
-                        ", brand='" + brand + '\'' +
-                        ", version='" + version + '\'' +
-                        ", name='" + name + '\'' +
-                        ", ability='" + ability + '\'' +
-                        ", canBeUpgrade=" + canBeUpgrade +
-                        ", appId='" + appId + '\'' +
-                        ", platForm=" + platForm +
+                        "brand='" + brand + '\'' +
                         ", channels=" + channels +
+                        ", streamPort=" + streamPort +
+                        ", canBeUpgrade=" + canBeUpgrade +
+                        ", status='" + status + '\'' +
+                        ", devLoginPassword='" + devLoginPassword + '\'' +
+                        ", deviceCatalog='" + deviceCatalog + '\'' +
+                        ", baseline='" + baseline + '\'' +
+                        ", appId='" + appId + '\'' +
+                        ", deviceModel='" + deviceModel + '\'' +
+                        ", deviceId='" + deviceId + '\'' +
+                        ", channelNum=" + channelNum +
+                        ", version='" + version + '\'' +
+                        ", ability='" + ability + '\'' +
+                        ", name='" + name + '\'' +
+                        ", encryptMode=" + encryptMode +
+                        ", devLoginName='" + devLoginName + '\'' +
+                        ", platForm=" + platForm +
                         '}';
             }
 
             public static class DeviceListBeanChannel {
                 private int channelId;
                 private String channelName;
-                private String channelOnline;
+                private boolean channelOnline;
                 private String channelPicUrl;
                 private int alarmStatus;
                 private int csStatus;
                 private boolean shareStatus;
+                private String channelAbility;
+
+                public String getChannelAbility() {
+                    return channelAbility;
+                }
+
+                public void setChannelAbility(String channelAbility) {
+                    this.channelAbility = channelAbility;
+                }
 
                 public int getChannelId() {
                     return channelId;
@@ -199,11 +257,11 @@ public class DeviceListResponse extends LeChengResponse<DeviceListResponse.Devic
                     this.channelName = channelName;
                 }
 
-                public String getChannelOnline() {
+                public boolean isChannelOnline() {
                     return channelOnline;
                 }
 
-                public void setChannelOnline(String channelOnline) {
+                public void setChannelOnline(boolean channelOnline) {
                     this.channelOnline = channelOnline;
                 }
 
@@ -249,6 +307,7 @@ public class DeviceListResponse extends LeChengResponse<DeviceListResponse.Devic
                             ", alarmStatus=" + alarmStatus +
                             ", csStatus=" + csStatus +
                             ", shareStatus=" + shareStatus +
+                            ", channelAbility=" + channelAbility +
                             '}';
                 }
             }

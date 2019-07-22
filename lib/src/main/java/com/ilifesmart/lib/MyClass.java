@@ -115,6 +115,10 @@ public class MyClass {
 	}
 
 	public static void gsonDemo() {
+		System.out.println("========== " + Math.acos(1/2f));
+		System.out.println("========== " + Math.acos(1/2f) * 180f / Math.PI);
+		System.out.println("========== " + Math.acos(-1/2f));
+		System.out.println("========== " + Math.acos(-1/2f) * 180f / Math.PI);
 
 	}
 }

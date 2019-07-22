@@ -48,7 +48,7 @@ public class SignHelper {
 		return system.toString();
 	}
 
-	public static LeChengRequest.SystemBean createSystemBean(Map<String,String> params) {
+	public static LeChengRequest.SystemBean createSystemBean(Map<String,? extends Object> params) {
 		LeChengRequest.SystemBean system = new LeChengRequest.SystemBean();
 
 		StringBuffer sign = new StringBuffer();

@@ -38,6 +38,10 @@
             android:roundIcon="@mipmap/ic_launcher_round"
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
+        <activity android:name="com.imou.DevicesListActivity">
+        </activity>
+        <activity android:name="com.imou.MediaPlayerActivity">
+        </activity>
         <activity android:name="com.gson.Gson2Activity">
         </activity>
         <activity android:name="com.gson.GsonActivity">

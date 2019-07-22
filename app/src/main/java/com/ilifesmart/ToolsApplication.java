@@ -7,11 +7,12 @@ import android.app.NotificationManager;
 import android.content.Context;
 import android.os.Build;
 import android.util.Log;
-
 import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
-import com.ilifesmart.region.RegionMgr;
 import com.ilifesmart.interfaces.MyLocationListener;
+import com.ilifesmart.region.RegionMgr;
+import com.imou.LeChengCameraWrapInfo;
+import com.lechange.opensdk.api.LCOpenSDK_Api;
 
 public class ToolsApplication extends Application {
 
@@ -30,6 +31,7 @@ public class ToolsApplication extends Application {
     public void onCreate() {
         super.onCreate();
 
+        LCOpenSDK_Api.setHost(LeChengCameraWrapInfo.APPCNUrl);
 //        if (LeakCanary.isInAnalyzerProcess(this)) {
 //            // This process is dedicated to LeakCanary for heap analysis.
 //            // You should not init your app in this process.

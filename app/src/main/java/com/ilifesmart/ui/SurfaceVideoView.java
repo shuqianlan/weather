@@ -7,7 +7,6 @@ import android.graphics.Bitmap;
 import android.media.MediaPlayer;
 import android.os.AsyncTask;
 import android.os.Build;
-import android.os.Environment;
 import android.support.annotation.RequiresApi;
 import android.support.constraint.ConstraintLayout;
 import android.text.TextUtils;
@@ -21,17 +20,13 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
-
-import com.ilifesmart.utils.DensityUtils;
-import com.ilifesmart.utils.Utils;
-import com.ilifesmart.weather.R;
-
-import java.io.File;
-import java.io.InputStream;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import com.ilifesmart.utils.DensityUtils;
+import com.ilifesmart.weather.R;
+
+import java.io.File;
 
 public class SurfaceVideoView extends FrameLayout implements MediaPlayer.OnPreparedListener, SurfaceHolder.Callback {
 
@@ -169,26 +164,26 @@ public class SurfaceVideoView extends FrameLayout implements MediaPlayer.OnPrepa
 		if (mThumbNailBitmap != null) {
 			mThumbNail.setImageBitmap(mThumbNailBitmap);
 		} else {
-			new Thread(new Runnable() {
-				@Override
-				public void run() {
-					try {
-						InputStream in = getResources().getAssets().open(filePath);
-						copyPath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MOVIES).getAbsolutePath() + File.separator + "video.mp4";
-						Bitmap mp = Utils.getVideoThumbnail(in, copyPath);
-						in.close();
-
-						mThumbNail.post(()->{
-							if (mp != null) {
-								mThumbNailBitmap = mp;
-								mThumbNail.setImageBitmap(mp);
-							}
-						});
-					} catch(Exception ex) {
-						ex.printStackTrace();
-					}
-				}
-			}).start();
+//			new Thread(new Runnable() {
+//				@Override
+//				public void run() {
+//					try {
+//						InputStream in = getResources().getAssets().open(filePath);
+//						copyPath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MOVIES).getAbsolutePath() + File.separator + "video.mp4";
+//						Bitmap mp = Utils.getVideoThumbnail(in, copyPath);
+//						in.close();
+//
+//						mThumbNail.post(()->{
+//							if (mp != null) {
+//								mThumbNailBitmap = mp;
+//								mThumbNail.setImageBitmap(mp);
+//							}
+//						});
+//					} catch(Exception ex) {
+//						ex.printStackTrace();
+//					}
+//				}
+//			}).start();
 		}
 	}
 

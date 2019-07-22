@@ -31,31 +31,41 @@
             android:text="授权"
     />
 
-    <Button
+    <TableLayout android:layout_width="match_parent" android:layout_height="wrap_content">
+        <TableRow>
+            <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/lecheng_userToken"
+                    android:text="登录"
+            />
+
+            <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/lecheng_admin_userToken"
+                    android:text="管理员登录"
+            />
+            <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/lecheng_devices_list"
+                    android:text="获取设备列表"
+            />
+
+            <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/lecheng_share_devices_list"
+                    android:text="获取共享设备列表"
+            />
+        </TableRow>
+    </TableLayout>
+    <android.support.v7.widget.RecyclerView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/lecheng_userToken"
-            android:text="登录"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:id="@+id/lecheng_devices"
     />
 
-    <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/lecheng_admin_userToken"
-            android:text="管理员登录"
-    />
-
-    <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/lecheng_devices_list"
-            android:text="获取设备列表"
-    />
-
-    <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/lecheng_share_devices_list"
-            android:text="获取共享设备列表"
-    />
 </LinearLayout>

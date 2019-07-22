@@ -32,6 +32,7 @@ public class DeviceListTypeAdapter extends TypeAdapter<DeviceListResponse> {
                     break;
                 case "result":
                     in.beginObject();
+                    Log.d("BBBB", "read: result ================= ");
                     response.setResult(getResult(in));
                     in.endObject();
                     break;
@@ -59,6 +60,7 @@ public class DeviceListTypeAdapter extends TypeAdapter<DeviceListResponse> {
                         result.setMsg(in.nextString());
                         break;
                     case "data":
+                        Log.d("BBBB", "getResult: data");
                         in.beginObject();
                         result.setData(getResultDatas(in));
                         in.endObject();
@@ -73,6 +75,7 @@ public class DeviceListTypeAdapter extends TypeAdapter<DeviceListResponse> {
 
     private DeviceListResponse.DeviceListResultData getResultDatas(JsonReader in) {
         DeviceListResponse.DeviceListResultData data = new DeviceListResponse.DeviceListResultData();
+        List<DeviceListResponse.DeviceListResultData.DeviceListBean> devices = new ArrayList<>();
 
         try {
             if (in.peek() == JsonToken.NULL) {
@@ -86,8 +89,12 @@ public class DeviceListTypeAdapter extends TypeAdapter<DeviceListResponse> {
                         data.setCount(in.nextInt());
                         break;
                     case "devices":
+                        Log.d("BBBB", "getResultDatas: devices");
                         in.beginArray();
-                        data.setDevices(getDevices(in));
+                        while(in.hasNext()) {
+                            devices.add(getDevice(in));
+                        }
+                        data.setDevices(devices);
                         in.endArray();
                         break;
                 }
@@ -99,18 +106,17 @@ public class DeviceListTypeAdapter extends TypeAdapter<DeviceListResponse> {
         return data;
     }
 
-    private List<DeviceListResponse.DeviceListResultData.DeviceListBean> getDevices(JsonReader in) {
-        List<DeviceListResponse.DeviceListResultData.DeviceListBean> devices = new ArrayList<>();
-
+    private DeviceListResponse.DeviceListResultData.DeviceListBean getDevice(JsonReader in) {
+        DeviceListResponse.DeviceListResultData.DeviceListBean bean = new DeviceListResponse.DeviceListResultData.DeviceListBean();
+        List<DeviceListResponse.DeviceListResultData.DeviceListBean.DeviceListBeanChannel> channels = new ArrayList<>();
         try {
             if (in.peek() == JsonToken.NULL) {
                 in.nextNull();
-                return devices;
+                return null;
             }
 
+            in.beginObject();
             while (in.hasNext()) {
-                in.beginObject();
-                DeviceListResponse.DeviceListResultData.DeviceListBean bean = new DeviceListResponse.DeviceListResultData.DeviceListBean();
                 switch (in.nextName()) {
                     case "deviceId":
                         bean.setDeviceId(in.nextString());
@@ -148,33 +154,54 @@ public class DeviceListTypeAdapter extends TypeAdapter<DeviceListResponse> {
                     case "platForm":
                         bean.setPlatForm(in.nextInt());
                         break;
+                    case "streamPort":
+                        bean.setStreamPort(in.nextInt());
+                        break;
+                    case "devLoginPassword":
+                        bean.setDevLoginPassword(in.nextString());
+                        break;
+                    case "channelNum":
+                        bean.setChannelNum(in.nextInt());
+                        break;
+                    case "encryptMode":
+                        bean.setEncryptMode(in.nextInt());
+                        break;
+                    case "devLoginName":
+                        bean.setDevLoginName(in.nextString());
+                        break;
                     case "channels":
+                        Log.d("BBBB", "getDevices: channels");
                         in.beginArray();
-                        bean.setChannels(getChannels(in));
+                        while (in.hasNext()) {
+                            channels.add(getChannel(in));
+                        }
+                        bean.setChannels(channels);
                         in.endArray();
                         break;
+                    default:
+                        in.skipValue();
                 }
-                devices.add(bean);
-                in.endObject();
+
             }
+            in.endObject();
+
         } catch(Exception ex) {
         	ex.printStackTrace();
         }
-        return devices;
+        return bean;
     }
 
-    private List<DeviceListResponse.DeviceListResultData.DeviceListBean.DeviceListBeanChannel> getChannels(JsonReader in) {
-        List<DeviceListResponse.DeviceListResultData.DeviceListBean.DeviceListBeanChannel> channels = new ArrayList<>();
+    private DeviceListResponse.DeviceListResultData.DeviceListBean.DeviceListBeanChannel getChannel(JsonReader in) {
+        DeviceListResponse.DeviceListResultData.DeviceListBean.DeviceListBeanChannel channel = new DeviceListResponse.DeviceListResultData.DeviceListBean.DeviceListBeanChannel();
 
         try {
             if (in.peek() == JsonToken.NULL) {
                 in.nextNull();
-                return channels;
+                return null;
             }
 
+            in.beginObject();
             while (in.hasNext()) {
-                in.beginObject();
-                DeviceListResponse.DeviceListResultData.DeviceListBean.DeviceListBeanChannel channel = new DeviceListResponse.DeviceListResultData.DeviceListBean.DeviceListBeanChannel();
                 switch (in.nextName()) {
                     case "channelId":
                         channel.setChannelId(in.nextInt());
@@ -183,7 +210,7 @@ public class DeviceListTypeAdapter extends TypeAdapter<DeviceListResponse> {
                         channel.setChannelName(in.nextString());
                         break;
                     case "channelOnline":
-                        channel.setChannelOnline(in.nextString());
+                        channel.setChannelOnline(in.nextBoolean());
                         break;
                     case "channelPicUrl":
                         channel.setChannelPicUrl(in.nextString());
@@ -197,14 +224,18 @@ public class DeviceListTypeAdapter extends TypeAdapter<DeviceListResponse> {
                     case "shareStatus":
                         channel.setShareStatus(in.nextBoolean());
                         break;
+                    case "channelAbility":
+                        channel.setChannelAbility(in.nextString());
+                        break;
+                    default:
+                        in.skipValue();
                 }
-                channels.add(channel);
-                in.endObject();
             }
+            in.endObject();
         } catch(Exception ex) {
         	ex.printStackTrace();
         }
 
-        return channels;
+        return channel;
     }
 }

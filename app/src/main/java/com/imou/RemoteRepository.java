@@ -3,6 +3,7 @@ package com.imou;
 import com.ilifesmart.utils.PersistentMgr;
 import com.imou.json.*;
 import io.reactivex.Flowable;
+import io.reactivex.Observable;
 import retrofit2.Retrofit;
 
 import java.util.HashMap;
@@ -33,7 +34,7 @@ public class RemoteRepository {
 		mLeChengCamApi = mRetrofit.create(LeChengCameraApi.class);
 	}
 
-	public Flowable<UserTokenResponse> userLogin(String phone) {
+	public Observable<UserTokenResponse> userLogin(String phone) {
 		UserBindSms body = new UserBindSms();
 		UserBindSms.UserBindSmsParams params = new UserBindSms.UserBindSmsParams();
 		params.setPhone(phone);
@@ -75,7 +76,7 @@ public class RemoteRepository {
 		return mLeChengCamApi.sendMessageCode(body);
 	}
 
-	public Flowable<LeChengResponse> userBind(String phone, String smsCode) {
+	public Observable<LeChengResponse> userBind(String phone, String smsCode) {
 		UserBind body = new UserBind();
 		UserBind.UserBindParams params = new UserBind.UserBindParams();
 		params.setPhone(phone);
@@ -141,5 +142,35 @@ public class RemoteRepository {
 		LeChengRequest.SystemBean system = SignHelper.createSystemBean(args);
 		body.setSystem(system);
 		return mLeChengCamApi.shareDeviceList(body);
+	}
+
+	public Flowable<LeChengResponse<String>> controlPTZ(
+			String token, String deviceId, String channelId, String operation, double h, double v, double z, String duration
+	) {
+		ControlPTZRequest body = new ControlPTZRequest();
+		body.setId("1.1");
+		ControlPTZRequest.ControlPTZRequestParams params = new ControlPTZRequest.ControlPTZRequestParams();
+		params.setChannelId(channelId);
+		params.setDeviceId(deviceId);
+		params.setDuration(duration);
+		params.setH(h);
+		params.setV(v);
+		params.setZ(z);
+		params.setOperation(operation);
+		params.setToken(token);
+		body.setParams(params);
+
+		Map<String,Object> args = new HashMap<>();
+		args.put("token", token);
+		args.put("deviceId", deviceId);
+		args.put("channelId", channelId);
+		args.put("operation", operation);
+		args.put("h", h);
+		args.put("v", v);
+		args.put("z", z);
+		args.put("duration", duration);
+		LeChengRequest.SystemBean system = SignHelper.createSystemBean(args);
+		body.setSystem(system);
+		return mLeChengCamApi.controlPTZ(body);
 	}
 }

@@ -38,7 +38,6 @@ public class RetrofitHelper {
 						.client(mOkHttpClient)
 						.baseUrl(SignHelper.getApiBaseUrl())
 						.addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-						.addConverterFactory(CustomGsonConverterFactory.create())
 						.addConverterFactory(GsonConverterFactory.create())
 						.build();
 	}

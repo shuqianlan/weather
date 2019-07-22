@@ -10,23 +10,16 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
-import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
-import android.widget.EditText;
-import android.widget.ListView;
-
+import android.widget.*;
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnCheckedChanged;
+import butterknife.OnClick;
 import com.ilifesmart.ui.SurfaceVideoView;
 import com.ilifesmart.weather.R;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnCheckedChanged;
-import butterknife.OnClick;
 
 public class VideoActivity extends AppCompatActivity {
 
@@ -63,7 +56,7 @@ public class VideoActivity extends AppCompatActivity {
 		setContentView(R.layout.activity_barrage);
 		ButterKnife.bind(this);
 
-		mVideoCont.setVideoPath(filePath);
+		mVideoCont.setVideoPath("http://devimages.apple.com/iphone/samples/bipbop/bipbopall.m3u8");
 
 		VideoAdapter adapter = new VideoAdapter();
 		adapter.registerDataSetObserver(new DataSetObserver() {

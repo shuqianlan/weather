@@ -27,6 +27,16 @@ public class CompassActivity extends AppCompatActivity {
 			public void onAngleChanged(double angle) {
 				Log.d(TAG, "OnAngleChangeListener: angle " + angle);
 			}
+
+			@Override
+			public void onTouchBegin() {
+
+			}
+
+			@Override
+			public void onTouchEnd() {
+
+			}
 		});
 	}
 

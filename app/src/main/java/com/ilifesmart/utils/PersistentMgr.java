@@ -48,6 +48,20 @@ public class PersistentMgr {
 		return true;
 	}
 
+	public static boolean putKV(String key, long value) {
+		try {
+			SharedPreferences auroraconfig = getPrivateSharedPreferenceFile();
+			SharedPreferences.Editor editor = auroraconfig.edit();
+			editor.putLong(key, value);
+			editor.apply();
+		} catch (Exception exp) {
+			exp.printStackTrace();
+			return false;
+		}
+
+		return true;
+	}
+
 	public static boolean putKV(String key, String value) {
 		try {
 			SharedPreferences auroraconfig = getPrivateSharedPreferenceFile();
@@ -79,6 +93,11 @@ public class PersistentMgr {
 	public static int readKV(String key, int def) {
 		SharedPreferences sharedPreferences = getPrivateSharedPreferenceFile();
 		return sharedPreferences.getInt(key, def);
+	}
+
+	public static long readKV(String key, long def) {
+		SharedPreferences sharedPreferences = getPrivateSharedPreferenceFile();
+		return sharedPreferences.getLong(key, def);
 	}
 
 	public static boolean removeKV(String key) {

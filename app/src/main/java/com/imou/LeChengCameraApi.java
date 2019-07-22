@@ -2,6 +2,7 @@ package com.imou;
 
 import com.imou.json.*;
 import io.reactivex.Flowable;
+import io.reactivex.Observable;
 import retrofit2.http.*;
 
 public interface LeChengCameraApi {
@@ -10,13 +11,13 @@ public interface LeChengCameraApi {
     Flowable<AccessTokenResponse> accessToken(@Body UserBindSms body);
 
     @POST("userToken")
-    Flowable<UserTokenResponse> getUserToken(@Body UserBindSms body);
+    Observable<UserTokenResponse> getUserToken(@Body UserBindSms body);
 
     @POST("userBindSms") // 发送验证码
     Flowable<LeChengResponse> sendMessageCode(@Body UserBindSms body);
 
     @POST("userBind")
-    Flowable<LeChengResponse> userBind(@Body UserBind body);
+    Observable<LeChengResponse> userBind(@Body UserBind body);
 
     @POST("deviceOnline")
     Flowable<DeviceOnlineResponsse> deviceOnline(@Body DeviceOnline body);
@@ -26,4 +27,7 @@ public interface LeChengCameraApi {
 
     @POST("shareDeviceList")
     Flowable<DeviceListResponse> shareDeviceList(@Body DevicesListRequest body);
+
+    @POST("controlPTZ")
+    Flowable<LeChengResponse<String>> controlPTZ(@Body ControlPTZRequest body);
 }

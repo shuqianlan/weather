@@ -11,4 +11,7 @@
     <color name="block_header_startColor">#FF646464</color>
     <color name="block_header_endColor">#FF232323</color>
     <color name="block_header_titleColor">#FFAAAAAA</color>
+
+    <color name="LeCeng_background_white">#FFFFFFFF</color>
+    <color name="LeCeng_background_white_alpha">#AAFFFFFF</color>
 </resources>

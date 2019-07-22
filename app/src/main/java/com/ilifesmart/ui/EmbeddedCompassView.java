@@ -8,6 +8,7 @@ import android.graphics.Paint;
 import android.graphics.Path;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
@@ -15,7 +16,9 @@ import com.ilifesmart.weather.R;
 
 public class EmbeddedCompassView extends View {
 	public interface OnAngleChangeListener {
-		void onAngleChanged(double angle);//[0~pi]
+		void onTouchBegin();
+		void onAngleChanged(double angle);//[0~360]
+		void onTouchEnd();
 	}
 
 	private OnAngleChangeListener listener;
@@ -153,6 +156,7 @@ public class EmbeddedCompassView extends View {
 				}
 				break;
 			case MotionEvent.ACTION_MOVE:
+			case MotionEvent.ACTION_HOVER_MOVE:
 				if (isSticking) {
 					if (isInOutSideCircle(downX, downY)) {
 						positionX = downX;
@@ -178,8 +182,14 @@ public class EmbeddedCompassView extends View {
 
 			if (listener != null) {
 				double dist = Math.sqrt((positionX - mCenterX) * (positionX - mCenterX) + (positionY - mCenterY) * (positionY - mCenterY));
-				double angle = Math.acos((positionX-mCenterX)/dist);
-				listener.onAngleChanged(angle);
+				double angle = Math.acos((positionX-mCenterX)/dist)*180.0/Math.PI;
+				Log.d(TAG, "onTouchEvent: angle " + angle);
+
+				if (positionY > mCenterY) {
+					angle = 360 - angle;
+				}
+
+				listener.onAngleChanged(angle); // [0-360] [0:右, 90:上，180:左，270:下
 			}
 		}
 		return true;

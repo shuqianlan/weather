@@ -10,6 +10,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -45,12 +46,16 @@ import com.ilifesmart.rxjava.DemoActivity;
 import com.ilifesmart.test.SeekBarActivity;
 import com.ilifesmart.thread.ThreadTestActivity;
 import com.ilifesmart.utils.NetWorkUtil;
+import com.ilifesmart.utils.PersistentMgr;
 import com.ilifesmart.utils.Utils;
 import com.ilifesmart.viewpager.ViewPagerActivity;
 import com.ilifesmart.weather.R;
 import com.ilifesmart.weather.WeatherActivity;
 import com.ilifesmart.window.WindowDemoActivity;
+import com.imou.DevicesListActivity;
+import com.imou.LeChengCameraWrapInfo;
 import com.imou.LeChengDemoActivity;
+import com.imou.LeChengUtils;
 import com.jni.JniDemoActivity;
 import com.spannableText.SpannableActivity;
 import com.surfaceview.SurfaceViewActivity;
@@ -298,7 +303,31 @@ public class HomeActivity extends AppCompatActivity {
                 Utils.startActivity(this, MIUIActivity.class);
                 break;
             case R.id.imou:
-                Utils.startActivity(this, LeChengDemoActivity.class);
+                String uid = PersistentMgr.readKV(LeChengUtils.LeChengUid, null);
+                boolean isOauth = false;
+                String token = null;
+                try {
+                    if (!TextUtils.isEmpty(uid)) {
+//                        long expiredTime = PersistentMgr.readKV(LeChengUtils.getLeChengStorgeKey(LeChengCameraWrapInfo.EXTRA_EXPIRETIME), 0l) + 24*3600;
+                        token = PersistentMgr.readKV(LeChengUtils.getLeChengStorgeKey(LeChengCameraWrapInfo.EXTRA_USERTOKEN), null);
+
+//                        Log.d(TAG, "onClick: expiredTime " + expiredTime);
+                        Log.d(TAG, "onClick: uid " + uid);
+                        Log.d(TAG, "onClick: token " + token);
+                        isOauth =  !TextUtils.isEmpty(token); // (expiredTime > System.currentTimeMillis()/1000) &&
+                    }
+                } catch (Exception ex) {
+                    isOauth = false;
+                    ex.printStackTrace();
+                }
+
+                if (isOauth) {
+                    Intent i = new Intent(this, DevicesListActivity.class);
+                    i.putExtra(Intent.EXTRA_TEXT, token);
+                    startActivity(i);
+                } else {
+                    Utils.startActivity(this, LeChengDemoActivity.class);
+                }
                 break;
             case R.id.gson:
                 Utils.startActivity(this, Gson2Activity.class);
