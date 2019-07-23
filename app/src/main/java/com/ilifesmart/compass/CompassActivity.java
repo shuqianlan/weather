@@ -24,7 +24,7 @@ public class CompassActivity extends AppCompatActivity {
 
 		mCompass.setListener(new EmbeddedCompassView.OnAngleChangeListener() {
 			@Override
-			public void onAngleChanged(double angle) {
+			public void onAngleChanged(double angle, EmbeddedCompassView compassView) {
 				Log.d(TAG, "OnAngleChangeListener: angle " + angle);
 			}
 

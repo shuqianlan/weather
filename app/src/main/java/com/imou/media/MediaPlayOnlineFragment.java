@@ -14,6 +14,7 @@ import android.content.res.Configuration;
 import android.media.MediaScannerConnection;
 import android.os.Bundle;
 import android.os.Environment;
+import android.support.constraint.ConstraintLayout;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -21,10 +22,10 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.*;
-import android.widget.LinearLayout.LayoutParams;
 import com.ilifesmart.ui.EmbeddedCompassView;
 import com.ilifesmart.weather.R;
 import com.imou.*;
+import com.imou.json.LeChengResponse;
 import com.imou.util.MediaPlayHelper;
 import com.lechange.opensdk.listener.LCOpenSDK_EventListener;
 import com.lechange.opensdk.listener.LCOpenSDK_TalkerListener;
@@ -104,7 +105,7 @@ public class MediaPlayOnlineFragment extends MediaPlayFragment implements
 		// 必须赋值，父类需要使用到
 		mSurfaceParentView = (ViewGroup) mView.findViewById(R.id.live_window);
 		// 初始化窗口大小
-		LayoutParams mLayoutParams = (LayoutParams) mSurfaceParentView
+		ConstraintLayout.LayoutParams mLayoutParams = (ConstraintLayout.LayoutParams) mSurfaceParentView
 				.getLayoutParams();
 		DisplayMetrics metric = new DisplayMetrics();
 		getActivity().getWindowManager().getDefaultDisplay().getMetrics(metric);
@@ -143,61 +144,103 @@ public class MediaPlayOnlineFragment extends MediaPlayFragment implements
 		mLiveRecord.setOnClickListener(this);
 
 		mCompossCtl.setListener(new EmbeddedCompassView.OnAngleChangeListener() {
+		    private long lastts = 0;
+		    private long duration = 2L;
+
 			@Override
-			public void onAngleChanged(double angle) {
+			public void onAngleChanged(double angle, EmbeddedCompassView compass) {
 				Log.d(TAG, "OnAngleChangeListener: angle " + angle);
 
 				double h=0,v=0,z=1.0;
 				String ORIENTATION = "";
-				if (angle <= 45 && angle >= 315) {
-					ORIENTATION = "RIGHT";
-					h = 5.0;
-				} else if (45 < angle && angle <= 135) {
-					ORIENTATION = "TOP";
-					v = 5.0;
-				} else if (135 < angle && angle <= 225) {
-					ORIENTATION = "LEFT";
-					h = -5;
-				} else if (225 < angle && angle < 315) {
-					v = -5;
-					ORIENTATION = "BOTTOM";
+//				if (angle <= 45 && angle >= 315) {
+//					ORIENTATION = "RIGHT";
+//					h = 5.0;
+//				} else if (45 < angle && angle <= 135) {
+//					ORIENTATION = "TOP";
+//					v = 5.0;
+//				} else if (135 < angle && angle <= 225) {
+//					ORIENTATION = "LEFT";
+//					h = -5;
+//				} else if (225 < angle && angle < 315) {
+//					v = -5;
+//					ORIENTATION = "BOTTOM";
+//				}
+//
+//				Log.d(TAG, "onAngleChanged: [h,v,z] = " + h + "," + v + "," + z + "Orentation: " + ORIENTATION);
+//				Log.d(TAG, "onAngleChanged: channelInfo " + channelInfo);
+//				Flowable flowable = RemoteRepository.getInstance().controlPTZ(LeChengMomgr.getInstance().getToken(), channelInfo.getDeviceCode(), String.valueOf(channelInfo.getIndex()), "move", h, v, z, "5");
+//				RxBus.getInstance().doSubscribe(flowable).subscribe(new Consumer() {
+//					@Override
+//					public void accept(Object o) throws Exception {
+//
+//					}
+//				}, new Consumer<Throwable>() {
+//					@Override
+//					public void accept(Throwable throwable) throws Exception {
+//
+//					}
+//				});
+
+				//0-上，1-下，2-左，3-右，4-左上，5-左下，6-右上，7-右下，8-放大，9-缩小，10-停止
+				if (22.5 < angle && angle <= 67.5) {
+					ORIENTATION = "6";
+				} else if (67.5 < angle && angle <= 112.5) {
+					ORIENTATION = "0";
+				} else if (112.5 < angle && angle <= 157.5) {
+					ORIENTATION = "4";
+				} else if (157.5 < angle && angle <= 202.5) {
+					ORIENTATION = "2";
+				} else if (202.5 < angle && angle <= 247.5) {
+					ORIENTATION = "5";
+				} else if (247.5 < angle && angle <= 292.5) {
+					ORIENTATION = "1";
+				} else if (292.5 < angle && angle <= 337.5) {
+					ORIENTATION = "7";
+				} else if (337.5 < angle || angle <= 22.5) {
+					ORIENTATION = "3";
 				}
 
-				Log.d(TAG, "onAngleChanged: [h,v,z] = " + h + "," + v + "," + z + "Orentation: " + ORIENTATION);
-				Log.d(TAG, "onAngleChanged: channelInfo " + channelInfo);
-				Flowable flowable = RemoteRepository.getInstance().controlPTZ(LeChengMomgr.getInstance().getToken(), channelInfo.getDeviceCode(), String.valueOf(channelInfo.getIndex()), "move", h, v, z, "5");
-				RxBus.getInstance().doSubscribe(flowable).subscribe(new Consumer() {
-					@Override
-					public void accept(Object o) throws Exception {
-
-					}
-				}, new Consumer<Throwable>() {
-					@Override
-					public void accept(Throwable throwable) throws Exception {
-
-					}
-				});
+                if ((lastts + duration) < System.currentTimeMillis()/1000) {
+                    Flowable flowable = RemoteRepository.getInstance().controlMovePTZ(LeChengMomgr.getInstance().getToken(), channelInfo.getDeviceCode(), String.valueOf(channelInfo.getIndex()), ORIENTATION);
+                    RxBus.getInstance().doSubscribe(flowable).subscribe(new Consumer<LeChengResponse>() {
+                        @Override
+                        public void accept(LeChengResponse o) throws Exception {
+                            lastts = System.currentTimeMillis()/1000;
+                            LeChengUtils.isResponseOK(o);
+                        }
+                    }, new Consumer<Throwable>() {
+                        @Override
+                        public void accept(Throwable throwable) throws Exception {
+                            lastts = System.currentTimeMillis()/1000;
+                        }
+                    });
+                }
 			}
 
 			@Override
 			public void onTouchBegin() {
-
+                Log.d(TAG, "onTouchBegin: -------要开始咯");
 			}
 
 			@Override
 			public void onTouchEnd() {
-				Flowable flowable = RemoteRepository.getInstance().controlPTZ(LeChengMomgr.getInstance().getToken(), channelInfo.getDeviceCode(), String.valueOf(channelInfo.getIndex()), "move", 0, 0, 1, "5");
-				RxBus.getInstance().doSubscribe(flowable).subscribe(new Consumer() {
-					@Override
-					public void accept(Object o) throws Exception {
+                Log.d(TAG, "onTouchEnd: ---------我靠，GameOver");
+//				Flowable flowable = RemoteRepository.getInstance().controlPTZ(LeChengMomgr.getInstance().getToken(), channelInfo.getDeviceCode(), String.valueOf(channelInfo.getIndex()), "move", 0, 0, 1, "5");
+//				RxBus.getInstance().doSubscribe(flowable).subscribe(new Consumer() {
+//					@Override
+//					public void accept(Object o) throws Exception {
+//
+//					}
+//				}, new Consumer<Throwable>() {
+//					@Override
+//					public void accept(Throwable throwable) throws Exception {
+//
+//					}
+//				});
 
-					}
-				}, new Consumer<Throwable>() {
-					@Override
-					public void accept(Throwable throwable) throws Exception {
-
-					}
-				});
+                Flowable flowable = RemoteRepository.getInstance().controlMovePTZ(LeChengMomgr.getInstance().getToken(), channelInfo.getDeviceCode(), String.valueOf(channelInfo.getIndex()), "10");
+                RxBus.getInstance().doSubscribe(flowable).subscribe();
 			}
 		});
 

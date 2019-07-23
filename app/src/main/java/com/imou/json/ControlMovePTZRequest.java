@@ -1,15 +1,12 @@
 package com.imou.json;
 
-public class ControlPTZRequest extends LeChengRequest {
-    public static class ControlPTZRequestParams extends LeChengRequest.ParamsBean {
+public class ControlMovePTZRequest extends LeChengRequest {
+    public static class ControlMovePTZParams extends LeChengRequest.ParamsBean {
         private String token;
         private String deviceId;
         private String channelId;
         private String operation;
-        private double h;
-        private double v;
-        private double z;
-        private String duration;
+        private long duration; // ms
 
         public String getToken() {
             return token;
@@ -43,50 +40,25 @@ public class ControlPTZRequest extends LeChengRequest {
             this.operation = operation;
         }
 
-        public double getH() {
-            return h;
-        }
-
-        public void setH(double h) {
-            this.h = h;
-        }
-
-        public double getV() {
-            return v;
-        }
-
-        public void setV(double v) {
-            this.v = v;
-        }
-
-        public double getZ() {
-            return z;
-        }
-
-        public void setZ(double z) {
-            this.z = z;
-        }
-
-        public String getDuration() {
+        public long getDuration() {
             return duration;
         }
 
-        public void setDuration(String duration) {
+        public void setDuration(long duration) {
             this.duration = duration;
         }
 
         @Override
         public String toString() {
-            return "ControlPTZRequestParams{" +
+            return "ControlMovePTZParams{" +
                     "token='" + token + '\'' +
                     ", deviceId='" + deviceId + '\'' +
                     ", channelId='" + channelId + '\'' +
                     ", operation='" + operation + '\'' +
-                    ", h=" + h +
-                    ", v=" + v +
-                    ", z=" + z +
-                    ", duration='" + duration + '\'' +
+                    ", duration=" + duration +
                     '}';
         }
     }
+
+
 }

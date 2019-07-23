@@ -7,7 +7,7 @@ public class LeChengCameraWrapInfo {
     public static final String APPOverSeaUrl = "openapi.easy4ip.com:443";
     public static final int RESULT_SOURCE_OPENAPI = 99; // 在播放过程中rest请求回调类型
 
-    public static final String EXTRA_USER_ID = "CURR_USER_ID";
+    public static final String EXTRA_USER_ID = LeChengUtils.LeChengUid;
     public static final String EXTRA_USERTOKEN = "_USERTOKEN";
     public static final String EXTRA_EXPIRETIME= "_EXPIRETIME";
 

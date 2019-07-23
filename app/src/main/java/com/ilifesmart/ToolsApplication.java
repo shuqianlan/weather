@@ -32,6 +32,7 @@ public class ToolsApplication extends Application {
         super.onCreate();
 
         LCOpenSDK_Api.setHost(LeChengCameraWrapInfo.APPCNUrl);
+
 //        if (LeakCanary.isInAnalyzerProcess(this)) {
 //            // This process is dedicated to LeakCanary for heap analysis.
 //            // You should not init your app in this process.

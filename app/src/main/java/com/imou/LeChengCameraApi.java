@@ -30,4 +30,25 @@ public interface LeChengCameraApi {
 
     @POST("controlPTZ")
     Flowable<LeChengResponse<String>> controlPTZ(@Body ControlPTZRequest body);
+
+    @POST("controlMovePTZ") //移动，放大，缩小
+    Flowable<LeChengResponse<String>> controlMovePTZ(@Body ControlMovePTZRequest body);
+
+    @POST("modifyDeviceAlarmStatus") // 设置动检开关
+    Flowable<LeChengResponse<String>> modifyDeviceAlarmStatus(@Body ModifyDeviceAlarmStatusRequest body);
+
+    @POST("upgradeDevice") // 设备升级
+    Flowable<LeChengResponse<String>> upgradeDevice(@Body UpgradeDeviceRequest body);
+
+    @POST("recoverSDCard") // SD卡格式化
+    Flowable<RecoverSDCardResponse> recoverSDCard(@Body RecoverSDCardRequest body);
+
+    @POST("setDeviceSnap") // 设备抓图
+    Flowable<DeviceSnapResponse> setDeviceSnap(@Body DeviceSnapRequest body);
+
+    @POST("setMessageCallback") // 设置时间消息推送
+    Flowable<LeChengResponse<String>> setMessageCallback(@Body MessageCallbackRequest body);
+
+    @POST("getMessageCallback")
+    Flowable<Object> getMessageCallback(@Body MessageCallBackGetRequest body);
 }

@@ -10,10 +10,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import com.ilifesmart.utils.PersistentMgr;
 import com.ilifesmart.weather.R;
 import com.imou.json.DeviceListResponse;
 import io.reactivex.Flowable;
@@ -30,6 +32,9 @@ public class DevicesListActivity extends AppCompatActivity {
 
     private String token;
     private DevicesAdapter adapter;
+    @BindView(R.id.lecheng_user_logout)
+    public Button logout;
+
     private static List<ChannelInfo> channels = new ArrayList<>();
 
     @Override
@@ -132,4 +137,9 @@ public class DevicesListActivity extends AppCompatActivity {
         }
     }
 
+    @OnClick(R.id.lecheng_user_logout)
+    public void onClick() {
+        PersistentMgr.putKV(LeChengCameraWrapInfo.EXTRA_USER_ID, null);
+        finish();
+    }
 }

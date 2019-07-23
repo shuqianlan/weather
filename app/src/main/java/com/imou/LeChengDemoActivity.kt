@@ -14,7 +14,6 @@ import com.ilifesmart.utils.PersistentMgr
 import com.ilifesmart.weather.R
 import com.imou.json.AccessTokenResponse
 import com.imou.json.UserTokenResponse
-import com.lechange.opensdk.api.LCOpenSDK_Api
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.functions.Consumer
@@ -34,7 +33,6 @@ class LeChengDemoActivity : BaseActivity() {
     * 3. 云台控制的释放操作处理(ACTION_UP)
     *
     * */
-
     private lateinit var userLogin:Button
     private lateinit var sendCode:Button
     private lateinit var userMobile:EditText
@@ -52,8 +50,6 @@ class LeChengDemoActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_le_cheng_demo)
-
-        LCOpenSDK_Api.setHost(LeChengCameraWrapInfo.APPCNUrl);
 
         userLogin   = findViewById(R.id.style_user_submit)
         sendCode    = findViewById(R.id.send_message)
@@ -133,6 +129,8 @@ class LeChengDemoActivity : BaseActivity() {
                     }
 
                     PersistentMgr.putKV(LeChengUtils.getLeChengStorgeKey(LeChengCameraWrapInfo.EXTRA_EXPIRETIME), expiretime)
+                    startActivity<DevicesListActivity>(userToken);
+
                 }
             }, Consumer {
                 println("accessToken:${it.message}")
@@ -186,6 +184,7 @@ class LeChengDemoActivity : BaseActivity() {
                                 }
 
                                 PersistentMgr.putKV(LeChengUtils.getLeChengStorgeKey(LeChengCameraWrapInfo.EXTRA_EXPIRETIME), expiretime)
+                                startActivity<DevicesListActivity>(userToken);
                             }
                         }
                     }

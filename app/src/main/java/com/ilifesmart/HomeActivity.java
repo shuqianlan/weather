@@ -52,10 +52,7 @@ import com.ilifesmart.viewpager.ViewPagerActivity;
 import com.ilifesmart.weather.R;
 import com.ilifesmart.weather.WeatherActivity;
 import com.ilifesmart.window.WindowDemoActivity;
-import com.imou.DevicesListActivity;
-import com.imou.LeChengCameraWrapInfo;
-import com.imou.LeChengDemoActivity;
-import com.imou.LeChengUtils;
+import com.imou.*;
 import com.jni.JniDemoActivity;
 import com.spannableText.SpannableActivity;
 import com.surfaceview.SurfaceViewActivity;
@@ -322,6 +319,7 @@ public class HomeActivity extends AppCompatActivity {
                 }
 
                 if (isOauth) {
+                    LeChengMomgr.getInstance().setToken(token);
                     Intent i = new Intent(this, DevicesListActivity.class);
                     i.putExtra(Intent.EXTRA_TEXT, token);
                     startActivity(i);

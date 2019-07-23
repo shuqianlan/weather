@@ -173,4 +173,146 @@ public class RemoteRepository {
 		body.setSystem(system);
 		return mLeChengCamApi.controlPTZ(body);
 	}
+
+	public Flowable<LeChengResponse<String>> controlMovePTZ(
+			String token, String deviceId, String channelId, String operation
+	) {
+		ControlMovePTZRequest body = new ControlMovePTZRequest();
+		body.setId("1.1");
+		ControlMovePTZRequest.ControlMovePTZParams params = new ControlMovePTZRequest.ControlMovePTZParams();
+		params.setChannelId(channelId);
+		params.setDeviceId(deviceId);
+		params.setDuration(2000L);
+		params.setOperation(operation);
+		params.setToken(token);
+		body.setParams(params);
+
+		Map<String,Object> args = new HashMap<>();
+		args.put("token", token);
+		args.put("deviceId", deviceId);
+		args.put("channelId", channelId);
+		args.put("operation", operation);
+		args.put("duration", 2000L);
+		LeChengRequest.SystemBean system = SignHelper.createSystemBean(args);
+		body.setSystem(system);
+		return mLeChengCamApi.controlMovePTZ(body);
+	}
+
+	public Flowable<LeChengResponse<String>> modifyDeviceAlarmStatus(
+			String token, String deviceId, String channelId, boolean enable
+	) {
+		ModifyDeviceAlarmStatusRequest body = new ModifyDeviceAlarmStatusRequest();
+		ModifyDeviceAlarmStatusRequest.Params params = new ModifyDeviceAlarmStatusRequest.Params();
+		body.setId("1.1");
+		params.setChannelId(channelId);
+		params.setDeviceId(deviceId);
+		params.setToken(token);
+		params.setEnable(enable);
+
+		Map<String,Object> args = new HashMap<>();
+		args.put("token", token);
+		args.put("deviceId", deviceId);
+		args.put("channelId", channelId);
+		args.put("enable", enable);
+		LeChengRequest.SystemBean system = SignHelper.createSystemBean(args);
+		body.setParams(params);
+		body.setSystem(system);
+		return mLeChengCamApi.modifyDeviceAlarmStatus(body);
+	}
+
+	public Flowable<LeChengResponse<String>> upgradeDevice(
+			String token, String deviceId
+	) {
+		UpgradeDeviceRequest body = new UpgradeDeviceRequest();
+		UpgradeDeviceRequest.Params params = new UpgradeDeviceRequest.Params();
+		params.setDeviceId(deviceId);
+		params.setToken(token);
+		Map<String,Object> args = new HashMap<>();
+		args.put("token", token);
+		args.put("deviceId", deviceId);
+
+		LeChengRequest.SystemBean system = SignHelper.createSystemBean(args);
+		body.setParams(params);
+		body.setSystem(system);
+		body.setId("1.1");
+
+		return mLeChengCamApi.upgradeDevice(body);
+	}
+
+	public Flowable<RecoverSDCardResponse> recoverSDCard(
+			String token, String deviceId, String channelId
+	) {
+		RecoverSDCardRequest body = new RecoverSDCardRequest();
+		RecoverSDCardRequest.Params params = new RecoverSDCardRequest.Params();
+		params.setDeviceId(deviceId);
+		params.setToken(token);
+		params.setChannelId(channelId);
+		Map<String,Object> args = new HashMap<>();
+		args.put("token", token);
+		args.put("deviceId", deviceId);
+		args.put("channelId", channelId);
+
+		LeChengRequest.SystemBean system = SignHelper.createSystemBean(args);
+		body.setParams(params);
+		body.setSystem(system);
+		body.setId("1.1");
+
+		return mLeChengCamApi.recoverSDCard(body);
+	}
+
+	public Flowable<DeviceSnapResponse> getDeviceSnap(
+			String token, String deviceId, String channelId
+	) {
+		DeviceSnapRequest body = new DeviceSnapRequest();
+		DeviceSnapRequest.Params params = new DeviceSnapRequest.Params();
+		params.setDeviceId(deviceId);
+		params.setToken(token);
+		params.setChannelId(channelId);
+
+		Map<String,Object> args = new HashMap<>();
+		args.put("token", token);
+		args.put("deviceId", deviceId);
+		args.put("channelId", channelId);
+
+		LeChengRequest.SystemBean system = SignHelper.createSystemBean(args);
+		body.setParams(params);
+		body.setSystem(system);
+		body.setId("1.1");
+		return mLeChengCamApi.setDeviceSnap(body);
+	}
+
+	public Flowable<LeChengResponse<String>> setMessageCallback(String token, String callbackFlag) {
+		MessageCallbackRequest body = new MessageCallbackRequest();
+		MessageCallbackRequest.Params params = new MessageCallbackRequest.Params();
+		params.setCallbackFlag(callbackFlag);
+		params.setToken(token);
+
+		Map<String,Object> args = new HashMap<>();
+		args.put("token", token);
+		args.put("status", params.getStatus());
+		args.put("callbackUrl", params.getCallbackUrl());
+		args.put("callbackFlag", callbackFlag);
+
+		LeChengRequest.SystemBean system = SignHelper.createSystemBean(args);
+		body.setParams(params);
+		body.setSystem(system);
+		body.setId("1.1");
+		return mLeChengCamApi.setMessageCallback(body);
+	}
+
+	public Flowable<Object> getMessageCallback(String token) {
+		MessageCallBackGetRequest body = new MessageCallBackGetRequest();
+		MessageCallBackGetRequest.Params params = new MessageCallBackGetRequest.Params();
+		params.setToken(token);
+
+		Map<String,Object> args = new HashMap<>();
+		args.put("token", token);
+
+		LeChengRequest.SystemBean system = SignHelper.createSystemBean(args);
+		body.setParams(params);
+		body.setSystem(system);
+		body.setId("1.1");
+		return mLeChengCamApi.getMessageCallback(body);
+	}
+
 }

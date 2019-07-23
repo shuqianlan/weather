@@ -9,9 +9,11 @@ open class BaseActivity : AppCompatActivity() {
         startActivity(i)
     }
 
-    inline fun <reified T:AppCompatActivity> startActivity(content:String) {
+    inline fun <reified T:AppCompatActivity> startActivity(content:String?) {
         val i = Intent(this, T::class.java)
-        i.putExtra(Intent.EXTRA_TEXT, content)
+        if (!content.isNullOrBlank()) {
+            i.putExtra(Intent.EXTRA_TEXT, content)
+        }
         startActivity(i)
     }
 

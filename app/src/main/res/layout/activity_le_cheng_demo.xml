@@ -9,16 +9,6 @@
         android:gravity="center"
         tools:context="com.imou.LeChengDemoActivity">
 
-    <!--<Button-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:id="@+id/lecheng_user_login"-->
-            <!--android:layout_gravity="center"-->
-            <!--android:text="user_login"-->
-            <!--android:visibility="gone"-->
-            <!--android:textAllCaps="false"-->
-    <!--/>-->
-
     <TableLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
