@@ -28,11 +28,10 @@ class LeChengDemoActivity : BaseActivity() {
     * 2. 已支持获取当前设备列表(deviceList)
     * 3. 已支持摄像头播放及云台操作
     * 4. 云台控制优化
-    * 5. 登录及相应的Token数据保存
-    * 6. 缓存本地Token及Token的有效期判断
-    * 7. 功能支持:播放、暂停、对讲、录制、动检开关、分辨率切换、升级、消息推送回调、SD卡格式化、设备抓图、云台控制 @see(LeChengCameraApi)
+    * 5. 登录模式及相应的Token数据保存
+    * 6. 功能支持:播放、暂停、对讲、录制、动检开关、分辨率切换、升级、消息推送回调、SD卡格式化、设备抓图、云台控制
     * */
-    private lateinit var userLogin:Button
+    private lateinit var userLogin: Button
     private lateinit var sendCode:Button
     private lateinit var userMobile:EditText
     private lateinit var userSmsCode:EditText

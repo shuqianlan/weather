@@ -1,10 +1,12 @@
 package com.imou;
 
+import android.widget.RemoteViews;
 import com.imou.json.*;
 import io.reactivex.Flowable;
 import io.reactivex.Observable;
 import retrofit2.http.*;
 
+@RemoteViews.RemoteView
 public interface LeChengCameraApi {
 
     @POST("accessToken")
@@ -28,7 +30,7 @@ public interface LeChengCameraApi {
     @POST("shareDeviceList")
     Flowable<DeviceListResponse> shareDeviceList(@Body DevicesListRequest body);
 
-    @POST("controlPTZ")
+    @POST("controlPTZ") // 旧版云台控制
     Flowable<LeChengResponse<String>> controlPTZ(@Body ControlPTZRequest body);
 
     @POST("controlMovePTZ") //移动，放大，缩小
@@ -49,6 +51,6 @@ public interface LeChengCameraApi {
     @POST("setMessageCallback") // 设置时间消息推送
     Flowable<LeChengResponse<String>> setMessageCallback(@Body MessageCallbackRequest body);
 
-    @POST("getMessageCallback")
+    @POST("getMessageCallback") // 获取消息推送Url
     Flowable<Object> getMessageCallback(@Body MessageCallBackGetRequest body);
 }
