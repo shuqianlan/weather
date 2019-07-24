@@ -146,7 +146,10 @@ public class DevicesListActivity extends AppCompatActivity {
                 finish();
                 break;
             case R.id.lecheng_category:
-                new PopupCategoryWindow(this, channels.get(0).getUuid()).show();
+                if (channels.size() > 0) {
+                    ChannelInfo channel = channels.get(0);
+                    new PopupCategoryWindow(this, channel.getUuid()).show();
+                }
                 break;
         }
     }

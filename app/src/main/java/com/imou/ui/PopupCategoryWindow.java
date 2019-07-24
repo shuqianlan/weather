@@ -17,7 +17,12 @@ import com.ilifesmart.weather.R;
 import com.imou.ChannelInfo;
 import com.imou.LeChengMomgr;
 import com.imou.RemoteRepository;
+import com.imou.RxBus;
 import com.imou.json.BindDeviceLiveM3U8Response;
+import com.imou.json.DeviceSnapResponse;
+import com.imou.json.LeChengResponse;
+import com.imou.json.RecoverSDCardResponse;
+import io.reactivex.Flowable;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Consumer;
@@ -136,12 +141,60 @@ public class PopupCategoryWindow extends PopupWindow {
         public void onClick(View v) {
             switch (category) {
                 case SET_MOTION_ALARM_STATUS:
+                    Flowable flowable = RemoteRepository.getInstance().modifyDeviceAlarmStatus(LeChengMomgr.getInstance().getToken(), channel.getDeviceCode(), String.valueOf(channel.getIndex()), true);
+                    RxBus.getInstance().doSubscribe(flowable).subscribe(new Consumer<LeChengResponse<String>>() {
+                        @Override
+                        public void accept(LeChengResponse<String> response) throws Exception {
+                            Log.d(TAG, "accept: response " + response);
+                        }
+                    }, new Consumer<Throwable>() {
+                        @Override
+                        public void accept(Throwable throwable) throws Exception {
+                            Log.d(TAG, "accept: error " + throwable.getMessage());
+                        }
+                    });
                     break;
                 case UPGRADE_DEVICE:
+                    Flowable flowable2 = RemoteRepository.getInstance().upgradeDevice(LeChengMomgr.getInstance().getToken(), channel.getDeviceCode());
+                    RxBus.getInstance().doSubscribe(flowable2).subscribe(new Consumer<LeChengResponse<String>>() {
+                        @Override
+                        public void accept(LeChengResponse<String> response) throws Exception {
+                            Log.d(TAG, "accept: response " + response);
+                        }
+                    }, new Consumer<Throwable>() {
+                        @Override
+                        public void accept(Throwable throwable) throws Exception {
+                            Log.d(TAG, "accept: error " + throwable.getMessage());
+                        }
+                    });
                     break;
                 case SDCARD_RECOVER:
+                    Flowable flowable3 = RemoteRepository.getInstance().recoverSDCard(LeChengMomgr.getInstance().getToken(), channel.getDeviceCode(), String.valueOf(channel.getIndex()));
+                    RxBus.getInstance().doSubscribe(flowable3).subscribe(new Consumer<RecoverSDCardResponse>() {
+                        @Override
+                        public void accept(RecoverSDCardResponse response) throws Exception {
+                            Log.d(TAG, "accept: response " + response);
+                        }
+                    }, new Consumer<Throwable>() {
+                        @Override
+                        public void accept(Throwable throwable) throws Exception {
+                            Log.d(TAG, "accept: error " + throwable.getMessage());
+                        }
+                    });
                     break;
                 case SNAP_DEVICE:
+                    Flowable flowable4 = RemoteRepository.getInstance().getDeviceSnap(LeChengMomgr.getInstance().getToken(), channel.getDeviceCode(), String.valueOf(channel.getIndex()));
+                    RxBus.getInstance().doSubscribe(flowable4).subscribe(new Consumer<DeviceSnapResponse>() {
+                        @Override
+                        public void accept(DeviceSnapResponse response) throws Exception {
+                            Log.d(TAG, "accept: response " + response);
+                        }
+                    }, new Consumer<Throwable>() {
+                        @Override
+                        public void accept(Throwable throwable) throws Exception {
+                            Log.d(TAG, "accept: error " + throwable.getMessage());
+                        }
+                    });
                     break;
                 case SET_MESSAGE_CB:
                     break;
