@@ -315,4 +315,126 @@ public class RemoteRepository {
 		return mLeChengCamApi.getMessageCallback(body);
 	}
 
+	public Observable<BindDeviceLiveM3U8Response> bindDeviceLive(
+			String token,String deviceId,String channelId,String liveMode,int streamId
+	) {
+
+		BindDeviceLiveM3U8Request body = new BindDeviceLiveM3U8Request();
+		BindDeviceLiveM3U8Request.Params params = new BindDeviceLiveM3U8Request.Params();
+		params.setChannelId(channelId);
+		params.setDeviceId(deviceId);
+		params.setLiveMode(liveMode);
+		params.setToken(token);
+		params.setStreamId(streamId);
+
+		Map<String,Object> args = new HashMap<>();
+		args.put("token", token);
+		args.put("deviceId", deviceId);
+		args.put("channelId", channelId);
+		args.put("liveMode", liveMode);
+		args.put("streamId", streamId);
+
+		LeChengRequest.SystemBean system = SignHelper.createSystemBean(args);
+		body.setParams(params);
+		body.setSystem(system);
+		body.setId("1.1");
+		return mLeChengCamApi.bindDeviceLive(body);
+	}
+
+	public Observable<BindDeviceLiveM3U8Response> bindDeviceLiveHttps(
+			String token,String deviceId,String channelId,String liveMode,int streamId
+	) {
+
+		BindDeviceLiveM3U8Request body = new BindDeviceLiveM3U8Request();
+		BindDeviceLiveM3U8Request.Params params = new BindDeviceLiveM3U8Request.Params();
+		params.setChannelId(channelId);
+		params.setDeviceId(deviceId);
+		params.setLiveMode(liveMode);
+		params.setToken(token);
+		params.setStreamId(streamId);
+
+		Map<String,Object> args = new HashMap<>();
+		args.put("token", token);
+		args.put("deviceId", deviceId);
+		args.put("channelId", channelId);
+		args.put("liveMode", liveMode);
+		args.put("streamId", streamId);
+
+		LeChengRequest.SystemBean system = SignHelper.createSystemBean(args);
+		body.setParams(params);
+		body.setSystem(system);
+		body.setId("1.1");
+		return mLeChengCamApi.bindDeviceLiveHttps(body);
+	}
+
+	public Observable<BindDeviceLiveM3U8Response> bindUserDeviceLive(
+			String token,String deviceId,String channelId,String liveMode,int streamId
+	) {
+
+		BindDeviceLiveM3U8Request body = new BindDeviceLiveM3U8Request();
+		BindDeviceLiveM3U8Request.Params params = new BindDeviceLiveM3U8Request.Params();
+		params.setChannelId(channelId);
+		params.setDeviceId(deviceId);
+		params.setLiveMode(liveMode);
+		params.setToken(token);
+		params.setStreamId(streamId);
+
+		Map<String,Object> args = new HashMap<>();
+		args.put("token", token);
+		args.put("deviceId", deviceId);
+		args.put("channelId", channelId);
+		args.put("liveMode", liveMode);
+		args.put("streamId", streamId);
+
+		LeChengRequest.SystemBean system = SignHelper.createSystemBean(args);
+		body.setParams(params);
+		body.setSystem(system);
+		body.setId("1.1");
+		return mLeChengCamApi.bindUserDeviceLive(body);
+	}
+
+	public Observable<BindDeviceLiveM3U8Response> bindUserDeviceLiveHttps(
+			String token,String deviceId,String channelId,String liveMode,int streamId
+	) {
+
+		BindDeviceLiveM3U8Request body = new BindDeviceLiveM3U8Request();
+		BindDeviceLiveM3U8Request.Params params = new BindDeviceLiveM3U8Request.Params();
+		params.setChannelId(channelId);
+		params.setDeviceId(deviceId);
+		params.setLiveMode(liveMode);
+		params.setToken(token);
+		params.setStreamId(streamId);
+
+		Map<String,Object> args = new HashMap<>();
+		args.put("token", token);
+		args.put("deviceId", deviceId);
+		args.put("channelId", channelId);
+		args.put("liveMode", liveMode);
+		args.put("streamId", streamId);
+
+		LeChengRequest.SystemBean system = SignHelper.createSystemBean(args);
+		body.setParams(params);
+		body.setSystem(system);
+		body.setId("1.1");
+		return mLeChengCamApi.bindUserDeviceLiveHttps(body);
+	}
+
+	public Observable<BindDeviceLiveM3U8Response> bindRtspLive(String token) {
+
+		BindRtspLiveRequest body = new BindRtspLiveRequest();
+		BindRtspLiveRequest.Params params = new BindRtspLiveRequest.Params();
+		params.setToken(token);
+
+		Map<String,Object> args = new HashMap<>();
+		args.put("token", token);
+		args.put("streamUrl", params.getStreamUrl());
+
+		LeChengRequest.SystemBean system = SignHelper.createSystemBean(args);
+		body.setParams(params);
+		body.setSystem(system);
+		body.setId("1.1");
+		return mLeChengCamApi.bindRtspLive(body);
+	}
+
+
 }

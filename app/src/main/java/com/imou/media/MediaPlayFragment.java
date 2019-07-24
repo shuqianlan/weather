@@ -13,6 +13,7 @@ import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.hardware.SensorManager;
 import android.os.Handler;
+import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.Fragment;
 import android.util.DisplayMetrics;
 import android.view.Gravity;
@@ -20,7 +21,6 @@ import android.view.OrientationEventListener;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
-import android.widget.LinearLayout.LayoutParams;
 import com.imou.util.MediaPlayHelper;
 import com.lechange.opensdk.listener.LCOpenSDK_EventListener;
 import com.lechange.opensdk.media.LCOpenSDK_PlayWindow;
@@ -29,7 +29,7 @@ import com.lechange.opensdk.media.LCOpenSDK_PlayWindow;
 /**
  * 描述：视频播放组件基类 作者： lc
  */
-public class MediaPlayFragment extends Fragment {
+public abstract class MediaPlayFragment extends Fragment {
 	private final static String tag = "MediaPlayFragment";
 	//底层返回值
 	protected static final int retOK = 0;
@@ -140,12 +140,12 @@ public class MediaPlayFragment extends Fragment {
 		} else {
 			mOrientationListener.disable();
 		}
-
 	}
+
 	/**
 	 * 描述：改变屏幕方向
 	 */
-	private void requestedOrientation(int rotation) {
+	protected void requestedOrientation(int rotation) {
 		if (rotation < 10 || rotation > 350) {// 手机顶部向上
 			setPortOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 		} else if (rotation < 100 && rotation > 80) {// 手机右边向上
@@ -193,13 +193,13 @@ public class MediaPlayFragment extends Fragment {
 		initWindow(newConfig);
 		initSurFace(newConfig);
 		resetViews(newConfig);
-	}	
+	}
 
 	/**
 	 * 描述：初始化playWindow
 	 */
 	protected void initWindow(Configuration mConfiguration) {
-		LayoutParams mLayoutParams = (LayoutParams) mSurfaceParentView.getLayoutParams();
+		ConstraintLayout.LayoutParams mLayoutParams = (ConstraintLayout.LayoutParams) mSurfaceParentView.getLayoutParams();
 		if (mConfiguration.orientation == Configuration.ORIENTATION_LANDSCAPE) { // 横屏
 			DisplayMetrics metric = new DisplayMetrics();
 			getActivity().getWindowManager().getDefaultDisplay().getMetrics(metric);
@@ -230,7 +230,7 @@ public class MediaPlayFragment extends Fragment {
 	/**
 	 * 重置View,子类实现
 	 */
-	protected void resetViews(Configuration mConfiguration) {}
+	protected abstract void resetViews(Configuration mConfiguration);
 
     public boolean onBackPressed() {
         return false;

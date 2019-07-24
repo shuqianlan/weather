@@ -98,9 +98,7 @@ public class SignHelper {
 	 final static String VEC = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
 	 private static Random rand;
 	 public static String randomString(int length) {
-		if (rand == null) {
-			rand = new Random(System.currentTimeMillis());
-		}
+		rand = new Random(System.currentTimeMillis());
 		StringBuilder ret = new StringBuilder();
 		for (int i = 0; i < length; i++) {
 			ret.append(VEC.charAt(rand.nextInt(VEC.length())));

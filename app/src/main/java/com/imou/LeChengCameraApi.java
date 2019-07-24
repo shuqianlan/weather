@@ -53,4 +53,19 @@ public interface LeChengCameraApi {
 
     @POST("getMessageCallback") // 获取消息推送Url
     Flowable<Object> getMessageCallback(@Body MessageCallBackGetRequest body);
+
+    @POST("bindDeviceLive")
+    Observable<BindDeviceLiveM3U8Response> bindDeviceLive(@Body BindDeviceLiveM3U8Request body);
+
+    @POST("bindDeviceLiveHttps")
+    Observable<BindDeviceLiveM3U8Response> bindDeviceLiveHttps(@Body BindDeviceLiveM3U8Request body);
+
+    @POST("bindUserDeviceLive")
+    Observable<BindDeviceLiveM3U8Response> bindUserDeviceLive(@Body BindDeviceLiveM3U8Request body);
+
+    @POST("bindUserDeviceLiveHttps")
+    Observable<BindDeviceLiveM3U8Response> bindUserDeviceLiveHttps(@Body BindDeviceLiveM3U8Request body);
+
+    @POST("bindRtspLive")
+    Observable<BindDeviceLiveM3U8Response> bindRtspLive(@Body BindRtspLiveRequest body);
 }

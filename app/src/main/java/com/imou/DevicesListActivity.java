@@ -18,6 +18,7 @@ import butterknife.OnClick;
 import com.ilifesmart.utils.PersistentMgr;
 import com.ilifesmart.weather.R;
 import com.imou.json.DeviceListResponse;
+import com.imou.ui.PopupCategoryWindow;
 import io.reactivex.Flowable;
 import io.reactivex.functions.Consumer;
 
@@ -137,9 +138,16 @@ public class DevicesListActivity extends AppCompatActivity {
         }
     }
 
-    @OnClick(R.id.lecheng_user_logout)
-    public void onClick() {
-        PersistentMgr.putKV(LeChengCameraWrapInfo.EXTRA_USER_ID, null);
-        finish();
+    @OnClick({R.id.lecheng_user_logout, R.id.lecheng_category})
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.lecheng_user_logout:
+                PersistentMgr.putKV(LeChengCameraWrapInfo.EXTRA_USER_ID, null);
+                finish();
+                break;
+            case R.id.lecheng_category:
+                new PopupCategoryWindow(this, channels.get(0).getUuid()).show();
+                break;
+        }
     }
 }

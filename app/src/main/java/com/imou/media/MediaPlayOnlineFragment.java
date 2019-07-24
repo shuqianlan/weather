@@ -240,11 +240,28 @@ public class MediaPlayOnlineFragment extends MediaPlayFragment implements
 //				});
 
                 Flowable flowable = RemoteRepository.getInstance().controlMovePTZ(LeChengMomgr.getInstance().getToken(), channelInfo.getDeviceCode(), String.valueOf(channelInfo.getIndex()), "10");
-                RxBus.getInstance().doSubscribe(flowable).subscribe();
+                RxBus.getInstance().doSubscribe(flowable).subscribe(new Consumer() {
+					@Override
+					public void accept(Object o) throws Exception {
+
+					}
+				}, new Consumer<Throwable>() {
+					@Override
+					public void accept(Throwable throwable) throws Exception {
+
+					}
+				});
 			}
 		});
+		resetViews(getResources().getConfiguration());
 
 		return mView;
+	}
+
+	@Override
+	public void onConfigurationChanged(Configuration newConfig) {
+		super.onConfigurationChanged(newConfig);
+		resetViews(newConfig);
 	}
 
 	@Override
@@ -256,28 +273,6 @@ public class MediaPlayOnlineFragment extends MediaPlayFragment implements
 
 		// 开启横竖屏切换
 		startListener();
-
-		// int ability = channelInfo.getAbility();
-		// if ((ability & ChannelInfo.Ability.AudioTalk) == 0) {
-		// if (getActivity().getResources().getConfiguration().orientation ==
-		// Configuration.ORIENTATION_LANDSCAPE) {
-		// mLiveTalk.setOnClickListener(new OnClickListener() {
-		// @Override
-		// public void onClick(View v) {
-		// toast(R.string.video_monitor_unsupport_audio_talk);
-		// }
-		// });
-		// } else if
-		// (getActivity().getResources().getConfiguration().orientation ==
-		// Configuration.ORIENTATION_PORTRAIT) {
-		// mLiveTalk.setOnClickListener(new OnClickListener() {
-		// @Override
-		// public void onClick(View v) {
-		// toast(R.string.video_monitor_unsupport_audio_talk);
-		// }
-		// });
-		// }
-		// }
 	}
 
 	@Override
@@ -307,15 +302,19 @@ public class MediaPlayOnlineFragment extends MediaPlayFragment implements
 
 	@Override
 	protected void resetViews(Configuration mConfiguration) {
-		super.resetViews(mConfiguration);
 		if (mConfiguration.orientation == Configuration.ORIENTATION_LANDSCAPE) { // 横屏
 			mLiveUseLayout.setVisibility(View.GONE);
 			mLiveScale.setTag("LANDSCAPE");
 			mLiveScale.setImageResource(R.drawable.live_btn_smallscreen);
+
+			mCompossCtl.setVisibility(View.GONE);
+
 		} else if (mConfiguration.orientation == Configuration.ORIENTATION_PORTRAIT) {
 			mLiveUseLayout.setVisibility(View.VISIBLE);
 			mLiveScale.setTag("PORTRAIT");
 			mLiveScale.setImageResource(R.drawable.live_btn_fullscreen);
+
+			mCompossCtl.setVisibility(View.VISIBLE);
 		}
 	}
 

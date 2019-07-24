@@ -162,7 +162,7 @@ public class SurfaceVideoView extends FrameLayout implements MediaPlayer.OnPrepa
 	private Bitmap mThumbNailBitmap = null;
 	private void autoSetVideoThumbnail() {
 		if (mThumbNailBitmap != null) {
-			mThumbNail.setImageBitmap(mThumbNailBitmap);
+//			mThumbNail.setImageBitmap(mThumbNailBitmap);
 		} else {
 //			new Thread(new Runnable() {
 //				@Override
@@ -235,7 +235,7 @@ public class SurfaceVideoView extends FrameLayout implements MediaPlayer.OnPrepa
 				}
 			});
 			AssetFileDescriptor descriptor = getResources().getAssets().openFd(filePath);
-			player.setDataSource(descriptor);
+			player.setDataSource("rtsp://47.106.222.158:8132/57cca166c2bb83232e45426d73e6d232_1");
 			player.setDisplay(mSurfaceHolder);
 			player.setScreenOnWhilePlaying(true);
 			player.prepareAsync();
