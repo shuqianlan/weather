@@ -1,26 +1,18 @@
 package com.ilifesmart.preference;
 
-import android.content.Context;
-import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v7.preference.Preference;
-import android.support.v7.preference.PreferenceFragmentCompat;
-import android.support.v7.preference.PreferenceManager;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.preference.Preference;
+import androidx.preference.PreferenceFragmentCompat;
+import androidx.preference.PreferenceManager;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 
 import com.ilifesmart.weather.R;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static android.content.Context.MODE_WORLD_READABLE;
-import static android.content.Intent.FLAG_GRANT_WRITE_URI_PERMISSION;
 
 public class SettingsFragment extends PreferenceFragmentCompat {
 	public static final String TAG = "SettingsFragment";

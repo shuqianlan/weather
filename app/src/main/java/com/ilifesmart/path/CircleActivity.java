@@ -4,11 +4,9 @@ import android.animation.ValueAnimator;
 import android.graphics.Color;
 import android.graphics.Point;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import android.util.Log;
-import android.view.View;
 import android.view.ViewTreeObserver;
-import android.widget.Button;
 import android.widget.TextView;
 
 import com.ilifesmart.ui.QualCircle;
@@ -19,7 +17,6 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 public class CircleActivity extends AppCompatActivity {
 

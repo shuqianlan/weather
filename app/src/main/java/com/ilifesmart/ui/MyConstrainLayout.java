@@ -6,7 +6,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.drawable.GradientDrawable;
-import android.support.constraint.ConstraintLayout;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import android.util.AttributeSet;
 import android.util.Log;
 

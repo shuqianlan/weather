@@ -1,7 +1,7 @@
 package com.ilifesmart.region;
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import android.widget.Button;
 
 import com.ilifesmart.weather.R;

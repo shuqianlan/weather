@@ -3,7 +3,7 @@ package com.ilifesmart.layout;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import android.view.ViewStub;
 
 import com.ilifesmart.weather.R;

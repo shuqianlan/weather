@@ -1,7 +1,7 @@
 package com.gson
 
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
 import com.google.gson.ExclusionStrategy
 import com.google.gson.FieldAttributes
 import com.google.gson.Gson

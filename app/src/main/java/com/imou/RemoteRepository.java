@@ -112,7 +112,7 @@ public class RemoteRepository {
 		return mLeChengCamApi.deviceOnline(body);
 	}
 
-	public Flowable<DeviceListResponse> deviceList(String token, String queryRange) {
+	public Observable deviceList(String token, String queryRange) {
 		DevicesListRequest body = new DevicesListRequest();
 		DevicesListRequest.DeviceListParams params = new DevicesListRequest.DeviceListParams();
 		params.setToken(token);
@@ -128,7 +128,7 @@ public class RemoteRepository {
 		return mLeChengCamApi.deviceList(body);
 	}
 
-	public Flowable<DeviceListResponse> shareDeviceList(String token, String queryRange) {
+	public Observable shareDeviceList(String token, String queryRange) {
 		DevicesListRequest body = new DevicesListRequest();
 		DevicesListRequest.DeviceListParams params = new DevicesListRequest.DeviceListParams();
 		params.setToken(token);
@@ -142,6 +142,22 @@ public class RemoteRepository {
 		LeChengRequest.SystemBean system = SignHelper.createSystemBean(args);
 		body.setSystem(system);
 		return mLeChengCamApi.shareDeviceList(body);
+	}
+
+	public Observable beAuthDeviceList(String token, String queryRange) {
+		DevicesListRequest body = new DevicesListRequest();
+		DevicesListRequest.DeviceListParams params = new DevicesListRequest.DeviceListParams();
+		params.setToken(token);
+		params.setQueryRange(queryRange);
+		body.setId("1.1");
+		body.setParams(params);
+
+		Map<String,String> args = new HashMap<>();
+		args.put("queryRange", queryRange);
+		args.put("token", token);
+		LeChengRequest.SystemBean system = SignHelper.createSystemBean(args);
+		body.setSystem(system);
+		return mLeChengCamApi.beAuthDeviceList(body);
 	}
 
 	public Flowable<LeChengResponse<String>> controlPTZ(
@@ -182,7 +198,7 @@ public class RemoteRepository {
 		ControlMovePTZRequest.ControlMovePTZParams params = new ControlMovePTZRequest.ControlMovePTZParams();
 		params.setChannelId(channelId);
 		params.setDeviceId(deviceId);
-		params.setDuration(2000L);
+		params.setDuration(200L);
 		params.setOperation(operation);
 		params.setToken(token);
 		body.setParams(params);
@@ -192,7 +208,7 @@ public class RemoteRepository {
 		args.put("deviceId", deviceId);
 		args.put("channelId", channelId);
 		args.put("operation", operation);
-		args.put("duration", 2000L);
+		args.put("duration", 200L);
 		LeChengRequest.SystemBean system = SignHelper.createSystemBean(args);
 		body.setSystem(system);
 		return mLeChengCamApi.controlMovePTZ(body);
@@ -268,11 +284,13 @@ public class RemoteRepository {
 		params.setDeviceId(deviceId);
 		params.setToken(token);
 		params.setChannelId(channelId);
+		params.setEncrypt(false);
 
 		Map<String,Object> args = new HashMap<>();
 		args.put("token", token);
 		args.put("deviceId", deviceId);
 		args.put("channelId", channelId);
+		args.put("encrypt", false);
 
 		LeChengRequest.SystemBean system = SignHelper.createSystemBean(args);
 		body.setParams(params);

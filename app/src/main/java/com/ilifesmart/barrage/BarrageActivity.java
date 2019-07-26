@@ -7,7 +7,7 @@ import android.os.Bundle;
 import android.support.v4.media.session.MediaControllerCompat;
 import android.support.v4.media.session.MediaSessionCompat;
 import android.support.v4.media.session.PlaybackStateCompat;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import android.view.SurfaceView;
 
 import com.ilifesmart.ui.BarrageView;

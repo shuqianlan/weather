@@ -14,7 +14,7 @@ import android.content.res.Configuration;
 import android.media.MediaScannerConnection;
 import android.os.Bundle;
 import android.os.Environment;
-import android.support.constraint.ConstraintLayout;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -145,7 +145,7 @@ public class MediaPlayOnlineFragment extends MediaPlayFragment implements
 
 		mCompossCtl.setListener(new EmbeddedCompassView.OnAngleChangeListener() {
 		    private long lastts = 0;
-		    private long duration = 2L;
+		    private double duration = 0.2; // 支持时间200ms
 
 			@Override
 			public void onAngleChanged(double angle, EmbeddedCompassView compass) {
@@ -879,7 +879,7 @@ public class MediaPlayOnlineFragment extends MediaPlayFragment implements
 			if(!isPlaying){
 				return;
 			}
-			if (true || (channelInfo.getAbility() & ChannelInfo.Ability.PTZ) != 0) {
+			if (channelInfo.isSupportPTZOrPZ()) {
 				if (IsPTZOpen) {
 					// 测试专用
 //					mPlayWin.setStreamCallback(0);

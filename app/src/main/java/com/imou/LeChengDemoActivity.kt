@@ -4,7 +4,7 @@ import android.animation.ObjectAnimator
 import android.animation.ValueAnimator
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.support.constraint.ConstraintLayout
+import androidx.constraintlayout.widget.ConstraintLayout
 import android.text.TextUtils
 import android.view.View
 import android.widget.Button
@@ -42,8 +42,8 @@ class LeChengDemoActivity : BaseActivity() {
     private lateinit var adminTab:Button
     private lateinit var userTab:Button
 
-    private lateinit var adminCont:ConstraintLayout
-    private lateinit var userCont:ConstraintLayout
+    private lateinit var adminCont: ConstraintLayout
+    private lateinit var userCont: ConstraintLayout
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

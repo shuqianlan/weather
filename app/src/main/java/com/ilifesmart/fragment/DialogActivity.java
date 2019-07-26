@@ -1,8 +1,8 @@
 package com.ilifesmart.fragment;
 
-import android.support.v4.app.DialogFragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v7.app.AppCompatActivity;
+import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 
 import com.ilifesmart.weather.R;

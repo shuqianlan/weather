@@ -2,10 +2,10 @@ package com.imou;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,13 +17,18 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import com.ilifesmart.utils.PersistentMgr;
 import com.ilifesmart.weather.R;
+import com.imou.json.AuthedDeviceListResponse;
 import com.imou.json.DeviceListResponse;
+import com.imou.json.LeChengResponse;
 import com.imou.ui.PopupCategoryWindow;
-import io.reactivex.Flowable;
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Consumer;
+import io.reactivex.schedulers.Schedulers;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class DevicesListActivity extends AppCompatActivity {
 
@@ -54,14 +59,25 @@ public class DevicesListActivity extends AppCompatActivity {
     }
 
     public void loadChannels() {
-        Flowable<DeviceListResponse> flowable = RemoteRepository.getInstance()
+        Observable deviceList = RemoteRepository.getInstance()
                 .deviceList(token, "1-10");
-        RxBus.getInstance().doSubscribe(flowable)
-                .subscribe(new Consumer<DeviceListResponse>() {
+        Observable shareDeviceList = RemoteRepository.getInstance()
+                .shareDeviceList(token, "1-10");
+        Observable beAuthDeviceList = RemoteRepository.getInstance()
+                .beAuthDeviceList(token, "1-10");
+
+        channels.clear();
+
+        AtomicInteger atomic = new AtomicInteger(0);
+        Observable.concat(deviceList, shareDeviceList, beAuthDeviceList)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<LeChengResponse>() {
                     @Override
-                    public void accept(DeviceListResponse response) throws Exception {
-                        channels.clear();
+                    public void accept(LeChengResponse response) throws Exception {
                         if (LeChengUtils.isResponseOK(response)) {
+                            atomic.getAndIncrement();
+                            Log.d(TAG, "accept: response " + response);
                             Object data = response.getResult().getData();
                             if (data != null && (data instanceof DeviceListResponse.DeviceListResultData)) {
                                 List<DeviceListResponse.DeviceListResultData.DeviceListBean> devices = ((DeviceListResponse.DeviceListResultData) data).getDevices();
@@ -72,6 +88,11 @@ public class DevicesListActivity extends AppCompatActivity {
                                 for(DeviceListResponse.DeviceListResultData.DeviceListBean device:devices) {
                                     channels.addAll(LeChengUtils.devicesElementToResult(device));
                                 }
+                            } else if (data != null && data instanceof AuthedDeviceListResponse.Data) {
+                                channels.addAll(LeChengUtils.devicesElementToResult(response));
+                            }
+
+                            if (atomic.get() == 2) {
                                 LeChengMomgr.getInstance().addChannels(channels);
                                 adapter.notifyDataSetChanged();
                             }
@@ -81,6 +102,57 @@ public class DevicesListActivity extends AppCompatActivity {
                     @Override
                     public void accept(Throwable throwable) throws Exception {
                         Log.d(TAG, "accept: Errmsg " + throwable.getMessage());
+                    }
+                });
+
+        beAuthDeviceList.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<AuthedDeviceListResponse>() {
+                    @Override
+                    public void accept(AuthedDeviceListResponse response) throws Exception {
+                        Log.d(TAG, "accept: beAuthDeviceList " + response);
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Exception {
+
+                    }
+                });
+
+
+        shareDeviceList.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<DeviceListResponse>() {
+                    @Override
+                    public void accept(DeviceListResponse response) throws Exception {
+                        Log.d(TAG, "accept: shareDeviceList " + response);
+                        if (LeChengUtils.isResponseOK(response)) {
+//                            atomic.getAndIncrement();
+                            Log.d(TAG, "accept: response " + response);
+                            Object data = response.getResult().getData();
+                            if (data != null && (data instanceof DeviceListResponse.DeviceListResultData)) {
+                                List<DeviceListResponse.DeviceListResultData.DeviceListBean> devices = ((DeviceListResponse.DeviceListResultData) data).getDevices();
+                                if (devices == null) {
+                                    devices = new ArrayList<>();
+                                }
+
+                                for(DeviceListResponse.DeviceListResultData.DeviceListBean device:devices) {
+                                    channels.addAll(LeChengUtils.devicesElementToResult(device));
+                                }
+                            } else if (data != null && data instanceof AuthedDeviceListResponse.Data) {
+                                channels.addAll(LeChengUtils.devicesElementToResult(response));
+                            }
+
+//                            if (atomic.get() == 2) {
+                                LeChengMomgr.getInstance().addChannels(channels);
+                                adapter.notifyDataSetChanged();
+//                            }
+                        }
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Exception {
+
                     }
                 });
     }

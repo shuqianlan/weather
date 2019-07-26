@@ -2,14 +2,11 @@ package com.ilifesmart.test;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.ColorStateList;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
 import android.text.style.TextAppearanceSpan;
-import android.util.Log;
 import android.view.ViewTreeObserver;
 import android.widget.SeekBar;
 import android.widget.TextView;

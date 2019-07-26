@@ -25,10 +25,13 @@ public interface LeChengCameraApi {
     Flowable<DeviceOnlineResponsse> deviceOnline(@Body DeviceOnline body);
 
     @POST("deviceList")
-    Flowable<DeviceListResponse> deviceList(@Body DevicesListRequest body);
+    Observable<DeviceListResponse> deviceList(@Body DevicesListRequest body);
 
     @POST("shareDeviceList")
-    Flowable<DeviceListResponse> shareDeviceList(@Body DevicesListRequest body);
+    Observable<DeviceListResponse> shareDeviceList(@Body DevicesListRequest body);
+
+    @POST("beAuthDeviceList")
+    Observable<AuthedDeviceListResponse> beAuthDeviceList(@Body DevicesListRequest body);
 
     @POST("controlPTZ") // 旧版云台控制
     Flowable<LeChengResponse<String>> controlPTZ(@Body ControlPTZRequest body);

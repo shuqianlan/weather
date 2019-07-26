@@ -38,11 +38,11 @@ public class ChannelInfo {
 		public static final int AudioTalk = 8; // 设备支持语音对讲
 		public static final int VVP2P = 16; // 设备支持威威网络P2P服务 
 		public static final int DHP2P = 32; // 设备支持大华P2P服务
-		public static final int PTZ = 64; //设备支持云台操作
+		public static final int PTZ = 64; //设备支持云台操作及数字变倍操作
 		public static final int HSEncrypt = 128; // 设备支持华视微讯码流加密
 		public static final int CloudStorage = 256; // 设备支持华视微讯平台云存储
+		public static final int PT = 512; // 支持云台操作
 	}
-	
 
 	public int getAlarmStatus() {
 		return alarmStatus;
@@ -122,6 +122,10 @@ public class ChannelInfo {
 	}
 	public void setEncryptKey(String encryptKey) {
 		this.encryptKey = encryptKey;
+	}
+
+	public boolean isSupportPTZOrPZ() {
+		return (ability & ChannelInfo.Ability.PTZ) != 0 || (ability & ChannelInfo.Ability.PT) != 0;
 	}
 
 	@Override

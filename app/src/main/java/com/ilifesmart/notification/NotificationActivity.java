@@ -7,9 +7,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.v4.app.NotificationCompat;
-import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
+import androidx.core.app.NotificationCompat;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.ilifesmart.weather.R;
 

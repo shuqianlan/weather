@@ -2,14 +2,12 @@ package com.ilifesmart.cam3drotate;
 
 import android.graphics.Bitmap;
 import android.graphics.Camera;
-import android.graphics.Color;
 import android.graphics.Matrix;
 import android.os.Bundle;
-import android.support.constraint.ConstraintLayout;
-import android.support.v7.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.appcompat.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
-import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 
 import com.ilifesmart.ui.RoundCornerImageView;

@@ -7,7 +7,7 @@
     android:layout_height="wrap_content"
     android:orientation="vertical" >
 
-    <android.support.constraint.ConstraintLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:paddingVertical="15dp"
@@ -33,13 +33,13 @@
             app:layout_constraintDimensionRatio="W,1:1"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/textView2"/>
-    </android.support.constraint.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
     <View
         android:layout_width="match_parent"
         android:layout_height="1px"
         android:background="@android:color/darker_gray"
         />
-    <android.support.design.widget.TabLayout
+    <com.google.android.material.tabs.TabLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/tablayout"
@@ -57,7 +57,7 @@
         android:background="@android:color/darker_gray"
         android:layout_marginBottom="4dp"
         />
-    <android.support.v7.widget.RecyclerView
+    <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"

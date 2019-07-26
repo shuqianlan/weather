@@ -106,7 +106,7 @@
                 </TableRow>
             </TableLayout>
 
-            <android.support.constraint.ConstraintLayout
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
@@ -133,9 +133,9 @@
                     app:layout_constraintWidth_percent="0.4"
                     />
 
-            </android.support.constraint.ConstraintLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <android.support.constraint.ConstraintLayout
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="20dp"
@@ -164,7 +164,7 @@
                     app:layout_constraintWidth_percent="0.4"
                     />
 
-            </android.support.constraint.ConstraintLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <TableLayout
                 android:layout_width="match_parent"

@@ -1,7 +1,7 @@
 package com.gson;
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import android.util.Log;
 import com.google.common.reflect.TypeToken;
 import com.google.gson.*;

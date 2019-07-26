@@ -9,6 +9,7 @@ import android.widget.Toast;
 import com.ilifesmart.ToolsApplication;
 import com.ilifesmart.utils.PersistentMgr;
 import com.ilifesmart.weather.R;
+import com.imou.json.AuthedDeviceListResponse;
 import com.imou.json.DeviceListResponse;
 import com.imou.json.LeChengResponse;
 
@@ -157,6 +158,64 @@ public class LeChengUtils {
         return channelList;
     }
 
+    public static List<ChannelInfo> devicesElementToResult(
+            LeChengResponse response) {
+        AuthedDeviceListResponse.Data data = (AuthedDeviceListResponse.Data) response.getResult().getData();
+        List<AuthedDeviceListResponse.Data.AuthedDevice> devices = data.getDevices();
+
+        List<ChannelInfo> channels = new ArrayList<>();
+
+        // 解析分享设备通道列表
+        for(AuthedDeviceListResponse.Data.AuthedDevice device:devices) {
+            if (device != null) {
+                ChannelInfo chnlInfo = new ChannelInfo();
+
+                chnlInfo.setDeviceCode(device.getDeviceId());
+                chnlInfo.setDeviceModel(device.getDeviceModel());
+                chnlInfo.setEncryptMode(device.getEncryptMode());
+                chnlInfo.setIndex(device.getChannelId());
+                chnlInfo.setName(device.getChannelName() + "[beAuth]");
+                chnlInfo.setBackgroudImgURL(device.getChannelPicUrl());
+//            chnlInfo.setCloudMealStates(device.csStatus);
+//            chnlInfo.setAlarmStatus(device.alarmStatus);
+                // // 是否为云台设备
+                // if ((chnlElement.channelAbility != null
+                // && chnlElement.channelAbility.contains("PTZ"))
+                // || devElement.ability.contains("PTZ")) {
+                // chnlInfo.setType(ChannelType.PtzCamera);
+                // }
+                // else {
+                // chnlInfo.setType(ChannelType.Camera);
+                // }
+                // 是否支持加密
+                chnlInfo.setEncryptMode(device.getEncryptMode());
+                // 设置设备能力集
+                chnlInfo.setAbility(StringToAbility(device.getAbility()));
+
+                // 设备与通道同时在线，通道才算在线
+                if (device.isChannelOnline())
+                    switch (device.getStatus()) {
+                        case 0:
+                            chnlInfo.setState(ChannelInfo.ChannelState.Offline);
+                            break;
+                        case 1:
+                            chnlInfo.setState(ChannelInfo.ChannelState.Online);
+                            break;
+                        case 3:
+                            chnlInfo.setState(ChannelInfo.ChannelState.Upgrade);
+                            break;
+                    }
+
+                channels.add(chnlInfo);
+            }
+
+
+        }
+
+        return channels;
+
+    }
+
     public static int StringToAbility(String strAbility) {
         int ability = 0;
         if (strAbility == null) {
@@ -184,6 +243,11 @@ public class LeChengUtils {
         if (strAbility.contains("CloudStorage")) {
             ability |= ChannelInfo.Ability.CloudStorage;
         }
+
+        if (strAbility.contains("PT")) {
+            ability |= ChannelInfo.Ability.PT;
+        }
+
         return ability;
     }
 
