@@ -21,3 +21,7 @@ Weather
 ## 区域选择器
 	
 > 避免多个Activity, 适用于同一Style的View.
+
+## 乐橙摄像头
+
+> 使用RxJava+Retrofit+Gson的方式，目前功能包含认证，播放，云台控制，视频录制，对讲等。部分功能已实现但未设置调用入口. 代码是含Kotlin及Java
