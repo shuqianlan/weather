@@ -16,8 +16,29 @@ Weather
 
 ## EmbeddedCompassView(万向轮)
 
+> 新增角度反馈(四方向和八角方向)，新增触摸DOWN及UP事件的回调.
+
 ## EmbeddedViewStackContainer(FrameLayout)
+
+## 弹幕内容
+
+> 自定义SurfaceView实现。搜索BarrageActivity.java
+
+## 富文本内容
+
+## 蛛网实现
+
+> 自定义View及自定义SurfaceView两个版本
+
+## 仿小米时钟
+
+> 自定义View及自定义摄像头
 
 ## 区域选择器
 	
-> 避免多个Activity, 适用于同一Style的View.
+> 仿京东微信小程序区域选择，csv区域编码支持大部分
+
+## 乐橙摄像头
+
+dir:/imou/
+> 使用RxJava+Retrofit+Gson的方式，目前功能包含认证，播放，云台控制，视频录制，对讲等。部分功能已实现但未设置调用入口. 代码是含Kotlin及Java
