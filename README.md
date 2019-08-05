@@ -42,3 +42,9 @@ Weather
 
 dir:/imou/
 > 使用RxJava+Retrofit+Gson的方式，目前功能包含认证，播放，云台控制，视频录制，对讲等。部分功能已实现但未设置调用入口. 代码是含Kotlin及Java
+
+## JetPack
+
+dir: jetpack/
+> 目前包含:LiveData+ViewModel+Room+Lifecycle Demo。包含部分注释，源码分析较简单，自行查阅即可!
+
