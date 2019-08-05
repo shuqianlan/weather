@@ -38,6 +38,12 @@
             android:roundIcon="@mipmap/ic_launcher_round"
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
+        <activity android:name="com.jetpack.RoomActivity">
+        </activity>
+        <activity android:name="com.jetpack.JetPackActivity">
+        </activity>
+        <activity android:name="com.db.SqliteActivity">
+        </activity>
         <activity android:name="com.imou.DevicesListActivity">
         </activity>
         <activity android:name="com.imou.MediaPlayerActivity">

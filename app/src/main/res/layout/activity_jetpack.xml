@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        >
+
+    <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+    >
+
+        <TableRow>
+            <FrameLayout
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="60dp"
+            >
+                <TextView
+                        android:id="@+id/score_A"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:textSize="30sp"
+                        android:background="@android:color/holo_blue_dark"
+                        tools:text="0"
+                />
+            </FrameLayout>
+            <FrameLayout
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="60dp"
+            >
+                <TextView
+                        android:id="@+id/score_B"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:textSize="30sp"
+                        android:background="@android:color/holo_green_light"
+                        tools:text="0"
+                />
+            </FrameLayout>
+        </TableRow>
+        <TableRow>
+            <Button
+                    android:id="@+id/player_A"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="Player A"
+            />
+            <Button
+                    android:layout_weight="1"
+                    android:id="@+id/player_B"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:text="Player B"
+            />
+        </TableRow>
+        <TableRow>
+            <Button
+                    android:id="@+id/room"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="Room"
+            />
+
+        </TableRow>
+    </TableLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:id="@+id/recycler"
+    />
+</LinearLayout>

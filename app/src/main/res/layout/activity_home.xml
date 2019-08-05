@@ -26,6 +26,24 @@
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
                     android:background="@drawable/stroke_background"
+                    android:id="@+id/jetpack"
+                    android:text="JetPack"
+                    android:textAllCaps="false"
+                    android:layout_gravity="center"
+            />
+            <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:background="@drawable/stroke_background"
+                    android:id="@+id/sqlite"
+                    android:text="数据库"
+                    android:textAllCaps="false"
+                    android:layout_gravity="center"
+            />
+            <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:background="@drawable/stroke_background"
                     android:id="@+id/gson"
                     android:text="Gson"
                     android:textAllCaps="false"

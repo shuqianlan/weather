@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        tools:context="com.jetpack.RoomActivity">
+
+    <TableLayout android:layout_width="match_parent" android:layout_height="wrap_content">
+
+        <TableRow>
+            <Button
+                android:id="@+id/room_insert"
+                android:layout_weight="1"
+                android:text="Inser(10)个数据"
+            />
+            <Button
+                    android:id="@+id/room_delete"
+                    android:layout_weight="1"
+                    android:text="Delete(1)个数据"
+            />
+            <Button
+                    android:id="@+id/room_update"
+                    android:layout_weight="1"
+                    android:text="Update(1)个数据"
+            />
+            <Button
+                    android:id="@+id/room_select"
+                    android:layout_weight="1"
+                    android:text="Select(10)个数据"
+            />
+        </TableRow>
+    </TableLayout>
+
+    <androidx.recyclerview.widget.RecyclerView android:layout_width="match_parent"
+                                               android:layout_height="0dp"
+                                               android:layout_weight="1"
+                                               android:id="@+id/user_cont"
+    />
+</LinearLayout>
