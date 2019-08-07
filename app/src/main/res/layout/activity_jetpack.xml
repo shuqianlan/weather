@@ -70,8 +70,32 @@
                     android:layout_weight="1"
                     android:gravity="center"
                     android:text="Room"
+                    android:textAllCaps="false"
             />
-
+            <Button
+                    android:id="@+id/navigation"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="Navigations"
+                    android:textAllCaps="false"
+            />
+            <Button
+                    android:id="@+id/databinding"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="DataBinding"
+                    android:textAllCaps="false"
+            />
+            <Button
+                    android:id="@+id/paging"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="Paging"
+                    android:textAllCaps="false"
+            />
         </TableRow>
     </TableLayout>
 

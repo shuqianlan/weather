@@ -7,7 +7,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -41,12 +40,7 @@ public class RoomActivity extends AppCompatActivity {
         mUserCont.setAdapter(adapter);
 
         userViewModel = ViewModelProviders.of(this).get(UserViewModel.class);
-        userViewModel.getAllUsers().observe(this, new Observer<List<User>>() {
-            @Override
-            public void onChanged(List<User> users) {
-                adapter.setUsers(users);
-            }
-        });
+        userViewModel.getAllUsers().observe(this, adapter::setUsers);
 
     }
 

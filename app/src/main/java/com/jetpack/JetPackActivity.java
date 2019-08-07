@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.ilifesmart.utils.Utils;
 import com.ilifesmart.weather.R;
 import com.jetpack.dagger2.WuKong;
+import com.jetpack.databinding.DataBinding2Activity;
 import com.jetpack.model.LiveDataTimerViewModel;
 import com.jetpack.model.MainViewModel;
 import com.jetpack.model.RecyclerViewModel;
@@ -83,6 +84,27 @@ public class JetPackActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Utils.startActivity(JetPackActivity.this, RoomActivity.class);
+            }
+        });
+
+        findViewById(R.id.navigation).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Utils.startActivity(JetPackActivity.this, NavigationActivity.class);
+            }
+        });
+
+        findViewById(R.id.databinding).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Utils.startActivity(JetPackActivity.this, DataBinding2Activity.class);
+            }
+        });
+
+        findViewById(R.id.paging).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Utils.startActivity(JetPackActivity.this, PagingActivity.class);
             }
         });
 

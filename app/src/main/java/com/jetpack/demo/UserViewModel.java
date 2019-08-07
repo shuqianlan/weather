@@ -1,8 +1,11 @@
 package com.jetpack.demo;
 
+import android.text.InputType;
 import android.util.Log;
+import android.widget.EditText;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
+import com.ilifesmart.ToolsApplication;
 
 import java.util.List;
 
@@ -55,5 +58,8 @@ public class UserViewModel extends ViewModel {
         User user = mAllUsers.getValue().get(index);
         Log.d(TAG, "delete: user " + user);
         mRepository.delete(user);
+
+        EditText edit = new EditText(ToolsApplication.getContext());
+        edit.setInputType(InputType.TYPE_CLASS_NUMBER);
     }
 }
