@@ -170,7 +170,7 @@ public class SurfaceVideoView extends FrameLayout implements MediaPlayer.OnPrepa
 //					try {
 //						InputStream in = getResources().getAssets().open(filePath);
 //						copyPath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MOVIES).getAbsolutePath() + File.separator + "video.mp4";
-//						Bitmap mp = Utils.getVideoThumbnail(in, copyPath);
+//						Bitmap mp = BindAdapters.getVideoThumbnail(in, copyPath);
 //						in.close();
 //
 //						mThumbNail.post(()->{

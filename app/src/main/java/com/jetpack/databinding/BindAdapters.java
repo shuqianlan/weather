@@ -3,7 +3,7 @@ package com.jetpack.databinding;
 import android.view.View;
 import androidx.databinding.BindingAdapter;
 
-public class Utils {
+public class BindAdapters {
 
     /*
     * BindingAdapter: 是对绑定数据的触发器的监听器，
