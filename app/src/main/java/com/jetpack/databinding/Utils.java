@@ -1,6 +1,5 @@
 package com.jetpack.databinding;
 
-import android.util.Log;
 import android.view.View;
 import androidx.databinding.BindingAdapter;
 
@@ -38,7 +37,6 @@ public class Utils {
     * */
     @BindingAdapter("isGone")
     public static void bindIsGone(View v, boolean isGone) {
-        Log.d("BBBB", "bindIsGone: isGone " + isGone);
         if (isGone) {
             v.setVisibility(View.GONE);
         } else {
