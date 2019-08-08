@@ -14,7 +14,7 @@ import com.ilifesmart.region.RegionMgr;
 import com.imou.LeChengCameraWrapInfo;
 import com.lechange.opensdk.api.LCOpenSDK_Api;
 
-public class ToolsApplication extends Application {
+public class ToolsApplication extends Application { //} implements Configuration.Provider {
 
     public static final String TAG = "Application";
     private static LocationClient mLocationClient;
@@ -114,4 +114,12 @@ public class ToolsApplication extends Application {
         manager.createNotificationChannel(channel);
     }
 
+// 自定义WorkManager的配置
+//    @NonNull
+//    @Override
+//    public Configuration getWorkManagerConfiguration() {
+//        return new Configuration.Builder()
+//                .setMinimumLoggingLevel(Log.INFO)
+//                .build();
+//    }
 }

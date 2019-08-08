@@ -6,9 +6,11 @@ import androidx.lifecycle.ViewModel;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class UserViewModel extends ViewModel {
-    private MutableLiveData<String> liveData = new MutableLiveData<>();
+    private MutableLiveData<DataBean> liveData = new MutableLiveData<>();
 
-    public MutableLiveData<String> getLiveData() {
+    private DataBean bean = new DataBean();
+
+    public MutableLiveData<DataBean> getLiveData() {
         return liveData;
     }
 
@@ -16,4 +18,15 @@ public class UserViewModel extends ViewModel {
     public String getRandomText() {
         return "Random:" + atomic.getAndIncrement();
     }
+
+    public void setName() {
+        bean.name = getRandomText();
+        liveData.setValue(bean);
+    }
+
+    public void reverVisible() {
+        bean.isGone = !bean.isGone;
+        liveData.setValue(bean);
+    }
+
 }

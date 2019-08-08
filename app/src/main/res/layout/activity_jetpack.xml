@@ -96,6 +96,14 @@
                     android:text="Paging"
                     android:textAllCaps="false"
             />
+            <Button
+                    android:id="@+id/work_manager"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="WorkManager"
+                    android:textAllCaps="false"
+            />
         </TableRow>
     </TableLayout>
 

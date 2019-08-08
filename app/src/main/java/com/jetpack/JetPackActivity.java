@@ -108,6 +108,13 @@ public class JetPackActivity extends AppCompatActivity {
             }
         });
 
+        findViewById(R.id.work_manager).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Utils.startActivity(JetPackActivity.this, WorkManagerActivity.class);
+            }
+        });
+
         final Observer<Long> observer = new Observer<Long>() {
             @Override
             public void onChanged(Long aLong) {

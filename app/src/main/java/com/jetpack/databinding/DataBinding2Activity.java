@@ -24,7 +24,11 @@ public class DataBinding2Activity extends AppCompatActivity {
 
     public class ButtonHandler {
         public void setRandomText() {
-            modelInfo.getLiveData().postValue(modelInfo.getRandomText());
+            modelInfo.setName();
+        }
+
+        public void reverseVisible() {
+            modelInfo.reverVisible();
         }
 
         public void showRandomText() {
