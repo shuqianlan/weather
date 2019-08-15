@@ -38,6 +38,14 @@
             android:roundIcon="@mipmap/ic_launcher_round"
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
+        <activity android:name="com.media.MP3PlayerActivity">
+        </activity>
+        <activity android:name="com.media.MediaActivity">
+        </activity>
+        <activity android:name="com.layout.LayoutDemo1Activity">
+        </activity>
+        <activity android:name="com.layout.LayoutDemoActivity">
+        </activity>
         <activity android:name="com.jetpack.WorkManagerActivity">
         </activity>
         <activity android:name="com.jetpack.databinding.DataBinding2Activity">

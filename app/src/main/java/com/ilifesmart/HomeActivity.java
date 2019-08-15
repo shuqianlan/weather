@@ -56,6 +56,8 @@ import com.ilifesmart.window.WindowDemoActivity;
 import com.imou.*;
 import com.jetpack.JetPackActivity;
 import com.jni.JniDemoActivity;
+import com.layout.LayoutDemoActivity;
+import com.media.MediaActivity;
 import com.spannableText.SpannableActivity;
 import com.surfaceview.SurfaceViewActivity;
 
@@ -193,10 +195,13 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     @OnClick({R.id.weather, R.id.seekbar, R.id.notification, R.id.rotate, R.id.aop_test, R.id.thread_test, R.id.framelayout, R.id.compass, R.id.miclock, R.id.camrotate, R.id.path, R.id.osinfo, R.id.viewpager, R.id.mapper, R.id.dialog, R.id.preference, R.id.nature_ui, R.id.spider_web, R.id.mvvm, R.id.rxjava, R.id.progress, R.id.ViewGroup, R.id.live, R.id.curtain, R.id.barrage, R.id.bluetooth, R.id.fold, R.id.region, R.id.span_text, R.id.custom_surfaceview, R.id.animation, R.id.window, R.id.abstract_layout, R.id.jni, R.id.miui_right_out, R.id.imou, R.id.gson,
-      R.id.sqlite, R.id.jetpack
+      R.id.sqlite, R.id.jetpack, R.id.layout, R.id.media
     })
     public void onClick(View v) {
         switch (v.getId()) {
+            case R.id.layout:
+                Utils.startActivity(this, LayoutDemoActivity.class);
+                break;
             case R.id.jetpack:
                 Utils.startActivity(this, JetPackActivity.class);
                 break;
@@ -339,6 +344,9 @@ public class HomeActivity extends AppCompatActivity {
                 break;
             case R.id.sqlite:
                 Utils.startActivity(this, SqliteActivity.class);
+                break;
+            case R.id.media:
+                Utils.startActivity(this, MediaActivity.class);
                 break;
         }
     }

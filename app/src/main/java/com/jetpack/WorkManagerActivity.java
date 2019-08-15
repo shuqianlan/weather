@@ -58,6 +58,7 @@ public class WorkManagerActivity extends AppCompatActivity {
                 )
                 .build();
 
+        // 此处需对进度条的旋转做出UI显示.
         WorkManager.getInstance(ToolsApplication.getContext()).getWorkInfoByIdLiveData(workRequest.getId()).observe(this, new Observer<WorkInfo>() {
             @Override
             public void onChanged(WorkInfo workInfo) {
