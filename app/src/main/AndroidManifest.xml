@@ -1,34 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          xmlns:tools="http://schemas.android.com/tools"
-          package="com.ilifesmart.weather">
+        xmlns:tools="http://schemas.android.com/tools"
+        package="com.ilifesmart.weather">
     <!-- 这个权限用于进行网络定位 -->
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/> <!-- 这个权限用于访问GPS定位 -->
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/> <!-- 用于访问wifi网络信息，wifi信息会用于进行网络定位 -->
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/> <!-- 获取运营商信息，用于支持提供运营商信息相关的接口 -->
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/> <!-- 这个权限用于获取wifi的获取权限，wifi信息会用来进行网络定位 -->
-    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"/> <!-- 用于读取手机当前的状态 -->
-    <uses-permission android:name="android.permission.READ_PHONE_STATE"/> <!-- 写入扩展存储，向扩展卡写入数据，用于写入离线定位数据 -->
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/> <!-- 访问网络，网络定位需要上网 -->
-    <uses-permission android:name="android.permission.INTERNET"/> <!-- SD卡读取权限，用户写入离线定位数据 -->
-    <uses-permission
-            android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"/> <!-- To auto-complete the email text field in the login form with the user's emails -->
-    <uses-permission android:name="android.permission.GET_ACCOUNTS"/>
-    <uses-permission android:name="android.permission.READ_PROFILE"/>
-    <uses-permission android:name="android.permission.READ_CONTACTS"/> <!-- 蓝牙权限 -->
-    <uses-permission android:name="android.permission.BLUETOOTH"/> <!-- 蓝牙设置权限 -->
-    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN"/> <!-- 设置屏幕效果(保持屏幕常亮或其它) -->
-    <uses-permission android:name="android.permission.WAKE_LOCK"/>
-    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" /> <!-- 这个权限用于访问GPS定位 -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" /> <!-- 用于访问wifi网络信息，wifi信息会用于进行网络定位 -->
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" /> <!-- 获取运营商信息，用于支持提供运营商信息相关的接口 -->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" /> <!-- 这个权限用于获取wifi的获取权限，wifi信息会用来进行网络定位 -->
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" /> <!-- 用于读取手机当前的状态 -->
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" /> <!-- 写入扩展存储，向扩展卡写入数据，用于写入离线定位数据 -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" /> <!-- 访问网络，网络定位需要上网 -->
+    <uses-permission android:name="android.permission.INTERNET" /> <!-- SD卡读取权限，用户写入离线定位数据 -->
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" /> <!-- To auto-complete the email text field in the login form with the user's emails -->
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="android.permission.READ_PROFILE" />
+    <uses-permission android:name="android.permission.READ_CONTACTS" /> <!-- 蓝牙权限 -->
+    <uses-permission android:name="android.permission.BLUETOOTH" /> <!-- 蓝牙设置权限 -->
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" /> <!-- 设置屏幕效果(保持屏幕常亮或其它) -->
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
 
     <uses-feature
             android:name="android.hardware.bluetooth_le"
-            android:required="false"/>
+            android:required="false" />
 
-    <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-permission android:name="android.permission.CAMERA" />
 
-    <uses-feature android:name="android.hardware.camera.autofocus"/>
-    <uses-feature android:name="android.hardware.camera"/>
+    <uses-feature android:name="android.hardware.camera.autofocus" />
+    <uses-feature android:name="android.hardware.camera" />
 
     <application
             android:name="com.ilifesmart.ToolsApplication"
@@ -38,133 +37,83 @@
             android:roundIcon="@mipmap/ic_launcher_round"
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
-        <activity android:name="com.media.MP3PlayerActivity">
-        </activity>
-        <activity android:name="com.media.MediaActivity">
-        </activity>
-        <activity android:name="com.layout.LayoutDemo1Activity">
-        </activity>
-        <activity android:name="com.layout.LayoutDemoActivity">
-        </activity>
-        <activity android:name="com.jetpack.WorkManagerActivity">
-        </activity>
-        <activity android:name="com.jetpack.databinding.DataBinding2Activity">
-        </activity>
-        <activity android:name="com.jetpack.databinding.DataBindingActivity">
-        </activity>
-        <activity android:name="com.jetpack.NavigationActivity">
-        </activity>
-        <activity android:name="com.jetpack.PagingActivity">
-        </activity>
-        <activity android:name="com.jetpack.RoomActivity">
-        </activity>
-        <activity android:name="com.jetpack.JetPackActivity">
-        </activity>
-        <activity android:name="com.db.SqliteActivity">
-        </activity>
-        <activity android:name="com.imou.DevicesListActivity">
-        </activity>
-        <activity android:name="com.imou.MediaPlayerActivity">
-        </activity>
-        <activity android:name="com.gson.Gson2Activity">
-        </activity>
-        <activity android:name="com.gson.GsonActivity">
-        </activity>
-        <activity android:name="com.imou.LeChengLoginActivity">
-        </activity>
-        <activity android:name="com.imou.LeChengDemoActivity">
-        </activity>
-        <activity android:name="com.ilifesmart.MIUIActivity">
-        </activity>
-        <activity android:name="com.jni.JniDemoActivity">
-        </activity>
-        <activity android:name="com.ilifesmart.layout.AbstractActivity">
-        </activity>
-        <activity android:name="com.ilifesmart.window.WindowDemoActivity">
-        </activity>
-        <activity android:name="com.ilifesmart.animation.AnimationActivity">
-        </activity>
-        <activity android:name="com.ilifesmart.barrage.VideoActivity">
-        </activity>
-        <activity android:name="com.surfaceview.SurfaceViewActivity">
-        </activity>
-        <activity android:name="com.spannableText.SpannableActivity">
-        </activity>
-        <activity android:name="com.ilifesmart.region.RegionDemoActivity">
-        </activity>
-        <activity android:name="com.ilifesmart.fold.FoldActivity">
-        </activity>
-        <activity android:name="com.ilifesmart.ble.Bluetooth2Activity">
-        </activity>
-        <activity android:name="com.ilifesmart.ble.BluetoothActivity">
-        </activity>
-        <activity android:name="com.ilifesmart.barrage.BarrageActivity">
-        </activity>
-        <activity android:name="com.ilifesmart.NatureCurtainActivity">
-        </activity>
-        <activity android:name="com.ilifesmart.live.ProgressLiveActivity">
-        </activity>
-        <activity android:name="com.ilifesmart.live.SinglePixelActivity">
-        </activity>
-        <activity android:name="com.ilifesmart.group.GroupActivity">
-        </activity>
-        <activity android:name="com.ilifesmart.ProgressActivity">
-        </activity>
-        <activity android:name="com.ilifesmart.rxjava.DemoActivity">
-        </activity>
-        <activity android:name="com.ilifesmart.mvvm.MVVMActivity">
-        </activity>
-        <activity android:name="com.ilifesmart.SpiderWebActivity">
-        </activity>
+        <activity android:name="com.jetpack.LiveDataActivity"></activity>
+        <activity android:name="com.media.MP3PlayerActivity"></activity>
+        <activity android:name="com.media.MediaActivity"></activity>
+        <activity android:name="com.layout.LayoutDemo1Activity"></activity>
+        <activity android:name="com.layout.LayoutDemoActivity"></activity>
+        <activity android:name="com.jetpack.WorkManagerActivity"></activity>
+        <activity android:name="com.jetpack.databinding.DataBinding2Activity"></activity>
+        <activity android:name="com.jetpack.databinding.DataBindingActivity"></activity>
+        <activity android:name="com.jetpack.NavigationActivity"></activity>
+        <activity android:name="com.jetpack.PagingActivity"></activity>
+        <activity android:name="com.jetpack.RoomActivity"></activity>
+        <activity android:name="com.jetpack.JetPackActivity"></activity>
+        <activity android:name="com.db.SqliteActivity"></activity>
+        <activity android:name="com.imou.DevicesListActivity"></activity>
+        <activity android:name="com.imou.MediaPlayerActivity"></activity>
+        <activity android:name="com.gson.Gson2Activity"></activity>
+        <activity android:name="com.gson.GsonActivity"></activity>
+        <activity android:name="com.imou.LeChengLoginActivity"></activity>
+        <activity android:name="com.imou.LeChengDemoActivity"></activity>
+        <activity android:name="com.ilifesmart.MIUIActivity"></activity>
+        <activity android:name="com.jni.JniDemoActivity"></activity>
+        <activity android:name="com.ilifesmart.layout.AbstractActivity"></activity>
+        <activity android:name="com.ilifesmart.window.WindowDemoActivity"></activity>
+        <activity android:name="com.ilifesmart.animation.AnimationActivity"></activity>
+        <activity android:name="com.ilifesmart.barrage.VideoActivity"></activity>
+        <activity android:name="com.surfaceview.SurfaceViewActivity"></activity>
+        <activity android:name="com.spannableText.SpannableActivity"></activity>
+        <activity android:name="com.ilifesmart.region.RegionDemoActivity"></activity>
+        <activity android:name="com.ilifesmart.fold.FoldActivity"></activity>
+        <activity android:name="com.ilifesmart.ble.Bluetooth2Activity"></activity>
+        <activity android:name="com.ilifesmart.ble.BluetoothActivity"></activity>
+        <activity android:name="com.ilifesmart.barrage.BarrageActivity"></activity>
+        <activity android:name="com.ilifesmart.NatureCurtainActivity"></activity>
+        <activity android:name="com.ilifesmart.live.ProgressLiveActivity"></activity>
+        <activity android:name="com.ilifesmart.live.SinglePixelActivity"></activity>
+        <activity android:name="com.ilifesmart.group.GroupActivity"></activity>
+        <activity android:name="com.ilifesmart.ProgressActivity"></activity>
+        <activity android:name="com.ilifesmart.rxjava.DemoActivity"></activity>
+        <activity android:name="com.ilifesmart.mvvm.MVVMActivity"></activity>
+        <activity android:name="com.ilifesmart.SpiderWebActivity"></activity>
         <activity
                 android:name="com.ilifesmart.nature.NatureActivity"
-                android:screenOrientation="landscape">
-        </activity>
+                android:screenOrientation="landscape"></activity>
         <activity android:name="com.ilifesmart.HomeActivity">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
+                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER"/>
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
         <meta-data
                 android:name="com.baidu.lbsapi.API_KEY"
-                android:value="k7M4yyyPlazQQYAInIwyqbxTWhupytWV"/>
+                android:value="k7M4yyyPlazQQYAInIwyqbxTWhupytWV" />
 
         <service
                 android:name="com.baidu.location.f"
                 android:enabled="true"
-                android:process=":remote"/>
+                android:process=":remote" />
 
-        <activity android:name=".WeatherActivity"/>
-        <activity android:name="com.ilifesmart.test.SeekBarActivity"/>
-        <activity android:name="com.ilifesmart.notification.NotificationActivity"/>
-        <activity android:name="com.ilifesmart.Rotate3DActivity"/>
-        <activity android:name="com.ilifesmart.aop.CheckOnClickActivity"/>
-        <activity android:name="com.ilifesmart.thread.ThreadTestActivity"/>
-        <activity android:name="com.ilifesmart.framelayout.FrameLayoutActivity">
-        </activity>
-        <activity android:name="com.ilifesmart.compass.CompassActivity">
-        </activity>
-        <activity android:name="com.ilifesmart.miclock.MiClockActivity">
-        </activity>
-        <activity android:name="com.ilifesmart.cam3drotate.CameraRotateActivity">
-        </activity>
-        <activity android:name="com.ilifesmart.path.CircleActivity">
-        </activity>
-        <activity android:name="com.ilifesmart.os.OSInfoActivity">
-        </activity>
-        <activity android:name="com.ilifesmart.viewpager.ViewPagerActivity">
-        </activity>
-        <activity android:name="com.ilifesmart.mapper.MapperActivity">
-        </activity>
-        <activity android:name="com.ilifesmart.fragment.DialogActivity">
-        </activity>
-        <activity android:name="com.ilifesmart.preference.SettingActivity">
-        </activity>
-        <activity android:name="com.ilifesmart.skin.SkinDemoActivity">
-        </activity>
+        <activity android:name=".WeatherActivity" />
+        <activity android:name="com.ilifesmart.test.SeekBarActivity" />
+        <activity android:name="com.ilifesmart.notification.NotificationActivity" />
+        <activity android:name="com.ilifesmart.Rotate3DActivity" />
+        <activity android:name="com.ilifesmart.aop.CheckOnClickActivity" />
+        <activity android:name="com.ilifesmart.thread.ThreadTestActivity" />
+        <activity android:name="com.ilifesmart.framelayout.FrameLayoutActivity"></activity>
+        <activity android:name="com.ilifesmart.compass.CompassActivity"></activity>
+        <activity android:name="com.ilifesmart.miclock.MiClockActivity"></activity>
+        <activity android:name="com.ilifesmart.cam3drotate.CameraRotateActivity"></activity>
+        <activity android:name="com.ilifesmart.path.CircleActivity"></activity>
+        <activity android:name="com.ilifesmart.os.OSInfoActivity"></activity>
+        <activity android:name="com.ilifesmart.viewpager.ViewPagerActivity"></activity>
+        <activity android:name="com.ilifesmart.mapper.MapperActivity"></activity>
+        <activity android:name="com.ilifesmart.fragment.DialogActivity"></activity>
+        <activity android:name="com.ilifesmart.preference.SettingActivity"></activity>
+        <activity android:name="com.ilifesmart.skin.SkinDemoActivity"></activity>
     </application>
 
 </manifest>

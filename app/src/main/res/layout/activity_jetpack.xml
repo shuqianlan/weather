@@ -104,6 +104,14 @@
                     android:text="WorkManager"
                     android:textAllCaps="false"
             />
+            <Button
+                    android:id="@+id/live_data"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="LiveData"
+                    android:textAllCaps="false"
+                    />
         </TableRow>
     </TableLayout>
 

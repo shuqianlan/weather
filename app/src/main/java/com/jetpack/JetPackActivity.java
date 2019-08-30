@@ -115,6 +115,13 @@ public class JetPackActivity extends AppCompatActivity {
             }
         });
 
+        findViewById(R.id.live_data).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Utils.startActivity(JetPackActivity.this, LiveDataActivity.class);
+            }
+        });
+
         final Observer<Long> observer = new Observer<Long>() {
             @Override
             public void onChanged(Long aLong) {

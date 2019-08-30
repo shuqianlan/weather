@@ -2,11 +2,15 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/AndroidStudio-weather.iml" filepath="$PROJECT_DIR$/AndroidStudio-weather.iml" />
       <module fileurl="file://$PROJECT_DIR$/JavaProgect/JavaProgect.iml" filepath="$PROJECT_DIR$/JavaProgect/JavaProgect.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/lib/lib.iml" filepath="$PROJECT_DIR$/lib/lib.iml" />
       <module fileurl="file://$PROJECT_DIR$/lib2/lib2.iml" filepath="$PROJECT_DIR$/lib2/lib2.iml" />
       <module fileurl="file://$PROJECT_DIR$/weather.iml" filepath="$PROJECT_DIR$/weather.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/weather-app.iml" filepath="$PROJECT_DIR$/app/weather-app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/lib/weather-lib.iml" filepath="$PROJECT_DIR$/lib/weather-lib.iml" />
+      <module fileurl="file://$PROJECT_DIR$/lib2/weather-lib2.iml" filepath="$PROJECT_DIR$/lib2/weather-lib2.iml" />
     </modules>
   </component>
 </project>
