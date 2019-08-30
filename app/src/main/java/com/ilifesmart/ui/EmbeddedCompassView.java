@@ -32,6 +32,7 @@ public class EmbeddedCompassView extends View {
 	private int mOutsideRadius;
 	private int mThresholdRadius;
 	private int mStickRadius;
+	private float validBeginPercent = 0.3f;
 	private int mOutSideRadiusStrokeColor;
 	private int mArrowColor;
 	private int mStickColor;
@@ -63,7 +64,7 @@ public class EmbeddedCompassView extends View {
 			mOutSideRadiusStrokeColor = arr.getColor(R.styleable.EmbeddedCompassView_outSideRadiusStrokerColor, Color.DKGRAY);
 			mArrowColor = arr.getColor(R.styleable.EmbeddedCompassView_arrowColor, Color.DKGRAY);
 			mStickColor = arr.getColor(R.styleable.EmbeddedCompassView_stickColor, Color.LTGRAY);
-
+			validBeginPercent = arr.getFloat(R.styleable.EmbeddedCompassView_validBeginPercent, validBeginPercent);
 			arr.recycle();
 		}
 		mStickCirclePaint.setColor(mStickColor);
@@ -194,7 +195,9 @@ public class EmbeddedCompassView extends View {
 					angle = 360 - angle;
 				}
 
-				listener.onAngleChanged(angle, this); // [0-360] [0:右, 90:上，180:左，270:下
+				if (validBeginPercent <= ((float)dist)/(mThresholdRadius-mStickRadius)) {
+					listener.onAngleChanged(angle, this); // [0-360] [0:右, 90:上，180:左，270:下
+				}
 			}
 		}
 		return true;

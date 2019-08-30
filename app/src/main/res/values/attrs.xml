@@ -34,6 +34,7 @@
         <attr name="outSideRadiusStrokerColor" format="color"/>
         <attr name="arrowColor" format="color"/>
         <attr name="stickColor" format="color"/>
+        <attr name="validBeginPercent" format="float" />
     </declare-styleable>
 
     <declare-styleable name="MiClockView">
