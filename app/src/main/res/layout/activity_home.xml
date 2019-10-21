@@ -26,6 +26,24 @@
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
                     android:background="@drawable/stroke_background"
+                    android:id="@+id/uilayout"
+                    android:text="UI-Layout"
+                    android:textAllCaps="false"
+                    android:layout_gravity="center"
+                    />
+            <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:background="@drawable/stroke_background"
+                    android:id="@+id/kotlin_conoroutine"
+                    android:text="Kotlin协程"
+                    android:textAllCaps="false"
+                    android:layout_gravity="center"
+                    />
+            <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:background="@drawable/stroke_background"
                     android:id="@+id/media"
                     android:text="Media"
                     android:textAllCaps="false"

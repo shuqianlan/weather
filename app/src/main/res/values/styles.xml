@@ -31,5 +31,7 @@
         <item name="android:windowEnterAnimation">@anim/pop_up</item>
         <item name="android:windowExitAnimation">@anim/pop_down</item>
     </style>
-    
+
+    <declare-styleable name="CarouselLayout" />
+
 </resources>

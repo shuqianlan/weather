@@ -45,9 +45,18 @@ class LeChengDemoActivity : BaseActivity() {
     private lateinit var adminCont: ConstraintLayout
     private lateinit var userCont: ConstraintLayout
 
+    override fun layoutResId()=R.layout.activity_le_cheng_demo
+    override fun initView() {
+
+    }
+
+    override fun initData() {
+
+    }
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_le_cheng_demo)
 
         userLogin   = findViewById(R.id.style_user_submit)
         sendCode    = findViewById(R.id.send_message)

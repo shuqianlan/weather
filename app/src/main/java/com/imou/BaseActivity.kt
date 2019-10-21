@@ -8,21 +8,25 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
-open class BaseActivity : AppCompatActivity() {
-    inline fun <reified T:AppCompatActivity> startActivity(content:String?=null) {
-        val i = Intent(this, T::class.java)// ::class.java类似Java.class
-        if (!content.isNullOrBlank()) {
-            i.putExtra(Intent.EXTRA_TEXT, content)
-        }
-        startActivity(i)
+inline fun <reified T> AppCompatActivity.startActivity(content:String?=null) {
+    val i = Intent(this, T::class.java)// ::class.java类似Java.class
+    if (!content.isNullOrBlank()) {
+        i.putExtra(Intent.EXTRA_TEXT, content)
+    }
+    startActivity(i)
+}
+
+open abstract class BaseActivity : AppCompatActivity() {
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        setContentView(layoutResId())
+        initView()
+        initData()
     }
 
-    override fun onCreate(savedInstanceState: Bundle?, persistentState: PersistableBundle?) {
-        super.onCreate(savedInstanceState, persistentState)
-
-        Dispatchers.Default
-        GlobalScope.launch {
-
-        }
-    }
+    abstract fun layoutResId(): Int
+    open fun initView() {}
+    open fun initData() {}
 }

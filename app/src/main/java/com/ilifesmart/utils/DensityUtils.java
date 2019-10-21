@@ -40,4 +40,18 @@ public class DensityUtils {
         result[0] = point.x;
         result[1] = point.y;
     }
+
+    public static int getWindowWidth(Context context) {
+        WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+        Point point = new Point();
+        wm.getDefaultDisplay().getRealSize(point);
+        return point.x;
+    }
+
+    public static int getWindowHeight(Context context) {
+        WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+        Point point = new Point();
+        wm.getDefaultDisplay().getRealSize(point);
+        return point.y;
+    }
 }
