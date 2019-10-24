@@ -17,15 +17,13 @@
             app:layout_constraintTop_toTopOf="parent"
             android:background="@android:color/holo_orange_dark"
         />
-    <com.ilifesmart.ui.SimpleGroup
+    <com.ilifesmart.ui.Carouse2Layout
             app:layout_constraintTop_toBottomOf="@id/top_area"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             app:layout_constraintDimensionRatio="H,16:9"
             android:id="@+id/simple_group"
-            android:background="@android:color/white"
-            android:touchscreenBlocksFocus="true"
-            android:descendantFocusability="blocksDescendants"
+            android:background="@color/colorPrimaryDark"
             >
 
         <FrameLayout
@@ -92,5 +90,5 @@
 
         </FrameLayout>
 
-    </com.ilifesmart.ui.SimpleGroup>
+    </com.ilifesmart.ui.Carouse2Layout>
 </androidx.constraintlayout.widget.ConstraintLayout>

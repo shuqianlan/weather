@@ -21,20 +21,22 @@ class UILayoutActivity : BaseActivity() {
             simple_group.autoPlay()
         }
 
-        text4.setOnClickListener{
-            toast("text4")
-        }
-
-        text3.setOnClickListener{
-            toast("text3")
-        }
-
-        text2.setOnClickListener{
-            toast("text2")
-        }
-
-        text1.setOnClickListener{
-            toast("text1")
-        }
+/*
+//        text4.setOnClickListener{
+//            toast("text4")
+//        }
+//
+//        text3.setOnClickListener{
+//            toast("text3")
+//        }
+//
+//        text2.setOnClickListener{
+//            toast("text2")
+//        }
+//
+//        text1.setOnClickListener{
+//            toast("text1")
+//        }
+*/
     }
 }

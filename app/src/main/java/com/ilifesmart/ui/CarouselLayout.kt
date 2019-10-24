@@ -5,12 +5,10 @@ import android.animation.ValueAnimator
 import android.content.Context
 import android.util.AttributeSet
 import android.util.Log
-import android.view.GestureDetector
-import android.view.MotionEvent
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.LinearLayout
 import java.util.jar.Attributes
+import kotlin.math.abs
 
 class CarouselLayout : ViewGroup {
     constructor(context:Context): this(context, null)
@@ -24,11 +22,8 @@ class CarouselLayout : ViewGroup {
 
     private var animator:ValueAnimator?=null
     private var once = true
-
-    private lateinit var gestureDetector: GestureDetector
-    init {
-        gestureDetector = GestureDetector(context, DefaultGestureDetector())
-    }
+    private var touchX = 0f
+    private var lastX = 0f
 
     override fun onLayout(changed: Boolean, l: Int, t: Int, r: Int, b: Int) {
         var left = 0
@@ -41,22 +36,50 @@ class CarouselLayout : ViewGroup {
             val height = child.measuredHeight + lp.topMargin + lp.bottomMargin
             val width = child.measuredWidth
             child.layout(left, 0, left + width, height)
-
             left += width
         }
     }
 
-//    override fun onTouchEvent(event: MotionEvent?): Boolean {
-//        println("onTouchEvent ... ")
-//        if (event?.action == MotionEvent.ACTION_DOWN) {
-//            return true
-//        }
-//        return gestureDetector.onTouchEvent(event)
-//    }
+    override fun onInterceptTouchEvent(ev: MotionEvent?): Boolean {
+        println("onInterceptTouchEvent ")
+        return true
+    }
 
-    override fun dispatchTouchEvent(ev: MotionEvent?): Boolean {
-        println("dispatchTouchEvent .. ")
-        return gestureDetector.onTouchEvent(ev)
+    override fun onTouchEvent(event: MotionEvent?): Boolean {
+        println("ontouchBegin .............. ")
+        if (event?.action == MotionEvent.ACTION_DOWN) {
+            touchX = event?.x ?: 0f
+            lastX = touchX
+        } else if (event?.action == MotionEvent.ACTION_MOVE) {
+            var currX = event?.x ?: 0f
+
+            setChildrenTranslationX(currX-touchX)
+            lastX = currX
+        } else if (event?.action == MotionEvent.ACTION_UP) {
+            if (abs(lastX - touchX).toInt() <= ViewConfiguration.get(context).scaledTouchSlop) {
+                println("触发OnClick事件")
+            } else {
+                //
+                val lastOffsetDistanceX = width - abs(lastX-touchX)
+                animToEnd(if ((lastX-touchX) > 0) lastOffsetDistanceX.toInt() else -lastOffsetDistanceX.toInt())
+            }
+            touchX = 0f
+            lastX = 0f
+        }
+
+        resetAutoPlay()
+        return true
+    }
+
+    fun animToEnd(start:Int) {
+        var _start = start
+        var _end = if (_start > 0) width else -width
+        val animator = ValueAnimator.ofInt(_start, _end)
+        animator.duration = 300
+        animator.addUpdateListener {
+            val distancex = it.animatedValue as Int
+            setChildrenTranslationX(distancex.toFloat())
+        }
     }
 
     fun autoPlay() {
@@ -69,9 +92,7 @@ class CarouselLayout : ViewGroup {
             duration = 500
             addUpdateListener {
                 val value = animatedValue as Int
-                for (index in 0 until childCount) {
-                    getChildAt(index).translationX = -value.toFloat()
-                }
+                setChildrenTranslationX(-value.toFloat())
             }
             addListener(object :Animator.AnimatorListener {
                 override fun onAnimationRepeat(animation: Animator?) {
@@ -102,31 +123,19 @@ class CarouselLayout : ViewGroup {
         }.start()
     }
 
-    override fun onDetachedFromWindow() {
-        super.onDetachedFromWindow()
+    fun setChildrenTranslationX(translationx:Float) {
+        for (index in 0 until childCount) {
+            getChildAt(index).translationX = translationx
+        }
+    }
+
+    fun resetAutoPlay() {
         animator?.cancel()
     }
 
-    inner class DefaultGestureDetector: GestureDetector.SimpleOnGestureListener() {
-        override fun onFling(
-            e1: MotionEvent?,
-            e2: MotionEvent?,
-            velocityX: Float,
-            velocityY: Float
-        ): Boolean {
-            val moveX = e2?.getX() ?: 0f
-            val beginX = e1?.getX() ?: 0f
-
-            val offsetDistanceX = moveX-beginX
-            println("velocityX:$velocityX, velocityY:$velocityY, offsetDistanceX:$offsetDistanceX")
-            return super.onFling(e1, e2, velocityX, velocityY)
-        }
-
-        override fun onDown(e: MotionEvent?): Boolean {
-            println("onDown: true")
-            return true
-        }
-
+    override fun onDetachedFromWindow() {
+        super.onDetachedFromWindow()
+        animator?.cancel()
     }
 
 }
