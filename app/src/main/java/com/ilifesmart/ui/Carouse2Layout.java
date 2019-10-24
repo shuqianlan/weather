@@ -20,7 +20,7 @@ public class Carouse2Layout extends ViewGroup {
     private boolean once = true;
     private float MIN_TOUCHSLOP_DISTANCE;
 
-    private boolean isCanTouchMove = true;
+    private boolean isCanTouchMove = false;
     private ValueAnimator mAutoAlignAnimator;
     private ValueAnimator mAutoPlayAnimator;
 
@@ -86,6 +86,9 @@ public class Carouse2Layout extends ViewGroup {
     public boolean onTouchEvent(MotionEvent event) {
         boolean canTouchMove = (isCanTouchMove && (mAutoAlignAnimator == null || !mAutoAlignAnimator.isRunning())) && (getChildCount() > 1); // 自动对齐动画执行中或当前仅一个元素则禁止滑动
 
+        if (canTouchMove) {
+//            resetAutoPlay();
+        }
         Log.d(TAG, "onTouchEvent: canTouchMove " + canTouchMove);
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
@@ -106,7 +109,6 @@ public class Carouse2Layout extends ViewGroup {
                 break;
         }
 
-        resetAutoPlay();
         lastX = event.getX();
         return true;
     }
@@ -125,10 +127,11 @@ public class Carouse2Layout extends ViewGroup {
     }
 
     private void animeToEnd(float start) {
+        Log.d(TAG, "animeToEnd: ...........");
         if (Math.abs(start) < MIN_TOUCHSLOP_DISTANCE) {
             return;
         }
-        float end   = (start > 0) ? getWidth() : -getWidth();
+        float end = (start > 0) ? getWidth() : -getWidth();
 
         mAutoAlignAnimator = ValueAnimator.ofFloat(start, end);
         mAutoAlignAnimator.setDuration(300);
@@ -148,8 +151,7 @@ public class Carouse2Layout extends ViewGroup {
             @Override
             public void onAnimationEnd(Animator animation) {
                 exchange(end);
-                debugprint();
-                autoPlay();
+//                autoPlay();
             }
 
             @Override
@@ -176,14 +178,14 @@ public class Carouse2Layout extends ViewGroup {
         if (Math.abs(translationx) < MIN_TOUCHSLOP_DISTANCE) {
             return;
         }
-        for (int index=0; index<getChildCount(); index++) {
+        for (int index=0; index < getChildCount(); index++) {
             getChildAt(index).setTranslationX(translationx);
         }
     }
 
     public void autoPlay() {
         mAutoPlayAnimator = ValueAnimator.ofInt(0, -getWidth());
-        mAutoPlayAnimator.setStartDelay(40000);
+        mAutoPlayAnimator.setStartDelay(4000);
         mAutoPlayAnimator.setDuration(600);
         mAutoPlayAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
