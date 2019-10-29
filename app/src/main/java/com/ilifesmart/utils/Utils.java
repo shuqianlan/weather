@@ -5,6 +5,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import androidx.appcompat.app.AlertDialog;
+
+import android.os.Build;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +16,7 @@ import com.ilifesmart.weather.R;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
+import java.util.UUID;
 
 import wseemann.media.FFmpegMediaMetadataRetriever;
 
@@ -88,5 +91,40 @@ public class Utils {
         retriever.release();
 
         return mp;
+    }
+
+    public static String getUUID() {
+        // 新的获取设备唯一硬件编码的函数
+        String serial = null;
+
+        String m_szDevIDShort = "35" +
+                Build.BOARD.length() % 10 + Build.BRAND.length() % 10 +
+
+                Build.CPU_ABI.length() % 10 + Build.DEVICE.length() % 10 +
+
+                Build.DISPLAY.length() % 10 + Build.HOST.length() % 10 +
+
+                Build.ID.length() % 10 + Build.MANUFACTURER.length() % 10 +
+
+                Build.MODEL.length() % 10 + Build.PRODUCT.length() % 10 +
+
+                Build.TAGS.length() % 10 + Build.TYPE.length() % 10 +
+
+                Build.USER.length() % 10; //13 位
+
+        try {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                serial = android.os.Build.getSerial();
+            } else {
+                serial = Build.SERIAL;
+            }
+            //API>=9 使用serial号
+            return new UUID(m_szDevIDShort.hashCode(), serial.hashCode()).toString();
+        } catch (Exception exception) {
+            //serial需要一个初始化
+            serial = "serial"; // 随便一个初始化
+        }
+        //使用硬件信息拼凑出来的15位号码
+        return new UUID(m_szDevIDShort.hashCode(), serial.hashCode()).toString();
     }
 }

@@ -19,6 +19,7 @@
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" /> <!-- 设置屏幕效果(保持屏幕常亮或其它) -->
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
 
     <uses-feature
             android:name="android.hardware.bluetooth_le"

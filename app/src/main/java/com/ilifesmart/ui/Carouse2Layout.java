@@ -3,6 +3,10 @@ package com.ilifesmart.ui;
 import android.animation.Animator;
 import android.animation.ValueAnimator;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.Paint;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -12,17 +16,42 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
+import com.ilifesmart.utils.DensityUtils;
+import com.ilifesmart.weather.R;
+
+
+/*
+* 功能支持:
+* 1. 自动播放
+* 2. 滑动刷新
+* 3. 点击时的位置更新
+*
+* */
 public class Carouse2Layout extends ViewGroup {
 
     public static final String TAG = "CarouseLayout";
 
-    private float touchX, lastX;
-    private boolean once = true;
-    private float MIN_TOUCHSLOP_DISTANCE;
+    private float touchX, lastX; // 初始按下的位置及上次按下的相对父容器的位置.
+    private float MIN_TOUCHSLOP_DISTANCE; // 认为是滑动的最小距离.
 
-    private boolean isCanTouchMove = false;
-    private ValueAnimator mAutoAlignAnimator;
-    private ValueAnimator mAutoPlayAnimator;
+    private boolean isCanTouchMove = true; // 是否允许滑动
+    private boolean isAutoPlay = true; // 是否允许滑动
+    private boolean once = true;
+
+    private static final int START_DELAY_TIME = 4000;
+    private static final int AUTO_DELAY_TIME = 600;
+    private static final int ANIM_END_TIME = 300;
+
+    private ValueAnimator mAutoAlignAnimator; // 滑动松手后自动对齐的动画
+    private ValueAnimator mAutoPlayAnimator;  // 自动播放的动画
+    private Paint bitmapPaint;
+
+    private Bitmap selected;
+    private Bitmap unSelected;
+
+    private int index = 0;
+
+    private OnScrollListener listener;
 
     public Carouse2Layout(Context context) {
         this(context, null);
@@ -31,7 +60,13 @@ public class Carouse2Layout extends ViewGroup {
     public Carouse2Layout(Context context, AttributeSet attrs) {
         super(context, attrs, 0);
         MIN_TOUCHSLOP_DISTANCE = ViewConfiguration.get(context).getScaledTouchSlop();
-        Log.d(TAG, "Carouse2Layout: MIN_TOUCHSLOP_DISTANCE " + MIN_TOUCHSLOP_DISTANCE);
+        index = getMiddleIndex();
+
+        bitmapPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+        selected = BitmapFactory.decodeResource(getResources(), R.drawable.dot_selected);
+        unSelected = BitmapFactory.decodeResource(getResources(), R.drawable.dot_unselected);
+
+        Log.d(TAG, "Carouse2Layout: neheng ");
     }
 
     @Override
@@ -39,7 +74,7 @@ public class Carouse2Layout extends ViewGroup {
         int width = 0, height = 0;
         for (int index = 0; index < getChildCount(); index++) {
             View child = getChildAt(index);
-            measureChildWithMargins(child, widthMeasureSpec, 0, heightMeasureSpec, 0);
+            measureChildWithMargins(child, widthMeasureSpec, 0, heightMeasureSpec, 0); // 测量子View的宽高
             width = child.getMeasuredWidth();
             height = child.getMeasuredHeight();
         }
@@ -64,8 +99,37 @@ public class Carouse2Layout extends ViewGroup {
             left += width;
         }
 
+        if (once) {
+            index = middle;
+            once=false;
+        }
         // 每次滑动结束时候通过requestLayout()重置translationX及left的位置
         debugprint();
+    }
+
+    @Override
+    protected void onDraw(Canvas canvas) {
+        super.onDraw(canvas);
+
+        Log.d(TAG, "onDraw: ~~~~~~~~~~~~~~~~~");
+        // 绘制点
+        int dotSize = unSelected.getWidth();
+        Log.d(TAG, "onDraw: dotSize " + dotSize);
+        int childCount = 4; //getChildCount();
+        int gapR = 10;
+        int left = getWidth();
+
+        for (int i = 0; i < childCount; i++) {
+            Bitmap bitmap = null;
+            if (i == index) {
+                bitmap = selected;
+            } else {
+                bitmap = unSelected;
+            }
+
+            Log.d(TAG, "onDraw: left " + (left-(childCount-i)*(gapR+dotSize)) + " top " + (getHeight()-dotSize-20));
+            canvas.drawBitmap(bitmap, left-(childCount-i)*(gapR+dotSize), getHeight()-dotSize-20, bitmapPaint);
+        }
     }
 
     private int getMiddleIndex() {
@@ -86,10 +150,10 @@ public class Carouse2Layout extends ViewGroup {
     public boolean onTouchEvent(MotionEvent event) {
         boolean canTouchMove = (isCanTouchMove && (mAutoAlignAnimator == null || !mAutoAlignAnimator.isRunning())) && (getChildCount() > 1); // 自动对齐动画执行中或当前仅一个元素则禁止滑动
 
-        if (canTouchMove) {
-//            resetAutoPlay();
+        if (canTouchMove && isAutoPlay()) {
+            isAutoPlay = false;
+            endAutoPlay();
         }
-        Log.d(TAG, "onTouchEvent: canTouchMove " + canTouchMove);
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
                 touchX = event.getX();
@@ -102,39 +166,45 @@ public class Carouse2Layout extends ViewGroup {
                 break;
             case MotionEvent.ACTION_UP:
                 if (Math.abs(lastX-touchX) < MIN_TOUCHSLOP_DISTANCE) {
-                    getMiddleView().callOnClick();
+                    callOnClickView(getMiddleView());
                 } else if (canTouchMove) {
                     animeToEnd(lastX-touchX);
                 }
+            case MotionEvent.ACTION_CANCEL:
+                if (isAutoPlay()) {
+                    isAutoPlay = true;
+                }
                 break;
         }
-
         lastX = event.getX();
         return true;
     }
 
     private void exchange(float offDistanceX) {
+        int childCount = getChildCount();
         if (offDistanceX > 0) {
-            View v = getChildAt(getChildCount()-1);
+            View v = getChildAt(childCount-1);
             removeView(v);
             addView(v, 0);
+            index = (index-1+childCount)%childCount;
         } else if (offDistanceX < 0) {
             View v = getChildAt(0);
             removeView(v);
             addView(v);
+            index = (index+1+childCount)%childCount;
         }
+        onScrollToEnd(index);
         requestLayout();
     }
 
     private void animeToEnd(float start) {
-        Log.d(TAG, "animeToEnd: ...........");
         if (Math.abs(start) < MIN_TOUCHSLOP_DISTANCE) {
             return;
         }
         float end = (start > 0) ? getWidth() : -getWidth();
 
         mAutoAlignAnimator = ValueAnimator.ofFloat(start, end);
-        mAutoAlignAnimator.setDuration(300);
+        mAutoAlignAnimator.setDuration(ANIM_END_TIME);
         mAutoAlignAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
             public void onAnimationUpdate(ValueAnimator animation) {
@@ -151,7 +221,7 @@ public class Carouse2Layout extends ViewGroup {
             @Override
             public void onAnimationEnd(Animator animation) {
                 exchange(end);
-//                autoPlay();
+                restartAutoPlay();
             }
 
             @Override
@@ -181,12 +251,22 @@ public class Carouse2Layout extends ViewGroup {
         for (int index=0; index < getChildCount(); index++) {
             getChildAt(index).setTranslationX(translationx);
         }
+
+        onScrollTo(translationx, (int)Math.floor(100*translationx/getWidth()));
+    }
+
+    private boolean isAutoPlay() {
+        return (mAutoPlayAnimator != null) || isAutoPlay ;
     }
 
     public void autoPlay() {
+        if (!isAutoPlay) {
+            return;
+        }
+
         mAutoPlayAnimator = ValueAnimator.ofInt(0, -getWidth());
-        mAutoPlayAnimator.setStartDelay(4000);
-        mAutoPlayAnimator.setDuration(600);
+        mAutoPlayAnimator.setStartDelay(START_DELAY_TIME);
+        mAutoPlayAnimator.setDuration(AUTO_DELAY_TIME);
         mAutoPlayAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
             public void onAnimationUpdate(ValueAnimator animation) {
@@ -202,13 +282,14 @@ public class Carouse2Layout extends ViewGroup {
 
             @Override
             public void onAnimationEnd(Animator animation) {
-                exchange(-getWidth());
-                animation.start();
+                if (isAutoPlay) {
+                    exchange(-getWidth());
+                    animation.start();
+                }
             }
 
             @Override
             public void onAnimationCancel(Animator animation) {
-//                animation.start();
             }
 
             @Override
@@ -220,9 +301,15 @@ public class Carouse2Layout extends ViewGroup {
         mAutoPlayAnimator.start();
     }
 
-    private void resetAutoPlay() {
-        if (mAutoPlayAnimator != null) {
-            mAutoPlayAnimator.cancel();
+    private void restartAutoPlay() {
+        if (mAutoPlayAnimator != null && !mAutoPlayAnimator.isStarted()) {
+            mAutoPlayAnimator.start();
+        }
+    }
+
+    private void endAutoPlay() {
+        if (mAutoPlayAnimator != null && mAutoPlayAnimator.isRunning()) {
+            mAutoPlayAnimator.end();
         }
     }
 
@@ -239,6 +326,44 @@ public class Carouse2Layout extends ViewGroup {
     @Override
     public LayoutParams generateLayoutParams(AttributeSet attrs) {
         return new MarginLayoutParams(getContext(), attrs);
+    }
+
+    public void setOnScrollListener(OnScrollListener listener) {
+        if (listener != null) {
+            this.listener = listener;
+        }
+    }
+
+    /*
+    * distanceX: 水平偏移量
+    * percent: 当前的进度百分比
+    * index: 当前显示的元素index
+    * */
+    public void onScrollTo(float distanceX, int percent) {
+        if (listener != null) {
+            listener.onScrollTo(distanceX, percent, index);
+        }
+    }
+
+    /*
+    * index: 选中的新index
+    * */
+    private void onScrollToEnd(int index) {
+        if(listener != null) {
+            listener.onScrollToEnd(index);
+        }
+    }
+
+    private void callOnClickView(View view) {
+        if (listener != null) {
+            listener.callOnClick(index, view);
+        }
+    }
+
+    public interface OnScrollListener {
+        void onScrollToEnd(int index);
+        void onScrollTo(float distanceX, int percent, int index);
+        void callOnClick(int index, View view);
     }
 
 }
