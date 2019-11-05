@@ -26,6 +26,15 @@
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
                     android:background="@drawable/stroke_background"
+                    android:id="@+id/app_bar_ayout"
+                    android:text="AppBarLayout"
+                    android:textAllCaps="false"
+                    android:layout_gravity="center"
+                    />
+            <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:background="@drawable/stroke_background"
                     android:id="@+id/uilayout"
                     android:text="UI-Layout"
                     android:textAllCaps="false"

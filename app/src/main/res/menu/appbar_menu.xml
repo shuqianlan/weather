@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:id="@+id/action_settings"
+        android:orderInCategory="100"
+        android:title="设置"
+        android:icon="@drawable/appbar_setting"
+        app:showAsAction="ifRoom"
+    />
+    <item android:id="@+id/action_search"
+            android:orderInCategory="80"
+            android:title="搜索"
+            android:icon="@drawable/appbar_search"
+            app:showAsAction="ifRoom"
+            />
+    <item android:id="@+id/action_customer"
+            android:orderInCategory="60"
+            android:title="客服"
+            android:icon="@drawable/appbar_customer"
+            app:showAsAction="ifRoom"
+            />
+
+    <item android:id="@+id/action_insurance"
+            android:orderInCategory="60"
+            android:title="保护伞"
+            android:icon="@drawable/appbar_insurance"
+            app:showAsAction="never"
+            />
+</menu>

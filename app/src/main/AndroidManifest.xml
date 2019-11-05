@@ -38,7 +38,8 @@
             android:roundIcon="@mipmap/ic_launcher_round"
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
-        <activity android:name="com.ilifesmart.UILayoutActivity"></activity>
+        <activity android:name="com.ilifesmart.AppBarActivity"></activity>
+        <activity android:name="com.ilifesmart.UILayoutActivity" />
         <activity android:name="com.jetpack.LiveDataActivity" />
         <activity android:name="com.media.MP3PlayerActivity" />
         <activity android:name="com.media.MediaActivity" />

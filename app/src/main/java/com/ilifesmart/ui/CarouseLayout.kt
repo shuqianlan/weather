@@ -8,16 +8,12 @@ import android.graphics.BitmapFactory
 import android.graphics.Canvas
 import android.graphics.Paint
 import android.util.AttributeSet
-import android.util.Log
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewConfiguration
 import android.view.ViewGroup
-import android.widget.FrameLayout
-import android.widget.TextView
 
 import com.ilifesmart.weather.R
-
 
 /*
 * 功能支持:
@@ -41,8 +37,8 @@ class CarouseLayout @JvmOverloads constructor(context: Context, attrs: Attribute
 
     private var mAutoAlignAnimator: ValueAnimator? = null // 滑动松手后自动对齐的动画
     private var mAutoPlayAnimator: ValueAnimator? = null  // 自动播放的动画
-    private val bitmapPaint: Paint
 
+    private val bitmapPaint: Paint
     private val selected: Bitmap
     private val unSelected: Bitmap
 
@@ -131,7 +127,7 @@ class CarouseLayout @JvmOverloads constructor(context: Context, attrs: Attribute
         val gapR = 10
         val left = width
 
-        for (i in 0 until childCount) {
+        for (i in childCount-1 downTo 0 step 1) {
             canvas.drawBitmap(
                 if (i == index) selected else unSelected,
                 (left - (childCount - i) * (gapR + dotSize)).toFloat(),
@@ -244,7 +240,7 @@ class CarouseLayout @JvmOverloads constructor(context: Context, attrs: Attribute
     }
 
     fun autoPlay() {
-        if (!isAutoPlay) {
+        if (!isAutoPlay || childCount <= 1) {
             return
         }
 
@@ -259,31 +255,27 @@ class CarouseLayout @JvmOverloads constructor(context: Context, attrs: Attribute
             var start = 0L
             var end = 0L
             override fun onAnimationStart(animation: Animator) {
-                println("onAnimationStart ~")
                 start = System.currentTimeMillis()
             }
 
             override fun onAnimationEnd(animation: Animator) {
-                println("onAnimationEnd ~")
-                println("auto_play_time ${(end - start)}")
                 end=System.currentTimeMillis()
                 if (isAutoPlay) {
                     exchange((-width).toFloat())
-                    animation.start()
+                    restartAutoPlay()
                 }
             }
 
             override fun onAnimationCancel(animation: Animator) {}
 
-            override fun onAnimationRepeat(animation: Animator) {
-
-            }
+            override fun onAnimationRepeat(animation: Animator) {}
         })
 
         mAutoPlayAnimator!!.start()
     }
 
     private fun restartAutoPlay() {
+        endAutoPlay()
         if (mAutoPlayAnimator != null && !mAutoPlayAnimator!!.isStarted) {
             mAutoPlayAnimator!!.start()
         }
@@ -349,8 +341,6 @@ class CarouseLayout @JvmOverloads constructor(context: Context, attrs: Attribute
     }
 
     companion object {
-
-        val TAG = "CarouseLayout"
 
         private val ANIM_END_TIME = 300
     }
