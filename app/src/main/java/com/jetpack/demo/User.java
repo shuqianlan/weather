@@ -3,11 +3,13 @@ package com.jetpack.demo;
 import androidx.room.*;
 
 // SQLite 表名不区分大小写
-// @Index 索引
+// @Index [indices:索引]
+// 默认表明为类名
+
 @Entity(indices = {@Index("first_name"), @Index("last_name")})
 public class User {
 
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
     public int uid;
 
     @ColumnInfo(name = "first_name")

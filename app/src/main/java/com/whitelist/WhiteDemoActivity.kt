@@ -1,8 +1,11 @@
 package com.whitelist
 
 import android.app.Activity
+import android.app.AlertDialog
 import android.content.Context
+import android.content.DialogInterface
 import android.content.Intent
+import android.location.LocationManager
 import android.net.Uri
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
@@ -17,8 +20,9 @@ import kotlinx.android.synthetic.main.activity_white_demo.*
 import java.lang.Exception
 
 class WhiteDemoActivity : AppCompatActivity() {
-
+    // 加入系统白名单
     private val  REQUEST_CODE:Int = 10090
+    private val  REQUEST_LOCATION_CODE:Int = 200
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_white_demo)
@@ -26,6 +30,14 @@ class WhiteDemoActivity : AppCompatActivity() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (!isIgnoringBatteryOptimizations()) {
                 requireIgnoreBatteryOptimiaztions()
+            }
+        }
+
+        gps_location.setOnClickListener {
+            if (!checkGPSIsOpenStatus()) {
+                turnToOpenGPRSSetting()
+            } else {
+                Snackbar.make(gps_location, "定位已开启", Snackbar.LENGTH_SHORT).show()
             }
         }
     }
@@ -60,8 +72,34 @@ class WhiteDemoActivity : AppCompatActivity() {
 
         if (requestCode == REQUEST_CODE) {
             val isGranted = if (resultCode == Activity.RESULT_OK) "OK" else "False"
-            println("resultCode:$isGranted, data: ${data?.data ?: "null"}")
             Snackbar.make(constrain_cont, "权限已授予:"+isGranted, Snackbar.LENGTH_SHORT).show()
+        } else if (requestCode == REQUEST_LOCATION_CODE) {
+            val isGranted = if (resultCode == Activity.RESULT_OK) "OK" else "False"
+
         }
+    }
+
+    private fun checkGPSIsOpenStatus():Boolean {
+        var isGPSOpen = false
+        (getSystemService(Context.LOCATION_SERVICE) as LocationManager)?.also {
+            isGPSOpen = it.isProviderEnabled(LocationManager.GPS_PROVIDER)
+        }
+
+        return isGPSOpen
+    }
+
+    private fun turnToOpenGPRSSetting() {
+        AlertDialog.Builder(this)
+            .setMessage("Go to open")
+            .setNegativeButton("cancel") { dialog, which ->
+                dialog.dismiss()
+            }
+            .setPositiveButton("ok") { dialog, which ->
+                Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS).also {
+                    startActivityForResult(it, REQUEST_LOCATION_CODE)
+                }
+            }
+            .setCancelable(false)
+            .show()
     }
 }
