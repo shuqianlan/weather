@@ -28,6 +28,15 @@
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
                     android:background="@drawable/stroke_background"
+                    android:id="@+id/white_menu"
+                    android:text="白名单"
+                    android:textAllCaps="false"
+                    android:layout_gravity="center"
+                    />
+            <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:background="@drawable/stroke_background"
                     android:id="@+id/service"
                     android:text="Service"
                     android:textAllCaps="false"

@@ -5,6 +5,7 @@ import androidx.databinding.DataBindingUtil;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 
 import com.ilifesmart.weather.R;
 import com.ilifesmart.weather.databinding.AppbarLivedataLayoutBinding;
@@ -18,7 +19,7 @@ public class AppBarLiveDataActivity extends AppCompatActivity {
         binder.setActivity(this);
     }
 
-    public void onRefreshView() {
+    public void onRefreshView(View view) {
         Log.d("{BBBB", "onRefreshView: ");
     }
 }
