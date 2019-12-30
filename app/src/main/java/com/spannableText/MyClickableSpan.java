@@ -27,4 +27,5 @@ public class MyClickableSpan extends ClickableSpan {
 		widget.getContext().startActivity(new Intent(widget.getContext(), FoldActivity.class));
 	}
 
+
 }

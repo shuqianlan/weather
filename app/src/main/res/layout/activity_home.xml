@@ -22,12 +22,44 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
+
+            <include layout="@layout/bottomrefreshlayout" />
+            <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:background="@drawable/stroke_background"
+                    android:id="@+id/service"
+                    android:text="Service"
+                    android:textAllCaps="false"
+                    android:layout_gravity="center"
+                    />
+            <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:background="@drawable/stroke_background"
+                    android:id="@+id/wanandroid"
+                    android:text="玩Android(Kotlin+MVVM)"
+                    android:textAllCaps="false"
+                    android:layout_gravity="center"
+                    />
+
+            <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:background="@drawable/stroke_background"
+                    android:id="@+id/paged_data"
+                    android:text="分页数据加载(JetPack)"
+                    android:visibility="gone"
+                    android:textAllCaps="false"
+                    android:layout_gravity="center"
+                    />
+
             <Button
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
                     android:background="@drawable/stroke_background"
                     android:id="@+id/app_bar_ayout"
-                    android:text="AppBarLayout"
+                    android:text="AppBarLayout+下拉及上拉刷新"
                     android:textAllCaps="false"
                     android:layout_gravity="center"
                     />

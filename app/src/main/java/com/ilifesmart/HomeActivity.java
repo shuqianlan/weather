@@ -10,8 +10,13 @@ import android.os.Build;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.PopupMenu;
+
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import butterknife.BindView;
@@ -21,6 +26,8 @@ import com.db.SqliteActivity;
 import com.gson.Gson2Activity;
 import com.ilifesmart.animation.AnimationActivity;
 import com.ilifesmart.aop.CheckOnClickActivity;
+import com.ilifesmart.appbarlayoutdemo.AppBarActivity;
+import com.ilifesmart.appbarlayoutdemo.AppBarLiveDataActivity;
 import com.ilifesmart.barrage.VideoActivity;
 import com.ilifesmart.ble.BluetoothActivity;
 import com.ilifesmart.broad.ScreenBroadcastListener;
@@ -59,10 +66,13 @@ import com.jni.JniDemoActivity;
 import com.kotlin.KotlinDemoActivity;
 import com.layout.LayoutDemoActivity;
 import com.media.MediaActivity;
+import com.services.HelloServiceActivity;
 import com.spannableText.SpannableActivity;
 import com.surfaceview.SurfaceViewActivity;
+import com.wanandroid.clipboard.ui.MainActivity;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class HomeActivity extends AppCompatActivity {
@@ -93,6 +103,9 @@ public class HomeActivity extends AppCompatActivity {
 
         mWeather.setPressed(false);
         onCreatView();
+
+
+        Log.d(TAG, "onCreate: " + ((char)null));
 
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction("android.net.conn.CONNECTIVITY_CHANGE");
@@ -195,13 +208,43 @@ public class HomeActivity extends AppCompatActivity {
         }
     }
 
+    private void onAppbarContext(View view) {
+        PopupMenu popupMenu = new PopupMenu(this, view, Gravity.RIGHT | Gravity.END);
+        Menu menu = popupMenu.getMenu();
+        menu.add(0, Menu.FIRST+1, 1, "LiveData");
+        menu.add(1, Menu.FIRST+2, 1, "非LiveData");
+        popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                if (item.getItemId() == Menu.FIRST + 1) {
+                    Utils.startActivity(HomeActivity.this, AppBarLiveDataActivity.class);
+                } else if (item.getItemId() == Menu.FIRST + 2) {
+                    Utils.startActivity(HomeActivity.this, AppBarActivity.class);
+                }
+                return true;
+            }
+        });
+        popupMenu.show();
+    }
+
     @OnClick({R.id.weather, R.id.seekbar, R.id.notification, R.id.rotate, R.id.aop_test, R.id.thread_test, R.id.framelayout, R.id.compass, R.id.miclock, R.id.camrotate, R.id.path, R.id.osinfo, R.id.viewpager, R.id.mapper, R.id.dialog, R.id.preference, R.id.nature_ui, R.id.spider_web, R.id.mvvm, R.id.rxjava, R.id.progress, R.id.ViewGroup, R.id.live, R.id.curtain, R.id.barrage, R.id.bluetooth, R.id.fold, R.id.region, R.id.span_text, R.id.custom_surfaceview, R.id.animation, R.id.window, R.id.abstract_layout, R.id.jni, R.id.miui_right_out, R.id.imou, R.id.gson,
-      R.id.sqlite, R.id.jetpack, R.id.layout, R.id.media, R.id.kotlin_conoroutine, R.id.uilayout, R.id.app_bar_ayout
+      R.id.sqlite, R.id.jetpack, R.id.layout, R.id.media, R.id.kotlin_conoroutine, R.id.uilayout, R.id.app_bar_ayout, R.id.paged_data, R.id.wanandroid,
+        R.id.service,
+
     })
     public void onClick(View v) {
         switch (v.getId()) {
+            case R.id.service:
+                Utils.startActivity(this, HelloServiceActivity.class);
+                break;
+            case R.id.wanandroid:
+                Utils.startActivity(this, MainActivity.class);
+                break;
+            case R.id.paged_data:
+
+                break;
             case R.id.app_bar_ayout:
-                Utils.startActivity(this, AppBarActivity.class);
+                onAppbarContext(v);
                 break;
             case R.id.uilayout:
                 Utils.startActivity(this, UILayoutActivity.class);

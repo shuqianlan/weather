@@ -5,40 +5,39 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context="com.ilifesmart.AppBarActivity"
+        tools:context="com.ilifesmart.appbarlayoutdemo.AppBarActivity"
         android:fitsSystemWindows="true"
         >
 
     <com.google.android.material.appbar.AppBarLayout
             android:layout_width="match_parent"
-            android:layout_height="120dp"
+            android:layout_height="wrap_content"
             android:id="@+id/app_bar"
-            android:background="@android:color/white"
+            android:background="@color/colorPrimary"
             android:minHeight="?attr/actionBarSize"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
             >
 
         <com.google.android.material.appbar.CollapsingToolbarLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:id="@+id/collapsingToolbarLayout"
                 app:layout_scrollFlags="scroll|exitUntilCollapsed"
-                app:title="wuzh"
-                app:titleEnabled="true"
                 >
 
             <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:src="@drawable/bulb"
+                    android:src="@drawable/banner"
                     app:layout_collapseMode="parallax"
-                    android:scaleType="centerInside"
+                    android:scaleType="centerCrop"
                     />
             <androidx.appcompat.widget.Toolbar
                     android:id="@+id/toolbar"
                     android:layout_width="match_parent"
                     android:layout_height="?attr/actionBarSize"
                     android:background="@android:color/white"
-
+                    app:title="吴正华"
                     app:titleTextColor="@android:color/background_dark"
                     app:navigationIcon="@drawable/arrow"
                     app:layout_collapseMode="pin"
@@ -48,13 +47,21 @@
         </com.google.android.material.appbar.CollapsingToolbarLayout>
     </com.google.android.material.appbar.AppBarLayout>
 
-    <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/appbar_items"
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            android:orientation="vertical"
-        />
+            android:id="@+id/swipe_refresh_cont"
+            app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
+        >
+        <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/appbar_items"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                android:orientation="vertical"
+                />
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
     <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/arrow"
             android:layout_width="wrap_content"

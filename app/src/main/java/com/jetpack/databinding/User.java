@@ -2,7 +2,6 @@ package com.jetpack.databinding;
 
 import androidx.databinding.BaseObservable;
 import androidx.databinding.Bindable;
-import com.ilifesmart.weather.BR;
 
 public class User extends BaseObservable {
     @Bindable
@@ -19,7 +18,7 @@ public class User extends BaseObservable {
 
     public void setAge(int age) {
         this.age = age;
-        notifyPropertyChanged(BR.age);
+        notifyPropertyChanged(age);
     }
 
 }

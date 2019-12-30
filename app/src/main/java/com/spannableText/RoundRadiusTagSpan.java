@@ -56,4 +56,5 @@ public class RoundRadiusTagSpan extends ReplacementSpan {
 
 		paint.setColor(defaultColor);//恢复画笔的文字颜色
 	}
+
 }

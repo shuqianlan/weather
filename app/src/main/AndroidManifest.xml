@@ -19,7 +19,6 @@
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" /> <!-- 设置屏幕效果(保持屏幕常亮或其它) -->
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
-    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
 
     <uses-feature
             android:name="android.hardware.bluetooth_le"
@@ -38,7 +37,22 @@
             android:roundIcon="@mipmap/ic_launcher_round"
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
-        <activity android:name="com.ilifesmart.AppBarActivity"></activity>
+        <activity android:name="com.whitelist.WhiteDemoActivity"></activity>
+        <activity android:name="com.services.HelloServiceActivity" />
+
+        <service
+                android:name="com.services.HelloService"
+                android:enabled="true"
+                android:exported="true" />
+        <service
+                android:name="com.services.HelloIntentService"
+                android:exported="false" />
+
+        <activity android:name="com.wanandroid.clipboard.ui.MainActivity" />
+        <activity android:name="com.ilifesmart.appbarlayoutdemo.AppBarLiveDataActivity" />
+        <activity android:name="com.ilifesmart.PagedActivity" />
+        <activity android:name="com.ilifesmart.ArticleActivity" />
+        <activity android:name="com.ilifesmart.appbarlayoutdemo.AppBarActivity" />
         <activity android:name="com.ilifesmart.UILayoutActivity" />
         <activity android:name="com.jetpack.LiveDataActivity" />
         <activity android:name="com.media.MP3PlayerActivity" />

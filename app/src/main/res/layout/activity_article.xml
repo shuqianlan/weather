@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context="com.ilifesmart.ArticleActivity">
+
+    <com.google.android.material.appbar.AppBarLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/article_appbar"
+            android:minHeight="?attr/actionBarSize"
+            >
+
+        <androidx.appcompat.widget.Toolbar
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:id="@+id/article_toolbar"
+                app:title="雪中悍刀行"
+                android:background="@android:color/white"
+                app:navigationIcon="@drawable/appbar_back"
+                app:layout_scrollFlags="scroll|exitUntilCollapsed"
+            />
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
+            >
+
+        <EditText
+                android:layout_margin="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/centent"
+                android:textIsSelectable="true"
+                android:editable="false"
+                android:background="@null"
+                android:textCursorDrawable="@null"
+                />
+    </androidx.core.widget.NestedScrollView>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_anchor="@id/article_appbar"
+            app:layout_anchorGravity="bottom|end|right"
+            android:src="@drawable/favorites"
+            />
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
