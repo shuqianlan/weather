@@ -19,7 +19,6 @@
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" /> <!-- 设置屏幕效果(保持屏幕常亮或其它) -->
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
-
     <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS" />
 
     <uses-feature
@@ -39,7 +38,8 @@
             android:roundIcon="@mipmap/ic_launcher_round"
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
-        <activity android:name="com.whitelist.WhiteDemoActivity"></activity>
+        <activity android:name="com.echarts.DemoActivity"></activity>
+        <activity android:name="com.whitelist.WhiteDemoActivity" />
         <activity android:name="com.services.HelloServiceActivity" />
 
         <service

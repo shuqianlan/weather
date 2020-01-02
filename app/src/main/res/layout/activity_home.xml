@@ -24,6 +24,17 @@
             android:orientation="vertical">
 
             <include layout="@layout/bottomrefreshlayout" />
+
+            <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:background="@drawable/stroke_background"
+                    android:id="@+id/echarts"
+                    android:text="ECharts"
+                    android:textAllCaps="false"
+                    android:layout_gravity="center"
+                    />
+
             <Button
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
