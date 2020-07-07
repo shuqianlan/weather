@@ -1,27 +1,40 @@
 package com.ilifesmart;
 
 import android.Manifest;
+import android.animation.Animator;
+import android.animation.TimeInterpolator;
+import android.animation.ValueAnimator;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.os.Build;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.PopupMenu;
 
 import android.text.TextUtils;
+import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.LinearInterpolator;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+
+import com.amap.AmapActivity;
+import com.amap.MapLocationActivity;
 import com.db.SqliteActivity;
 import com.gson.Gson2Activity;
 import com.ilifesmart.animation.AnimationActivity;
@@ -92,8 +105,18 @@ public class HomeActivity extends AppCompatActivity {
     @BindView(R.id.weather)
     Button mWeather;
 
-//    @BindView(R.id.imageview)
-//    ImageView mImageview;
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        AlertDialog dialog = new AlertDialog.Builder(this)
+                .setMessage("请你务必审慎阅读、充分理解许可及服务协议和稳私政策各条款。包括但不限于：为了向你提供即时通讯、内容分享、设备配置等服务，我们需要收集你的登录信息、设备运行日志等内容。\\n你可以在用户注册页面和帮助页面查看详细内容。\\n如果你同意，请点击“同意”开始接受我们的服务。")
+                .setTitle("隐私服务")
+                .create();
+
+        dialog.show();
+    }
 
     private NetChangedBroadcast netChangeReceiver;
     @Override
@@ -102,38 +125,95 @@ public class HomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_home);
         ButterKnife.bind(this);
 
-        mWeather.setPressed(false);
+//        mWeather.setPressed(false);
         onCreatView();
 
-
-        IntentFilter intentFilter = new IntentFilter();
-        intentFilter.addAction("android.net.conn.CONNECTIVITY_CHANGE");
-        netChangeReceiver = new NetChangedBroadcast();
-        registerReceiver(netChangeReceiver, intentFilter);
-
-        final ScreenBroadcastListener.ScreenManager screenManager = ScreenBroadcastListener.ScreenManager.getInstance(this);
-        ScreenBroadcastListener listener = new ScreenBroadcastListener(this);
-        listener.registerListener(new ScreenBroadcastListener.ScreenStateListener() {
-            @Override
-            public void onScreenOn() {
-                Log.d(TAG, "onScreenOn: --------------------- ON");
-//                screenManager.finishActivity();
-                startService(new Intent(HomeActivity.this, KeepLiveService.class));
-            }
-
-            @Override
-            public void onScreenOff() {
-                Log.d(TAG, "onScreenOn: --------------------- OFF");
-//                screenManager.startActivity();
-            }
-        });
-
-        WifiManager manager = (WifiManager) getApplicationContext().getSystemService(WIFI_SERVICE);
-        WifiInfo info = manager.getConnectionInfo();
-        int freq = info.getFrequency();
-        Log.d(TAG, "onCreate: freq " + freq);
-        Log.d(TAG, "onCreate: is5G " + NetWorkUtil.is5GHz(freq));
-        Log.d(TAG, "onCreate: is2.4G " + NetWorkUtil.is24GHz(freq));
+//        mTaoBaoBtn.setOnClickListener(v -> {
+//        });
+//        startActivity(new Intent(this, MapLocationActivity.class));
+//
+//        IntentFilter intentFilter = new IntentFilter();
+//        intentFilter.addAction("android.net.conn.CONNECTIVITY_CHANGE");
+//        netChangeReceiver = new NetChangedBroadcast();
+//        registerReceiver(netChangeReceiver, intentFilter);
+//
+//        final ScreenBroadcastListener.ScreenManager screenManager = ScreenBroadcastListener.ScreenManager.getInstance(this);
+//        ScreenBroadcastListener listener = new ScreenBroadcastListener(this);
+//        listener.registerListener(new ScreenBroadcastListener.ScreenStateListener() {
+//            @Override
+//            public void onScreenOn() {
+//                Log.d(TAG, "onScreenOn: --------------------- ON");
+////                screenManager.finishActivity();
+//                startService(new Intent(HomeActivity.this, KeepLiveService.class));
+//            }
+//
+//            @Override
+//            public void onScreenOff() {
+//                Log.d(TAG, "onScreenOn: --------------------- OFF");
+////                screenManager.startActivity();
+//            }
+//        });
+//
+//        WifiManager manager = (WifiManager) getApplicationContext().getSystemService(WIFI_SERVICE);
+//        WifiInfo info = manager.getConnectionInfo();
+//        int freq = info.getFrequency();
+//        Log.d(TAG, "onCreate: freq " + freq);
+//        Log.d(TAG, "onCreate: is5G " + NetWorkUtil.is5GHz(freq));
+//        Log.d(TAG, "onCreate: is2.4G " + NetWorkUtil.is24GHz(freq));
+//
+//        scrollText = findViewById(R.id.scroll_text);
+//        scrollText.setText("2020-06-23 12:05:27.5877 DEBUG: GLOG: --[[(zai.netmng:75>zai.netmng:341>ai.icttask:341>zai.aienv:21");
+//        Log.d(TAG, "onCreate: scrollText " + scrollText.getEllipsize() + " Text " + scrollText.getText().toString());
+//        scrollText.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                int width = scrollText.getWidth();
+//                int measureWidth = (int)scrollText.getPaint().measureText(scrollText.getText().toString());
+//
+//                if (measureWidth <= width) {
+//                    return;
+//                }
+//
+//                int offsetDistanceX = Math.abs(measureWidth-width);
+//
+//                // 可探索法1：根据已转移的translationX，计算出当前显示区域字符串的内容，依次即可.
+//
+//                scrollText.animate().setDuration(3000).translationX(-offsetDistanceX)
+//                .setInterpolator(null)
+//                .setUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+//                    @Override
+//                    public void onAnimationUpdate(ValueAnimator animation) {
+//                        Log.d(TAG, "onAnimationUpdate: currvalue " + animation.getAnimatedValue());
+//                        Log.d(TAG, "onAnimationUpdate: scrollText.transX " + scrollText.getTranslationX());
+//                    }
+//                })
+//                .setListener(new Animator.AnimatorListener() {
+//                    @Override
+//                    public void onAnimationStart(Animator animation) {
+//                        scrollText.setTranslationX(0);
+//                    }
+//
+//                    @Override
+//                    public void onAnimationEnd(Animator animation) {
+//                        scrollText.setTranslationX(0);
+//                    }
+//
+//                    @Override
+//                    public void onAnimationCancel(Animator animation) {
+//                        scrollText.setTranslationX(0);
+//                    }
+//
+//                    @Override
+//                    public void onAnimationRepeat(Animator animation) {
+//                        scrollText.setTranslationX(0);
+//                    }
+//                })
+//                .start();
+//            }
+//        });
+//
+//        .setMovementMethod(ScrollingMovementMethod.getInstance());
+//        findViewById(R.id.scroll_text).setFocusable(true);
     }
 
     @Override
@@ -226,11 +306,53 @@ public class HomeActivity extends AppCompatActivity {
         popupMenu.show();
     }
 
-    @OnClick({R.id.weather, R.id.seekbar, R.id.notification, R.id.rotate, R.id.aop_test, R.id.thread_test, R.id.framelayout, R.id.compass, R.id.miclock, R.id.camrotate, R.id.path, R.id.osinfo, R.id.viewpager, R.id.mapper, R.id.dialog, R.id.preference, R.id.nature_ui, R.id.spider_web, R.id.mvvm, R.id.rxjava, R.id.progress, R.id.ViewGroup, R.id.live, R.id.curtain, R.id.barrage, R.id.bluetooth, R.id.fold, R.id.region, R.id.span_text, R.id.custom_surfaceview, R.id.animation, R.id.window, R.id.abstract_layout, R.id.jni, R.id.miui_right_out, R.id.imou, R.id.gson,
-      R.id.sqlite, R.id.jetpack, R.id.layout, R.id.media, R.id.kotlin_conoroutine, R.id.uilayout, R.id.app_bar_ayout, R.id.paged_data, R.id.wanandroid, R.id.service, R.id.white_menu, R.id.echarts
+    @OnClick({R.id.weather, R.id.seekbar, R.id.notification, R.id.rotate, R.id.aop_test, R.id.thread_test,
+            R.id.framelayout, R.id.compass, R.id.miclock, R.id.camrotate, R.id.path, R.id.osinfo, R.id.viewpager, R.id.mapper,
+            R.id.dialog, R.id.preference, R.id.nature_ui, R.id.spider_web, R.id.mvvm, R.id.rxjava, R.id.progress,
+            R.id.ViewGroup, R.id.live, R.id.curtain, R.id.barrage, R.id.bluetooth, R.id.fold, R.id.region, R.id.span_text,
+            R.id.custom_surfaceview, R.id.animation, R.id.window, R.id.abstract_layout, R.id.jni, R.id.miui_right_out, R.id.imou, R.id.gson,
+            R.id.sqlite, R.id.jetpack, R.id.layout, R.id.media, R.id.kotlin_conoroutine, R.id.uilayout, R.id.app_bar_ayout, R.id.paged_data, R.id.wanandroid, R.id.service, R.id.white_menu, R.id.echarts,
+            R.id.test_for_ui, R.id.smart_plus, R.id.scroll_text, R.id.amap_for_ui, R.id.tobao_product_detail
     })
     public void onClick(View v) {
         switch (v.getId()) {
+            case R.id.tobao_product_detail:
+                Intent intent = new Intent();
+                intent.setAction("Android.intent.action.VIEW");
+                Uri uri = Uri.parse("https://item.taobao.com/item.htm?spm=a219r.lm0.14.21.65121087YJft2y&id=615676811592&ns=1&abbucket=5"); // 商品地址
+                intent.setData(uri);
+                intent.setClassName("com.taobao.taobao", "com.taobao.tao.detail.activity.DetailActivity");
+                startActivity(intent);
+                break;
+            case R.id.amap_for_ui:
+                Utils.startActivity(this, MapLocationActivity.class);
+                break;
+            case R.id.scroll_text:
+                v.setSelected(false);
+                v.setSelected(true);
+//                scrollText.setEllipsize(TextUtils.TruncateAt.MARQUEE);
+//                scrollText.setFocusableInTouchMode(true);
+//                scrollText.setFocusable(true);
+//                scrollText.requestFocus();
+//
+//                Log.d(TAG, "onClick: ========================== click scroll text");
+//                int width = scrollText.getWidth();
+//                Log.d(TAG, "onClick: ========================== width " + width);
+////                if (scrollText.animate() != null)
+//                scrollText.animate().setDuration(500).translationX(-width).setUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+//                    @Override
+//                    public void onAnimationUpdate(ValueAnimator animation) {
+//                        Log.d(TAG, "onAnimationUpdate: currvalue " + animation.getAnimatedValue());
+//                        Log.d(TAG, "onAnimationUpdate: scrollText.transX " + scrollText.getTranslationX());
+//                    }
+//                }).start();
+                break;
+            case R.id.smart_plus:
+//                Utils.startActivity(this, ArmingActivity.class);
+                break;
+            case R.id.test_for_ui:
+                Utils.startActivity(this, TestUIActivity.class);
+                break;
             case R.id.echarts:
                 Utils.startActivity(this, com.echarts.DemoActivity.class);
                 break;
@@ -404,6 +526,8 @@ public class HomeActivity extends AppCompatActivity {
             case R.id.media:
                 Utils.startActivity(this, MediaActivity.class);
                 break;
+            default:
+                throw new IllegalStateException("Unexpected value: " + v.getId());
         }
     }
 

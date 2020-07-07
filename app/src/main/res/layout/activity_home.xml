@@ -29,6 +29,75 @@
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
                     android:background="@drawable/stroke_background"
+                    android:id="@+id/tobao_product_detail"
+                    android:text="淘宝产品详情"
+                    android:textAllCaps="false"
+                    android:layout_gravity="center"
+                    android:clickable="true"
+                    />
+
+
+            <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:background="@drawable/stroke_background"
+                    android:id="@+id/amap_for_ui"
+                    android:text="高德地图"
+                    android:textAllCaps="false"
+                    android:layout_gravity="center"
+                    android:clickable="true"
+                    />
+            <!--            <ScrollView-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:scrollbars="horizontal"-->
+<!--                    android:fillViewport="true"-->
+<!--                    >-->
+
+<!--            </ScrollView>-->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/scroll_text"
+                android:textSize="20sp"
+
+                android:singleLine="true"
+                android:ellipsize="marquee"
+                android:marqueeRepeatLimit="1"
+
+                android:text="@string/super_large_text_content"
+                android:background="@android:color/background_dark"
+                android:gravity="start|left|center_vertical"
+                android:textColor="@android:color/background_light"
+                android:paddingVertical="20dp"
+            />
+
+
+            <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:background="@drawable/stroke_background"
+                    android:id="@+id/smart_plus"
+                    android:text="Smart Plus"
+
+                    android:textAllCaps="false"
+                    android:layout_gravity="center"
+                    />
+
+            <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:background="@drawable/stroke_background"
+                    android:id="@+id/test_for_ui"
+                    android:text="UITest"
+                    android:textAllCaps="false"
+                    android:layout_gravity="center"
+                    />
+
+            <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:background="@drawable/stroke_background"
                     android:id="@+id/echarts"
                     android:text="ECharts"
                     android:textAllCaps="false"

@@ -7,14 +7,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta charset="utf-8">
 </head>
-<body style="height: 100%; margin: 0">
+<body style="height: 100%; margin: 0" bgcolor="#333333">
     <!-- 为ECharts准备一个具备大小（宽高）的Dom -->
     <div id="main" style="height: 100%;"></div>
     <script src="echarts.min.js"></script>
     <script type="text/javascript">
         // 基于准备好的dom，初始化echarts实例
         var myChart = echarts.init(document.getElementById('main'), 'dark'); //theme： 'light', 'dark'
-        myChart.showLoading()
+        myChart.showLoading({
+            text: 'Loading...',
+		    color: '#ffffff',
+		    textColor: '#ffffff',
+		    maskColor: '#333333',
+		    zlevel: 0
+        })
         // 指定图表的配置项和数据
 <!--        var option = {-->
 <!--            title: {-->

@@ -29,6 +29,7 @@
 
     <string name="lecheng_login_admin">管理员模式</string>
     <string name="lecheng_login_user">用户模式</string>
+    <string name="super_large_text_content">这是一个超长的字符串:这是一个超长的字符串:这是一个超长的字符串:这是一个超长的字符串:这是一个超长的字符串:这是一个超长的字符串:这是一个超长的字符串:这是一个超长的字符串:这是一个超长的字符串:这是一个超长的字符串:</string>
 
     <string name="failed">失败</string>
 </resources>

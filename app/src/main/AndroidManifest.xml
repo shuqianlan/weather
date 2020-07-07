@@ -38,7 +38,11 @@
             android:roundIcon="@mipmap/ic_launcher_round"
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
-        <activity android:name="com.echarts.DemoActivity"></activity>
+        <activity android:name="com.amap.MapLocationActivity"></activity>
+        <activity android:name="com.amap.AmapActivity" />
+        <activity android:name="com.ilifesmart.WebviewActivity" />
+        <activity android:name="com.ilifesmart.TestUIActivity" />
+        <activity android:name="com.echarts.DemoActivity" />
         <activity android:name="com.whitelist.WhiteDemoActivity" />
         <activity android:name="com.services.HelloServiceActivity" />
 
@@ -133,6 +137,12 @@
         <activity android:name="com.ilifesmart.fragment.DialogActivity" />
         <activity android:name="com.ilifesmart.preference.SettingActivity" />
         <activity android:name="com.ilifesmart.skin.SkinDemoActivity" />
+
+        <meta-data
+                android:name="com.amap.api.v2.apikey"
+                android:value="effe3f6692678245406d0cd1aac90ed3" />
+
+        <service android:name="com.amap.api.location.APSService" />
     </application>
 
 </manifest>

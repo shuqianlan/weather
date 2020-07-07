@@ -30,6 +30,6 @@
 
     <string name="lecheng_login_admin">管理员模式</string>
     <string name="lecheng_login_user">用户模式</string>
-
+    <string name="super_large_text_content">this is a super large text content:this is a super large text content:this is a super large text content:this is a super large text content</string>
     <string name="failed">失败</string>
 </resources>

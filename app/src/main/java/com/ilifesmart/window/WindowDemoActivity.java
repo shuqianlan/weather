@@ -7,6 +7,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import android.view.Gravity;
 import android.view.MotionEvent;
@@ -67,6 +68,7 @@ public class WindowDemoActivity extends AppCompatActivity {
 		}
 	}
 
+	@RequiresApi(api = Build.VERSION_CODES.O)
 	private void onWindAddView() {
 		mImageView = new ImageView(this);
 		mImageView.setBackgroundResource(R.drawable.bulb);
