@@ -330,22 +330,6 @@ public class HomeActivity extends AppCompatActivity {
             case R.id.scroll_text:
                 v.setSelected(false);
                 v.setSelected(true);
-//                scrollText.setEllipsize(TextUtils.TruncateAt.MARQUEE);
-//                scrollText.setFocusableInTouchMode(true);
-//                scrollText.setFocusable(true);
-//                scrollText.requestFocus();
-//
-//                Log.d(TAG, "onClick: ========================== click scroll text");
-//                int width = scrollText.getWidth();
-//                Log.d(TAG, "onClick: ========================== width " + width);
-////                if (scrollText.animate() != null)
-//                scrollText.animate().setDuration(500).translationX(-width).setUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-//                    @Override
-//                    public void onAnimationUpdate(ValueAnimator animation) {
-//                        Log.d(TAG, "onAnimationUpdate: currvalue " + animation.getAnimatedValue());
-//                        Log.d(TAG, "onAnimationUpdate: scrollText.transX " + scrollText.getTranslationX());
-//                    }
-//                }).start();
                 break;
             case R.id.smart_plus:
 //                Utils.startActivity(this, ArmingActivity.class);

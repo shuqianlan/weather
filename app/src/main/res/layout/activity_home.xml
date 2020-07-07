@@ -79,7 +79,7 @@
                     android:background="@drawable/stroke_background"
                     android:id="@+id/smart_plus"
                     android:text="Smart Plus"
-
+                    android:visibility="gone"
                     android:textAllCaps="false"
                     android:layout_gravity="center"
                     />
