@@ -26,4 +26,22 @@
         android:layout_gravity="center"
         />
 
+    <Button
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:background="@drawable/stroke_background"
+            android:id="@+id/open_notification"
+            android:text="打开通知权限"
+            android:layout_gravity="center"
+            />
+
+    <Button
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:background="@drawable/stroke_background"
+            android:id="@+id/close_notification"
+            android:text="关闭通知权限"
+            android:layout_gravity="center"
+            />
+
 </LinearLayout>

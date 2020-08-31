@@ -29,6 +29,51 @@
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
                     android:background="@drawable/stroke_background"
+                    android:id="@+id/toActionBarActivity"
+                    android:text="显示ActionBar返回键"
+                    android:textAllCaps="false"
+                    android:layout_gravity="center"
+                    android:clickable="true"
+                    />
+
+            <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:background="@drawable/stroke_background"
+                    android:id="@+id/listener_service"
+                    android:text="通知监听服务"
+                    android:textAllCaps="false"
+                    android:layout_gravity="center"
+                    android:clickable="true"
+                    />
+
+            <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:background="@drawable/stroke_background"
+                    android:id="@+id/custom_sensor"
+                    android:text="Custom Sensor"
+                    android:textAllCaps="false"
+                    android:layout_gravity="center"
+                    android:clickable="true"
+                    />
+
+
+            <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:background="@drawable/stroke_background"
+                    android:id="@+id/encryption"
+                    android:text="AES256+BASE64+SHA256"
+                    android:textAllCaps="false"
+                    android:layout_gravity="center"
+                    android:clickable="true"
+                    />
+
+            <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:background="@drawable/stroke_background"
                     android:id="@+id/tobao_product_detail"
                     android:text="淘宝产品详情"
                     android:textAllCaps="false"
@@ -321,7 +366,7 @@
                 android:layout_height="60dp"
                 android:background="@drawable/stroke_background"
                 android:id="@+id/notification"
-                android:text="notification"
+                android:text="消息栏通知"
                 android:layout_gravity="center"
                 />
             <Button

@@ -6,12 +6,15 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Point;
+import android.graphics.Typeface;
+import android.graphics.fonts.Font;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
 
+import com.ilifesmart.utils.DensityUtils;
 import com.ilifesmart.weather.R;
 
 import java.util.ArrayList;
@@ -34,6 +37,7 @@ public class SpiderWeb extends View implements GestureDetector.OnGestureListener
 	private int DEFAULT_TOUCH_POINT_COLOR = Color.RED;
 
 	private Paint mPointPaint;
+	private Paint mLabelPaint;
 	private Paint mLinePaint;
 	private Paint mTouchPaint;
 
@@ -92,6 +96,12 @@ public class SpiderWeb extends View implements GestureDetector.OnGestureListener
 		mTouchPaint.setColor(mConfig.mTouchPointColor);
 		mTouchPaint.setStrokeCap(Paint.Cap.ROUND);
 		mTouchPaint.setStrokeWidth(mConfig.mTouchPointStrokeWidth);
+
+		mLabelPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+		mLabelPaint.setColor(Color.GRAY);
+		mLabelPaint.setTextAlign(Paint.Align.CENTER);
+		mLabelPaint.setTextSize(DensityUtils.sp2px(getContext(), 120));
+		mLabelPaint.setTypeface(Typeface.create(Typeface.MONOSPACE, Typeface.BOLD));
 	}
 
 	private void initialize(AttributeSet attrs) {
@@ -145,6 +155,8 @@ public class SpiderWeb extends View implements GestureDetector.OnGestureListener
 		if (mTouchY != -1 && mTouchX != -1) {
 			canvas.drawPoint(mTouchX, mTouchY, mPointPaint);
 		}
+
+		canvas.drawText(String.valueOf(DEFAULT_POINT_COUNTS), mWidth/2, mHeight/2, mLabelPaint);
 
 		for (CodePoint currPoint:mPointList) {
 			currPoint.x += currPoint.getXa();
@@ -291,4 +303,14 @@ public class SpiderWeb extends View implements GestureDetector.OnGestureListener
 			return "[ " + "x: " + x + "; y: " + y + "; xa: " + xa + "; ya: " + ya + "]";
 		}
 	}
+
+	public void setSpiderCounts(int counts) {
+		DEFAULT_POINT_COUNTS = counts;
+		initCodePoints();
+	}
+
+	public int getSpiderCounts() {
+		return DEFAULT_POINT_COUNTS;
+	}
+
 }

@@ -4,6 +4,8 @@ import android.Manifest;
 import android.animation.Animator;
 import android.animation.TimeInterpolator;
 import android.animation.ValueAnimator;
+import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
@@ -12,13 +14,18 @@ import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.os.Build;
 import android.os.Bundle;
+
+import androidx.annotation.LongDef;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.PopupMenu;
+import androidx.core.app.NotificationManagerCompat;
 
+import android.provider.Settings;
 import android.text.TextUtils;
 import android.text.method.ScrollingMovementMethod;
+import android.util.Base64;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
@@ -28,14 +35,18 @@ import android.view.animation.LinearInterpolator;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import okhttp3.internal.Util;
 
 import com.amap.AmapActivity;
 import com.amap.MapLocationActivity;
 import com.db.SqliteActivity;
+import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.gson.Gson2Activity;
 import com.ilifesmart.animation.AnimationActivity;
 import com.ilifesmart.aop.CheckOnClickActivity;
@@ -70,6 +81,7 @@ import com.ilifesmart.utils.NetWorkUtil;
 import com.ilifesmart.utils.PersistentMgr;
 import com.ilifesmart.utils.Utils;
 import com.ilifesmart.viewpager.ViewPagerActivity;
+import com.ilifesmart.weather.ActionBarActivity;
 import com.ilifesmart.weather.R;
 import com.ilifesmart.weather.WeatherActivity;
 import com.ilifesmart.window.WindowDemoActivity;
@@ -77,6 +89,7 @@ import com.imou.*;
 import com.jetpack.JetPackActivity;
 import com.jni.JniDemoActivity;
 import com.kotlin.KotlinDemoActivity;
+import com.kotlin.SensorActivity;
 import com.layout.LayoutDemoActivity;
 import com.media.MediaActivity;
 import com.services.HelloServiceActivity;
@@ -88,6 +101,7 @@ import com.whitelist.WhiteDemoActivity;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Set;
 
 public class HomeActivity extends AppCompatActivity {
 
@@ -110,6 +124,15 @@ public class HomeActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
+        if (getIntent().getExtras() != null) {
+            for (String key : getIntent().getExtras().keySet()) {
+
+                String value = getIntent().getExtras().getString(key);
+
+                Log.d(TAG, "Key: " + key + " Value: " + value);
+
+            }
+        }
         AlertDialog dialog = new AlertDialog.Builder(this)
                 .setMessage("请你务必审慎阅读、充分理解许可及服务协议和稳私政策各条款。包括但不限于：为了向你提供即时通讯、内容分享、设备配置等服务，我们需要收集你的登录信息、设备运行日志等内容。\\n你可以在用户注册页面和帮助页面查看详细内容。\\n如果你同意，请点击“同意”开始接受我们的服务。")
                 .setTitle("隐私服务")
@@ -118,12 +141,50 @@ public class HomeActivity extends AppCompatActivity {
         dialog.show();
     }
 
+    // 判断是否打开了通知监听权限
+    private boolean isEnabled() {
+        String pkgName = getPackageName();
+        final String flat = Settings.Secure.getString(getContentResolver(), "enabled_notification_listeners");
+        Log.d(TAG, "isEnabled: FLAT " + flat);
+        if (!TextUtils.isEmpty(flat)) {
+            final String[] names = flat.split(":");
+            Log.d(TAG, "isEnabled: names " + names);
+            for (int i = 0; i < names.length; i++) {
+                final ComponentName cn = ComponentName.unflattenFromString(names[i]);
+                if (cn != null) {
+                    if (TextUtils.equals(pkgName, cn.getPackageName())) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
     private NetChangedBroadcast netChangeReceiver;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         ButterKnife.bind(this);
+
+
+        Log.d(TAG, "onCreate: Allowed " + isEnabled());
+        String string = Settings.Secure.getString(getContentResolver(), "enabled_notification_listeners");
+
+        Log.d(TAG, "onCreate: notification " + string);
+
+        FirebaseInstanceId.getInstance().getInstanceId().addOnCompleteListener(task -> {
+            if (!task.isSuccessful()) {
+                Log.w(TAG, "getInstanceId failed", task.getException());
+                return;
+            }
+
+            // Get new Instance ID token
+            String msg = task.getResult().getToken();
+            Log.d(TAG, "onCreate: token " + msg);
+            Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
+        });
 
 //        mWeather.setPressed(false);
         onCreatView();
@@ -219,7 +280,7 @@ public class HomeActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        unregisterReceiver(netChangeReceiver);
+//        unregisterReceiver(netChangeReceiver);
     }
 
     private void onCreatView() {
@@ -312,10 +373,44 @@ public class HomeActivity extends AppCompatActivity {
             R.id.ViewGroup, R.id.live, R.id.curtain, R.id.barrage, R.id.bluetooth, R.id.fold, R.id.region, R.id.span_text,
             R.id.custom_surfaceview, R.id.animation, R.id.window, R.id.abstract_layout, R.id.jni, R.id.miui_right_out, R.id.imou, R.id.gson,
             R.id.sqlite, R.id.jetpack, R.id.layout, R.id.media, R.id.kotlin_conoroutine, R.id.uilayout, R.id.app_bar_ayout, R.id.paged_data, R.id.wanandroid, R.id.service, R.id.white_menu, R.id.echarts,
-            R.id.test_for_ui, R.id.smart_plus, R.id.scroll_text, R.id.amap_for_ui, R.id.tobao_product_detail
+            R.id.test_for_ui, R.id.smart_plus, R.id.scroll_text, R.id.amap_for_ui, R.id.tobao_product_detail, R.id.encryption,
+            R.id.custom_sensor, R.id.toActionBarActivity, R.id.listener_service
     })
     public void onClick(View v) {
         switch (v.getId()) {
+            case R.id.toActionBarActivity:
+                Utils.startActivity(this, ActionBarActivity.class);
+                break;
+            case R.id.listener_service:
+                if (!isEnabled()) {
+                    startActivity(new Intent("android.settings.ACTION_NOTIFICATION_LISTENER_SETTINGS"));
+                } else {
+                    Snackbar.make(v, "权限已授予", Snackbar.LENGTH_SHORT).show();
+                }
+
+                break;
+            case R.id.custom_sensor:
+                Utils.startActivity(this, SensorActivity.class);
+                break;
+            case R.id.encryption:
+                String nounce = "91641833";
+                String ssid = "TP-link";
+                String pwd = "12345678";
+                String sn = "5F073DAYAJAJ3152A";
+
+                String sha256_encryption_source = nounce + sn + ",";
+                String aes256_encryption_source = nounce+","+ssid+","+pwd;
+                String shaKey = Utils.shaEnc256(sha256_encryption_source);
+                Log.d(TAG, "onClick: shaKey " + shaKey);
+                String aes256 = Utils.AES256Encode(aes256_encryption_source, shaKey);
+                Log.d(TAG, "onClick: aes256 " + aes256);
+
+                String strBase64 = new String(Base64.encode(aes256.getBytes(), Base64.DEFAULT));
+                Log.d(TAG, "onClick: Base64 " + strBase64 + " equals " + "+vwAejYaG3N0yX9wdREEn2CGa1t08NVx4SNVcpfVM6g=".equals(strBase64));
+
+                String result = nounce + "," + strBase64;
+                Log.d(TAG, "onClick: qrcode " + result);
+                break;
             case R.id.tobao_product_detail:
                 Intent intent = new Intent();
                 intent.setAction("Android.intent.action.VIEW");

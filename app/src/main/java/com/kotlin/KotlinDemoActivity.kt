@@ -19,6 +19,9 @@ class KotlinDemoActivity : BaseActivity(), CoroutineScope by MainScope() {
 
     override fun initData() {
         println("initData ---------")
+
+        val list = arrayListOf<Int>(1,2,3,4,5,6,7,8,9,0)
+        print("joinToString: ${joinToString(list, separator = ", ")}")
     }
 
     override fun onResume() {

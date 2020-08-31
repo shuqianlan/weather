@@ -1,6 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'com.google.gms.google-services'
 //apply plugin: 'android-aspectjx'
 
 android {
@@ -11,12 +12,12 @@ android {
             keyAlias 'weather'
             keyPassword 'weather'
         }
-        debug {
-            storeFile file('/AndroidStudio/weather/weather.keystore')
-            storePassword 'weather'
-            keyAlias 'weather'
-            keyPassword 'weather'
-        }
+//        debug {
+//            storeFile file('/AndroidStudio/weather/weather.keystore')
+//            storePassword 'weather'
+//            keyAlias 'weather'
+//            keyPassword 'weather'
+//        }
     }
     compileSdkVersion 29
     defaultConfig {
@@ -137,6 +138,10 @@ dependencies {
     implementation 'androidx.recyclerview:recyclerview:1.1.0'
     implementation 'com.nostra13.universalimageloader:universal-image-loader:1.9.5'
 
+    // firebase
+    implementation 'com.google.firebase:firebase-core:17.4.4'
+    implementation 'com.google.firebase:firebase-messaging:20.2.3'
+    implementation 'com.google.firebase:firebase-messaging-directboot:20.2.3'
 }
 
 //class Version {

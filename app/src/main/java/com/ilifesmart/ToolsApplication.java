@@ -7,8 +7,13 @@ import android.app.NotificationManager;
 import android.content.Context;
 import android.os.Build;
 import android.util.Log;
+import android.widget.Toast;
+
 import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.ilifesmart.interfaces.MyLocationListener;
 import com.ilifesmart.region.RegionMgr;
 import com.imou.LeChengCameraWrapInfo;
@@ -33,7 +38,10 @@ public class ToolsApplication extends Application { //} implements Configuration
 
         LCOpenSDK_Api.setHost(LeChengCameraWrapInfo.APPCNUrl);
 
-//        if (LeakCanary.isInAnalyzerProcess(this)) {
+        FirebaseApp.initializeApp(this);
+        FirebaseMessaging.getInstance().setAutoInitEnabled(true);
+
+        //        if (LeakCanary.isInAnalyzerProcess(this)) {
 //            // This process is dedicated to LeakCanary for heap analysis.
 //            // You should not init your app in this process.
 //            return;

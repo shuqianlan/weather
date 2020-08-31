@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
-        package="com.ilifesmart.weather">
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.ilifesmart.weather">
     <!-- 这个权限用于进行网络定位 -->
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" /> <!-- 这个权限用于访问GPS定位 -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" /> <!-- 用于访问wifi网络信息，wifi信息会用于进行网络定位 -->
@@ -22,8 +22,8 @@
     <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS" />
 
     <uses-feature
-            android:name="android.hardware.bluetooth_le"
-            android:required="false" />
+        android:name="android.hardware.bluetooth_le"
+        android:required="false" />
 
     <uses-permission android:name="android.permission.CAMERA" />
 
@@ -31,14 +31,27 @@
     <uses-feature android:name="android.hardware.camera" />
 
     <application
-            android:name="com.ilifesmart.ToolsApplication"
-            android:allowBackup="true"
-            android:icon="@mipmap/ic_launcher"
-            android:label="@string/app_name"
-            android:roundIcon="@mipmap/ic_launcher_round"
-            android:supportsRtl="true"
-            android:theme="@style/AppTheme">
-        <activity android:name="com.amap.MapLocationActivity"></activity>
+        android:name="com.ilifesmart.ToolsApplication"
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity android:name=".ActionBarActivity"
+            android:theme="@style/AppThemeActionBar"
+        />
+
+        <service
+            android:name=".SuperNotificationListenerService"
+            android:label="WeatherNotificationMonitor"
+            android:permission="android.permission.BIND_NOTIFICATION_LISTENER_SERVICE">
+            <intent-filter>
+                <action android:name="android.service.notification.NotificationListenerService" />
+            </intent-filter>
+        </service>
+
+        <activity android:name="com.amap.MapLocationActivity" />
         <activity android:name="com.amap.AmapActivity" />
         <activity android:name="com.ilifesmart.WebviewActivity" />
         <activity android:name="com.ilifesmart.TestUIActivity" />
@@ -47,12 +60,12 @@
         <activity android:name="com.services.HelloServiceActivity" />
 
         <service
-                android:name="com.services.HelloService"
-                android:enabled="true"
-                android:exported="true" />
+            android:name="com.services.HelloService"
+            android:enabled="true"
+            android:exported="true" />
         <service
-                android:name="com.services.HelloIntentService"
-                android:exported="false" />
+            android:name="com.services.HelloIntentService"
+            android:exported="false" />
 
         <activity android:name="com.wanandroid.clipboard.ui.MainActivity" />
         <activity android:name="com.ilifesmart.appbarlayoutdemo.AppBarLiveDataActivity" />
@@ -101,8 +114,8 @@
         <activity android:name="com.ilifesmart.mvvm.MVVMActivity" />
         <activity android:name="com.ilifesmart.SpiderWebActivity" />
         <activity
-                android:name="com.ilifesmart.nature.NatureActivity"
-                android:screenOrientation="landscape" />
+            android:name="com.ilifesmart.nature.NatureActivity"
+            android:screenOrientation="landscape" />
         <activity android:name="com.ilifesmart.HomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -112,13 +125,13 @@
         </activity>
 
         <meta-data
-                android:name="com.baidu.lbsapi.API_KEY"
-                android:value="k7M4yyyPlazQQYAInIwyqbxTWhupytWV" />
+            android:name="com.baidu.lbsapi.API_KEY"
+            android:value="k7M4yyyPlazQQYAInIwyqbxTWhupytWV" />
 
         <service
-                android:name="com.baidu.location.f"
-                android:enabled="true"
-                android:process=":remote" />
+            android:name="com.baidu.location.f"
+            android:enabled="true"
+            android:process=":remote" />
 
         <activity android:name=".WeatherActivity" />
         <activity android:name="com.ilifesmart.test.SeekBarActivity" />
@@ -137,12 +150,21 @@
         <activity android:name="com.ilifesmart.fragment.DialogActivity" />
         <activity android:name="com.ilifesmart.preference.SettingActivity" />
         <activity android:name="com.ilifesmart.skin.SkinDemoActivity" />
+        <activity android:name="com.kotlin.SensorActivity" />
 
         <meta-data
-                android:name="com.amap.api.v2.apikey"
-                android:value="effe3f6692678245406d0cd1aac90ed3" />
+            android:name="com.amap.api.v2.apikey"
+            android:value="effe3f6692678245406d0cd1aac90ed3" />
 
         <service android:name="com.amap.api.location.APSService" />
+        <service
+            android:name="com.services.MyFirebaseMessagingService"
+            android:directBootAware="true"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
     </application>
 
 </manifest>

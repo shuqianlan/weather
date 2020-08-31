@@ -1,5 +1,7 @@
 <resources>
 
+    <style name="AppThemeActionBar" parent="Theme.AppCompat.Light" />
+
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
@@ -9,6 +11,7 @@
 
         <item name="android:windowFullscreen">true</item>
     </style>
+
 
     <style name="VerticalSeekBarStyle" parent="Widget.AppCompat.SeekBar">
         <item name="android:progressDrawable">@drawable/drawable_vertical_seekbar</item>
