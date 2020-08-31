@@ -123,22 +123,6 @@ public class HomeActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-
-        if (getIntent().getExtras() != null) {
-            for (String key : getIntent().getExtras().keySet()) {
-
-                String value = getIntent().getExtras().getString(key);
-
-                Log.d(TAG, "Key: " + key + " Value: " + value);
-
-            }
-        }
-        AlertDialog dialog = new AlertDialog.Builder(this)
-                .setMessage("请你务必审慎阅读、充分理解许可及服务协议和稳私政策各条款。包括但不限于：为了向你提供即时通讯、内容分享、设备配置等服务，我们需要收集你的登录信息、设备运行日志等内容。\\n你可以在用户注册页面和帮助页面查看详细内容。\\n如果你同意，请点击“同意”开始接受我们的服务。")
-                .setTitle("隐私服务")
-                .create();
-
-        dialog.show();
     }
 
     // 判断是否打开了通知监听权限
@@ -275,6 +259,22 @@ public class HomeActivity extends AppCompatActivity {
 //
 //        .setMovementMethod(ScrollingMovementMethod.getInstance());
 //        findViewById(R.id.scroll_text).setFocusable(true);
+
+        if (getIntent().getExtras() != null) {
+            for (String key : getIntent().getExtras().keySet()) {
+
+                String value = getIntent().getExtras().getString(key);
+
+                Log.d(TAG, "Key: " + key + " Value: " + value);
+
+            }
+        }
+        AlertDialog dialog = new AlertDialog.Builder(this)
+                .setMessage("请你务必审慎阅读、充分理解许可及服务协议和稳私政策各条款。包括但不限于：为了向你提供即时通讯、内容分享、设备配置等服务，我们需要收集你的登录信息、设备运行日志等内容。\\n你可以在用户注册页面和帮助页面查看详细内容。\\n如果你同意，请点击“同意”开始接受我们的服务。")
+                .setTitle("隐私服务")
+                .create();
+
+        dialog.show();
     }
 
     @Override
