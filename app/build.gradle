@@ -69,6 +69,12 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
 
+    repositories{
+        flatDir{
+            dirs 'libs'
+        }
+    }
+
     buildToolsVersion '29.0.2'
 }
 
@@ -142,6 +148,13 @@ dependencies {
     implementation 'com.google.firebase:firebase-core:17.4.4'
     implementation 'com.google.firebase:firebase-messaging:20.2.3'
     implementation 'com.google.firebase:firebase-messaging-directboot:20.2.3'
+
+    implementation 'com.umeng.umsdk:common:9.1.0' // (必选)
+//    implementation 'com.umeng.umsdk:asms:1.1.3' // asms包依赖(必选)
+//    implementation 'com.umeng.umsdk:crash:0.0.4' // native crash包依赖(必选)
+
+    implementation (name:'umeng-asms-v1.1.3', ext:'aar')
+    implementation (name:'umeng-crash-v0.0.5', ext:'aar')
 }
 
 //class Version {

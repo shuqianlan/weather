@@ -26,6 +26,17 @@
             <include layout="@layout/bottomrefreshlayout" />
 
             <Button
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:background="@drawable/stroke_background"
+                android:id="@+id/scale_drawable"
+                android:text="ScaleDrawable"
+                android:textAllCaps="false"
+                android:layout_gravity="center"
+                android:clickable="true"
+                />
+
+            <Button
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
                     android:background="@drawable/stroke_background"
@@ -35,6 +46,17 @@
                     android:layout_gravity="center"
                     android:clickable="true"
                     />
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:background="@drawable/stroke_background"
+                android:id="@+id/umeng"
+                android:text="友盟事件统计"
+                android:textAllCaps="false"
+                android:layout_gravity="center"
+                android:clickable="true"
+                />
 
             <Button
                     android:layout_width="match_parent"

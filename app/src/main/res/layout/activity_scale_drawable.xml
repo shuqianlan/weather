@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ScaleDrawableActivity">
+
+    <FrameLayout
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:id="@+id/state_list_drawable"
+        app:layout_constraintWidth_percent="0.6"
+        app:layout_constraintDimensionRatio="h,1:1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="经验证\nselector中不支持ScaleDrawable"
+        android:layout_marginTop="20dp"
+        android:gravity="center"
+
+        app:layout_constraintStart_toStartOf="@id/state_list_drawable"
+        app:layout_constraintEnd_toEndOf="@id/state_list_drawable"
+        app:layout_constraintTop_toBottomOf="@id/state_list_drawable"
+
+        />
+</androidx.constraintlayout.widget.ConstraintLayout>

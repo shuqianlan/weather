@@ -1,11 +1,15 @@
 package com.ilifesmart;
 
 import android.annotation.TargetApi;
+import android.app.Activity;
 import android.app.Application;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.content.ComponentCallbacks;
 import android.content.Context;
+import android.content.res.Configuration;
 import android.os.Build;
+import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -18,6 +22,14 @@ import com.ilifesmart.interfaces.MyLocationListener;
 import com.ilifesmart.region.RegionMgr;
 import com.imou.LeChengCameraWrapInfo;
 import com.lechange.opensdk.api.LCOpenSDK_Api;
+import com.umeng.analytics.MobclickAgent;
+import com.umeng.commonsdk.UMConfigure;
+import com.umeng.commonsdk.statistics.common.DeviceConfig;
+
+import java.util.ArrayList;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 public class ToolsApplication extends Application { //} implements Configuration.Provider {
 
@@ -36,11 +48,22 @@ public class ToolsApplication extends Application { //} implements Configuration
     public void onCreate() {
         super.onCreate();
 
+        UMConfigure.init(this, "5f18f5efb4fa6023ce18da4d", "Unknown", UMConfigure.DEVICE_TYPE_PHONE, null);
+
+        MobclickAgent.setPageCollectionMode(MobclickAgent.PageMode.MANUAL);
+
         LCOpenSDK_Api.setHost(LeChengCameraWrapInfo.APPCNUrl);
 
         FirebaseApp.initializeApp(this);
         FirebaseMessaging.getInstance().setAutoInitEnabled(true);
 
+//        Log.d(TAG, "onCreate: " + getTestDeviceInfo(getApplicationContext()));
+
+        String[] infos =  UMConfigure.getTestDeviceInfo(getApplicationContext());
+
+        for (int i = 0; i < infos.length; i++) {
+            Log.d(TAG, "onCreate: Info " + infos[i]);
+        }
         //        if (LeakCanary.isInAnalyzerProcess(this)) {
 //            // This process is dedicated to LeakCanary for heap analysis.
 //            // You should not init your app in this process.
@@ -90,6 +113,56 @@ public class ToolsApplication extends Application { //} implements Configuration
             }
         }
 
+        registerActivityLifecycleCallbacks(new ActivityLifecycleCallbacks() {
+            @Override
+            public void onActivityCreated(@NonNull Activity activity, @Nullable Bundle savedInstanceState) {
+
+            }
+
+            @Override
+            public void onActivityStarted(@NonNull Activity activity) {
+
+            }
+
+            @Override
+            public void onActivityResumed(@NonNull Activity activity) {
+                MobclickAgent.onResume(activity);
+
+            }
+
+            @Override
+            public void onActivityPaused(@NonNull Activity activity) {
+                MobclickAgent.onPause(activity);
+            }
+
+            @Override
+            public void onActivityStopped(@NonNull Activity activity) {
+
+            }
+
+            @Override
+            public void onActivitySaveInstanceState(@NonNull Activity activity, @NonNull Bundle outState) {
+
+            }
+
+            @Override
+            public void onActivityDestroyed(@NonNull Activity activity) {
+
+            }
+        });
+
+    }
+
+    public static String[] getTestDeviceInfo(Context context){
+        String[] deviceInfo = new String[2];
+        try {
+            if(context != null){
+                deviceInfo[0] = DeviceConfig.getDeviceIdForGeneral(context);
+                deviceInfo[1] = DeviceConfig.getMac(context);
+            }
+        } catch (Exception e){
+        }
+        return deviceInfo;
     }
 
     public static boolean isInLocating() {
@@ -130,4 +203,5 @@ public class ToolsApplication extends Application { //} implements Configuration
 //                .setMinimumLoggingLevel(Log.INFO)
 //                .build();
 //    }
+
 }

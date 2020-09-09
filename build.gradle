@@ -6,8 +6,10 @@ buildscript {
     repositories {
         google()
         jcenter()
+        maven { url 'https://dl.bintray.com/umsdk/release' }
     }
     dependencies {
+
         classpath 'com.android.tools.build:gradle:4.0.1'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         classpath "org.jetbrains.kotlin:kotlin-android-extensions:$kotlin_version"
@@ -22,6 +24,7 @@ allprojects {
     repositories {
         google()
         jcenter()
+        maven { url 'https://dl.bintray.com/umsdk/release' }
     }
 }
 
