@@ -29,6 +29,17 @@
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:background="@drawable/stroke_background"
+                android:id="@+id/screenshot"
+                android:text="截图"
+                android:textAllCaps="false"
+                android:layout_gravity="center"
+                android:clickable="true"
+                />
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:background="@drawable/stroke_background"
                 android:id="@+id/scale_drawable"
                 android:text="ScaleDrawable"
                 android:textAllCaps="false"
@@ -96,8 +107,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
                     android:background="@drawable/stroke_background"
-                    android:id="@+id/tobao_product_detail"
-                    android:text="淘宝产品详情"
+                    android:id="@+id/app_shopping"
+                    android:text="购物App跳转详情"
                     android:textAllCaps="false"
                     android:layout_gravity="center"
                     android:clickable="true"

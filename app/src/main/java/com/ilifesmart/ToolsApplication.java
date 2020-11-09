@@ -5,11 +5,13 @@ import android.app.Activity;
 import android.app.Application;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.content.ClipboardManager;
 import android.content.ComponentCallbacks;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -48,7 +50,7 @@ public class ToolsApplication extends Application { //} implements Configuration
     public void onCreate() {
         super.onCreate();
 
-        UMConfigure.init(this, "5f18f5efb4fa6023ce18da4d", "Unknown", UMConfigure.DEVICE_TYPE_PHONE, null);
+        UMConfigure.init(this, "5f18f5efb4fa6023ce18da4d", null, UMConfigure.DEVICE_TYPE_PHONE, null);
 
         MobclickAgent.setPageCollectionMode(MobclickAgent.PageMode.MANUAL);
 

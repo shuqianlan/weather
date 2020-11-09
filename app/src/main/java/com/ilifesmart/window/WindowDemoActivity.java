@@ -56,6 +56,7 @@ public class WindowDemoActivity extends AppCompatActivity {
 		}
 	}
 
+	@RequiresApi(api = Build.VERSION_CODES.O)
 	@OnClick({R.id.add, R.id.remove})
 	public void onViewClicked(View view) {
 		switch (view.getId()) {

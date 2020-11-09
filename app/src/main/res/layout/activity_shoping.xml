@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    tools:context="com.ilifesmart.ShopingActivity">
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="@drawable/stroke_background"
+        android:id="@+id/tobao_product_detail"
+        android:text="淘宝产品详情"
+        android:textAllCaps="false"
+        android:layout_gravity="center"
+        android:clickable="true"
+        />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="@drawable/stroke_background"
+        android:id="@+id/tobao_shop"
+        android:text="淘宝店铺"
+        android:textAllCaps="false"
+        android:layout_gravity="center"
+        android:clickable="true"
+        />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="@drawable/stroke_background"
+        android:id="@+id/jd_product_detail"
+        android:text="京东产品详情"
+        android:textAllCaps="false"
+        android:layout_gravity="center"
+        android:clickable="true"
+        />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="@drawable/stroke_background"
+        android:id="@+id/jd_shop"
+        android:text="京东店铺"
+        android:textAllCaps="false"
+        android:layout_gravity="center"
+        android:clickable="true"
+        />
+
+</LinearLayout>

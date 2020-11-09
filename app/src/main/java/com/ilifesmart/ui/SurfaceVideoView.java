@@ -219,7 +219,12 @@ public class SurfaceVideoView extends FrameLayout implements MediaPlayer.OnPrepa
 
 	@TargetApi(Build.VERSION_CODES.N)
 	private void openVideo() {
+
+		Log.d(TAG, "openVideo: " + TextUtils.isEmpty(filePath));
+		Log.d(TAG, "mSurfaceHolder: " + (mSurfaceHolder == null));
+
 		if (TextUtils.isEmpty(filePath) || mSurfaceHolder == null) {
+
 			return;
 		}
 
@@ -235,10 +240,13 @@ public class SurfaceVideoView extends FrameLayout implements MediaPlayer.OnPrepa
 				}
 			});
 			AssetFileDescriptor descriptor = getResources().getAssets().openFd(filePath);
-			player.setDataSource("rtsp://47.106.222.158:8132/57cca166c2bb83232e45426d73e6d232_1");
+			player.setDataSource(descriptor);
+//			player.setDataSource("rtsp://47.106.222.158:8132/57cca166c2bb83232e45426d73e6d232_1");
 			player.setDisplay(mSurfaceHolder);
 			player.setScreenOnWhilePlaying(true);
 			player.prepareAsync();
+
+			Log.d(TAG, "openVideo: 》》》》》》》》》》 ");
 		} catch(Exception ex) {
 			ex.printStackTrace();
 		}
@@ -282,7 +290,7 @@ public class SurfaceVideoView extends FrameLayout implements MediaPlayer.OnPrepa
 	public void OnStatus() {
 		Log.d(TAG, "OnStatus: ~~~~~~ 0");
 		if (mControlArea.getAlpha() > VISIBLE_MAX_ALPHA) {
-			checkVideoPrepared();
+//			checkVideoPrepared();
 			Log.d(TAG, "OnStatus: ~~~~~~ 1");
 			mState.setSelected(!mState.isSelected());
 			mThumbNail.setVisibility(GONE);
@@ -313,6 +321,7 @@ public class SurfaceVideoView extends FrameLayout implements MediaPlayer.OnPrepa
 		mTime.setText(getDurationString(0));
 		mDuration.setText(getDurationString(player.getDuration()));
 
+		Log.d(TAG, "onPrepared: ~~~~~~~~~~ ");
 		if (mThread.getState() == Thread.State.NEW) {
 			mThread.start();
 		}

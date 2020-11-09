@@ -38,7 +38,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ScaleDrawableActivity"></activity>
+        <activity android:name="com.ilifesmart.ShopingActivity"></activity>
+        <activity
+            android:name=".ScreenSnapshotActivity"
+            android:theme="@style/AppThemeActionBar2" />
+        <activity android:name=".ScaleDrawableActivity" />
         <activity android:name=".UmengActivity" />
         <activity
             android:name=".ActionBarActivity"

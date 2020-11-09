@@ -4,6 +4,7 @@ import android.Manifest;
 import android.animation.Animator;
 import android.animation.TimeInterpolator;
 import android.animation.ValueAnimator;
+import android.content.ClipboardManager;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -84,6 +85,7 @@ import com.ilifesmart.viewpager.ViewPagerActivity;
 import com.ilifesmart.weather.ActionBarActivity;
 import com.ilifesmart.weather.R;
 import com.ilifesmart.weather.ScaleDrawableActivity;
+import com.ilifesmart.weather.ScreenSnapshotActivity;
 import com.ilifesmart.weather.UmengActivity;
 import com.ilifesmart.weather.WeatherActivity;
 import com.ilifesmart.window.WindowDemoActivity;
@@ -171,6 +173,8 @@ public class HomeActivity extends AppCompatActivity {
             Log.d(TAG, "onCreate: token " + msg);
             Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
         });
+
+        paste();
 
 //        mWeather.setPressed(false);
         onCreatView();
@@ -375,12 +379,15 @@ public class HomeActivity extends AppCompatActivity {
             R.id.ViewGroup, R.id.live, R.id.curtain, R.id.barrage, R.id.bluetooth, R.id.fold, R.id.region, R.id.span_text,
             R.id.custom_surfaceview, R.id.animation, R.id.window, R.id.abstract_layout, R.id.jni, R.id.miui_right_out, R.id.imou, R.id.gson,
             R.id.sqlite, R.id.jetpack, R.id.layout, R.id.media, R.id.kotlin_conoroutine, R.id.uilayout, R.id.app_bar_ayout, R.id.paged_data, R.id.wanandroid, R.id.service, R.id.white_menu, R.id.echarts,
-            R.id.test_for_ui, R.id.smart_plus, R.id.scroll_text, R.id.amap_for_ui, R.id.tobao_product_detail, R.id.encryption,
+            R.id.test_for_ui, R.id.smart_plus, R.id.scroll_text, R.id.amap_for_ui, R.id.app_shopping, R.id.encryption,
             R.id.custom_sensor, R.id.toActionBarActivity, R.id.listener_service, R.id.umeng,
-            R.id.scale_drawable
+            R.id.scale_drawable,R.id.screenshot
     })
     public void onClick(View v) {
         switch (v.getId()) {
+            case R.id.screenshot:
+                Utils.startActivity(this, ScreenSnapshotActivity.class);
+                break;
             case R.id.scale_drawable:
                 Utils.startActivity(this, ScaleDrawableActivity.class);
                 break;
@@ -420,13 +427,9 @@ public class HomeActivity extends AppCompatActivity {
                 String result = nounce + "," + strBase64;
                 Log.d(TAG, "onClick: qrcode " + result);
                 break;
-            case R.id.tobao_product_detail:
-                Intent intent = new Intent();
-                intent.setAction("Android.intent.action.VIEW");
-                Uri uri = Uri.parse("https://item.taobao.com/item.htm?spm=a219r.lm0.14.21.65121087YJft2y&id=615676811592&ns=1&abbucket=5"); // 商品地址
-                intent.setData(uri);
-                intent.setClassName("com.taobao.taobao", "com.taobao.tao.detail.activity.DetailActivity");
-                startActivity(intent);
+            case R.id.app_shopping:
+
+                Utils.startActivity(this, ShopingActivity.class);
                 break;
             case R.id.amap_for_ui:
                 Utils.startActivity(this, MapLocationActivity.class);
@@ -659,5 +662,16 @@ public class HomeActivity extends AppCompatActivity {
         startActivity(Utils.newIntent(this, CameraRotateActivity.class));
     }
 
+    public String paste(){
+        ClipboardManager manager = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+        if (manager.hasPrimaryClip() && manager.getPrimaryClip().getItemCount() > 0) {
+            CharSequence addedText = manager.getPrimaryClip().getItemAt(0).getText();
+            String addedTextString = String.valueOf(addedText);
+            if (!TextUtils.isEmpty(addedTextString)) {
+                return addedTextString;
+            }
+        }
+        return "";
+    }
 
 }

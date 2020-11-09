@@ -39,13 +39,13 @@ public class VideoActivity extends AppCompatActivity {
 	public static List<String> videos = new ArrayList<>();
 	static {
 		videos.add(filePath);
-		videos.add(filePath);
-		videos.add(filePath);
-		videos.add(filePath);
-		videos.add(filePath);
-		videos.add(filePath);
-		videos.add(filePath);
-		videos.add(filePath);
+//		videos.add(filePath);
+//		videos.add(filePath);
+//		videos.add(filePath);
+//		videos.add(filePath);
+//		videos.add(filePath);
+//		videos.add(filePath);
+//		videos.add(filePath);
 	}
 	@BindView(R.id.videos)
 	ListView mVideos;
@@ -56,7 +56,7 @@ public class VideoActivity extends AppCompatActivity {
 		setContentView(R.layout.activity_barrage);
 		ButterKnife.bind(this);
 
-		mVideoCont.setVideoPath("http://devimages.apple.com/iphone/samples/bipbop/bipbopall.m3u8");
+//		mVideoCont.setVideoPath("http://devimages.apple.com/iphone/samples/bipbop/bipbopall.m3u8");
 
 		VideoAdapter adapter = new VideoAdapter();
 		adapter.registerDataSetObserver(new DataSetObserver() {
