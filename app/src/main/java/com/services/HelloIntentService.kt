@@ -3,6 +3,7 @@ package com.services
 import android.app.IntentService
 import android.content.Intent
 import android.content.Context
+import androidx.core.app.JobIntentService
 
 // TODO: Rename actions, choose action names that describe tasks that this
 // IntentService can perform, e.g. ACTION_FETCH_NEW_ITEMS
@@ -19,9 +20,9 @@ private const val EXTRA_PARAM2 = "com.services.extra.PARAM2"
  * TODO: Customize class - update intent actions, extra parameters and static
  * helper methods.
  */
-class HelloIntentService : IntentService("HelloIntentService") {
+class HelloIntentService : JobIntentService() {
 
-    override fun onHandleIntent(intent: Intent?) {
+    override fun onHandleWork(intent: Intent) {
         when (intent?.action) {
             ACTION_FOO -> {
                 val param1 = intent.getStringExtra(EXTRA_PARAM1)
@@ -40,7 +41,7 @@ class HelloIntentService : IntentService("HelloIntentService") {
      * Handle action Foo in the provided background thread with the provided
      * parameters.
      */
-    private fun handleActionFoo(param1: String, param2: String) {
+    private fun handleActionFoo(param1: String?, param2: String?) {
         TODO("Handle action Foo")
     }
 
@@ -48,7 +49,7 @@ class HelloIntentService : IntentService("HelloIntentService") {
      * Handle action Baz in the provided background thread with the provided
      * parameters.
      */
-    private fun handleActionBaz(param1: String, param2: String) {
+    private fun handleActionBaz(param1: String?, param2: String?) {
         TODO("Handle action Baz")
     }
 

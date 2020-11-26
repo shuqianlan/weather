@@ -29,6 +29,17 @@
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:background="@drawable/stroke_background"
+                android:id="@+id/systemunlock"
+                android:text="生物解锁"
+                android:textAllCaps="false"
+                android:layout_gravity="center"
+                android:clickable="true"
+                />
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:background="@drawable/stroke_background"
                 android:id="@+id/screenshot"
                 android:text="截图"
                 android:textAllCaps="false"

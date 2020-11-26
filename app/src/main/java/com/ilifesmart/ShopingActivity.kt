@@ -51,5 +51,17 @@ class ShopingActivity : AppCompatActivity() {
 				startActivity(this)
 			}
 		}
+		
+		"https://detail.tmall.com/item.htm?id=569833217123&ali_trackid=2:mm_12238993_19794510_110896800135:1604990083_194_429147225&union_lens=lensId:OPT@1604990080@0b014c60_c023_175b0dd170c_ddf8@01;recoveryid:201_11.23.83.213_3227039_1604990073931;prepvid:201_11.186.139.24_3225585_1604990080225&spm=a2e1u.19484427.29996460.1&pvid=100_11.14.234.10_30619_7741604990080632522&scm=null&bxsign=tbkJ2PkjfAjNnd6O5nrslvYAL3Ag%207sAEKwcw0AhKGjm5dSS5AFqFv4jqm1aLDv%203qj8Zo20S3JmY4MvVHia3Lg7Ml9J%20ESsvqB3ucQ0ry3MqU="
+		.apply {
+			with(Uri.parse(this)) {
+				val names = queryParameterNames
+				
+				for (key in names) {
+					Log.d("UrlKey", "onCreate: key: $key, value: ${getQueryParameter(key)}")
+				}
+			}
+		}
+		
 	}
 }

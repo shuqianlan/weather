@@ -33,6 +33,7 @@ import javax.crypto.NoSuchPaddingException;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 
+import androidx.biometric.BiometricManager;
 import wseemann.media.FFmpegMediaMetadataRetriever;
 
 public class Utils {
@@ -234,6 +235,19 @@ public class Utils {
         for (int i = 0; i < len; i++)
             result[i] = Integer.valueOf(hexString.substring(2 * i, 2 * i + 2),
                     16).byteValue();
+        return result;
+    }
+
+    public static boolean isBiometricSupported(Context context, int type) {
+        boolean result = false;
+
+        BiometricManager manager = BiometricManager.from(context);
+        switch (manager.canAuthenticate(type)) {
+            case BiometricManager.BIOMETRIC_SUCCESS:
+                result = true;
+                break;
+        }
+
         return result;
     }
 }

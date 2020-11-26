@@ -4,6 +4,7 @@ import android.Manifest;
 import android.animation.Animator;
 import android.animation.TimeInterpolator;
 import android.animation.ValueAnimator;
+import android.app.KeyguardManager;
 import android.content.ClipboardManager;
 import android.content.ComponentName;
 import android.content.Context;
@@ -18,9 +19,12 @@ import android.os.Bundle;
 
 import androidx.annotation.LongDef;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.PopupMenu;
+import androidx.biometric.BiometricManager;
+import androidx.biometric.BiometricPrompt;
 import androidx.core.app.NotificationManagerCompat;
 
 import android.provider.Settings;
@@ -38,6 +42,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.core.hardware.fingerprint.FingerprintManagerCompat;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -107,6 +112,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
 
+import static androidx.biometric.BiometricManager.Authenticators.BIOMETRIC_STRONG;
+import static androidx.biometric.BiometricManager.Authenticators.DEVICE_CREDENTIAL;
+
 public class HomeActivity extends AppCompatActivity {
 
     public static final String TAG = "HomeActivity";
@@ -157,6 +165,7 @@ public class HomeActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
 
+        onClickAuthBySystem();
         Log.d(TAG, "onCreate: Allowed " + isEnabled());
         String string = Settings.Secure.getString(getContentResolver(), "enabled_notification_listeners");
 
@@ -275,12 +284,6 @@ public class HomeActivity extends AppCompatActivity {
 
             }
         }
-        AlertDialog dialog = new AlertDialog.Builder(this)
-                .setMessage("请你务必审慎阅读、充分理解许可及服务协议和稳私政策各条款。包括但不限于：为了向你提供即时通讯、内容分享、设备配置等服务，我们需要收集你的登录信息、设备运行日志等内容。\\n你可以在用户注册页面和帮助页面查看详细内容。\\n如果你同意，请点击“同意”开始接受我们的服务。")
-                .setTitle("隐私服务")
-                .create();
-
-        dialog.show();
     }
 
     @Override
@@ -373,6 +376,91 @@ public class HomeActivity extends AppCompatActivity {
         popupMenu.show();
     }
 
+    private void onClickAuthBySystem() {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.P) {
+            KeyguardManager manager = (KeyguardManager) getSystemService(Context.KEYGUARD_SERVICE);
+            if (!manager.isKeyguardSecure()) {
+                Toast.makeText(this, "none set", Toast.LENGTH_LONG).show();
+                return;
+            }
+
+            Intent i = manager.createConfirmDeviceCredentialIntent(null, null);
+            startActivityForResult(i, 10090);
+        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+            boolean isSupport = false;
+
+            int target = 0;
+            if (Utils.isBiometricSupported(this, BIOMETRIC_STRONG)) {
+                isSupport = true;
+                target |= BIOMETRIC_STRONG; // 生物功能，依据手机开放，可人脸,指纹，虹膜等
+            }
+
+            if (Utils.isBiometricSupported(this, DEVICE_CREDENTIAL)) {
+                isSupport = true;
+                target |= DEVICE_CREDENTIAL; // PIN或密码
+            }
+
+            if (!isSupport) {
+                Log.d(TAG, "onClickAuthBySystem: no support");
+                return;
+            }
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                target = BIOMETRIC_STRONG | DEVICE_CREDENTIAL;
+            }
+            // 30以前，不支持单独配置DEVICE_CREDENTIAL.
+            // 28 or 29, 不支持设置BIOMETRIC_STRONG | DEVICE_CREDENTIAL.
+
+            BiometricPrompt.PromptInfo promptInfo =
+                    new BiometricPrompt.PromptInfo.Builder()
+                            .setTitle("Biometric login for my app") //设置大标题
+                            .setSubtitle("Log in using your biometric credential") // 设置标题下的提示
+                            .setAllowedAuthenticators(target)
+                            .setConfirmationRequired(true)
+                            .build();
+
+            //需要提供的参数callback
+            BiometricPrompt biometricPrompt = new BiometricPrompt(this,
+                    getMainExecutor(), new BiometricPrompt.AuthenticationCallback() {
+                //各种异常的回调
+                @Override
+                public void onAuthenticationError(int errorCode, @NonNull CharSequence errString) {
+                    super.onAuthenticationError(errorCode, errString);
+                    Toast.makeText(getApplicationContext(),
+                            "Authentication error: " + errString, Toast.LENGTH_SHORT)
+                            .show();
+                }
+
+                //认证成功的回调
+                @Override
+                public void onAuthenticationSucceeded(
+                        @NonNull BiometricPrompt.AuthenticationResult result) {
+                    super.onAuthenticationSucceeded(result);
+                    BiometricPrompt.CryptoObject authenticatedCryptoObject =
+                            result.getCryptoObject();
+
+                    Log.d(TAG, "onAuthenticationSucceeded: AuthenticationType " + result.getAuthenticationType());
+                    // User has verified the signature, cipher, or message
+                    // authentication code (MAC) associated with the crypto object,
+                    // so you can use it in your app's crypto-driven workflows.
+                }
+
+                //认证失败的回调
+                @Override
+                public void onAuthenticationFailed() {
+                    super.onAuthenticationFailed();
+                    Toast.makeText(getApplicationContext(), "Authentication failed",
+                            Toast.LENGTH_SHORT)
+                            .show();
+                }
+            });
+
+            // 显示认证对话框
+            biometricPrompt.authenticate(promptInfo);
+        }
+    }
+
+
     @OnClick({R.id.weather, R.id.seekbar, R.id.notification, R.id.rotate, R.id.aop_test, R.id.thread_test,
             R.id.framelayout, R.id.compass, R.id.miclock, R.id.camrotate, R.id.path, R.id.osinfo, R.id.viewpager, R.id.mapper,
             R.id.dialog, R.id.preference, R.id.nature_ui, R.id.spider_web, R.id.mvvm, R.id.rxjava, R.id.progress,
@@ -381,10 +469,13 @@ public class HomeActivity extends AppCompatActivity {
             R.id.sqlite, R.id.jetpack, R.id.layout, R.id.media, R.id.kotlin_conoroutine, R.id.uilayout, R.id.app_bar_ayout, R.id.paged_data, R.id.wanandroid, R.id.service, R.id.white_menu, R.id.echarts,
             R.id.test_for_ui, R.id.smart_plus, R.id.scroll_text, R.id.amap_for_ui, R.id.app_shopping, R.id.encryption,
             R.id.custom_sensor, R.id.toActionBarActivity, R.id.listener_service, R.id.umeng,
-            R.id.scale_drawable,R.id.screenshot
+            R.id.scale_drawable,R.id.screenshot,R.id.systemunlock
     })
     public void onClick(View v) {
         switch (v.getId()) {
+            case R.id.systemunlock:
+                onClickAuthBySystem();
+                break;
             case R.id.screenshot:
                 Utils.startActivity(this, ScreenSnapshotActivity.class);
                 break;
@@ -601,9 +692,9 @@ public class HomeActivity extends AppCompatActivity {
 
                 if (isOauth) {
                     LeChengMomgr.getInstance().setToken(token);
-                    Intent i = new Intent(this, DevicesListActivity.class);
-                    i.putExtra(Intent.EXTRA_TEXT, token);
-                    startActivity(i);
+                    Intent intent = new Intent(this, DevicesListActivity.class);
+                    intent.putExtra(Intent.EXTRA_TEXT, token);
+                    startActivity(intent);
                 } else {
                     Utils.startActivity(this, LeChengDemoActivity.class);
                 }
@@ -674,4 +765,11 @@ public class HomeActivity extends AppCompatActivity {
         return "";
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        if (requestCode == 10090) {
+            Log.d(TAG, "onActivityResult: isOK " + (resultCode == RESULT_OK));
+        }
+        super.onActivityResult(requestCode, resultCode, data);
+    }
 }
