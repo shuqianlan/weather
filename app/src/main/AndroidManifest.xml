@@ -38,7 +38,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name="com.ilifesmart.ShopingActivity"></activity>
+        <activity android:name=".MP3Activity"></activity>
+        <activity android:name=".JobActivity" />
+        <activity android:name=".NewFragmentActivity" />
+        <activity android:name="com.ilifesmart.ShopingActivity" />
         <activity
             android:name=".ScreenSnapshotActivity"
             android:theme="@style/AppThemeActionBar2" />
@@ -171,6 +174,9 @@
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
+        <service
+            android:name="com.services.MyJobService"
+            android:permission="android.permission.BIND_JOB_SERVICE" />
     </application>
 
 </manifest>

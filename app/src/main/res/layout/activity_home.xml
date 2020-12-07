@@ -29,6 +29,39 @@
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:background="@drawable/stroke_background"
+                android:id="@+id/mp3"
+                android:text="音频播放"
+                android:textAllCaps="false"
+                android:layout_gravity="center"
+                android:clickable="true"
+                />
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:background="@drawable/stroke_background"
+                android:id="@+id/new_job"
+                android:text="作业任务"
+                android:textAllCaps="false"
+                android:layout_gravity="center"
+                android:clickable="true"
+                />
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:background="@drawable/stroke_background"
+                android:id="@+id/new_fragment"
+                android:text="新fragment"
+                android:textAllCaps="false"
+                android:layout_gravity="center"
+                android:clickable="true"
+                />
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:background="@drawable/stroke_background"
                 android:id="@+id/systemunlock"
                 android:text="生物解锁"
                 android:textAllCaps="false"

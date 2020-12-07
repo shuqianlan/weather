@@ -88,6 +88,9 @@ import com.ilifesmart.utils.PersistentMgr;
 import com.ilifesmart.utils.Utils;
 import com.ilifesmart.viewpager.ViewPagerActivity;
 import com.ilifesmart.weather.ActionBarActivity;
+import com.ilifesmart.weather.JobActivity;
+import com.ilifesmart.weather.MP3Activity;
+import com.ilifesmart.weather.NewFragmentActivity;
 import com.ilifesmart.weather.R;
 import com.ilifesmart.weather.ScaleDrawableActivity;
 import com.ilifesmart.weather.ScreenSnapshotActivity;
@@ -102,6 +105,7 @@ import com.kotlin.SensorActivity;
 import com.layout.LayoutDemoActivity;
 import com.media.MediaActivity;
 import com.services.HelloServiceActivity;
+import com.services.JobScheduleHelper;
 import com.spannableText.SpannableActivity;
 import com.surfaceview.SurfaceViewActivity;
 import com.wanandroid.clipboard.ui.MainActivity;
@@ -130,7 +134,6 @@ public class HomeActivity extends AppCompatActivity {
 
     @BindView(R.id.weather)
     Button mWeather;
-
 
     @Override
     protected void onResume() {
@@ -289,6 +292,7 @@ public class HomeActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        JobScheduleHelper.clearAllJobs(getApplicationContext());
 //        unregisterReceiver(netChangeReceiver);
     }
 
@@ -468,11 +472,20 @@ public class HomeActivity extends AppCompatActivity {
             R.id.custom_surfaceview, R.id.animation, R.id.window, R.id.abstract_layout, R.id.jni, R.id.miui_right_out, R.id.imou, R.id.gson,
             R.id.sqlite, R.id.jetpack, R.id.layout, R.id.media, R.id.kotlin_conoroutine, R.id.uilayout, R.id.app_bar_ayout, R.id.paged_data, R.id.wanandroid, R.id.service, R.id.white_menu, R.id.echarts,
             R.id.test_for_ui, R.id.smart_plus, R.id.scroll_text, R.id.amap_for_ui, R.id.app_shopping, R.id.encryption,
-            R.id.custom_sensor, R.id.toActionBarActivity, R.id.listener_service, R.id.umeng,
-            R.id.scale_drawable,R.id.screenshot,R.id.systemunlock
+            R.id.custom_sensor, R.id.toActionBarActivity, R.id.listener_service, R.id.umeng,R.id.new_job,R.id.mp3,
+            R.id.scale_drawable,R.id.screenshot,R.id.systemunlock, R.id.new_fragment
     })
     public void onClick(View v) {
         switch (v.getId()) {
+            case R.id.mp3:
+                Utils.startActivity(this, MP3Activity.class);
+                break;
+            case R.id.new_job:
+                Utils.startActivity(this, JobActivity.class);
+                break;
+            case R.id.new_fragment:
+                Utils.startActivity(this, NewFragmentActivity.class);
+                break;
             case R.id.systemunlock:
                 onClickAuthBySystem();
                 break;

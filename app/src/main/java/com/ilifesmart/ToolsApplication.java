@@ -11,8 +11,10 @@ import android.content.Context;
 import android.content.res.Configuration;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Looper;
 import android.text.TextUtils;
 import android.util.Log;
+import android.util.Printer;
 import android.widget.Toast;
 
 import com.baidu.location.LocationClient;
@@ -59,6 +61,12 @@ public class ToolsApplication extends Application { //} implements Configuration
         FirebaseApp.initializeApp(this);
         FirebaseMessaging.getInstance().setAutoInitEnabled(true);
 
+//        Looper.getMainLooper().setMessageLogging(new Printer() {
+//            @Override
+//            public void println(String x) {
+//                Log.d(TAG, "println: MessageLogging " + x);
+//            }
+//        });
 //        Log.d(TAG, "onCreate: " + getTestDeviceInfo(getApplicationContext()));
 
         String[] infos =  UMConfigure.getTestDeviceInfo(getApplicationContext());

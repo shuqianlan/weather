@@ -7,6 +7,7 @@ import android.app.Service
 import android.content.Context
 import android.content.Intent
 import android.os.*
+import android.util.Log
 import android.widget.Toast
 import androidx.core.app.NotificationCompat
 import com.ilifesmart.weather.R
@@ -76,7 +77,7 @@ class HelloService : Service() {
             getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         notificationManager.createNotificationChannel(channel)
         //将服务置于启动状态 NOTIFICATION_ID指的是创建的通知的ID
-        startForeground(10098, builder.build())
+        startForeground(0, builder.build())
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
@@ -96,16 +97,17 @@ class HelloService : Service() {
             }, 2000)
         }
 
-        if (notification) {
-            createFroundNotification()
-        } else {
-            stopForeground(true)
-        }
+//        if (notification) {
+//            createFroundNotification()
+//        } else {
+//            stopForeground(true)
+//        }
 //        return START_STICKY
         return START_NOT_STICKY
     }
 
     override fun onDestroy() {
+        Log.d("HelloService", "onDestroy: HelloService closed")
         Toast.makeText(this, "service done", Toast.LENGTH_SHORT).show()
         super.onDestroy()
     }
