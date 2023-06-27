@@ -27,6 +27,7 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/foregroundColor"
                 android:layout_weight="1"
+                android:onClick="onMForegroundColorClicked"
                 android:text="前景色"
                 />
             <Button
@@ -34,12 +35,14 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/backgroundColor"
                 android:layout_weight="1"
+                android:onClick="onMBackgroundColorClicked"
                 android:text="背景色"
                 />
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/relativeSizeSpan"
+                android:onClick="onMRelativeSizeSpanClicked"
                 android:layout_weight="1"
                 android:text="字体大小"
                 />
@@ -47,6 +50,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/strikethroughSpan"
+                android:onClick="onMStrikethroughSpanClicked"
                 android:layout_weight="1"
                 android:text="删除线"
                 />
@@ -57,6 +61,7 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/under_line"
                 android:layout_weight="1"
+                android:onClick="onMUnderLineClicked"
                 android:text="下划线"
                 />
             <Button
@@ -64,6 +69,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:id="@+id/super_script"
+                android:onClick="onMSuperScriptClicked"
                 android:text="上标"
                 />
             <Button
@@ -71,6 +77,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:id="@+id/sub_script"
+                android:onClick="onMSubScriptClicked"
                 android:text="下标"
                 />
             <Button
@@ -78,6 +85,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:id="@+id/style"
+                android:onClick="onMStyleClicked"
                 android:text="字体样式"
                 />
         </TableRow>
@@ -87,6 +95,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:id="@+id/image"
+                android:onClick="onMImageClicked"
                 android:text="图片样式"
                 />
             <Button
@@ -95,14 +104,44 @@
                 android:layout_weight="1"
                 android:id="@+id/clickle_span"
                 android:text="ClickableSpan"
+                android:onClick="onViewClicked"
                 />
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:id="@+id/round_radius_span"
+                android:onClick="onRoundRadiusClicked"
                 android:text="圆角标签"
                 />
         </TableRow>
+
+        <TableRow>
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:id="@+id/spanable_html1"
+                android:onClick="onSetHtml"
+                android:text="设置Html"
+                />
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:id="@+id/spanable_html2"
+                android:onClick="onCancelHtml"
+                android:text="取消Html"
+                />
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:id="@+id/spanable_html3"
+                android:text="设置点击Html"
+                android:onClick="onEnableHtml"
+                />
+        </TableRow>
+
     </TableLayout>
 </LinearLayout>

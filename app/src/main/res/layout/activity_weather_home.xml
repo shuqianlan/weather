@@ -24,6 +24,7 @@
             android:layout_height="40dp"
             android:background="@drawable/stroke_background"
             android:id="@+id/bt_realtime"
+            android:onClick="onViewClicked"
             android:layout_gravity="center_horizontal"
             android:text="实时"
             />
@@ -36,6 +37,7 @@
             android:id="@+id/bt_forecast"
             android:layout_gravity="center_horizontal"
             android:text="预告"
+            android:onClick="onViewClicked"
             />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

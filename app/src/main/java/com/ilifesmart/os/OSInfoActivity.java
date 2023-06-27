@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Display;
 import android.view.KeyEvent;
+import android.view.View;
 import android.widget.Button;
 
 import com.ilifesmart.weather.R;
@@ -15,28 +16,23 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
-
 public class OSInfoActivity extends AppCompatActivity {
 
 	public static final String TAG = "OSInfoActivity";
-	@BindView(R.id.button)
 	Button mButton;
-	@BindView(R.id.button2)
 	Button mButton2;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_osinfo);
-		ButterKnife.bind(this);
+
+		mButton = findViewById(R.id.button);
+		mButton2 = findViewById(R.id.button2);
 	}
 
 
-	@OnClick(R.id.button)
-	public void onViewClicked1() {
+	public void onViewClicked1(View v) {
 		Log.d(TAG, "onViewClicked: ");
 
 		Log.d(TAG, "onViewClicked: widthPixels " + getResources().getDisplayMetrics().widthPixels);
@@ -113,8 +109,7 @@ public class OSInfoActivity extends AppCompatActivity {
 
 	}
 
-	@OnClick(R.id.button2)
-	public void onViewClicked() {
+	public void onViewClicked2(View c) {
 
 	}
 

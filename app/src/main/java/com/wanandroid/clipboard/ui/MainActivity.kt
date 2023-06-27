@@ -1,11 +1,11 @@
 package com.wanandroid.clipboard.ui
 
 import android.os.Bundle
+import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.snackbar.Snackbar
 import com.ilifesmart.weather.R
 import com.wanandroid.clipboard.ClipboardHelper
-import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
@@ -312,10 +312,10 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        copy_board.setOnLongClickListener {
+        findViewById<EditText>(R.id.copy_board).setOnLongClickListener {
             val content = ClipboardHelper.instance.clipText ?: "unknown"
-            copy_board.setTextIsSelectable(true)
-            Snackbar.make(app_bar, "已复制，长按输入框即可粘贴", Snackbar.LENGTH_SHORT).show()
+            findViewById<EditText>(R.id.copy_board).setTextIsSelectable(true)
+            Snackbar.make(findViewById(R.id.app_bar), "已复制，长按输入框即可粘贴", Snackbar.LENGTH_SHORT).show()
 
             return@setOnLongClickListener false
         }

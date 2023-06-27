@@ -1,9 +1,9 @@
 package com.media;
 
 import android.os.Bundle;
+import android.view.View;
+
 import androidx.appcompat.app.AppCompatActivity;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
 import com.ilifesmart.utils.Utils;
 import com.ilifesmart.weather.R;
 
@@ -13,15 +13,12 @@ public class MediaActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_media);
-        ButterKnife.bind(this);
     }
 
-    @OnClick(R.id.audio_mp3)
-    public void onPlayMp3() {
+    public void onPlayMp3(View v) {
         Utils.startActivity(this, MP3PlayerActivity.class);
     }
 
-    @OnClick(R.id.audio_mp4)
-    public void onPlayMp4() {
+    public void onPlayMp4(View v) {
     }
 }

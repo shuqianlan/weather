@@ -29,6 +29,7 @@
         android:background="#11ffffff"
         android:id="@+id/control_area"
         android:focusable="true"
+        android:onClick="onControlAreaClicked"
         android:descendantFocusability="blocksDescendants"
         >
 
@@ -39,8 +40,9 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            android:src="@drawable/selector_play_state"
+            app:srcCompat="@drawable/selector_play_state"
             android:clickable="false"
+            android:onClick="OnStatus"
             android:id="@+id/state"
             />
         <TextView

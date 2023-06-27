@@ -7,9 +7,9 @@ import android.hardware.SensorEventListener
 import android.hardware.SensorManager
 import android.os.Bundle
 import android.util.Log
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.ilifesmart.weather.R
-import kotlinx.android.synthetic.main.activity_sensor.*
 import java.lang.Exception
 
 
@@ -30,7 +30,7 @@ class SensorActivity : AppCompatActivity() {
                     val mAdcSensorEventListener = object : SensorEventListener {
                         override fun onSensorChanged(event: SensorEvent) {
                             val voltage = event.values[0]
-                            with(sensor_value) {
+                            with(findViewById<TextView>(R.id.sensor_value)) {
                                 text = "$text + \n + $voltage"
                             }
                         }

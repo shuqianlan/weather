@@ -3,11 +3,9 @@ package com.jni;
 import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
 
 import com.ilifesmart.weather.R;
-
-import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 public class JniDemoActivity extends AppCompatActivity {
 
@@ -22,41 +20,34 @@ public class JniDemoActivity extends AppCompatActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_jni_demo);
-		ButterKnife.bind(this);
 
 		instance = new HelloNDK();
 	}
 
-	@OnClick(R.id.c_print)
-	public void onCPrintClicked() {
+	public void onCPrintClicked(View v) {
 		HelloNDK.callFromC();
 	}
 
-	@OnClick(R.id.c_add)
-	public void onCAddClicked() {
+	public void onCAddClicked(View v) {
 		int result = HelloNDK.callAddFromC(3, 4);
 		Log.d(TAG, "onCAddClicked: Reselt_from_c " + result);
 	}
 
-	@OnClick(R.id.c_string_append)
-	public void onCStringAppendClicked() {
+	public void onCStringAppendClicked(View v) {
 		String rtn = HelloNDK.callStringAppend("Hello");
 		Log.d(TAG, "onCStringAppendClicked: rtn " + rtn);
 	}
 
-	@OnClick(R.id.java_debug)
-	public void onJavaDebugClicked() {
+	public void onJavaDebugClicked(View v) {
 		instance.callDebugFromJava();
 	}
 
-	@OnClick(R.id.java_add)
-	public void onJavaAddClicked() {
+	public void onJavaAddClicked(View v) {
 		int result = instance.callAddFromJava();
 		Log.d(TAG, "onJavaAddClicked: result " + result);
 	}
 
-	@OnClick(R.id.java_print)
-	public void onJavaPrintClicked() {
+	public void onJavaPrintClicked(View v) {
 		instance.callPrintFromJava();
 	}
 

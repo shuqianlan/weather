@@ -14,14 +14,9 @@ import com.ilifesmart.weather.R;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
-
 public class FrameLayoutActivity extends AppCompatActivity {
 
 	public static final String TAG = "FrameLayoutActivity";
-	@BindView(R.id.frame_cont)
 	EmbeddedViewStackContainer mFrameCont;
 	private AtomicInteger counts = new AtomicInteger(0);
 
@@ -29,11 +24,11 @@ public class FrameLayoutActivity extends AppCompatActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_frame_layout);
-		ButterKnife.bind(this);
+
+		mFrameCont = findViewById(R.id.frame_cont);
 	}
 
-	@OnClick(R.id.frame_cont)
-	public void onViewClicked() {
+	public void onViewClicked(View cv) {
 		View item = LayoutInflater.from(this).inflate(R.layout.activity_frame_layout_item1, mFrameCont, false);
 		EmbeddedView v = new EmbeddedViewBuilder().setIdentifier("item-1").setUIView(item).build();
 		item.findViewById(R.id.item_1_cont).setOnClickListener(new View.OnClickListener() {

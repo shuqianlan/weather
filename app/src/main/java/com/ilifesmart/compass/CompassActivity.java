@@ -7,20 +7,16 @@ import android.util.Log;
 import com.ilifesmart.ui.EmbeddedCompassView;
 import com.ilifesmart.weather.R;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-
 public class CompassActivity extends AppCompatActivity {
 
 	public static final String TAG = "CompassActivity";
-	@BindView(R.id.compass)
 	EmbeddedCompassView mCompass;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_compass);
-		ButterKnife.bind(this);
+		mCompass = findViewById(R.id.compass);
 
 		mCompass.setListener(new EmbeddedCompassView.OnAngleChangeListener() {
 			@Override

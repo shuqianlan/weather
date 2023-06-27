@@ -46,7 +46,7 @@
         <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/bulb"
+                app:srcCompat="@drawable/bulb"
                 app:isGone="@{modelInfo.liveData.isGone}"
         />
 

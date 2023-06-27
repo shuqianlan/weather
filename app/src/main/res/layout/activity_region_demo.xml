@@ -13,6 +13,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/region_demo_top"
         android:layout_centerInParent="true"
+        android:onClick="onViewClicked"
         android:text="Test"
         />
 </LinearLayout>

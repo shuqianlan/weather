@@ -3,8 +3,8 @@ package com.ilifesmart.weather
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.widget.Button
 import com.umeng.analytics.MobclickAgent
-import kotlinx.android.synthetic.main.activity_umeng.*
 
 class UmengActivity : AppCompatActivity() {
 	
@@ -15,7 +15,7 @@ class UmengActivity : AppCompatActivity() {
 		super.onCreate(savedInstanceState)
 		setContentView(R.layout.activity_umeng)
 		
-		home_more.setOnClickListener {
+		findViewById<Button>(R.id.home_more).setOnClickListener {
 			Log.d("BBBB", "onCreate: clicked home_more")
 			MobclickAgent.onEventObject(applicationContext, "home_more", mapOf("clicked" to true))
 		}

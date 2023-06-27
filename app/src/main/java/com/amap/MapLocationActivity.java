@@ -157,13 +157,10 @@ public class MapLocationActivity extends AppCompatActivity implements AMapLocati
     }
 
     public void onClickView(View view) {
-        switch (view.getId()) {
-            case R.id.start_location:
-                onStartLocation();
-                break;
-            case R.id.stop_location:
-                onStopLocation();
-                break;
+        if (view.getId() == R.id.start_location) {
+            onStartLocation();
+        } else if (view.getId() == R.id.stop_location) {
+            onStopLocation();
         }
     }
 

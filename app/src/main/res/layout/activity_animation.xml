@@ -26,7 +26,7 @@
                 android:layout_centerInParent="true"
                 android:layout_gravity="center_horizontal"
                 android:scaleType="centerCrop"
-                android:src="@drawable/telephone"
+                app:srcCompat="@drawable/telephone"
                 />
 
             <Button
@@ -34,6 +34,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
+                android:onClick="onStatusClicked"
                 android:text="Animation"
                 />
 
@@ -58,6 +59,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="(Default)添加"
+                        android:onClick="onViewClicked"
                         android:textAllCaps="false"
                         />
 
@@ -66,6 +68,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
+                        android:onClick="onViewClicked"
                         android:text="(Default)删除"
                         android:textAllCaps="false"
                         />
@@ -92,6 +95,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="(Custom)添加"
+                        android:onClick="onViewClicked"
                         android:textAllCaps="false"
                         />
 
@@ -101,6 +105,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="(Custom)删除"
+                        android:onClick="onViewClicked"
                         android:textAllCaps="false"
                         />
                 </TableRow>
@@ -214,12 +219,14 @@
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:text="内发光(Inner)"
+                        android:onClick="onBlurStyle"
                         android:textAllCaps="false"
                         />
 
                     <Button
                         android:padding="30px"
                         android:id="@+id/blur_solid"
+                        android:onClick="onBlurStyle"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
@@ -231,6 +238,7 @@
                         android:id="@+id/blur_normal"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
+                        android:onClick="onBlurStyle"
                         android:layout_weight="1"
                         android:text="内外发光(Normal)"
                         android:textAllCaps="false"
@@ -239,6 +247,7 @@
                     <Button
                         android:id="@+id/blur_outer"
                         android:layout_width="0dp"
+                        android:onClick="onBlurStyle"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:text="仅发光(Outer)"
@@ -329,6 +338,7 @@
                         android:layout_weight="1"
                         android:gravity="center"
                         android:text="Clear"
+                        android:onClick="onXfermodeClicked"
                         />
 
                     <Button
@@ -338,6 +348,7 @@
                         android:layout_weight="1"
                         android:gravity="center"
                         android:text="Src"
+                        android:onClick="onXfermodeClicked"
                         />
 
                     <Button
@@ -347,6 +358,7 @@
                         android:layout_weight="1"
                         android:gravity="center"
                         android:text="Dst"
+                        android:onClick="onXfermodeClicked"
                         />
 
                     <Button
@@ -356,6 +368,7 @@
                         android:layout_weight="1"
                         android:gravity="center"
                         android:text="SrcOver"
+                        android:onClick="onXfermodeClicked"
                         />
                 </TableRow>
 

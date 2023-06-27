@@ -126,7 +126,7 @@ class LeChengDemoActivity : BaseActivity() {
                 if (it is AccessTokenResponse) {
                     val data = (it.result.data as? AccessTokenResponse.ResultData)
                     var userToken = data?.accessToken ?: ""
-                    var expiretime = System.currentTimeMillis()/1000 + if (data != null) data?.expireTime.toLong() else 0L
+                    var expiretime = System.currentTimeMillis()/1000 + (if (data != null) data?.expireTime!!.toLong() else 0L)
                     LeChengMomgr.getInstance().token = userToken
                     println("accessToken userToken: $userToken")
                     println("expireTime: $expiretime")
@@ -204,14 +204,19 @@ class LeChengDemoActivity : BaseActivity() {
     private val animator = ObjectAnimator.ofInt(0, 60).apply {
         repeatCount = 1
         duration = 60_000
-        addUpdateListener(object: ValueAnimator.AnimatorUpdateListener {
-            override fun onAnimationUpdate(animation: ValueAnimator?) {
-                if ((animation?.animatedValue as? Number) != null) {
-                    val time = (animation?.animatedValue as? Number)?.toInt() ?: 0
-                    sendCode.text = (60-time).toString()+"S"
-                }
-            }
-        })
+//        addUpdateListener(object: ValueAnimator.AnimatorUpdateListener {
+//            override fun onAnimationUpdate(animation: ValueAnimator?) {
+//                if ((animation?.animatedValue as? Number) != null) {
+//                    val time = (animation?.animatedValue as? Number)?.toInt() ?: 0
+//                    sendCode.text = (60-time).toString()+"S"
+//                }
+//            }
+//
+//            @JvmName("onAnimationUpdate1")
+//            override fun onAnimationUpdate(animation: ValueAnimator) {
+//                TODO("Not yet implemented")
+//            }
+//        })
     }
 
     val UNOAUTH = 0

@@ -10,9 +10,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
 import com.ilifesmart.weather.R;
 import com.jetpack.demo.User;
 import com.jetpack.demo.UserViewModel;
@@ -23,7 +20,6 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public class RoomActivity extends AppCompatActivity {
 
-    @BindView(R.id.user_cont)
     RecyclerView mUserCont;
     private UserViewModel userViewModel;
 
@@ -33,7 +29,7 @@ public class RoomActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_room);
-        ButterKnife.bind(this);
+        mUserCont = findViewById(R.id.user_cont);
 
         adapter = new UsersAdapter();
         mUserCont.setLayoutManager(new LinearLayoutManager(this));
@@ -85,19 +81,11 @@ public class RoomActivity extends AppCompatActivity {
     }
 
     private AtomicInteger itemCount = new AtomicInteger(1);
-    @OnClick({R.id.room_delete, R.id.room_update, R.id.room_select, R.id.room_insert})
     public void onViewClicked(View view) {
-        switch (view.getId()) {
-            case R.id.room_delete:
-                userViewModel.delete();
-                break;
-            case R.id.room_update:
-                break;
-            case R.id.room_select:
-                break;
-            case R.id.room_insert:
-                userViewModel.creatAndInsert();
-                break;
+        if (view.getId() == R.id.room_delete) {
+            userViewModel.delete();
+        } else if (view.getId() == R.id.room_insert) {
+            userViewModel.creatAndInsert();
         }
     }
 }

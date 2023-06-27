@@ -20,10 +20,6 @@ import com.ilifesmart.weather.R;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
-
 public class FoldActivity extends AppCompatActivity {
 
 	private static final List<FoldData> mFoldData = new ArrayList<>();
@@ -57,14 +53,14 @@ public class FoldActivity extends AppCompatActivity {
 		mFoldData.add(new FoldData.FoldBuilder<MOBase>().title("测试8").selected(true).mods(ThreeData).build());
 	}
 
-	@BindView(R.id.foldContainer)
 	RecyclerView mFoldContainer;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_fold);
-		ButterKnife.bind(this);
+
+		mFoldContainer = findViewById(R.id.foldContainer);
 
 		FoldAdapter adapter = new FoldAdapter(new OnItemClickCallback() {
 			@Override
@@ -103,16 +99,12 @@ public class FoldActivity extends AppCompatActivity {
 
 	public class FoldItem extends RecyclerView.ViewHolder {
 
-		@BindView(R.id.layout_item_0)
 		LinearLayout mCont0;
 
-		@BindView(R.id.layout_item_1)
 		LinearLayout mCont1;
 
-		@BindView(R.id.layout_item_2)
 		LinearLayout mCont2;
 
-		@BindView(R.id.layout_item_3)
 		LinearLayout mCont3;
 
 		private boolean isExpand;
@@ -121,7 +113,38 @@ public class FoldActivity extends AppCompatActivity {
 		private OnItemClickCallback cb;
 		public FoldItem(@NonNull View itemView) {
 			super(itemView);
-			ButterKnife.bind(this, itemView);
+			mCont0 = itemView.findViewById(R.id.layout_item_0);
+			mCont1 = itemView.findViewById(R.id.layout_item_1);
+			mCont2 = itemView.findViewById(R.id.layout_item_2);
+			mCont3 = itemView.findViewById(R.id.layout_item_3);
+
+			mCont0.setOnClickListener(new View.OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					onClick(v);
+				}
+			});
+
+			mCont1.setOnClickListener(new View.OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					onClick(v);
+				}
+			});
+
+			mCont2.setOnClickListener(new View.OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					onClick(v);
+				}
+			});
+
+			mCont3.setOnClickListener(new View.OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					onClick(v);
+				}
+			});
 		}
 
 		public void onBind(FoldData<String> data, OnItemClickCallback cb) {
@@ -151,38 +174,33 @@ public class FoldActivity extends AppCompatActivity {
 			((CheckBox)v.findViewById(R.id.fold_item_check_box)).setChecked(data.isSelected());
 		}
 
-		@OnClick({R.id.layout_item_0,R.id.layout_item_1,R.id.layout_item_2,R.id.layout_item_3})
 		public void onClick(View v) {
 			CheckBox checkBox;
 			int selected = -1;
-			switch (v.getId()) {
-				case R.id.layout_item_0:
-					isExpand = !isExpand;
-					mCont0.setSelected(isExpand);
-					switch(mFoldData.getMods().size()) {
-						case 3:
-							mCont3.setVisibility(isExpand ? View.VISIBLE : View.GONE);
-						case 2:
-							mCont2.setVisibility(isExpand ? View.VISIBLE : View.GONE);
-						case 1:
-							mCont1.setVisibility(isExpand ? View.VISIBLE : View.GONE);
-					}
-					break;
-				case R.id.layout_item_1:
-					checkBox = v.findViewById(R.id.fold_item_check_box);
-					setChecked(checkBox, !checkBox.isChecked());
-					selected = 0;
-					break;
-				case R.id.layout_item_2:
-					checkBox = v.findViewById(R.id.fold_item_check_box);
-					setChecked(checkBox, !checkBox.isChecked());
-					selected = 1;
-					break;
-				case R.id.layout_item_3:
-					checkBox = v.findViewById(R.id.fold_item_check_box);
-					setChecked(checkBox, !checkBox.isChecked());
-					selected = 2;
-					break;
+
+			if (v.getId() == R.id.layout_item_0) {
+				isExpand = !isExpand;
+				mCont0.setSelected(isExpand);
+				switch(mFoldData.getMods().size()) {
+					case 3:
+						mCont3.setVisibility(isExpand ? View.VISIBLE : View.GONE);
+					case 2:
+						mCont2.setVisibility(isExpand ? View.VISIBLE : View.GONE);
+					case 1:
+						mCont1.setVisibility(isExpand ? View.VISIBLE : View.GONE);
+				}
+			} else if (v.getId() == R.id.layout_item_1) {
+				checkBox = v.findViewById(R.id.fold_item_check_box);
+				setChecked(checkBox, !checkBox.isChecked());
+				selected = 0;
+			} else if (v.getId() == R.id.layout_item_2) {
+				checkBox = v.findViewById(R.id.fold_item_check_box);
+				setChecked(checkBox, !checkBox.isChecked());
+				selected = 1;
+			} else if (v.getId() == R.id.layout_item_3) {
+				checkBox = v.findViewById(R.id.fold_item_check_box);
+				setChecked(checkBox, !checkBox.isChecked());
+				selected = 2;
 			}
 
 			if ((selected >= 0) && cb != null) {

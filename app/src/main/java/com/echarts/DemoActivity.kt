@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.webkit.*
 import com.google.gson.Gson
 import com.ilifesmart.weather.R
-import kotlinx.android.synthetic.main.activity_echarts.*
 import org.json.JSONArray
 import org.json.JSONObject
 
@@ -16,6 +15,7 @@ class DemoActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_echarts)
 
+        val webView = findViewById<WebView>(R.id.webView)
         webView.settings.apply {
             javaScriptEnabled = true
             javaScriptCanOpenWindowsAutomatically=true
@@ -73,7 +73,7 @@ class DemoActivity : AppCompatActivity() {
     }
 
     private fun onFinishLoadUrl() {
-        webView.postDelayed({
+        findViewById<WebView>(R.id.webView).postDelayed({
             val json = creatEChartsOption()
             loadEChartsOption(json)
         }, 2000)
@@ -82,7 +82,7 @@ class DemoActivity : AppCompatActivity() {
 
     private fun loadEChartsOption(option:String) {
         println("onLoadEChartOption: $option")
-        webView.loadUrl("javascript:loadEcharts('" + option + "')")
+        findViewById<WebView>(R.id.webView).loadUrl("javascript:loadEcharts('" + option + "')")
     }
 
     private fun creatEChartsOption():String {

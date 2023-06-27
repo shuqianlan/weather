@@ -14,16 +14,11 @@ import android.widget.TextView;
 import com.ilifesmart.ui.VerticalSeekBar;
 import com.ilifesmart.weather.R;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-
 public class SeekBarActivity extends AppCompatActivity {
 
     public static final String TAG = "SeekBarActivity";
 
-    @BindView(R.id.seekBar)
     VerticalSeekBar mSeekBar;
-    @BindView(R.id.progress)
     TextView mProgress;
     private int availHeight;
     private boolean once = false;
@@ -32,7 +27,8 @@ public class SeekBarActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_seek_bar);
-        ButterKnife.bind(this);
+        mSeekBar = findViewById(R.id.seekBar);
+        mProgress = findViewById(R.id.progress);
 
         mSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override

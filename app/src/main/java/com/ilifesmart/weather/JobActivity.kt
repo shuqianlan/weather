@@ -7,9 +7,9 @@ import android.content.Context
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Button
 import androidx.annotation.RequiresApi
 import com.services.MyJobService
-import kotlinx.android.synthetic.main.activity_job.*
 import java.util.concurrent.atomic.AtomicInteger
 
 class JobActivity : AppCompatActivity() {
@@ -33,17 +33,17 @@ class JobActivity : AppCompatActivity() {
 		* */
 		scheduler = getSystemService(JOB_SCHEDULER_SERVICE) as JobScheduler
 		
-		log.setOnClickListener {
+		findViewById<Button>(R.id.log).setOnClickListener {
 			scheduleJobInfo(this, MyJobService.JobID_LOG)
 		}
 		
-		toast.setOnClickListener {
+		findViewById<Button>(R.id.toast).setOnClickListener {
 			scheduleJobInfo(this, MyJobService.JobID_TOAST, Bundle().apply {
 				putString(MyJobService.CONST_TOAST_MESSAGE_KEY, "Toast here ..")
 			})
 		}
 		
-		print.setOnClickListener {
+		findViewById<Button>(R.id.print).setOnClickListener {
 			scheduleJobInfo(this, MyJobService.JOBID_PRINT)
 		}
 	}

@@ -25,7 +25,162 @@
 
             <include layout="@layout/bottomrefreshlayout" />
 
-            <Button
+            <Button android:onClick="onClick"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:background="@drawable/stroke_background"
+                android:id="@+id/get_system_android_id"
+                android:text="[ 获取ANDROID ID ] AOP验证"
+                android:textAllCaps="false"
+                android:layout_gravity="center"
+                android:clickable="true"
+                />
+
+            <Button android:onClick="onClick"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:background="@drawable/stroke_background"
+                android:id="@+id/lecam_password"
+                android:text="乐橙密码修改验证"
+                android:textAllCaps="false"
+                android:layout_gravity="center"
+                android:clickable="true"
+                />
+
+            <Button android:onClick="onClick"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:background="@drawable/stroke_background"
+                android:id="@+id/deeplink_lsapp"
+                android:text="DeepLink唤起LSAPP"
+                android:textAllCaps="false"
+                android:layout_gravity="center"
+                android:clickable="true"
+                />
+
+            <Button android:onClick="onClick"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:background="@drawable/stroke_background"
+                android:id="@+id/location_mobile"
+                android:text="获取手机经纬度"
+                android:textAllCaps="false"
+                android:layout_gravity="center"
+                android:clickable="true"
+                />
+
+            <Button android:onClick="onClick"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:background="@drawable/stroke_background"
+                android:id="@+id/accessibility"
+                android:text="无障碍功能"
+                android:visibility="gone"
+                android:textAllCaps="false"
+                android:layout_gravity="center"
+                android:clickable="true"
+                />
+
+            <Button android:onClick="onClick"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:background="@drawable/stroke_background"
+                android:id="@+id/openThirdAPP"
+                android:text="打开第三方APP"
+                android:textAllCaps="false"
+                android:layout_gravity="center"
+                android:clickable="true"
+                />
+
+            <Button android:onClick="onClick"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:background="@drawable/stroke_background"
+                android:id="@+id/tesla"
+                android:text="Tesla Refresh"
+                android:textAllCaps="false"
+                android:layout_gravity="center"
+                android:clickable="true"
+                />
+
+            <Button android:onClick="onClick"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:background="@drawable/stroke_background"
+                android:id="@+id/openAlbum"
+                android:text="从相册中获取图片"
+                android:textAllCaps="false"
+                android:layout_gravity="center"
+                android:clickable="true"
+                />
+
+            <Button android:onClick="onClick"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:background="@drawable/stroke_background"
+                android:id="@+id/wifi_info"
+                android:text="Wi-Fi信息查询(Android 13)"
+                android:textAllCaps="false"
+                android:layout_gravity="center"
+                android:clickable="true"
+                />
+
+            <Button android:onClick="onClick"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:background="@drawable/stroke_background"
+                android:id="@+id/umeng_custom_event"
+                android:text="友盟自定义事件"
+                android:textAllCaps="false"
+                android:layout_gravity="center"
+                android:clickable="true"
+                />
+
+            <Button android:onClick="onClick"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:background="@drawable/stroke_background"
+                android:id="@+id/taobao_shop"
+                android:text="淘宝店铺地址内嵌"
+                android:textAllCaps="false"
+                android:layout_gravity="center"
+                android:clickable="true"
+                />
+
+            <Button android:onClick="onClick"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:background="@drawable/stroke_background"
+                android:id="@+id/textureViewTest"
+                android:text="TextView.Available"
+                android:textAllCaps="false"
+                android:layout_gravity="center"
+                android:clickable="true"
+                />
+
+            <Button android:onClick="onClick"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:background="@drawable/stroke_background"
+                android:id="@+id/sharefile"
+                android:text="图片分享"
+                android:textAllCaps="false"
+                android:layout_gravity="center"
+                android:clickable="true"
+                />
+
+            <Button android:onClick="onClick"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:background="@drawable/stroke_background"
+                android:id="@+id/webview"
+                android:text="网页测试"
+                android:textAllCaps="false"
+                android:layout_gravity="center"
+                android:clickable="true"
+                />
+
+            <Button android:onClick="onClick"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:background="@drawable/stroke_background"
@@ -36,7 +191,7 @@
                 android:clickable="true"
                 />
 
-            <Button
+            <Button android:onClick="onClick"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:background="@drawable/stroke_background"
@@ -47,7 +202,7 @@
                 android:clickable="true"
                 />
 
-            <Button
+            <Button android:onClick="onClick"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:background="@drawable/stroke_background"
@@ -58,7 +213,7 @@
                 android:clickable="true"
                 />
 
-            <Button
+            <Button android:onClick="onClick"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:background="@drawable/stroke_background"
@@ -69,7 +224,7 @@
                 android:clickable="true"
                 />
 
-            <Button
+            <Button android:onClick="onClick"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:background="@drawable/stroke_background"
@@ -80,7 +235,7 @@
                 android:clickable="true"
                 />
 
-            <Button
+            <Button android:onClick="onClick"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:background="@drawable/stroke_background"
@@ -91,7 +246,7 @@
                 android:clickable="true"
                 />
 
-            <Button
+            <Button android:onClick="onClick"
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
                     android:background="@drawable/stroke_background"
@@ -102,7 +257,7 @@
                     android:clickable="true"
                     />
 
-            <Button
+            <Button android:onClick="onClick"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:background="@drawable/stroke_background"
@@ -113,7 +268,7 @@
                 android:clickable="true"
                 />
 
-            <Button
+            <Button android:onClick="onClick"
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
                     android:background="@drawable/stroke_background"
@@ -124,7 +279,7 @@
                     android:clickable="true"
                     />
 
-            <Button
+            <Button android:onClick="onClick"
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
                     android:background="@drawable/stroke_background"
@@ -136,7 +291,7 @@
                     />
 
 
-            <Button
+            <Button android:onClick="onClick"
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
                     android:background="@drawable/stroke_background"
@@ -147,7 +302,7 @@
                     android:clickable="true"
                     />
 
-            <Button
+            <Button android:onClick="onClick"
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
                     android:background="@drawable/stroke_background"
@@ -159,7 +314,7 @@
                     />
 
 
-            <Button
+            <Button android:onClick="onClick"
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
                     android:background="@drawable/stroke_background"
@@ -195,7 +350,7 @@
             />
 
 
-            <Button
+            <Button android:onClick="onClick"
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
                     android:background="@drawable/stroke_background"
@@ -206,7 +361,7 @@
                     android:layout_gravity="center"
                     />
 
-            <Button
+            <Button android:onClick="onClick"
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
                     android:background="@drawable/stroke_background"
@@ -216,7 +371,7 @@
                     android:layout_gravity="center"
                     />
 
-            <Button
+            <Button android:onClick="onClick"
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
                     android:background="@drawable/stroke_background"
@@ -226,7 +381,7 @@
                     android:layout_gravity="center"
                     />
 
-            <Button
+            <Button android:onClick="onClick"
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
                     android:background="@drawable/stroke_background"
@@ -235,7 +390,7 @@
                     android:textAllCaps="false"
                     android:layout_gravity="center"
                     />
-            <Button
+            <Button android:onClick="onClick"
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
                     android:background="@drawable/stroke_background"
@@ -244,7 +399,7 @@
                     android:textAllCaps="false"
                     android:layout_gravity="center"
                     />
-            <Button
+            <Button android:onClick="onClick"
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
                     android:background="@drawable/stroke_background"
@@ -254,7 +409,7 @@
                     android:layout_gravity="center"
                     />
 
-            <Button
+            <Button android:onClick="onClick"
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
                     android:background="@drawable/stroke_background"
@@ -265,7 +420,7 @@
                     android:layout_gravity="center"
                     />
 
-            <Button
+            <Button android:onClick="onClick"
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
                     android:background="@drawable/stroke_background"
@@ -274,7 +429,7 @@
                     android:textAllCaps="false"
                     android:layout_gravity="center"
                     />
-            <Button
+            <Button android:onClick="onClick"
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
                     android:background="@drawable/stroke_background"
@@ -283,7 +438,7 @@
                     android:textAllCaps="false"
                     android:layout_gravity="center"
                     />
-            <Button
+            <Button android:onClick="onClick"
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
                     android:background="@drawable/stroke_background"
@@ -292,7 +447,7 @@
                     android:textAllCaps="false"
                     android:layout_gravity="center"
                     />
-            <Button
+            <Button android:onClick="onClick"
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
                     android:background="@drawable/stroke_background"
@@ -301,7 +456,7 @@
                     android:textAllCaps="false"
                     android:layout_gravity="center"
             />
-            <Button
+            <Button android:onClick="onClick"
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
                     android:background="@drawable/stroke_background"
@@ -310,7 +465,7 @@
                     android:textAllCaps="false"
                     android:layout_gravity="center"
             />
-            <Button
+            <Button android:onClick="onClick"
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
                     android:background="@drawable/stroke_background"
@@ -319,7 +474,7 @@
                     android:textAllCaps="false"
                     android:layout_gravity="center"
             />
-            <Button
+            <Button android:onClick="onClick"
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
                     android:background="@drawable/stroke_background"
@@ -328,7 +483,7 @@
                     android:textAllCaps="false"
                     android:layout_gravity="center"
             />
-            <Button
+            <Button android:onClick="onClick"
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
                     android:background="@drawable/stroke_background"
@@ -337,7 +492,7 @@
                     android:textAllCaps="false"
                     android:layout_gravity="center"
             />
-            <Button
+            <Button android:onClick="onClick"
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
                     android:background="@drawable/stroke_background"
@@ -346,7 +501,7 @@
                     android:textAllCaps="false"
                     android:layout_gravity="center"
             />
-            <Button
+            <Button android:onClick="onClick"
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
                     android:background="@drawable/stroke_background"
@@ -355,7 +510,7 @@
                     android:textAllCaps="false"
                     android:layout_gravity="center"
             />
-            <Button
+            <Button android:onClick="onClick"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:background="@drawable/stroke_background"
@@ -364,7 +519,7 @@
                 android:textAllCaps="false"
                 android:layout_gravity="center"
                 />
-            <Button
+            <Button android:onClick="onClick"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:background="@drawable/stroke_background"
@@ -373,7 +528,7 @@
                 android:textAllCaps="false"
                 android:layout_gravity="center"
                 />
-            <Button
+            <Button android:onClick="onClick"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:background="@drawable/stroke_background"
@@ -382,7 +537,7 @@
                 android:textAllCaps="false"
                 android:layout_gravity="center"
                 />
-            <Button
+            <Button android:onClick="onClick"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:background="@drawable/stroke_background"
@@ -392,7 +547,7 @@
                 android:layout_gravity="center"
                 />
 
-            <Button
+            <Button android:onClick="onClick"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:background="@drawable/stroke_background"
@@ -402,7 +557,7 @@
                 android:layout_gravity="center"
                 />
 
-            <Button
+            <Button android:onClick="onClick"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:background="@drawable/stroke_background"
@@ -412,7 +567,7 @@
                 android:layout_gravity="center"
                 />
 
-            <Button
+            <Button android:onClick="onClick"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:background="@drawable/stroke_background"
@@ -422,7 +577,7 @@
                 android:layout_gravity="center"
                 />
 
-            <Button
+            <Button android:onClick="onClick"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:background="@drawable/stroke_background"
@@ -430,7 +585,7 @@
                 android:text="Weather"
                 android:layout_gravity="center"
                 />
-            <Button
+            <Button android:onClick="onClick"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:background="@drawable/stroke_background"
@@ -438,7 +593,7 @@
                 android:text="SeekBar"
                 android:layout_gravity="center"
                 />
-            <Button
+            <Button android:onClick="onClick"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:background="@drawable/stroke_background"
@@ -446,7 +601,7 @@
                 android:text="消息栏通知"
                 android:layout_gravity="center"
                 />
-            <Button
+            <Button android:onClick="onClick"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:background="@drawable/stroke_background"
@@ -454,7 +609,7 @@
                 android:text="Rotate3D"
                 android:layout_gravity="center"
                 />
-            <Button
+            <Button android:onClick="onClick"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:background="@drawable/stroke_background"
@@ -462,7 +617,7 @@
                 android:text="AOP"
                 android:layout_gravity="center"
                 />
-            <Button
+            <Button android:onClick="onClick"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:background="@drawable/stroke_background"
@@ -470,7 +625,7 @@
                 android:text="Thread"
                 android:layout_gravity="center"
                 />
-            <Button
+            <Button android:onClick="onClick"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:background="@drawable/stroke_background"
@@ -478,7 +633,7 @@
                 android:text="FrameLayout"
                 android:layout_gravity="center"
                 />
-            <Button
+            <Button android:onClick="onClick"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:background="@drawable/stroke_background"
@@ -486,7 +641,7 @@
                 android:text="Compass"
                 android:layout_gravity="center"
                 />
-            <Button
+            <Button android:onClick="onClick"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:background="@drawable/stroke_background"
@@ -494,7 +649,7 @@
                 android:text="MiClock"
                 android:layout_gravity="center"
                 />
-            <Button
+            <Button android:onClick="onClick"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:background="@drawable/stroke_background"
@@ -502,7 +657,7 @@
                 android:text="cam-rotate"
                 android:layout_gravity="center"
                 />
-            <Button
+            <Button android:onClick="onClick"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:background="@drawable/stroke_background"
@@ -510,7 +665,7 @@
                 android:text="Path"
                 android:layout_gravity="center"
                 />
-            <Button
+            <Button android:onClick="onClick"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:background="@drawable/stroke_background"
@@ -518,7 +673,7 @@
                 android:text="OS"
                 android:layout_gravity="center"
                 />
-            <Button
+            <Button android:onClick="onClick"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:background="@drawable/stroke_background"
@@ -526,7 +681,7 @@
                 android:text="ViewPager"
                 android:layout_gravity="center"
                 />
-            <Button
+            <Button android:onClick="onClick"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:background="@drawable/stroke_background"
@@ -534,7 +689,7 @@
                 android:text="Mapper"
                 android:layout_gravity="center"
                 />
-            <Button
+            <Button android:onClick="onClick"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:background="@drawable/stroke_background"
@@ -542,7 +697,7 @@
                 android:text="Dialog"
                 android:layout_gravity="center"
                 />
-            <Button
+            <Button android:onClick="onClick"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:background="@drawable/stroke_background"
@@ -550,7 +705,7 @@
                 android:text="preference"
                 android:layout_gravity="center"
                 />
-            <Button
+            <Button android:onClick="onClick"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:background="@drawable/stroke_background"
@@ -558,7 +713,7 @@
                 android:text="Nature_UI"
                 android:layout_gravity="center"
                 />
-            <Button
+            <Button android:onClick="onClick"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:background="@drawable/stroke_background"
@@ -566,7 +721,7 @@
                 android:text="蛛网"
                 android:layout_gravity="center"
                 />
-            <Button
+            <Button android:onClick="onClick"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:background="@drawable/stroke_background"
@@ -575,7 +730,7 @@
                 android:text="MVVM"
                 android:layout_gravity="center"
                 />
-            <Button
+            <Button android:onClick="onClick"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:background="@drawable/stroke_background"
@@ -584,7 +739,7 @@
                 android:textAllCaps="false"
                 android:layout_gravity="center"
                 />
-            <Button
+            <Button android:onClick="onClick"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:background="@drawable/stroke_background"
@@ -593,7 +748,7 @@
                 android:textAllCaps="false"
                 android:layout_gravity="center"
                 />
-            <Button
+            <Button android:onClick="onClick"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:background="@drawable/stroke_background"
@@ -602,7 +757,7 @@
                 android:textAllCaps="false"
                 android:layout_gravity="center"
                 />
-            <Button
+            <Button android:onClick="onClick"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:background="@drawable/stroke_background"
@@ -611,7 +766,7 @@
                 android:textAllCaps="false"
                 android:layout_gravity="center"
                 />
-            <Button
+            <Button android:onClick="onClick"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:background="@drawable/stroke_background"
@@ -620,7 +775,7 @@
                 android:textAllCaps="false"
                 android:layout_gravity="center"
                 />
-            <Button
+            <Button android:onClick="onClick"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:background="@drawable/stroke_background"
@@ -629,7 +784,7 @@
                 android:textAllCaps="false"
                 android:layout_gravity="center"
                 />
-            <Button
+            <Button android:onClick="onClick"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:background="@drawable/stroke_background"
@@ -638,7 +793,7 @@
                 android:textAllCaps="false"
                 android:layout_gravity="center"
                 />
-            <Button
+            <Button android:onClick="onClick"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:background="@drawable/stroke_background"

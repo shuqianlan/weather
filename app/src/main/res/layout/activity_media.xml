@@ -14,12 +14,14 @@
             android:layout_height="wrap_content"
             android:id="@+id/audio_mp3"
             android:text="MP3"
+        android:onClick="onPlayMp3"
     />
 
     <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/audio_mp4"
+            android:onClick="onPlayMp4"
             android:text="MP4"
     />
 </LinearLayout>

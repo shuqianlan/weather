@@ -1,14 +1,8 @@
 package com.ilifesmart.region;
 
-import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import androidx.annotation.NonNull;
-import androidx.constraintlayout.widget.ConstraintLayout;
-import com.google.android.material.tabs.TabLayout;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -20,15 +14,19 @@ import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.android.material.tabs.TabLayout;
 import com.ilifesmart.utils.DensityUtils;
 import com.ilifesmart.weather.R;
+import com.ilifesmart.weather.generated.callback.OnClickListener;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 public class PopupRegionWindow extends PopupWindow {
 
@@ -44,11 +42,8 @@ public class PopupRegionWindow extends PopupWindow {
 	public static final String TAG = "PopupRegionWindow";
 	private Context mContext;
 
-	@BindView(R.id.tablayout)
 	TabLayout mTablayout;
-	@BindView(R.id.recy_cont_1)
 	RecyclerView mRecyCont1;
-	@BindView(R.id.head_cont)
 	ConstraintLayout mHeadCont;
 
 	private List<RegionItem> regions = new ArrayList<>();
@@ -80,7 +75,9 @@ public class PopupRegionWindow extends PopupWindow {
 		View v = LayoutInflater.from(context).inflate(R.layout.popup_region_window, null, false);
 		setContentView(v);
 
-		ButterKnife.bind(this, v);
+		mTablayout = v.findViewById(R.id.tablayout);
+		mRecyCont1 = v.findViewById(R.id.recy_cont_1);
+		mHeadCont = v.findViewById(R.id.head_cont);
 		initialize(context);
 	}
 
@@ -116,9 +113,9 @@ public class PopupRegionWindow extends PopupWindow {
 	}
 
 	private void darkenBackground(float alpha) {
-		WindowManager.LayoutParams lp = ((Activity)mContext).getWindow().getAttributes();
+		WindowManager.LayoutParams lp = ((AppCompatActivity)mContext).getWindow().getAttributes();
 		lp.alpha = alpha;
-		((Activity)mContext).getWindow().setAttributes(lp);
+		((AppCompatActivity)mContext).getWindow().setAttributes(lp);
 	}
 
 	public PopupRegionWindow setRegionCode() {
@@ -153,8 +150,8 @@ public class PopupRegionWindow extends PopupWindow {
 	}
 
 	public void show() {
-		if (mContext instanceof Activity) {
-			ViewGroup group = ((Activity) mContext).findViewById(Window.ID_ANDROID_CONTENT);
+		if (mContext instanceof AppCompatActivity) {
+			ViewGroup group = ((AppCompatActivity) mContext).findViewById(Window.ID_ANDROID_CONTENT);
 			darkenBackground(0.6f);
 			showAsDropDown(group, 0, -mWindowHeight, Gravity.START);
 		}
@@ -230,15 +227,19 @@ public class PopupRegionWindow extends PopupWindow {
 	public final class RegionHolder extends RecyclerView.ViewHolder {
 		private RegionItem bean;
 
-		@BindView(R.id.text)
 		TextView mTextView;
 
-		@BindView(R.id.selected)
 		ImageView mSelected;
 
 		public RegionHolder(@NonNull View itemView) {
 			super(itemView);
-			ButterKnife.bind(this, itemView);
+
+			mTextView = itemView.findViewById(R.id.text);
+			mSelected = itemView.findViewById(R.id.selected);
+
+			itemView.findViewById(R.id.region_item).setOnClickListener((v) -> {
+				OnClickItem(v);
+			});
 		}
 
 		public void onBind(RegionItem bean) {
@@ -247,7 +248,6 @@ public class PopupRegionWindow extends PopupWindow {
 			mSelected.setVisibility((!TextUtils.isEmpty(regionCode) && regionCode.equals(getCode())) ? View.VISIBLE : View.INVISIBLE);
 		}
 
-		@OnClick(R.id.region_item)
 		public void OnClickItem(View v) {
 			mSelected.setVisibility(View.VISIBLE);
 			notiItemChanged(getIndex(), getCode(), getName());
@@ -303,7 +303,6 @@ public class PopupRegionWindow extends PopupWindow {
 		void onRegionSelected(String code, String fullName);
 	}
 
-	@OnClick(R.id.head_cont)
 	public void onClickCancel() {
 		onDismiss(null);
 	}

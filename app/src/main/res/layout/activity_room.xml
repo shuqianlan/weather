@@ -14,22 +14,26 @@
         <TableRow>
             <Button
                 android:id="@+id/room_insert"
+                android:onClick="onViewClicked"
                 android:layout_weight="1"
                 android:text="Inser(10)个数据"
             />
             <Button
                     android:id="@+id/room_delete"
                     android:layout_weight="1"
+                android:onClick="onViewClicked"
                     android:text="Delete(1)个数据"
             />
             <Button
                     android:id="@+id/room_update"
                     android:layout_weight="1"
+                android:onClick="onViewClicked"
                     android:text="Update(1)个数据"
             />
             <Button
                     android:id="@+id/room_select"
                     android:layout_weight="1"
+                android:onClick="onViewClicked"
                     android:text="Select(10)个数据"
             />
         </TableRow>

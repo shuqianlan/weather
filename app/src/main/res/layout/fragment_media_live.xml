@@ -40,25 +40,25 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:src="@drawable/live_btn_fluent"/>
+                app:srcCompat="@drawable/live_btn_fluent"/>
            <ImageView
                 android:id="@+id/live_ptz"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:src="@drawable/live_btn_ptz_off"/>
+                app:srcCompat="@drawable/live_btn_ptz_off"/>
            <ImageView
                 android:id="@+id/live_sound"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:src="@drawable/live_btn_sound_off"/>
+                app:srcCompat="@drawable/live_btn_sound_off"/>
            <ImageView
                 android:id="@+id/live_scale"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:src="@drawable/record_btn_fullscreen"/>       
+                app:srcCompat="@drawable/record_btn_fullscreen"/>
        </LinearLayout>
        
        <!-- 播放加载提示 -->
@@ -113,19 +113,19 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:src="@drawable/live_btn_screenshot_nor"/>
+            app:srcCompat="@drawable/live_btn_screenshot_nor"/>
        <ImageView
             android:id="@+id/live_talk"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:src="@drawable/live_btn_talk_nor"/>
+            app:srcCompat="@drawable/live_btn_talk_nor"/>
        <ImageView
             android:id="@+id/live_record"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:src="@drawable/live_btn_record_nor"/>
+            app:srcCompat="@drawable/live_btn_record_nor"/>
    </LinearLayout>
 
 

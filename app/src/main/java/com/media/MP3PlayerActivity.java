@@ -3,8 +3,6 @@ package com.media;
 import android.net.Uri;
 import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
-import butterknife.BindView;
-import butterknife.ButterKnife;
 import com.google.android.exoplayer2.ExoPlayerFactory;
 import com.google.android.exoplayer2.SimpleExoPlayer;
 import com.google.android.exoplayer2.source.MediaSource;
@@ -17,7 +15,6 @@ import com.ilifesmart.weather.R;
 
 public class MP3PlayerActivity extends AppCompatActivity {
 
-    @BindView(R.id.player_view)
     PlayerView mPlayerView;
     SimpleExoPlayer player;
 
@@ -26,7 +23,7 @@ public class MP3PlayerActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mp3_player);
-        ButterKnife.bind(this);
+        mPlayerView = findViewById(R.id.player_view);
 
         player = ExoPlayerFactory.newSimpleInstance(this);
         mPlayerView.setPlayer(player);

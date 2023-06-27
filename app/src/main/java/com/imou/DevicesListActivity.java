@@ -12,9 +12,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
 import com.ilifesmart.utils.PersistentMgr;
 import com.ilifesmart.weather.R;
 import com.imou.json.AuthedDeviceListResponse;
@@ -33,12 +30,10 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class DevicesListActivity extends AppCompatActivity {
 
     public static final String TAG = "DevicesListActivity";
-    @BindView(R.id.lecheng_devices_recycler)
     RecyclerView mDeviceViews;
 
     private String token;
     private DevicesAdapter adapter;
-    @BindView(R.id.lecheng_user_logout)
     public Button logout;
 
     private static List<ChannelInfo> channels = new ArrayList<>();
@@ -47,7 +42,8 @@ public class DevicesListActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_devices_list);
-        ButterKnife.bind(this);
+        mDeviceViews = findViewById(R.id.lecheng_devices_recycler);
+        logout = findViewById(R.id.lecheng_user_logout);
 
         token = getIntent().getStringExtra(Intent.EXTRA_TEXT);
         Log.d(TAG, "onCreate: token " + token);
@@ -160,12 +156,12 @@ public class DevicesListActivity extends AppCompatActivity {
     public class DeviceHolder extends RecyclerView.ViewHolder {
         private ChannelInfo channel;
 
-        @BindView(R.id.list_channel_name)
         TextView mChannelName;
 
         public DeviceHolder(@NonNull View itemView) {
             super(itemView);
-            ButterKnife.bind(this, itemView);
+
+            mChannelName = itemView.findViewById(R.id.list_channel_name);
         }
 
         public void onBind(ChannelInfo channel) {
@@ -173,19 +169,16 @@ public class DevicesListActivity extends AppCompatActivity {
             mChannelName.setText(channel.getName());
         }
 
-        @OnClick({R.id.list_device_livevideo, R.id.list_device_localvideo, R.id.list_device_cloudvideo, R.id.list_device_message, R.id.list_device_setting, R.id.list_device_delete})
         public void onClick(View v) {
-            switch (v.getId()) {
-                case R.id.list_device_livevideo:
-                    Log.d(TAG, "onClick: channel " + channel);
-                    if (channel.getEncryptKey() == null && channel.getEncryptMode() == 1) {
-                        Log.d(TAG, "onClick: none support");
-                    } else {
-                        Intent i = new Intent(DevicesListActivity.this, MediaPlayerActivity.class);
-                        i.putExtra(Intent.EXTRA_TEXT, channel.getUuid());
-                        startActivity(i);
-                    }
-                    break;
+            if (v.getId() == R.id.list_device_livevideo) {
+                Log.d(TAG, "onClick: channel " + channel);
+                if (channel.getEncryptKey() == null && channel.getEncryptMode() == 1) {
+                    Log.d(TAG, "onClick: none support");
+                } else {
+                    Intent i = new Intent(DevicesListActivity.this, MediaPlayerActivity.class);
+                    i.putExtra(Intent.EXTRA_TEXT, channel.getUuid());
+                    startActivity(i);
+                }
             }
         }
     }
@@ -210,19 +203,15 @@ public class DevicesListActivity extends AppCompatActivity {
         }
     }
 
-    @OnClick({R.id.lecheng_user_logout, R.id.lecheng_category})
     public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.lecheng_user_logout:
-                PersistentMgr.putKV(LeChengCameraWrapInfo.EXTRA_USER_ID, null);
-                finish();
-                break;
-            case R.id.lecheng_category:
-                if (channels.size() > 0) {
-                    ChannelInfo channel = channels.get(0);
-                    new PopupCategoryWindow(this, channel.getUuid()).show();
-                }
-                break;
+        if (v.getId() == R.id.lecheng_user_logout) {
+            PersistentMgr.putKV(LeChengCameraWrapInfo.EXTRA_USER_ID, null);
+            finish();
+        } else if (v.getId() == R.id.lecheng_category) {
+            if (channels.size() > 0) {
+                ChannelInfo channel = channels.get(0);
+                new PopupCategoryWindow(this, channel.getUuid()).show();
+            }
         }
     }
 }

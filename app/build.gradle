@@ -1,8 +1,8 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-android-extensions'
 apply plugin: 'com.google.gms.google-services'
-//apply plugin: 'android-aspectjx'
+apply plugin: 'kotlin-parcelize'
+//apply plugin: 'io.github.wurensen.android-aspectjx'
 
 android {
     signingConfigs {
@@ -19,19 +19,20 @@ android {
 //            keyPassword 'weather'
 //        }
     }
-    compileSdkVersion 30
+    compileSdkVersion 33
     defaultConfig {
         applicationId "com.ilifesmart.weather"
         minSdkVersion 21
         versionCode 1
+        targetSdkVersion 33
         versionName "1.0.3"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
-        javaCompileOptions {
-            annotationProcessorOptions {
-                includeCompileClasspath = true
-            }
-        }
+//        javaCompileOptions {
+//            annotationProcessorOptions {
+//                includeCompileClasspath = true
+//            }
+//        }
 
         ndk {
             abiFilters "armeabi"
@@ -40,9 +41,14 @@ android {
     }
 
     buildFeatures {
-        dataBinding {
-            enabled = true
-        }
+        viewBinding true
+        compose true
+        dataBinding true
+
+    }
+
+    composeOptions {
+        kotlinCompilerExtensionVersion "1.4.3"
     }
 
     buildTypes {
@@ -69,13 +75,22 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
 
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+
     repositories{
         flatDir{
             dirs 'libs'
         }
     }
 
-    buildToolsVersion '29.0.2'
+//    aspectjx {
+////排除所有package路径中包含`android.support`的class文件及库（jar文件）
+//        exclude 'android.support'
+//    }
+
+    namespace 'com.ilifesmart.weather'
 }
 
 dependencies {
@@ -86,21 +101,20 @@ dependencies {
 
 //    implementation 'com.amap.api:location:3.3.0'
 //    implementation project(':myapplication')
-    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
-    implementation 'com.jakewharton:butterknife:10.2.1'
-    annotationProcessor 'com.jakewharton:butterknife-compiler:10.2.1'
-    implementation 'androidx.appcompat:appcompat:1.1.0'
-    implementation 'com.google.android.material:material:1.1.0'
-    //    implementation 'org.aspectj:aspectjrt:1.8.9'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.3'
+    implementation 'org.jetbrains.kotlin:kotlin-reflect:1.4.21'
+    implementation 'androidx.appcompat:appcompat:1.6.1'
+    implementation 'com.google.android.material:material:1.5.0'
+    implementation 'org.aspectj:aspectjrt:1.9.7'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
-    testImplementation 'junit:junit:4.13'
+    testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test:runner:1.2.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
 //    debugImplementation 'com.squareup.leakcanary:leakcanary-android:1.6.2'
 //    releaseImplementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.6.2'
     // Optional, if you use support library fragments:
 //    debugImplementation 'com.squareup.leakcanary:leakcanary-support-fragment:1.6.2'
-    implementation 'androidx.preference:preference:1.1.1'
+    implementation 'androidx.preference:preference:1.2.0'
     implementation 'io.reactivex.rxjava2:rxandroid:2.1.1'
     implementation 'io.reactivex.rxjava2:rxjava:2.2.19'
     implementation 'com.google.guava:guava:29.0-jre'
@@ -118,44 +132,56 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.3.72"
 
     implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
-    annotationProcessor 'androidx.lifecycle:lifecycle-compiler:2.2.0'
+    annotationProcessor 'androidx.lifecycle:lifecycle-compiler:2.4.1'
     implementation 'javax.inject:javax.inject:1'
     implementation 'com.google.dagger:dagger:2.28.1'
     annotationProcessor 'com.google.dagger:dagger-compiler:2.28.1'
 
 
-    implementation 'androidx.room:room-runtime:2.2.5'
-    annotationProcessor 'androidx.room:room-compiler:2.2.5'
-    implementation 'androidx.room:room-guava:2.2.5'
-    implementation 'androidx.room:room-testing:2.2.5'
-    implementation 'androidx.paging:paging-common:2.1.2'
-    implementation 'androidx.paging:paging-runtime:2.1.2'
-    implementation 'androidx.navigation:navigation-fragment:2.3.0'
-    implementation 'androidx.navigation:navigation-ui:2.3.0'
-    implementation 'androidx.work:work-runtime:2.3.4'
+    implementation 'androidx.room:room-runtime:2.4.2'
+    annotationProcessor 'androidx.room:room-compiler:2.4.2'
+    implementation 'androidx.room:room-guava:2.4.2'
+    implementation 'androidx.room:room-testing:2.4.2'
+    implementation 'androidx.paging:paging-common:3.1.1'
+    implementation 'androidx.paging:paging-runtime:3.1.1'
+    implementation 'androidx.navigation:navigation-fragment:2.5.2'
+    implementation 'androidx.navigation:navigation-ui:2.5.2'
+    implementation 'androidx.work:work-runtime:2.7.1'
 
-    // exoplayer
-    implementation 'com.google.android.exoplayer:exoplayer:2.10.4'
+
+    implementation 'com.google.android.exoplayer:exoplayer:2.13.3'
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.7'
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.7'
-    implementation 'androidx.mediarouter:mediarouter:1.1.0'
+    implementation 'androidx.mediarouter:mediarouter:1.2.6'
 
     implementation 'androidx.cardview:cardview:1.0.0'
-    implementation 'androidx.recyclerview:recyclerview:1.1.0'
+    implementation 'androidx.recyclerview:recyclerview:1.2.1'
     implementation 'com.nostra13.universalimageloader:universal-image-loader:1.9.5'
 
     // firebase
+    implementation platform('com.google.firebase:firebase-bom:30.0.1')
+//    implementation 'com.google.firebase:firebase-analytics'
+//
+    implementation 'com.google.firebase:firebase-messaging:23.0.4'
     implementation 'com.google.firebase:firebase-core:17.4.4'
-    implementation 'com.google.firebase:firebase-messaging:20.2.3'
-    implementation 'com.google.firebase:firebase-messaging-directboot:20.2.3'
+//    implementation 'com.google.firebase:firebase-messaging-directboot:20.2.3'
 
-    implementation 'com.umeng.umsdk:common:9.1.0' // (必选)
-//    implementation 'com.umeng.umsdk:asms:1.1.3' // asms包依赖(必选)
-//    implementation 'com.umeng.umsdk:crash:0.0.4' // native crash包依赖(必选)
+    implementation  'com.umeng.umsdk:common:9.4.4'// 必选
+    implementation  'com.umeng.umsdk:asms:1.4.1'// 必选
+    implementation 'com.umeng.umsdk:apm:1.5.2' // 错误分析升级为独立SDK，看crash数据请一定集成，可选
+    implementation  'com.umeng.umsdk:abtest:1.0.0'//使用U-App中ABTest能力，可选
+    implementation 'androidx.biometric:biometric:1.2.0-alpha04'
+    implementation "com.google.accompanist:accompanist-appcompat-theme:0.28.0"
+    implementation("androidx.compose.runtime:runtime:1.4.2")
 
-    implementation (name:'umeng-asms-v1.1.3', ext:'aar')
-    implementation (name:'umeng-crash-v0.0.5', ext:'aar')
-    implementation 'androidx.biometric:biometric:1.1.0-rc01'
+    constraints {
+        implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.7.10") {
+            because("kotlin-stdlib-jdk7 is now a part of kotlin-stdlib")
+        }
+        implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.8.20") {
+            because("kotlin-stdlib-jdk8 is now a part of kotlin-stdlib")
+        }
+    }
 }
 
 //class Version {
@@ -174,4 +200,63 @@ dependencies {
 
 repositories {
     mavenCentral()
+}
+
+
+android.applicationVariants.all { variant ->
+    variant.outputs.each { output ->
+        def processManifest = output.getProcessManifestProvider().get()
+        processManifest.doLast { task ->
+            def outputDir = task.multiApkManifestOutputDirectory
+            File outputDirectory
+            if (outputDir instanceof File) {
+                outputDirectory = outputDir
+            } else {
+                outputDirectory = outputDir.get().asFile
+            }
+            File manifestOutFile = file("$outputDirectory/AndroidManifest.xml")
+            println("----------- ${manifestOutFile} ----------- ")
+
+            if (manifestOutFile.exists() && manifestOutFile.canRead() && manifestOutFile.canWrite()) {
+                def manifestFile = manifestOutFile
+                ///这里第二个参数是 false ，所以 namespace 是展开的，所以下面不能用 androidSpace，而是用 nameTag
+                def xml = new XmlParser(false, false).parse(manifestFile)
+                def exportedTag = "android:exported"
+                def nameTag = "android:name"
+                ///指定 space
+                //def androidSpace = new groovy.xml.Namespace('http://schemas.android.com/apk/res/android', 'android')
+
+                def nodes = xml.application[0].'*'.findAll {
+                    //挑选要修改的节点，没有指定的 exported 的才需要增加
+                    //如果 exportedTag 拿不到可以尝试 it.attribute(androidSpace.exported)
+                    (it.name() == 'activity' || it.name() == 'receiver' || it.name() == 'service') && it.attribute(exportedTag) == null
+
+                }
+                ///添加 exported，默认 false
+                nodes.each {
+                    def isMain = false
+                    it.each {
+                        if (it.name() == "intent-filter") {
+                            it.each {
+                                if (it.name() == "action") {
+                                    //如果 nameTag 拿不到可以尝试 it.attribute(androidSpace.name)
+                                    if (it.attributes().get(nameTag) == "android.intent.action.MAIN") {
+                                        isMain = true
+                                        println("......................MAIN FOUND......................")
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    it.attributes().put(exportedTag, "${isMain}")
+                }
+
+                PrintWriter pw = new PrintWriter(manifestFile)
+                pw.write(groovy.xml.XmlUtil.serialize(xml))
+                pw.close()
+
+            }
+
+        }
+    }
 }

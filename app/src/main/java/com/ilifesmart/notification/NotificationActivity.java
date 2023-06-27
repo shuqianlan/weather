@@ -3,10 +3,12 @@ package com.ilifesmart.notification;
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.Notification;
+import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
@@ -21,36 +23,38 @@ import com.ilifesmart.weather.R;
 
 import java.lang.reflect.Method;
 
-import butterknife.ButterKnife;
-import butterknife.OnClick;
-
 public class NotificationActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_notification);
-        ButterKnife.bind(this);
     }
 
     @TargetApi(Build.VERSION_CODES.O)
-    @OnClick(R.id.send_notification_high)
-    public void onSendHighNotification() {
+    public void onSendHighNotification(View v) {
         NotificationManager manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+
+        NotificationChannel channel = new NotificationChannel("LifeSmart", "LifeSmart", NotificationManager.IMPORTANCE_HIGH);
+        channel.setShowBadge(true);
+        channel.setLightColor(Color.BLUE);
+        channel.enableVibration(false);
+        manager.createNotificationChannel(channel);
+
         Notification notification = new Notification.Builder(this, "chat")
                 .setContentTitle("收到一条新消息")
                 .setContentText("门已打开")
                 .setWhen(System.currentTimeMillis())
                 .setAutoCancel(true)
                 .setSmallIcon(R.mipmap.ic_launcher)
+                .setPriority(Notification.PRIORITY_HIGH)
                 .build();
 
         manager.notify(1, notification);
     }
 
     @TargetApi(Build.VERSION_CODES.O)
-    @OnClick(R.id.send_notification_def)
-    public void onSendDefNotification() {
+    public void onSendDefNotification(View v) {
         try {
             NotificationManager manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
             Notification notification = new Notification.Builder(this, "speedy")
@@ -70,15 +74,12 @@ public class NotificationActivity extends AppCompatActivity {
         return new Intent(context, NotificationActivity.class);
     }
 
-    @OnClick({R.id.open_notification, R.id.close_notification})
-    void notificationControl(View view) {
-        switch (view.getId()) {
-            case R.id.open_notification:
-                notificationRealController(true);
-                break;
-            case R.id.close_notification:
-                notificationRealController(false);
-                break;
+    @SuppressLint("NonConstantResourceId")
+    public void notificationControl(View view) {
+        if (view.getId() == R.id.open_notification8) {
+            notificationRealController(true);
+        } else if (view.getId() == R.id.open_notification8) {
+            notificationRealController(false);
         }
     }
 

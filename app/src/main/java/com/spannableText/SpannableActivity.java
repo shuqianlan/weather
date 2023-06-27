@@ -4,7 +4,11 @@ import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.text.Html;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.method.LinkMovementMethod;
@@ -17,17 +21,15 @@ import android.text.style.StyleSpan;
 import android.text.style.SubscriptSpan;
 import android.text.style.SuperscriptSpan;
 import android.text.style.UnderlineSpan;
+import android.text.util.Linkify;
+import android.util.Log;
+import android.view.View;
 import android.widget.TextView;
 
 import com.ilifesmart.weather.R;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
-
 public class SpannableActivity extends AppCompatActivity {
 
-	@BindView(R.id.span_example)
 	TextView mSpanExample;
 
 	/*
@@ -44,29 +46,26 @@ public class SpannableActivity extends AppCompatActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_spannable);
-		ButterKnife.bind(this);
 
+		mSpanExample = findViewById(R.id.span_example);
 		mSpanExample.setText(EXAMPLETEXT);
 	}
 
-	@OnClick(R.id.foregroundColor)
-	public void onMForegroundColorClicked() {
+	public void onMForegroundColorClicked(View c) {
 		SpannableString string = new SpannableString(EXAMPLETEXT);
 		ForegroundColorSpan span = new ForegroundColorSpan(Color.BLUE);
 		string.setSpan(span, 0, 1, Spanned.SPAN_INCLUSIVE_INCLUSIVE);
 		mSpanExample.setText(string);
 	}
 
-	@OnClick(R.id.backgroundColor)
-	public void onMBackgroundColorClicked() {
+	public void onMBackgroundColorClicked(View v) {
 		BackgroundColorSpan colorSpan = new BackgroundColorSpan(Color.RED);
 		SpannableString string = new SpannableString(EXAMPLETEXT);
 		string.setSpan(colorSpan, 0, 1, Spanned.SPAN_INCLUSIVE_INCLUSIVE);
 		mSpanExample.setText(string);
 	}
 
-	@OnClick(R.id.relativeSizeSpan)
-	public void onMRelativeSizeSpanClicked() {
+	public void onMRelativeSizeSpanClicked(View v) {
 		RelativeSizeSpan sizeSpan_1 = new RelativeSizeSpan(1.0f);
 		RelativeSizeSpan sizeSpan_2 = new RelativeSizeSpan(1.1f);
 		RelativeSizeSpan sizeSpan_3 = new RelativeSizeSpan(1.2f);
@@ -85,7 +84,6 @@ public class SpannableActivity extends AppCompatActivity {
 		mSpanExample.setText(string);
 	}
 
-	@OnClick(R.id.strikethroughSpan)
 	public void onMStrikethroughSpanClicked() {
 		StrikethroughSpan strikeSpan = new StrikethroughSpan();
 		SpannableString string = new SpannableString(EXAMPLETEXT);
@@ -93,32 +91,28 @@ public class SpannableActivity extends AppCompatActivity {
 		mSpanExample.setText(string);
 	}
 
-	@OnClick(R.id.under_line)
-	public void onMUnderLineClicked() {
+	public void onMUnderLineClicked(View v) {
 		UnderlineSpan underlineSpanSpan = new UnderlineSpan();
 		SpannableString string = new SpannableString(EXAMPLETEXT);
 		string.setSpan(underlineSpanSpan, 0, 3, Spanned.SPAN_INCLUSIVE_INCLUSIVE);
 		mSpanExample.setText(string);
 	}
 
-	@OnClick(R.id.super_script)
-	public void onMSuperScriptClicked() {
+	public void onMSuperScriptClicked(View v) {
 		SpannableString string = new SpannableString(EXAMPLETEXT);
 		SuperscriptSpan span = new SuperscriptSpan();
 		string.setSpan(span, 4, 6, Spanned.SPAN_INCLUSIVE_INCLUSIVE);
 		mSpanExample.setText(string);
 	}
 
-	@OnClick(R.id.sub_script)
-	public void onMSubScriptClicked() {
+	public void onMSubScriptClicked(View v) {
 		SpannableString string = new SpannableString(EXAMPLETEXT);
 		SubscriptSpan span = new SubscriptSpan();
 		string.setSpan(span, 4, 6, Spanned.SPAN_INCLUSIVE_INCLUSIVE);
 		mSpanExample.setText(string);
 	}
 
-	@OnClick(R.id.style)
-	public void onMStyleClicked() {
+	public void onMStyleClicked(View v) {
 		SpannableString string = new SpannableString(EXAMPLETEXT);
 		StyleSpan boldSpan = new StyleSpan(Typeface.BOLD);
 		StyleSpan italicSpan = new StyleSpan(Typeface.ITALIC);
@@ -127,8 +121,7 @@ public class SpannableActivity extends AppCompatActivity {
 		mSpanExample.setText(string);
 	}
 
-	@OnClick(R.id.image)
-	public void onMImageClicked() {
+	public void onMImageClicked(View v) {
 		Drawable drawable = getDrawable(R.drawable.stroke_background);
 		drawable.setBounds(0, 0, 40, 40);
 		ImageSpan span = new ImageSpan(drawable, ImageSpan.ALIGN_BOTTOM);
@@ -137,23 +130,46 @@ public class SpannableActivity extends AppCompatActivity {
 		mSpanExample.setText(string);
 	}
 
-	@OnClick(R.id.clickle_span)
-	public void onViewClicked() {
+	public void onViewClicked(View v) {
+
 		MyClickableSpan span = new MyClickableSpan(EXAMPLETEXT);
 		SpannableString string = new SpannableString(EXAMPLETEXT);
 		string.setSpan(span, 0, EXAMPLETEXT.length(), Spanned.SPAN_INCLUSIVE_INCLUSIVE);
+
+		ForegroundColorSpan span2 = new ForegroundColorSpan(Color.BLUE);
+		string.setSpan(span, 0, EXAMPLETEXT.length(), Spanned.SPAN_INCLUSIVE_INCLUSIVE);
+
 		mSpanExample.setMovementMethod(LinkMovementMethod.getInstance());
+		mSpanExample.setAutoLinkMask(Linkify.WEB_URLS);
+		mSpanExample.setOnClickListener((view) -> {
+			Log.d("Home", "onViewClicked: ?????????????????????? ");
+		});
 		mSpanExample.setText(string);
 		mSpanExample.callOnClick();
 	}
 
-	@OnClick(R.id.round_radius_span)
-	public void onRoundRadiusClicked() {
+	public void onRoundRadiusClicked(View v) {
 		RoundRadiusTagSpan span = new RoundRadiusTagSpan();
 		SpannableString string = new SpannableString(EXAMPLETEXT);
 		mSpanExample.setMovementMethod(LinkMovementMethod.getInstance());
 		string.setSpan(span, 0, 2, Spanned.SPAN_INCLUSIVE_INCLUSIVE);
 		mSpanExample.setText(string);
+	}
+
+	public void onSetHtml(View v) {
+
+		String html_text = "<i><a href='https://gavinli369.github.io/'>我的博客</a></i>";
+		mSpanExample.setMovementMethod(LinkMovementMethod.getInstance());
+		mSpanExample.setText(Html.fromHtml(html_text));
+	}
+
+	public void onCancelHtml(View v) {
+		mSpanExample.setText(EXAMPLETEXT);
+		mSpanExample.setMovementMethod(null);
+	}
+
+	public void onEnableHtml(View v) {
+		Log.d("Home", "onEnableHtml: do nothing.");
 	}
 
 }

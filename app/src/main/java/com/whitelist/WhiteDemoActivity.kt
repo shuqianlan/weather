@@ -1,22 +1,19 @@
 package com.whitelist
 
-import android.app.Activity
-import android.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AlertDialog
 import android.content.Context
-import android.content.DialogInterface
 import android.content.Intent
 import android.location.LocationManager
 import android.net.Uri
 import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.PowerManager
 import android.provider.Settings
+import android.widget.Button
 import androidx.annotation.RequiresApi
-import androidx.appcompat.app.ActionBar
 import com.google.android.material.snackbar.Snackbar
 import com.ilifesmart.weather.R
-import kotlinx.android.synthetic.main.activity_white_demo.*
 import java.lang.Exception
 
 class WhiteDemoActivity : AppCompatActivity() {
@@ -33,11 +30,11 @@ class WhiteDemoActivity : AppCompatActivity() {
             }
         }
 
-        gps_location.setOnClickListener {
+        findViewById<Button>(R.id.gps_location).setOnClickListener {
             if (!checkGPSIsOpenStatus()) {
                 turnToOpenGPRSSetting()
             } else {
-                Snackbar.make(gps_location, "定位已开启", Snackbar.LENGTH_SHORT).show()
+                Snackbar.make(findViewById<Button>(R.id.gps_location), "定位已开启", Snackbar.LENGTH_SHORT).show()
             }
         }
     }
@@ -71,10 +68,10 @@ class WhiteDemoActivity : AppCompatActivity() {
         super.onActivityResult(requestCode, resultCode, data)
 
         if (requestCode == REQUEST_CODE) {
-            val isGranted = if (resultCode == Activity.RESULT_OK) "OK" else "False"
-            Snackbar.make(constrain_cont, "权限已授予:"+isGranted, Snackbar.LENGTH_SHORT).show()
+            val isGranted = if (resultCode == AppCompatActivity.RESULT_OK) "OK" else "False"
+            Snackbar.make(findViewById(R.id.constrain_cont), "权限已授予:"+isGranted, Snackbar.LENGTH_SHORT).show()
         } else if (requestCode == REQUEST_LOCATION_CODE) {
-            val isGranted = if (resultCode == Activity.RESULT_OK) "OK" else "False"
+            val isGranted = if (resultCode == AppCompatActivity.RESULT_OK) "OK" else "False"
 
         }
     }

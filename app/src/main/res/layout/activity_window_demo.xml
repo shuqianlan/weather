@@ -16,12 +16,14 @@
             android:layout_weight="1"
             android:text="AddView"
             android:id="@+id/add"
+            android:onClick="onViewClicked"
             android:layout_height="match_parent"/>
         <Button
             android:layout_width="0dp"
             android:layout_weight="1"
             android:text="RemoveView"
             android:id="@+id/remove"
+            android:onClick="onViewClicked"
             android:layout_height="match_parent"/>
     </LinearLayout>
 </LinearLayout>

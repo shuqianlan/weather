@@ -20,9 +20,6 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
 import com.ilifesmart.utils.DensityUtils;
 import com.ilifesmart.weather.R;
 
@@ -47,23 +44,14 @@ public class SurfaceVideoView extends FrameLayout implements MediaPlayer.OnPrepa
 	private String copyPath;
 	private Context mContext;
 
-	@BindView(R.id.video)
 	SurfaceView mVideo;
-	@BindView(R.id.barrage)
 	BarrageView mBarrage;
-	@BindView(R.id.video_cont)
 	FrameLayout mVideoCont;
-	@BindView(R.id.time)
 	TextView mTime;
-	@BindView(R.id.timeline)
 	SeekBar mTimeline;
-	@BindView(R.id.duration)
 	TextView mDuration;
-	@BindView(R.id.state)
 	ImageView mState;
-	@BindView(R.id.control_area)
 	ConstraintLayout mControlArea;
-	@BindView(R.id.thumbnail)
 	ImageView mThumbNail;
 
 	public SurfaceVideoView(Context context) {
@@ -78,7 +66,17 @@ public class SurfaceVideoView extends FrameLayout implements MediaPlayer.OnPrepa
 		super(context, attrs, defStyleAttr);
 
 		View v = LayoutInflater.from(context).inflate(R.layout.layout_surface_video_view, this);
-		ButterKnife.bind(this, v);
+		mVideo = findViewById(R.id.video);
+		mBarrage = findViewById(R.id.barrage);
+		mVideoCont = findViewById(R.id.video_cont);
+		mTime = findViewById(R.id.time);
+		mTimeline = findViewById(R.id.timeline);
+		mDuration = findViewById(R.id.duration);
+		mState = findViewById(R.id.state);
+		mControlArea = findViewById(R.id.control_area);
+		mThumbNail = findViewById(R.id.thumbnail);
+
+
 
 		mContext = context;
 		initialize();
@@ -275,8 +273,7 @@ public class SurfaceVideoView extends FrameLayout implements MediaPlayer.OnPrepa
 		mBarrage.setLayoutParams(lp1);
 	}
 
-	@OnClick(R.id.control_area)
-	public void onControlAreaClicked() {
+	public void onControlAreaClicked(View v) {
 		if (mControlArea.getAlpha() < VISIBLE_MIN_ALPHA) {
 			mControlArea.setAlpha(1);
 			mControlArea.animate().cancel();
@@ -286,8 +283,7 @@ public class SurfaceVideoView extends FrameLayout implements MediaPlayer.OnPrepa
 	}
 
 	@TargetApi(Build.VERSION_CODES.N)
-	@OnClick(R.id.state)
-	public void OnStatus() {
+	public void OnStatus(View v) {
 		Log.d(TAG, "OnStatus: ~~~~~~ 0");
 		if (mControlArea.getAlpha() > VISIBLE_MAX_ALPHA) {
 //			checkVideoPrepared();
@@ -310,7 +306,7 @@ public class SurfaceVideoView extends FrameLayout implements MediaPlayer.OnPrepa
 			}
 		}
 
-		onControlAreaClicked();
+		onControlAreaClicked(mControlArea);
 	}
 
 	@Override

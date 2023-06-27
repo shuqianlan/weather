@@ -13,6 +13,8 @@ import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.hardware.SensorManager;
 import android.os.Handler;
+
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import android.util.DisplayMetrics;
@@ -221,9 +223,9 @@ public abstract class MediaPlayFragment extends Fragment {
 	 */
 	private void initSurFace(Configuration mConfiguration) {
 		if (mConfiguration.orientation == Configuration.ORIENTATION_LANDSCAPE) { // 横屏
-			MediaPlayHelper.setFullScreen(getActivity());
+			MediaPlayHelper.setFullScreen((AppCompatActivity) getContext());
 		} else if (mConfiguration.orientation == Configuration.ORIENTATION_PORTRAIT) {
-			MediaPlayHelper.quitFullScreen(getActivity());
+			MediaPlayHelper.quitFullScreen((AppCompatActivity) getContext());
 		}
 	}
 

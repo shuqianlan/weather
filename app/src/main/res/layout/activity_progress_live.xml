@@ -12,6 +12,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/singlepixel"
+        android:onClick="onSinglepixelClicked"
         android:text="1像素保活"
         android:layout_gravity="center_horizontal"
         />
@@ -19,6 +20,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/foreground_service"
+        android:onClick="onMForegroundServiceClicked"
         android:text="前台Service保活"
         />
 

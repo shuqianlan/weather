@@ -11,10 +11,8 @@ import android.os.Handler
 import android.util.Log
 import android.view.PixelCopy
 import android.view.View
-import androidx.annotation.RequiresApi
-import androidx.work.Operation
-import kotlinx.android.synthetic.main.activity_live_data.*
-import kotlinx.android.synthetic.main.activity_screen_snapshot.*
+import android.widget.Button
+import android.widget.ImageView
 
 class ScreenSnapshotActivity : AppCompatActivity() {
 	
@@ -25,14 +23,14 @@ class ScreenSnapshotActivity : AppCompatActivity() {
 		val point = Point()
 		windowManager.defaultDisplay.getSize(point)
 		
-		snapshot.setOnClickListener {
+		findViewById<Button>(R.id.snapshot).setOnClickListener {
 			findViewById<View>(android.R.id.content).apply {
 				var bitmap:Bitmap?
 				if (false && Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
 					bitmap= Bitmap.createBitmap(point.x, point.y, Bitmap.Config.ARGB_8888)
 					PixelCopy.request(window, bitmap, PixelCopy.OnPixelCopyFinishedListener {
 						if (it == PixelCopy.SUCCESS) {
-							shortcut.background = BitmapDrawable(resources, bitmap)
+							findViewById<ImageView>(R.id.shortcut).background = BitmapDrawable(resources, bitmap)
 						}
 					}, Handler())
 				} else {
@@ -44,7 +42,7 @@ class ScreenSnapshotActivity : AppCompatActivity() {
 					rootView.buildDrawingCache()
 					bitmap = rootView.getDrawingCache()
 					Log.d("BBBB", "onCreate: null ${bitmap == null}")
-					shortcut.background = BitmapDrawable(resources, bitmap)
+					findViewById<ImageView>(R.id.shortcut).background = BitmapDrawable(resources, bitmap)
 					rootView.isDrawingCacheEnabled = false
 				}
 			}

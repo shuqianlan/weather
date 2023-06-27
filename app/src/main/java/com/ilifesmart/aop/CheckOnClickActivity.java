@@ -11,23 +11,16 @@ import android.widget.TextView;
 
 import com.ilifesmart.weather.R;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-
 public class CheckOnClickActivity extends AppCompatActivity implements View.OnClickListener {
 
     public static final String TAG = CheckOnClickActivity.class.getSimpleName();
-
-    @BindView(R.id.bt_click_test)
-    Button mBtClickTest;
-    @BindView(R.id.textView)
-    TextView mTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_check_on_click);
-        ButterKnife.bind(this);
+
+
 
 //        mBtClickTest.setOnClickListener(this);
     }

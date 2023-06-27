@@ -10,8 +10,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.recyclerview.widget.RecyclerView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
 import com.google.android.material.snackbar.Snackbar;
 import com.ilifesmart.weather.R;
 
@@ -20,12 +18,9 @@ import java.util.List;
 
 public class LayoutDemo1Activity extends AppCompatActivity {
 
-    @BindView(R.id.rvToDoList)
     RecyclerView mRvToDoList;
-    @BindView(R.id.main_content)
     CoordinatorLayout mMainContent;
 
-    @BindView(R.id.toolbar)
     Toolbar mToolBar;
 
     private ItemAdapter adapter;
@@ -40,7 +35,9 @@ public class LayoutDemo1Activity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_layout_demo1);
-        ButterKnife.bind(this);
+        mRvToDoList = findViewById(R.id.rvToDoList);
+        mMainContent = findViewById(R.id.main_content);
+        mToolBar = findViewById(R.id.toolbar);
 
         initView();
     }

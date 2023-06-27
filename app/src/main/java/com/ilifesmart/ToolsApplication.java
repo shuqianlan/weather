@@ -19,8 +19,12 @@ import android.widget.Toast;
 
 import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseApp;
-import com.google.firebase.iid.FirebaseInstanceId;
+//import com.google.firebase.iid.FirebaseInstanceId;
+//import com.google.firebase.iid.InstanceIdResult;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.ilifesmart.interfaces.MyLocationListener;
 import com.ilifesmart.region.RegionMgr;
@@ -52,15 +56,36 @@ public class ToolsApplication extends Application { //} implements Configuration
     public void onCreate() {
         super.onCreate();
 
-        UMConfigure.init(this, "5f18f5efb4fa6023ce18da4d", null, UMConfigure.DEVICE_TYPE_PHONE, null);
-
-        MobclickAgent.setPageCollectionMode(MobclickAgent.PageMode.MANUAL);
-
-        LCOpenSDK_Api.setHost(LeChengCameraWrapInfo.APPCNUrl);
-
-        FirebaseApp.initializeApp(this);
-        FirebaseMessaging.getInstance().setAutoInitEnabled(true);
-
+//        UMConfigure.setLogEnabled(true);
+//        UMConfigure.init(this, "5f06db16895cca282300009c", "weather", UMConfigure.DEVICE_TYPE_PHONE, null);
+//        MobclickAgent.setPageCollectionMode(MobclickAgent.PageMode.AUTO);
+//
+//        LCOpenSDK_Api.setHost(LeChengCameraWrapInfo.APPCNUrl);
+//
+//        FirebaseApp.initializeApp(this);
+//        FirebaseMessaging.getInstance().setAutoInitEnabled(true);
+//
+////        FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener(new OnSuccessListener<InstanceIdResult>() {
+////            @Override
+////            public void onSuccess(InstanceIdResult instanceIdResult) {
+////                String fcmDeviceToken = instanceIdResult.getToken();
+////                Log.i(TAG, "FirebaseInstanceId: token: " + fcmDeviceToken);
+////            }
+////        });
+//
+//        FirebaseMessaging.getInstance().getToken().addOnCompleteListener(new OnCompleteListener<String>() {
+//            @Override
+//            public void onComplete(@NonNull Task<String> task) {
+//                if (!task.isSuccessful()) {
+//                    Log.w(TAG, "Fetching FCM registration token failed", task.getException());
+//                    return;
+//                }
+//
+//                // Get new FCM registration token
+//                String token = task.getResult();
+//                Log.d(TAG, "onComplete: token::" + token);
+//            }
+//        });
 //        Looper.getMainLooper().setMessageLogging(new Printer() {
 //            @Override
 //            public void println(String x) {
@@ -69,11 +94,11 @@ public class ToolsApplication extends Application { //} implements Configuration
 //        });
 //        Log.d(TAG, "onCreate: " + getTestDeviceInfo(getApplicationContext()));
 
-        String[] infos =  UMConfigure.getTestDeviceInfo(getApplicationContext());
-
-        for (int i = 0; i < infos.length; i++) {
-            Log.d(TAG, "onCreate: Info " + infos[i]);
-        }
+//        String[] infos =  UMConfigure.getTestDeviceInfo(getApplicationContext());
+//
+//        for (int i = 0; i < infos.length; i++) {
+//            Log.d(TAG, "onCreate: Info " + infos[i]);
+//        }
         //        if (LeakCanary.isInAnalyzerProcess(this)) {
 //            // This process is dedicated to LeakCanary for heap analysis.
 //            // You should not init your app in this process.
@@ -95,71 +120,71 @@ public class ToolsApplication extends Application { //} implements Configuration
         mLocationClient = new LocationClient(getApplicationContext());
         mLocationClient.registerLocationListener(mLocationListener);
 
-        option.setLocationMode(LocationClientOption.LocationMode.Hight_Accuracy);
-        option.setCoorType("GCJ02"); // 经纬度坐标类型.
-        option.setScanSpan(1000); // 请求间隔
-        option.setOpenGps(true);
-        option.setLocationNotify(true);
-        option.setIgnoreKillProcess(false);
-        option.setWifiCacheTimeOut(5*60*1000);
-        option.setEnableSimulateGps(false);
-        mLocationClient.setLocOption(option);
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            String channelID = "chat";
-            String channelName = "消息通知";
-            int importance = NotificationManager.IMPORTANCE_HIGH;
-            creatNotificationChannel(channelID, channelName, importance);
-
-            channelID = "speedy";
-            channelName = "便捷开关";
-            importance = NotificationManager.IMPORTANCE_DEFAULT;
-            creatNotificationChannel(channelID, channelName, importance);
-            
-            NotificationManager manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-            NotificationChannel channel = manager.getNotificationChannel("speedy");
-            if (channel.getImportance() == NotificationManager.IMPORTANCE_NONE) {
-                Log.d(TAG, "onCreate: -- ");
-            }
-        }
-
-        registerActivityLifecycleCallbacks(new ActivityLifecycleCallbacks() {
-            @Override
-            public void onActivityCreated(@NonNull Activity activity, @Nullable Bundle savedInstanceState) {
-
-            }
-
-            @Override
-            public void onActivityStarted(@NonNull Activity activity) {
-
-            }
-
-            @Override
-            public void onActivityResumed(@NonNull Activity activity) {
-                MobclickAgent.onResume(activity);
-
-            }
-
-            @Override
-            public void onActivityPaused(@NonNull Activity activity) {
-                MobclickAgent.onPause(activity);
-            }
-
-            @Override
-            public void onActivityStopped(@NonNull Activity activity) {
-
-            }
-
-            @Override
-            public void onActivitySaveInstanceState(@NonNull Activity activity, @NonNull Bundle outState) {
-
-            }
-
-            @Override
-            public void onActivityDestroyed(@NonNull Activity activity) {
-
-            }
-        });
+//        option.setLocationMode(LocationClientOption.LocationMode.Hight_Accuracy);
+//        option.setCoorType("GCJ02"); // 经纬度坐标类型.
+//        option.setScanSpan(1000); // 请求间隔
+//        option.setOpenGps(true);
+//        option.setLocationNotify(true);
+//        option.setIgnoreKillProcess(false);
+//        option.setWifiCacheTimeOut(5*60*1000);
+//        option.setEnableSimulateGps(false);
+//        mLocationClient.setLocOption(option);
+//
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+//            String channelID = "chat";
+//            String channelName = "消息通知";
+//            int importance = NotificationManager.IMPORTANCE_HIGH;
+//            creatNotificationChannel(channelID, channelName, importance);
+//
+//            channelID = "speedy";
+//            channelName = "便捷开关";
+//            importance = NotificationManager.IMPORTANCE_DEFAULT;
+//            creatNotificationChannel(channelID, channelName, importance);
+//
+//            NotificationManager manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+//            NotificationChannel channel = manager.getNotificationChannel("speedy");
+//            if (channel.getImportance() == NotificationManager.IMPORTANCE_NONE) {
+//                Log.d(TAG, "onCreate: -- ");
+//            }
+//        }
+//
+//        registerActivityLifecycleCallbacks(new ActivityLifecycleCallbacks() {
+//            @Override
+//            public void onActivityCreated(@NonNull Activity activity, @Nullable Bundle savedInstanceState) {
+//
+//            }
+//
+//            @Override
+//            public void onActivityStarted(@NonNull Activity activity) {
+//
+//            }
+//
+//            @Override
+//            public void onActivityResumed(@NonNull Activity activity) {
+//                MobclickAgent.onResume(activity);
+//
+//            }
+//
+//            @Override
+//            public void onActivityPaused(@NonNull Activity activity) {
+//                MobclickAgent.onPause(activity);
+//            }
+//
+//            @Override
+//            public void onActivityStopped(@NonNull Activity activity) {
+//
+//            }
+//
+//            @Override
+//            public void onActivitySaveInstanceState(@NonNull Activity activity, @NonNull Bundle outState) {
+//
+//            }
+//
+//            @Override
+//            public void onActivityDestroyed(@NonNull Activity activity) {
+//
+//            }
+//        });
 
     }
 

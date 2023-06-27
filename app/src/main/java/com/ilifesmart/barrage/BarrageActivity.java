@@ -13,14 +13,9 @@ import android.view.SurfaceView;
 import com.ilifesmart.ui.BarrageView;
 import com.ilifesmart.weather.R;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-
 public class BarrageActivity extends AppCompatActivity {
 
-	@BindView(R.id.barrage)
 	BarrageView mBarrage;
-	@BindView(R.id.video)
 	SurfaceView mVideo;
 
 	//Docs: https://developer.android.google.cn/guide/topics/media-apps/working-with-a-media-session.html#init-session
@@ -35,7 +30,9 @@ public class BarrageActivity extends AppCompatActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_barrage);
-		ButterKnife.bind(this);
+
+		mBarrage = findViewById(R.id.barrage);
+		mVideo = findViewById(R.id.video);
 
 		initialize();
 	}

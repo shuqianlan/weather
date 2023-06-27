@@ -2,10 +2,10 @@ package com.jetpack
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.TextView
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.ilifesmart.weather.R
-import kotlinx.android.synthetic.main.activity_live_data.*
 
 class LiveDataActivity : AppCompatActivity() {
 
@@ -28,25 +28,25 @@ class LiveDataActivity : AppCompatActivity() {
         viewmodel.livedata.observe(this, Observer {
             println("the result: $it")
             builder.append("the data: $it\n")
-            content.text = builder.toString()
+            findViewById<TextView>(R.id.content).text = builder.toString()
         })
 
         builder.append("onCreate\n")
-        content.text = builder.toString()
+        findViewById<TextView>(R.id.content).text = builder.toString()
         println("onCreate")
     }
 
     override fun onStart() {
         super.onStart()
         builder.append("onStart\n")
-        content.text = builder.toString()
+        findViewById<TextView>(R.id.content).text = builder.toString()
         println("onStart")
     }
 
     override fun onResume() {
         super.onResume()
         builder.append("onResume\n")
-        content.text = builder.toString()
+        findViewById<TextView>(R.id.content).text = builder.toString()
         println("onResume")
     }
 

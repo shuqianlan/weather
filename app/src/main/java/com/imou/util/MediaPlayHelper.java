@@ -1,8 +1,9 @@
 package com.imou.util;
 
-import android.app.Activity;
 import android.os.Environment;
 import android.view.WindowManager;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
@@ -17,13 +18,13 @@ public class MediaPlayHelper {
 	}
 	
 	
-	public static void setFullScreen(Activity activity) {
+	public static void setFullScreen(AppCompatActivity activity) {
 		activity.getWindow().setFlags(
 				WindowManager.LayoutParams.FLAG_FULLSCREEN,
 				WindowManager.LayoutParams.FLAG_FULLSCREEN);
 	}
 
-	public static void quitFullScreen(Activity activity) {
+	public static void quitFullScreen(AppCompatActivity activity) {
 		final WindowManager.LayoutParams attrs = activity.getWindow().getAttributes();
 		attrs.flags &= (~WindowManager.LayoutParams.FLAG_FULLSCREEN);
 		activity.getWindow().setAttributes(attrs);

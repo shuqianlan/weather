@@ -18,9 +18,6 @@ import android.widget.ImageView;
 
 import com.ilifesmart.weather.R;
 
-import butterknife.ButterKnife;
-import butterknife.OnClick;
-
 public class WindowDemoActivity extends AppCompatActivity {
 
 	private WindowManager mWindowManager;
@@ -32,7 +29,7 @@ public class WindowDemoActivity extends AppCompatActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_window_demo);
-		ButterKnife.bind(this);
+
 
 		mWindowManager = (WindowManager) getSystemService(Context.WINDOW_SERVICE);
 		requestPermissions();
@@ -57,15 +54,11 @@ public class WindowDemoActivity extends AppCompatActivity {
 	}
 
 	@RequiresApi(api = Build.VERSION_CODES.O)
-	@OnClick({R.id.add, R.id.remove})
 	public void onViewClicked(View view) {
-		switch (view.getId()) {
-			case R.id.add:
-				onWindAddView();
-				break;
-			case R.id.remove:
-				onWindRemoveView();
-				break;
+		if (view.getId() == R.id.add) {
+			onWindAddView();
+		} else if (view.getId() == R.id.remove) {
+			onWindRemoveView();
 		}
 	}
 

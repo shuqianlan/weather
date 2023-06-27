@@ -10,17 +10,22 @@
         tools:context="com.db.SqliteActivity">
 
     <Button android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:onClick="onViewClicked"
             android:id="@+id/sqlite_add" android:text="Add" />
 
     <Button android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:onClick="onViewClicked"
             android:id="@+id/sqlite_delete" android:text="Delete" />
 
     <Button android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:onClick="onViewClicked"
             android:id="@+id/sqlite_update" android:text="Update" />
 
     <Button android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:onClick="onViewClicked"
             android:id="@+id/sqlite_query" android:text="Query" />
 
     <Button android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:onClick="onViewClicked"
             android:id="@+id/sqlite_upgrade" android:text="Upgrade" />
 </LinearLayout>

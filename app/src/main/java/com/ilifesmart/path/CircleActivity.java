@@ -15,19 +15,12 @@ import com.ilifesmart.weather.R;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-
 public class CircleActivity extends AppCompatActivity {
 
 	public static final String TAG = "CircleActivity";
-	@BindView(R.id.qual_circle)
 	QualCircle mQualCircle;
-	@BindView(R.id.btn1)
 	TextView mBtn1;
-	@BindView(R.id.btn2)
 	TextView mBtn2;
-	@BindView(R.id.btn3)
 	TextView mBtn3;
 	private AtomicInteger mCurrentIndex = new AtomicInteger(1);
 	ValueAnimator mValueAnimator;
@@ -40,7 +33,11 @@ public class CircleActivity extends AppCompatActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_circle);
-		ButterKnife.bind(this);
+		mQualCircle = findViewById(R.id.qual_circle);
+		mBtn1 = findViewById(R.id.btn1);
+		mBtn2 = findViewById(R.id.btn2);
+		mBtn3 = findViewById(R.id.btn3);
+
 
 		mBtn2.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
 			@Override

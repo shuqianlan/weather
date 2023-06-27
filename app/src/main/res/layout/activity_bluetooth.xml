@@ -12,6 +12,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/blue_cap"
+        android:onClick="onBluetoothCapacity"
         android:text="判断是否支持蓝牙"
         android:visibility="gone"
         />
@@ -21,11 +22,13 @@
         android:id="@+id/blue_enable"
         android:text="打开蓝牙"
         android:visibility="gone"
+        android:onClick="onMBlueEnableClicked"
         />
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/blue_start_scan"
+        android:onClick="onMBlueStartScanClicked"
         android:text="搜索蓝牙设备"
         android:visibility="gone"
         />
@@ -33,6 +36,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/blue_stop_scan"
+        android:onClick="onMBlueStopScanClicked"
         android:text="停止搜索蓝牙设备"
         android:visibility="gone"
         />

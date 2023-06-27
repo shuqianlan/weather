@@ -16,33 +16,19 @@ import com.ilifesmart.weather.R;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 public class CameraRotateActivity extends AppCompatActivity {
 
-	@BindView(R.id.rotate_orgx)
 	Button RotateOrgx;
-	@BindView(R.id.rotate_x)
 	Button RotateX;
-	@BindView(R.id.rotate_orgy)
 	Button RotateOrgy;
-	@BindView(R.id.rotate_y)
 	Button RotateY;
-	@BindView(R.id.rotate_xy)
 	Button RotateXy;
-	@BindView(R.id.rotate_z)
 	Button RotateZ;
-	@BindView(R.id.frame_cont)
 	LinearLayout mFrameCont;
-	@BindView(R.id.group_1)
 	ConstraintLayout mCont1;
-	@BindView(R.id.group_2)
 	ConstraintLayout mCont2;
-	@BindView(R.id.group_3)
 	ConstraintLayout mCont3;
-	@BindView(R.id.group_4)
 	ConstraintLayout mCont4;
 
 	private final List<RoundCornerImageView> mImgList = new ArrayList<RoundCornerImageView>();
@@ -56,7 +42,18 @@ public class CameraRotateActivity extends AppCompatActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_camera_rotate);
-		ButterKnife.bind(this);
+
+		RotateOrgx = findViewById(R.id.rotate_orgx);
+		RotateX = findViewById(R.id.rotate_x);
+		RotateY  = findViewById(R.id.rotate_y);
+		RotateY = findViewById(R.id.rotate_orgy);
+		RotateXy = findViewById(R.id.rotate_xy);
+		RotateZ = findViewById(R.id.rotate_z);
+		mFrameCont = findViewById(R.id.frame_cont);
+		mCont1 = findViewById(R.id.group_1);
+		mCont2 = findViewById(R.id.group_2);
+		mCont3 = findViewById(R.id.group_3);
+		mCont4 = findViewById(R.id.group_4);
 
 		mContList.add(mCont1);
 		mContList.add(mCont2);
@@ -70,9 +67,35 @@ public class CameraRotateActivity extends AppCompatActivity {
 		mCamera = new Camera();
 		mCameramatrix = new Matrix();
 //		mBitmap = ((BitmapDrawable)mImg.getDrawable()).getBitmap();
+
+		RotateOrgx.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				onRotateOrgxClicked();
+			}
+		});
+
+		RotateX.setOnClickListener((v) -> {
+			onRotateXClicked();
+		});
+
+		RotateY.setOnClickListener((v)-> {
+			onRotateYClicked();
+		});
+
+		RotateXy.setOnClickListener((v)-> {
+			onRotateXyClicked();
+		});
+
+		RotateZ.setOnClickListener((v)-> {
+			onRotateZClicked();
+		});
+
+		RotateOrgy.setOnClickListener((v) -> {
+			onRotateOrgyClicked();
+		});
 	}
 
-	@OnClick(R.id.rotate_orgx)
 	public void onRotateOrgxClicked() {
 		mCamera.save();
 		mCameramatrix.reset();
@@ -84,26 +107,21 @@ public class CameraRotateActivity extends AppCompatActivity {
 		mCameramatrix.postTranslate(mBitmap.getWidth() / 2, 0);
 	}
 
-	@OnClick(R.id.rotate_x)
 	public void onRotateXClicked() {
 //		mImg.setHoverColorAndDrawable(Color.WHITE, R.drawable.item_viewpager_120switch_1);
 	}
 
-	@OnClick(R.id.rotate_orgy)
 	public void onRotateOrgyClicked() {
 //		mImg.setHoverColorAndDrawable(Color.WHITE, R.drawable.item_viewpager_120switch_3);
 	}
 
-	@OnClick(R.id.rotate_y)
 	public void onRotateYClicked() {
 //		mImg.setHoverColorAndDrawable(Color.RED, -99);
 	}
 
-	@OnClick(R.id.rotate_xy)
 	public void onRotateXyClicked() {
 	}
 
-	@OnClick(R.id.rotate_z)
 	public void onRotateZClicked() {
 	}
 

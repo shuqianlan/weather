@@ -873,10 +873,8 @@ public class MediaPlayOnlineFragment extends MediaPlayFragment implements
 
 	@Override
 	public void onClick(View view) {
-		// TODO Auto-generated method stub
-		switch (view.getId()) {
-		case R.id.live_ptz:
-			if(!isPlaying){
+		if (view.getId() == R.id.live_ptz) {
+			if (!isPlaying) {
 				return;
 			}
 			if (channelInfo.isSupportPTZOrPZ()) {
@@ -894,8 +892,8 @@ public class MediaPlayOnlineFragment extends MediaPlayFragment implements
 			} else {
 				toast(R.string.toast_device_ability_no_ptz);
 			}
-			break;
-		case R.id.live_scale:
+		}
+		else if (view.getId() == R.id.live_scale) {
 			if ("LANDSCAPE".equals(mLiveScale.getTag())) {
 				mOrientation = ORIENTATION.isPortRait;
 				getActivity().setRequestedOrientation(
@@ -905,9 +903,8 @@ public class MediaPlayOnlineFragment extends MediaPlayFragment implements
 				getActivity().setRequestedOrientation(
 						ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 			}
-			break;
-		case R.id.live_mode:
-			// if(isPlaying) //播放是个异步的,多次点击会使停止播放顺序乱掉
+		}
+		else if (view.getId() == R.id.live_mode) {
 			if (mOpenTalk == AudioTalkStatus.talk_opening) {
 				stopTalk();
 			}
@@ -922,21 +919,30 @@ public class MediaPlayOnlineFragment extends MediaPlayFragment implements
 				mLiveMode.setImageResource(R.drawable.live_btn_hd);
 				play(R.string.video_monitor_change_stream_hd);
 			}
-			break;
-		case R.id.live_talk:
-			switch (mOpenTalk) {
-			case talk_open:
-			case talk_opening:
-				stopTalk();
-				break;
-			case talk_close:
-				startTalk();
-				break;
-			default:
-				break;
+		}
+		else if (view.getId() == R.id.live_play_pressed) {
+			play(-1);
+		} else if (view.getId() == R.id.live_record) {
+			if (!isRecord) {
+				boolean result = startRecord();
+				if (result) {
+					toastWithImg(
+							getString(R.string.video_monitor_media_record),
+							R.drawable.live_pic_record);
+					isRecord = true;
+					mLiveRecord
+							.setImageResource(R.drawable.live_btn_record_click);
+				}
+			} else {
+				stopRecord();
 			}
-			break;
-		case R.id.live_sound:
+		} else if (view.getId() == R.id.live_screenshot) {
+			mLiveScreenshot
+					.setImageResource(R.drawable.live_btn_screenshot_click);
+			capture();
+			mLiveScreenshot
+					.setImageResource(R.drawable.live_btn_screenshot_nor);
+		} else if (view.getId() == R.id.live_sound) {
 			if (mOpenTalk != AudioTalkStatus.talk_close || !isPlaying) {
 				toast(R.string.video_monitor_load_talk_sound_error);
 			} else {
@@ -958,34 +964,18 @@ public class MediaPlayOnlineFragment extends MediaPlayFragment implements
 					}
 				}
 			}
-			break;
-		case R.id.live_screenshot:
-			mLiveScreenshot
-					.setImageResource(R.drawable.live_btn_screenshot_click);
-			capture();
-			mLiveScreenshot
-					.setImageResource(R.drawable.live_btn_screenshot_nor);
-			break;
-		case R.id.live_record:
-			if (!isRecord) {
-				boolean result = startRecord();
-				if (result) {
-					toastWithImg(
-							getString(R.string.video_monitor_media_record),
-							R.drawable.live_pic_record);
-					isRecord = true;
-					mLiveRecord
-							.setImageResource(R.drawable.live_btn_record_click);
-				}
-			} else {
-				stopRecord();
+		} else if (view.getId() == R.id.live_talk) {
+			switch (mOpenTalk) {
+				case talk_open:
+				case talk_opening:
+					stopTalk();
+					break;
+				case talk_close:
+					startTalk();
+					break;
+				default:
+					break;
 			}
-			break;
-		case R.id.live_play_pressed:
-			play(-1);
-			break;
-		default:
-			break;
 		}
 	}
 }

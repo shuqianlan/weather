@@ -15,6 +15,7 @@
         android:background="@drawable/stroke_background"
         android:id="@+id/send_notification_high"
         android:text="High Notification"
+        android:onClick="onSendHighNotification"
         android:layout_gravity="center"
         />
     <Button
@@ -23,6 +24,7 @@
         android:background="@drawable/stroke_background"
         android:id="@+id/send_notification_def"
         android:text="Default Notification"
+        android:onClick="onSendDefNotification"
         android:layout_gravity="center"
         />
 
@@ -30,8 +32,9 @@
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:background="@drawable/stroke_background"
-            android:id="@+id/open_notification"
+            android:id="@+id/open_notification8"
             android:text="打开通知权限"
+            android:onClick="notificationControl"
             android:layout_gravity="center"
             />
 
@@ -39,8 +42,9 @@
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:background="@drawable/stroke_background"
-            android:id="@+id/close_notification"
+            android:id="@+id/close_notification8"
             android:text="关闭通知权限"
+            android:onClick="notificationControl"
             android:layout_gravity="center"
             />
 

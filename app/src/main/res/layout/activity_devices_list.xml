@@ -14,6 +14,7 @@
             android:id="@+id/lecheng_user_logout"
             android:layout_gravity="center"
             android:text="注销"
+            android:onClick="lecheng_user_logout"
             android:textAllCaps="false"
     />
 
@@ -27,6 +28,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/lecheng_category"
             android:layout_gravity="center"
+            android:onClick="lecheng_user_logout"
             android:text="功能"
             android:textAllCaps="false"
     />

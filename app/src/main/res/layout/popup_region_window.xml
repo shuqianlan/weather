@@ -12,6 +12,7 @@
         android:layout_height="60dp"
         android:paddingVertical="15dp"
         android:id="@+id/head_cont"
+        android:onClick="onClickCancel"
         >
 
         <TextView
@@ -28,7 +29,7 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginRight="20dp"
-            android:src="@drawable/close"
+            app:srcCompat="@drawable/close"
             app:layout_constraintBottom_toBottomOf="@+id/textView2"
             app:layout_constraintDimensionRatio="W,1:1"
             app:layout_constraintEnd_toEndOf="parent"

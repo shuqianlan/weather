@@ -17,12 +17,14 @@
         android:gravity="center"
         android:layout_gravity="center_horizontal"
         android:text="调用C函数(print)"
+        android:onClick="onCPrintClicked"
         />
 
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/c_add"
+        android:onClick="onCAddClicked"
         android:text="调用C函数(add)"
         />
 
@@ -31,6 +33,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/c_string_append"
         android:text="调用C函数(Append)"
+        android:onClick="onCStringAppendClicked"
         />
 
     <Button
@@ -38,6 +41,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/java_debug"
         android:text="C调用Java函数(debug)"
+        android:onClick="onJavaDebugClicked"
         />
 
     <Button
@@ -45,6 +49,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/java_add"
         android:text="C调用Java函数(add)"
+        android:onClick="onJavaAddClicked"
         />
 
     <Button
@@ -52,5 +57,6 @@
         android:layout_height="wrap_content"
         android:id="@+id/java_print"
         android:text="C调用Java函数(print)"
+        android:onClick="onJavaPrintClicked"
         />
 </LinearLayout>

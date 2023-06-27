@@ -1,66 +1,47 @@
 package com.ilifesmart;
 
 import android.Manifest;
-import android.animation.Animator;
-import android.animation.TimeInterpolator;
-import android.animation.ValueAnimator;
+import android.app.ActivityManager;
 import android.app.KeyguardManager;
 import android.content.ClipboardManager;
 import android.content.ComponentName;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.net.Uri;
-import android.net.wifi.WifiInfo;
-import android.net.wifi.WifiManager;
 import android.os.Build;
 import android.os.Bundle;
 
-import androidx.annotation.LongDef;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.PopupMenu;
-import androidx.biometric.BiometricManager;
 import androidx.biometric.BiometricPrompt;
-import androidx.core.app.NotificationManagerCompat;
 
+import android.os.Environment;
 import android.provider.Settings;
 import android.text.TextUtils;
-import android.text.method.ScrollingMovementMethod;
 import android.util.Base64;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.animation.LinearInterpolator;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.core.hardware.fingerprint.FingerprintManagerCompat;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
-import okhttp3.internal.Util;
+import androidx.core.content.FileProvider;
 
-import com.amap.AmapActivity;
 import com.amap.MapLocationActivity;
 import com.db.SqliteActivity;
 import com.google.android.material.snackbar.Snackbar;
-import com.google.firebase.iid.FirebaseInstanceId;
 import com.gson.Gson2Activity;
 import com.ilifesmart.animation.AnimationActivity;
 import com.ilifesmart.aop.CheckOnClickActivity;
 import com.ilifesmart.appbarlayoutdemo.AppBarActivity;
-import com.ilifesmart.appbarlayoutdemo.AppBarLiveDataActivity;
 import com.ilifesmart.barrage.VideoActivity;
 import com.ilifesmart.ble.BluetoothActivity;
-import com.ilifesmart.broad.ScreenBroadcastListener;
 import com.ilifesmart.cam3drotate.CameraRotateActivity;
 import com.ilifesmart.compass.CompassActivity;
 import com.ilifesmart.fold.FoldActivity;
@@ -68,7 +49,6 @@ import com.ilifesmart.fragment.DialogActivity;
 import com.ilifesmart.framelayout.FrameLayoutActivity;
 import com.ilifesmart.group.GroupActivity;
 import com.ilifesmart.layout.AbstractActivity;
-import com.ilifesmart.live.KeepLiveService;
 import com.ilifesmart.live.ProgressLiveActivity;
 import com.ilifesmart.mapper.MapperActivity;
 import com.ilifesmart.miclock.MiClockActivity;
@@ -83,13 +63,16 @@ import com.ilifesmart.region.RegionDemoActivity;
 import com.ilifesmart.rxjava.DemoActivity;
 import com.ilifesmart.test.SeekBarActivity;
 import com.ilifesmart.thread.ThreadTestActivity;
-import com.ilifesmart.utils.NetWorkUtil;
+import com.ilifesmart.utils.A;
+import com.ilifesmart.utils.LeCameraUtils;
 import com.ilifesmart.utils.PersistentMgr;
 import com.ilifesmart.utils.Utils;
 import com.ilifesmart.viewpager.ViewPagerActivity;
 import com.ilifesmart.weather.ActionBarActivity;
+import com.ilifesmart.weather.DeepLinkActivity;
 import com.ilifesmart.weather.JobActivity;
 import com.ilifesmart.weather.MP3Activity;
+import com.ilifesmart.weather.MobileLocationActivity;
 import com.ilifesmart.weather.NewFragmentActivity;
 import com.ilifesmart.weather.R;
 import com.ilifesmart.weather.ScaleDrawableActivity;
@@ -108,13 +91,16 @@ import com.services.HelloServiceActivity;
 import com.services.JobScheduleHelper;
 import com.spannableText.SpannableActivity;
 import com.surfaceview.SurfaceViewActivity;
+import com.umeng.analytics.MobclickAgent;
+import com.umeng.umcrash.UMCrash;
 import com.wanandroid.clipboard.ui.MainActivity;
 import com.whitelist.WhiteDemoActivity;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Set;
+import java.util.Map;
 
 import static androidx.biometric.BiometricManager.Authenticators.BIOMETRIC_STRONG;
 import static androidx.biometric.BiometricManager.Authenticators.DEVICE_CREDENTIAL;
@@ -132,12 +118,18 @@ public class HomeActivity extends AppCompatActivity {
         mPermissions.add(Manifest.permission.WRITE_EXTERNAL_STORAGE);
     }
 
-    @BindView(R.id.weather)
     Button mWeather;
 
     @Override
     protected void onResume() {
         super.onResume();
+        MobclickAgent.onPageStart("Home");
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        MobclickAgent.onPageEnd("Home");
     }
 
     // 判断是否打开了通知监听权限
@@ -165,8 +157,7 @@ public class HomeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-        ButterKnife.bind(this);
-
+        mWeather = findViewById(R.id.weather);
 
         onClickAuthBySystem();
         Log.d(TAG, "onCreate: Allowed " + isEnabled());
@@ -174,17 +165,17 @@ public class HomeActivity extends AppCompatActivity {
 
         Log.d(TAG, "onCreate: notification " + string);
 
-        FirebaseInstanceId.getInstance().getInstanceId().addOnCompleteListener(task -> {
-            if (!task.isSuccessful()) {
-                Log.w(TAG, "getInstanceId failed", task.getException());
-                return;
-            }
-
-            // Get new Instance ID token
-            String msg = task.getResult().getToken();
-            Log.d(TAG, "onCreate: token " + msg);
-            Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
-        });
+//        FirebaseInstanceId.getInstance().getInstanceId().addOnCompleteListener(task -> {
+//            if (!task.isSuccessful()) {
+//                Log.w(TAG, "getInstanceId failed", task.getException());
+//                return;
+//            }
+//
+//            // Get new Instance ID token
+//            String msg = task.getResult().getToken();
+//            Log.d(TAG, "onCreate: token " + msg);
+//            Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
+//        });
 
         paste();
 
@@ -278,6 +269,7 @@ public class HomeActivity extends AppCompatActivity {
 //        .setMovementMethod(ScrollingMovementMethod.getInstance());
 //        findViewById(R.id.scroll_text).setFocusable(true);
 
+        Log.d(TAG, "onCreate: ================================> ");
         if (getIntent().getExtras() != null) {
             for (String key : getIntent().getExtras().keySet()) {
 
@@ -293,6 +285,7 @@ public class HomeActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         JobScheduleHelper.clearAllJobs(getApplicationContext());
+        MobclickAgent.onKillProcess(getApplicationContext());
 //        unregisterReceiver(netChangeReceiver);
     }
 
@@ -328,6 +321,10 @@ public class HomeActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            mPermissions.add(Manifest.permission.POST_NOTIFICATIONS);
+        }
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             for (int i = mPermissions.size() - 1; i >= 0; i--) {
@@ -370,7 +367,6 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
                 if (item.getItemId() == Menu.FIRST + 1) {
-                    Utils.startActivity(HomeActivity.this, AppBarLiveDataActivity.class);
                 } else if (item.getItemId() == Menu.FIRST + 2) {
                     Utils.startActivity(HomeActivity.this, AppBarActivity.class);
                 }
@@ -381,348 +377,397 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     private void onClickAuthBySystem() {
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.P) {
-            KeyguardManager manager = (KeyguardManager) getSystemService(Context.KEYGUARD_SERVICE);
-            if (!manager.isKeyguardSecure()) {
-                Toast.makeText(this, "none set", Toast.LENGTH_LONG).show();
-                return;
-            }
-
-            Intent i = manager.createConfirmDeviceCredentialIntent(null, null);
-            startActivityForResult(i, 10090);
-        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
-            boolean isSupport = false;
-
-            int target = 0;
-            if (Utils.isBiometricSupported(this, BIOMETRIC_STRONG)) {
-                isSupport = true;
-                target |= BIOMETRIC_STRONG; // 生物功能，依据手机开放，可人脸,指纹，虹膜等
-            }
-
-            if (Utils.isBiometricSupported(this, DEVICE_CREDENTIAL)) {
-                isSupport = true;
-                target |= DEVICE_CREDENTIAL; // PIN或密码
-            }
-
-            if (!isSupport) {
-                Log.d(TAG, "onClickAuthBySystem: no support");
-                return;
-            }
-
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-                target = BIOMETRIC_STRONG | DEVICE_CREDENTIAL;
-            }
-            // 30以前，不支持单独配置DEVICE_CREDENTIAL.
-            // 28 or 29, 不支持设置BIOMETRIC_STRONG | DEVICE_CREDENTIAL.
-
-            BiometricPrompt.PromptInfo promptInfo =
-                    new BiometricPrompt.PromptInfo.Builder()
-                            .setTitle("Biometric login for my app") //设置大标题
-                            .setSubtitle("Log in using your biometric credential") // 设置标题下的提示
-                            .setAllowedAuthenticators(target)
-                            .setConfirmationRequired(true)
-                            .build();
-
-            //需要提供的参数callback
-            BiometricPrompt biometricPrompt = new BiometricPrompt(this,
-                    getMainExecutor(), new BiometricPrompt.AuthenticationCallback() {
-                //各种异常的回调
-                @Override
-                public void onAuthenticationError(int errorCode, @NonNull CharSequence errString) {
-                    super.onAuthenticationError(errorCode, errString);
-                    Toast.makeText(getApplicationContext(),
-                            "Authentication error: " + errString, Toast.LENGTH_SHORT)
-                            .show();
-                }
-
-                //认证成功的回调
-                @Override
-                public void onAuthenticationSucceeded(
-                        @NonNull BiometricPrompt.AuthenticationResult result) {
-                    super.onAuthenticationSucceeded(result);
-                    BiometricPrompt.CryptoObject authenticatedCryptoObject =
-                            result.getCryptoObject();
-
-                    Log.d(TAG, "onAuthenticationSucceeded: AuthenticationType " + result.getAuthenticationType());
-                    // User has verified the signature, cipher, or message
-                    // authentication code (MAC) associated with the crypto object,
-                    // so you can use it in your app's crypto-driven workflows.
-                }
-
-                //认证失败的回调
-                @Override
-                public void onAuthenticationFailed() {
-                    super.onAuthenticationFailed();
-                    Toast.makeText(getApplicationContext(), "Authentication failed",
-                            Toast.LENGTH_SHORT)
-                            .show();
-                }
-            });
-
-            // 显示认证对话框
-            biometricPrompt.authenticate(promptInfo);
-        }
+//        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.P) {
+//            KeyguardManager manager = (KeyguardManager) getSystemService(Context.KEYGUARD_SERVICE);
+//            if (!manager.isKeyguardSecure()) {
+//                Toast.makeText(this, "none set", Toast.LENGTH_LONG).show();
+//                return;
+//            }
+//
+//            Intent i = manager.createConfirmDeviceCredentialIntent(null, null);
+//            startActivityForResult(i, 10090);
+//        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+//            boolean isSupport = false;
+//
+//            int target = 0;
+//            if (Utils.isBiometricSupported(this, BIOMETRIC_STRONG)) {
+//                isSupport = true;
+//                target |= BIOMETRIC_STRONG; // 生物功能，依据手机开放，可人脸,指纹，虹膜等
+//            }
+//
+//            if (Utils.isBiometricSupported(this, DEVICE_CREDENTIAL)) {
+//                isSupport = true;
+//                target |= DEVICE_CREDENTIAL; // PIN或密码
+//            }
+//
+//            if (!isSupport) {
+//                Log.d(TAG, "onClickAuthBySystem: no support");
+//                return;
+//            }
+//
+//            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+//                target = BIOMETRIC_STRONG | DEVICE_CREDENTIAL;
+//            }
+//            // 30以前，不支持单独配置DEVICE_CREDENTIAL.
+//            // 28 or 29, 不支持设置BIOMETRIC_STRONG | DEVICE_CREDENTIAL.
+//
+//            BiometricPrompt.PromptInfo promptInfo =
+//                    new BiometricPrompt.PromptInfo.Builder()
+//                            .setTitle("Biometric login for my app") //设置大标题
+//                            .setSubtitle("Log in using your biometric credential") // 设置标题下的提示
+//                            .setAllowedAuthenticators(target)
+//                            .setConfirmationRequired(true)
+//                            .build();
+//
+//            //需要提供的参数callback
+//            BiometricPrompt biometricPrompt = new BiometricPrompt(this,
+//                    getMainExecutor(), new BiometricPrompt.AuthenticationCallback() {
+//                //各种异常的回调
+//                @Override
+//                public void onAuthenticationError(int errorCode, @NonNull CharSequence errString) {
+//                    super.onAuthenticationError(errorCode, errString);
+//                    Toast.makeText(getApplicationContext(),
+//                            "Authentication error: " + errString, Toast.LENGTH_SHORT)
+//                            .show();
+//                }
+//
+//                //认证成功的回调
+//                @Override
+//                public void onAuthenticationSucceeded(
+//                        @NonNull BiometricPrompt.AuthenticationResult result) {
+//                    super.onAuthenticationSucceeded(result);
+//                    BiometricPrompt.CryptoObject authenticatedCryptoObject =
+//                            result.getCryptoObject();
+//
+//                    Log.d(TAG, "onAuthenticationSucceeded: AuthenticationType " + result.getAuthenticationType());
+//                    // User has verified the signature, cipher, or message
+//                    // authentication code (MAC) associated with the crypto object,
+//                    // so you can use it in your app's crypto-driven workflows.
+//                }
+//
+//                //认证失败的回调
+//                @Override
+//                public void onAuthenticationFailed() {
+//                    super.onAuthenticationFailed();
+//                    Toast.makeText(getApplicationContext(), "Authentication failed",
+//                            Toast.LENGTH_SHORT)
+//                            .show();
+//                }
+//            });
+//
+//            // 显示认证对话框
+//            biometricPrompt.authenticate(promptInfo);
+//        }
     }
 
 
-    @OnClick({R.id.weather, R.id.seekbar, R.id.notification, R.id.rotate, R.id.aop_test, R.id.thread_test,
-            R.id.framelayout, R.id.compass, R.id.miclock, R.id.camrotate, R.id.path, R.id.osinfo, R.id.viewpager, R.id.mapper,
-            R.id.dialog, R.id.preference, R.id.nature_ui, R.id.spider_web, R.id.mvvm, R.id.rxjava, R.id.progress,
-            R.id.ViewGroup, R.id.live, R.id.curtain, R.id.barrage, R.id.bluetooth, R.id.fold, R.id.region, R.id.span_text,
-            R.id.custom_surfaceview, R.id.animation, R.id.window, R.id.abstract_layout, R.id.jni, R.id.miui_right_out, R.id.imou, R.id.gson,
-            R.id.sqlite, R.id.jetpack, R.id.layout, R.id.media, R.id.kotlin_conoroutine, R.id.uilayout, R.id.app_bar_ayout, R.id.paged_data, R.id.wanandroid, R.id.service, R.id.white_menu, R.id.echarts,
-            R.id.test_for_ui, R.id.smart_plus, R.id.scroll_text, R.id.amap_for_ui, R.id.app_shopping, R.id.encryption,
-            R.id.custom_sensor, R.id.toActionBarActivity, R.id.listener_service, R.id.umeng,R.id.new_job,R.id.mp3,
-            R.id.scale_drawable,R.id.screenshot,R.id.systemunlock, R.id.new_fragment
-    })
     public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.mp3:
-                Utils.startActivity(this, MP3Activity.class);
-                break;
-            case R.id.new_job:
-                Utils.startActivity(this, JobActivity.class);
-                break;
-            case R.id.new_fragment:
-                Utils.startActivity(this, NewFragmentActivity.class);
-                break;
-            case R.id.systemunlock:
-                onClickAuthBySystem();
-                break;
-            case R.id.screenshot:
-                Utils.startActivity(this, ScreenSnapshotActivity.class);
-                break;
-            case R.id.scale_drawable:
-                Utils.startActivity(this, ScaleDrawableActivity.class);
-                break;
-            case R.id.umeng:
-                Utils.startActivity(this, UmengActivity.class);
-                break;
-            case R.id.toActionBarActivity:
-                Utils.startActivity(this, ActionBarActivity.class);
-                break;
-            case R.id.listener_service:
-                if (!isEnabled()) {
-                    startActivity(new Intent("android.settings.ACTION_NOTIFICATION_LISTENER_SETTINGS"));
-                } else {
-                    Snackbar.make(v, "权限已授予", Snackbar.LENGTH_SHORT).show();
-                }
 
-                break;
-            case R.id.custom_sensor:
-                Utils.startActivity(this, SensorActivity.class);
-                break;
-            case R.id.encryption:
-                String nounce = "91641833";
-                String ssid = "TP-link";
-                String pwd = "12345678";
-                String sn = "5F073DAYAJAJ3152A";
+        if (v.getId() == R.id.get_system_android_id) {
+            String androidid = Settings.System.getString(getContentResolver(), Settings.Secure.ANDROID_ID);
+            Log.d(TAG, "onClick: getAndroidID " + androidid);
+        }
+        else if (v.getId() == R.id.lecam_password) {
+            try {
+//                    LeCameraUtils.check();
+                A.main(new String[]{});
+            } catch (Exception ex) {
 
-                String sha256_encryption_source = nounce + sn + ",";
-                String aes256_encryption_source = nounce+","+ssid+","+pwd;
-                String shaKey = Utils.shaEnc256(sha256_encryption_source);
-                Log.d(TAG, "onClick: shaKey " + shaKey);
-                String aes256 = Utils.AES256Encode(aes256_encryption_source, shaKey);
-                Log.d(TAG, "onClick: aes256 " + aes256);
+            }
+        }
+        else if (v.getId() == R.id.deeplink_lsapp) {
+            Utils.startActivity(this, DeepLinkActivity.class);
+        }
+        else if (v.getId() == R.id.location_mobile) {
+            Utils.startActivity(this, MobileLocationActivity.class);
+        }
+        else if (v.getId() == R.id.accessibility) {
+            List<ActivityManager.RunningServiceInfo> serviceInfos = ((ActivityManager) getSystemService(ACTIVITY_SERVICE)).getRunningServices(100);
+        }
+        else if (v.getId() == R.id.openThirdAPP) {
+            Utils.startThirdApp("com.ilifesmart.mslict_gp", this);
+        }
+        else if (v.getId() == R.id.tesla) {
+            Utils.startActivity(this, TeslaOauthActivity.class);
+        }
+        else if (v.getId() == R.id.openAlbum) {
+            Utils.startActivity(this, cameraSnapActivity.class);
+        }
+        else if (v.getId() == R.id.wifi_info) {
+            Utils.startActivity(this, WifiInfoActivity.class);
+        }
+        else if (v.getId() == R.id.umeng_custom_event) {
+            Map map = new HashMap();
+            map.put("event_id", "setFav");
+            map.put("stack", "对于计算型事件不同的参数类型对应不同的计算方式，总共可以分为两大类，数值型和字符型");
+            map.put("value", "wtf..");
+            MobclickAgent.onEventObject(this, "set_fav", map);
 
-                String strBase64 = new String(Base64.encode(aes256.getBytes(), Base64.DEFAULT));
-                Log.d(TAG, "onClick: Base64 " + strBase64 + " equals " + "+vwAejYaG3N0yX9wdREEn2CGa1t08NVx4SNVcpfVM6g=".equals(strBase64));
+            Map<String, Object> ekvs = new HashMap<String, Object>();
+            ekvs.put("type", "popular");
+            ekvs.put("artist", "JJLin");
+            ekvs.put("type", "popular");
+            ekvs.put("artist", "JJLin");
+            MobclickAgent.onEventObject(this, "music", ekvs);
+        }
+        else if (v.getId() == R.id.taobao_shop) {
+            Utils.startActivity(this, TaoBaoShopActivity.class);
+        }
+        else if (v.getId() == R.id.textureViewTest) {
+            Utils.startActivity(this, TextureViewTestActivity.class);
+        }
+        else if (v.getId() == R.id.sharefile) {
+            sharePic();
+        }
+        else if (v.getId() == R.id.webview) {
+//            Utils.startActivity(this, WebViewActivity.class);
+        }
+        else if (v.getId() == R.id.mp3) {
+            UMCrash.generateCustomLog("click mpe button =======================", "UMException");
+            Utils.startActivity(this, MP3Activity.class);
+        }
+        else if (v.getId() == R.id.new_job) {
+            Utils.startActivity(this, JobActivity.class);
+        }
+        else if (v.getId() == R.id.new_fragment) {
+            Utils.startActivity(this, NewFragmentActivity.class);
+        }
+        else if (v.getId() == R.id.systemunlock) {
+            onClickAuthBySystem();
+        }
+        else if (v.getId() == R.id.screenshot) {
+            Utils.startActivity(this, ScreenSnapshotActivity.class);
+        }
+        else if (v.getId() == R.id.scale_drawable) {
+            Utils.startActivity(this, ScaleDrawableActivity.class);
+        }
+        else if (v.getId() == R.id.umeng) {
+            Utils.startActivity(this, UmengActivity.class);
+        }
+        else if (v.getId() == R.id.toActionBarActivity) {
+            Utils.startActivity(this, ActionBarActivity.class);
+        }
+        else if (v.getId() == R.id.listener_service) {
+            if (!isEnabled()) {
+                startActivity(new Intent("android.settings.ACTION_NOTIFICATION_LISTENER_SETTINGS"));
+            } else {
+                Snackbar.make(v, "权限已授予", Snackbar.LENGTH_SHORT).show();
+            }
+        }
+        else if (v.getId() == R.id.custom_sensor) {
+            Utils.startActivity(this, SensorActivity.class);
+        }
+        else if (v.getId() == R.id.encryption) {
+            String nounce = "91641833";
+            String ssid = "TP-link";
+            String pwd = "12345678";
+            String sn = "5F073DAYAJAJ3152A";
 
-                String result = nounce + "," + strBase64;
-                Log.d(TAG, "onClick: qrcode " + result);
-                break;
-            case R.id.app_shopping:
+            String sha256_encryption_source = nounce + sn + ",";
+            String aes256_encryption_source = nounce+","+ssid+","+pwd;
+            String shaKey = Utils.shaEnc256(sha256_encryption_source);
+            Log.d(TAG, "onClick: shaKey " + shaKey);
+            String aes256 = Utils.AES256Encode(aes256_encryption_source, shaKey);
+            Log.d(TAG, "onClick: aes256 " + aes256);
 
-                Utils.startActivity(this, ShopingActivity.class);
-                break;
-            case R.id.amap_for_ui:
-                Utils.startActivity(this, MapLocationActivity.class);
-                break;
-            case R.id.scroll_text:
-                v.setSelected(false);
-                v.setSelected(true);
-                break;
-            case R.id.smart_plus:
-//                Utils.startActivity(this, ArmingActivity.class);
-                break;
-            case R.id.test_for_ui:
-                Utils.startActivity(this, TestUIActivity.class);
-                break;
-            case R.id.echarts:
-                Utils.startActivity(this, com.echarts.DemoActivity.class);
-                break;
-            case R.id.white_menu:
-                Utils.startActivity(this, WhiteDemoActivity.class);
-                break;
-            case R.id.service:
-                Utils.startActivity(this, HelloServiceActivity.class);
-                break;
-            case R.id.wanandroid:
-                Utils.startActivity(this, MainActivity.class);
-                break;
-            case R.id.paged_data:
+            String strBase64 = new String(Base64.encode(aes256.getBytes(), Base64.DEFAULT));
+            Log.d(TAG, "onClick: Base64 " + strBase64 + " equals " + "+vwAejYaG3N0yX9wdREEn2CGa1t08NVx4SNVcpfVM6g=".equals(strBase64));
 
-                break;
-            case R.id.app_bar_ayout:
-                onAppbarContext(v);
-                break;
-            case R.id.uilayout:
-                Utils.startActivity(this, UILayoutActivity.class);
-                break;
-            case R.id.kotlin_conoroutine:
-                Utils.startActivity(this, KotlinDemoActivity.class);
-                break;
-            case R.id.layout:
-                Utils.startActivity(this, LayoutDemoActivity.class);
-                break;
-            case R.id.jetpack:
-                Utils.startActivity(this, JetPackActivity.class);
-                break;
-            case R.id.weather:
-                onWeather();
-                break;
-            case R.id.seekbar:
-                onSeekBar();
-                break;
-            case R.id.notification:
-                onNotification();
-                break;
-            case R.id.rotate:
-                onRotate3D();
-                break;
-            case R.id.aop_test:
-                onAop();
-                break;
-            case R.id.thread_test:
-                onThread();
-                break;
-            case R.id.framelayout:
-                onFrameLayout();
-                break;
-            case R.id.compass:
-                onCompass();
-                break;
-            case R.id.miclock:
-                onMiClock();
-                break;
-            case R.id.camrotate:
-                onCamRotate();
-                break;
-            case R.id.path:
-                startActivity(Utils.newIntent(this, CircleActivity.class));
-                break;
-            case R.id.osinfo:
-                startActivity(Utils.newIntent(this, OSInfoActivity.class));
-                break;
-            case R.id.viewpager:
-                Utils.startActivity(this, ViewPagerActivity.class);
-                break;
-            case R.id.mapper:
-                Utils.startActivity(this, MapperActivity.class);
-                break;
-            case R.id.dialog:
-                Utils.startActivity(this, DialogActivity.class);
-                break;
-            case R.id.preference:
-//                ImageUtils.clearCachedDrawable();
-                Utils.startActivity(this, SettingActivity.class);
-                break;
-            case R.id.nature_ui:
-                Utils.startActivity(this, NatureActivity.class);
-                break;
-            case R.id.spider_web:
-                Utils.startActivity(this, SpiderWebActivity.class);
-                break;
-            case R.id.mvvm:
-                Utils.startActivity(this, MVVMActivity.class);
-                break;
-            case R.id.rxjava:
-                Utils.startActivity(this, DemoActivity.class);
-                break;
-            case R.id.progress:
-                Utils.startActivity(this, ProgressActivity.class);
-                break;
-            case R.id.ViewGroup:
-                Utils.startActivity(this, GroupActivity.class);
-                break;
-            case R.id.live:
-                Utils.startActivity(this, ProgressLiveActivity.class);
-                break;
-            case R.id.curtain:
-                Utils.startActivity(this, NatureCurtainActivity.class);
-                break;
-            case R.id.barrage:
-                Utils.startActivity(this, VideoActivity.class);
-                break;
-            case R.id.bluetooth:
-                Utils.startActivity(this, BluetoothActivity.class);
-                break;
-            case R.id.fold:
-                Utils.startActivity(this, FoldActivity.class);
-                break;
-            case R.id.region:
-                Utils.startActivity(this, RegionDemoActivity.class);
-                break;
-            case R.id.span_text:
-                Utils.startActivity(this, SpannableActivity.class);
-                break;
-            case R.id.custom_surfaceview:
-                Utils.startActivity(this, SurfaceViewActivity.class);
-                break;
-            case R.id.animation:
-                Utils.startActivity(this, AnimationActivity.class);
-                break;
-            case R.id.window:
-                Utils.startActivity(this, WindowDemoActivity.class);
-                break;
-            case R.id.abstract_layout:
-                Utils.startActivity(this, AbstractActivity.class);
-                break;
-            case R.id.jni:
-                Utils.startActivity(this, JniDemoActivity.class);
-                break;
-            case R.id.miui_right_out:
-                Utils.startActivity(this, MIUIActivity.class);
-                break;
-            case R.id.imou:
-                String uid = PersistentMgr.readKV(LeChengUtils.LeChengUid, null);
-                boolean isOauth = false;
-                String token = null;
-                try {
-                    if (!TextUtils.isEmpty(uid)) {
+            String result = nounce + "," + strBase64;
+            Log.d(TAG, "onClick: qrcode " + result);
+        }
+        else if (v.getId() == R.id.app_shopping) {
+            Utils.startActivity(this, ShopingActivity.class);
+        }
+        else if (v.getId() == R.id.amap_for_ui) {
+            Utils.startActivity(this, MapLocationActivity.class);
+        }
+        else if (v.getId() == R.id.scroll_text) {
+            v.setSelected(false);
+            v.setSelected(true);
+        }
+        else if (v.getId() == R.id.smart_plus) {
+//            Utils.startActivity(this, ArmingActivity.class);
+        }
+        else if (v.getId() == R.id.test_for_ui) {
+            Utils.startActivity(this, TestUIActivity.class);
+        }
+        else if (v.getId() == R.id.echarts) {
+            Utils.startActivity(this, com.echarts.DemoActivity.class);
+        }
+        else if (v.getId() == R.id.white_menu) {
+            Utils.startActivity(this, WhiteDemoActivity.class);
+        }
+        else if (v.getId() == R.id.service) {
+            Utils.startActivity(this, HelloServiceActivity.class);
+        }
+        else if (v.getId() == R.id.wanandroid) {
+            Utils.startActivity(this, MainActivity.class);
+        }
+        else if (v.getId() == R.id.app_bar_ayout) {
+            onAppbarContext(v);
+        }
+        else if (v.getId() == R.id.uilayout) {
+            Utils.startActivity(this, UILayoutActivity.class);
+        }
+        else if (v.getId() == R.id.kotlin_conoroutine) {
+            Utils.startActivity(this, KotlinDemoActivity.class);
+        }
+        else if (v.getId() == R.id.layout) {
+            Utils.startActivity(this, LayoutDemoActivity.class);
+        }
+        else if (v.getId() == R.id.jetpack) {
+            Utils.startActivity(this, JetPackActivity.class);
+        }
+        else if (v.getId() == R.id.weather) {
+            onWeather();
+        }
+        else if (v.getId() == R.id.seekbar) {
+            onSeekBar();
+        }
+        else if (v.getId() == R.id.notification) {
+            onNotification();
+        }
+        else if (v.getId() == R.id.rotate) {
+            onRotate3D();
+        }
+        else if (v.getId() == R.id.aop_test) {
+            onAop();
+        }
+        else if (v.getId() == R.id.thread_test) {
+            onThread();
+        }
+        else if (v.getId() == R.id.framelayout) {
+            onFrameLayout();
+        }
+        else if (v.getId() == R.id.compass) {
+            onCompass();
+        }
+        else if (v.getId() == R.id.camrotate) {
+            onCamRotate();
+        }
+        else if (v.getId() == R.id.path) {
+            Utils.startActivity(this, CircleActivity.class);
+        }
+        else if (v.getId() == R.id.osinfo) {
+            Utils.startActivity(this, OSInfoActivity.class);
+        }
+        else if (v.getId() == R.id.viewpager) {
+            Utils.startActivity(this, ViewPagerActivity.class);
+        }
+        else if (v.getId() == R.id.mapper) {
+            Utils.startActivity(this, MapperActivity.class);
+        }
+        else if (v.getId() == R.id.dialog) {
+            Utils.startActivity(this, DialogActivity.class);
+        }
+        else if (v.getId() == R.id.preference) {
+            Utils.startActivity(this, SettingActivity.class);
+        }
+        else if (v.getId() == R.id.nature_ui) {
+            Utils.startActivity(this, NatureActivity.class);
+        }
+        else if (v.getId() == R.id.spider_web) {
+            Utils.startActivity(this, SpiderWebActivity.class);
+        }
+        else if (v.getId() == R.id.mvvm) {
+            Utils.startActivity(this, MVVMActivity.class);
+        }
+        else if (v.getId() == R.id.rxjava) {
+            Utils.startActivity(this, DemoActivity.class);
+        }
+        else if (v.getId() == R.id.progress) {
+            Utils.startActivity(this, ProgressActivity.class);
+        }
+        else if (v.getId() == R.id.ViewGroup) {
+            Utils.startActivity(this, GroupActivity.class);
+        }
+        else if (v.getId() == R.id.live) {
+            Utils.startActivity(this, ProgressLiveActivity.class);
+        }
+        else if (v.getId() == R.id.curtain) {
+            Utils.startActivity(this, NatureCurtainActivity.class);
+        }
+        else if (v.getId() == R.id.barrage) {
+            Utils.startActivity(this, VideoActivity.class);
+        }
+        else if (v.getId() == R.id.bluetooth) {
+            Utils.startActivity(this, BluetoothActivity.class);
+        }
+        else if (v.getId() == R.id.fold) {
+            Utils.startActivity(this, FoldActivity.class);
+        }
+        else if (v.getId() == R.id.region) {
+            Utils.startActivity(this, RegionDemoActivity.class);
+        } else if (v.getId() == R.id.span_text) {
+            Utils.startActivity(this, SpannableActivity.class);
+        } else if (v.getId() == R.id.custom_surfaceview) {
+            Utils.startActivity(this, SurfaceViewActivity.class);
+        } else if (v.getId() == R.id.animation) {
+            Utils.startActivity(this, AnimationActivity.class);
+        } else if (v.getId() == R.id.window) {
+            Utils.startActivity(this, WindowDemoActivity.class);
+        }else if (v.getId() == R.id.abstract_layout) {
+            Utils.startActivity(this, AbstractActivity.class);
+        } else if (v.getId() == R.id.jni) {
+            Utils.startActivity(this, JniDemoActivity.class);
+        } else if (v.getId() == R.id.miui_right_out) {
+            Utils.startActivity(this, MIUIActivity.class);
+        } else if (v.getId() == R.id.media) {
+            Utils.startActivity(this, MediaActivity.class);
+        } else if (v.getId() == R.id.sqlite) {
+            Utils.startActivity(this, SqliteActivity.class);
+        } else if (v.getId() == R.id.gson) {
+            Utils.startActivity(this, Gson2Activity.class);
+        } else if (v.getId() == R.id.imou) {
+            String uid = PersistentMgr.readKV(LeChengUtils.LeChengUid, null);
+            boolean isOauth = false;
+            String token = null;
+            try {
+                if (!TextUtils.isEmpty(uid)) {
 //                        long expiredTime = PersistentMgr.readKV(LeChengUtils.getLeChengStorgeKey(LeChengCameraWrapInfo.EXTRA_EXPIRETIME), 0l) + 24*3600;
-                        token = PersistentMgr.readKV(LeChengUtils.getLeChengStorgeKey(LeChengCameraWrapInfo.EXTRA_USERTOKEN), null);
+                    token = PersistentMgr.readKV(LeChengUtils.getLeChengStorgeKey(LeChengCameraWrapInfo.EXTRA_USERTOKEN), null);
 
 //                        Log.d(TAG, "onClick: expiredTime " + expiredTime);
-                        Log.d(TAG, "onClick: uid " + uid);
-                        Log.d(TAG, "onClick: token " + token);
-                        isOauth =  !TextUtils.isEmpty(token); // (expiredTime > System.currentTimeMillis()/1000) &&
-                    }
-                } catch (Exception ex) {
-                    isOauth = false;
-                    ex.printStackTrace();
+                    Log.d(TAG, "onClick: uid " + uid);
+                    Log.d(TAG, "onClick: token " + token);
+                    isOauth =  !TextUtils.isEmpty(token); // (expiredTime > System.currentTimeMillis()/1000) &&
                 }
+            } catch (Exception ex) {
+                isOauth = false;
+                ex.printStackTrace();
+            }
 
-                if (isOauth) {
-                    LeChengMomgr.getInstance().setToken(token);
-                    Intent intent = new Intent(this, DevicesListActivity.class);
-                    intent.putExtra(Intent.EXTRA_TEXT, token);
-                    startActivity(intent);
-                } else {
-                    Utils.startActivity(this, LeChengDemoActivity.class);
-                }
-                break;
-            case R.id.gson:
-                Utils.startActivity(this, Gson2Activity.class);
-                break;
-            case R.id.sqlite:
-                Utils.startActivity(this, SqliteActivity.class);
-                break;
-            case R.id.media:
-                Utils.startActivity(this, MediaActivity.class);
-                break;
-            default:
-                throw new IllegalStateException("Unexpected value: " + v.getId());
+            if (isOauth) {
+                LeChengMomgr.getInstance().setToken(token);
+                Intent intent = new Intent(this, DevicesListActivity.class);
+                intent.putExtra(Intent.EXTRA_TEXT, token);
+                startActivity(intent);
+            } else {
+                Utils.startActivity(this, LeChengDemoActivity.class);
+            }
+        }
+    }
+
+    private void sharePic() {
+
+        Log.d(TAG, "sharePic: " + Environment.getExternalStorageDirectory().getAbsolutePath());
+        File file = new File("/sdcard/lifesmart/shareimages/1562299620.jpeg");
+        if (!file.exists()) {
+            Toast.makeText(getApplicationContext(), "invalid path", Toast.LENGTH_SHORT).show();;
+            return;
+        }
+
+        Intent intent = new Intent(Intent.ACTION_SEND);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            Uri contentUri = FileProvider.getUriForFile(this, getPackageName()+".fileprovider", file);
+            intent.putExtra(Intent.EXTRA_STREAM, contentUri);
+            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_ACTIVITY_NEW_TASK);
+
+            intent.setType("image/jpeg");
+            Intent chooser = Intent.createChooser(intent, "Top 1");
+            startActivity(chooser);
         }
     }
 
@@ -784,5 +829,27 @@ public class HomeActivity extends AppCompatActivity {
             Log.d(TAG, "onActivityResult: isOK " + (resultCode == RESULT_OK));
         }
         super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    public static boolean isSupportCodec(String ffcodecname){
+        boolean supportvideo = false;
+//        int count = MediaCodecList.getCodecCount();
+//        for(int i = 0; i < count; i++)
+//        {
+//            String[] tyeps = MediaCodecList.getCodecInfoAt(i).getSupportedTypes();
+//            for(int j = 0; j < tyeps.length; j++)
+//            {
+//                if(tyeps[j].equals(findVideoCodecName(ffcodecname)))
+//                {
+//                    supportvideo = true;
+//                    break;
+//                }
+//            }
+//            if(supportvideo)
+//            {
+//                break;
+//            }
+//        }
+        return supportvideo;
     }
 }

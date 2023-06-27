@@ -10,22 +10,18 @@ import android.widget.TextView;
 import com.ilifesmart.ui.Custom3DView;
 import com.ilifesmart.weather.R;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 public class Rotate3DActivity extends AppCompatActivity {
 
-    @BindView(R.id.camera)
     Custom3DView mCamera;
-    @BindView(R.id.text)
     TextView mText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_rotate3_d);
-        ButterKnife.bind(this);
+        mCamera = findViewById(R.id.camera);
+        mText = findViewById(R.id.text);
 
         mCamera.removeAllViewsInLayout();
         for (int i = 0; i < 3; i++) {
@@ -35,7 +31,6 @@ public class Rotate3DActivity extends AppCompatActivity {
         }
     }
 
-    @OnClick(R.id.text)
     public void onViewClicked() {
 
     }

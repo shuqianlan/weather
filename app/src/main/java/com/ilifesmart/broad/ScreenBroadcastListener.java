@@ -1,10 +1,11 @@
 package com.ilifesmart.broad;
 
-import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.ilifesmart.live.SinglePixelActivity;
 
@@ -53,7 +54,7 @@ public class ScreenBroadcastListener {
 
 	public static class ScreenManager {
 		private Context mContext;
-		private WeakReference<Activity> mActivityWeakReference;
+		private WeakReference<AppCompatActivity> mActivityWeakReference;
 		public static ScreenManager mDefault;
 
 		public ScreenManager(Context context) {
@@ -68,7 +69,7 @@ public class ScreenBroadcastListener {
 			return mDefault;
 		}
 
-		public void setActivity(Activity activity) {
+		public void setActivity(AppCompatActivity activity) {
 			mActivityWeakReference = new WeakReference<>(activity);
 		}
 
@@ -78,7 +79,7 @@ public class ScreenBroadcastListener {
 
 		public void finishActivity() {
 			if (mActivityWeakReference != null) {
-				Activity activity = mActivityWeakReference.get();
+				AppCompatActivity activity = mActivityWeakReference.get();
 				if (activity != null && !activity.isFinishing()) {
 					activity.finish();
 				}

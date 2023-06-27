@@ -21,26 +21,23 @@ import com.ilifesmart.weather.R;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-
 public class ViewPagerActivity extends AppCompatActivity {
 
 	public static final String TAG = "ViewPagerActivity";
-	@BindView(R.id.viewpager)
 	ViewPager mViewpager;
-	@BindView(R.id.linear_cont)
 	LinearLayout mLinearCont;
 	private final List<View> mViews = new ArrayList<>();
 	private final List<View> mPointDots = new ArrayList<>();
-	@BindView(R.id.cont)
 	ConstraintLayout mCont;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_view_pager);
-		ButterKnife.bind(this);
+		mViewpager = findViewById(R.id.viewpager);
+		mLinearCont = findViewById(R.id.linear_cont);
+		mCont = findViewById(R.id.cont);
+
 
 		initialize();
 		initPageAdapter();

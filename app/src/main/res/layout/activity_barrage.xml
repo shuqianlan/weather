@@ -60,6 +60,7 @@
                     android:layout_weight="1"
                     android:background="@drawable/stroke_background"
                     android:layout_marginLeft="2dp"
+                    android:onClick="onViewClicked"
                     android:text="倍速(0.5)"
                     />
                 <Button
@@ -69,6 +70,7 @@
                     android:layout_weight="1"
                     android:background="@drawable/stroke_background"
                     android:layout_marginLeft="2dp"
+                    android:onClick="onViewClicked"
                     android:text="倍速(1.0)"
                     />
                 <Button
@@ -78,6 +80,7 @@
                     android:layout_weight="1"
                     android:background="@drawable/stroke_background"
                     android:layout_marginLeft="2dp"
+                    android:onClick="onViewClicked"
                     android:text="倍速(1.5)"
                     />
                 <Button
@@ -88,6 +91,7 @@
                     android:background="@drawable/stroke_background"
                     android:layout_marginLeft="2dp"
                     android:text="倍速(2.0)"
+                    android:onClick="onViewClicked"
                     />
             </TableRow>
         </TableLayout>

@@ -3,36 +3,31 @@ package com.ilifesmart.live;
 import android.content.Intent;
 import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.view.View;
 import android.widget.Button;
 
 import com.ilifesmart.utils.Utils;
 import com.ilifesmart.weather.R;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
-
 public class ProgressLiveActivity extends AppCompatActivity {
 
-	@BindView(R.id.singlepixel)
 	Button mSinglepixel;
-	@BindView(R.id.foreground_service)
 	Button mForegroundService;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_progress_live);
-		ButterKnife.bind(this);
+		mSinglepixel = findViewById(R.id.singlepixel);
+		mForegroundService = findViewById(R.id.foreground_service);
 	}
 
-	@OnClick(R.id.singlepixel)
-	public void onSinglepixelClicked() {
+	public void onSinglepixelClicked(View v) {
 		Utils.startActivity(this, SinglePixelActivity.class);
 	}
 
-	@OnClick(R.id.foreground_service)
-	public void onMForegroundServiceClicked() {
+	public void onMForegroundServiceClicked(View v) {
 		startService(new Intent(this, KeepLiveService.class));
 	}
 }

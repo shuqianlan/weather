@@ -25,7 +25,7 @@
         android:id="@+id/selected"
         app:layout_constraintTop_toTopOf="@id/text"
         app:layout_constraintBottom_toBottomOf="@id/text"
-        android:src="@drawable/selected"
+        app:srcCompat="@drawable/selected"
         android:visibility="invisible"
         />
 </androidx.constraintlayout.widget.ConstraintLayout>

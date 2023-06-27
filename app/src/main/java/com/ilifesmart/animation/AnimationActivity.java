@@ -30,31 +30,17 @@ import com.ilifesmart.weather.R;
 
 import java.util.Arrays;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
-
 public class AnimationActivity extends AppCompatActivity {
 
-	@BindView(R.id.sample)
 	ImageView mSample;
-	@BindView(R.id.adddel)
 	LinearLayout mAdddel;
-	@BindView(R.id.auto)
 	LinearLayout mAuto;
-	@BindView(R.id.blur_text)
 	BlurText mBlurText;
-	@BindView(R.id.xfermode)
 	XfermodeView mXfermode;
-	@BindView(R.id.custom_image)
 	ImageView mCustomImage;
-	@BindView(R.id.blur_reshader_image_3)
 	ImageView mShineImage;
-	@BindView(R.id.blur_alpha_image_2)
 	ImageView mShine2Image;
-	@BindView(R.id.src_image_1)
 	ImageView mShine1Image;
-	@BindView(R.id.blur_image)
 	BlurImgageView mBlurImage;
 
 	private Animator mTelephoneAnimator;
@@ -63,7 +49,18 @@ public class AnimationActivity extends AppCompatActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_animation);
-		ButterKnife.bind(this);
+
+		mSample = findViewById(R.id.sample);
+		mAdddel = findViewById(R.id.adddel);
+		mAuto = findViewById(R.id.auto);
+		mBlurText = findViewById(R.id.blur_text);
+		mBlurImage = findViewById(R.id.blur_image);
+		mXfermode = findViewById(R.id.xfermode);
+		mCustomImage = findViewById(R.id.custom_image);
+		mShine1Image = findViewById(R.id.src_image_1);
+		mShine2Image = findViewById(R.id.blur_alpha_image_2);
+		mShineImage = findViewById(R.id.blur_reshader_image_3);
+
 
 		initialize();
 	}
@@ -123,8 +120,7 @@ public class AnimationActivity extends AppCompatActivity {
 		mShineImage.setImageBitmap(shineBitmap);
 	}
 
-	@OnClick(R.id.start_stop)
-	public void onViewClicked() {
+	public void onStatusClicked(View v) {
 
 		Keyframe frame0 = Keyframe.ofFloat(0.0f, 0);
 		Keyframe frame1 = Keyframe.ofFloat(0.1f, -20);
@@ -155,21 +151,15 @@ public class AnimationActivity extends AppCompatActivity {
 		}
 	}
 
-	@OnClick({R.id.add, R.id.del, R.id.add2, R.id.del2})
 	public void onViewClicked(View v) {
-		switch (v.getId()) {
-			case R.id.add:
-				onAdd(mAdddel);
-				break;
-			case R.id.del:
-				onDel(mAdddel);
-				break;
-			case R.id.add2:
-				onAdd(mAuto);
-				break;
-			case R.id.del2:
-				onDel(mAuto);
-				break;
+		if (v.getId() == R.id.add) {
+			onAdd(mAdddel);
+		} else if(v.getId() == R.id.del) {
+			onDel(mAdddel);
+		} else if(v.getId() == R.id.add2) {
+			onAdd(mAuto);
+		} else if(v.getId() == R.id.del2) {
+			onDel(mAuto);
 		}
 	}
 
@@ -196,80 +186,55 @@ public class AnimationActivity extends AppCompatActivity {
 		}
 	}
 
-	@OnClick({R.id.blur_inner, R.id.blur_outer, R.id.blur_normal, R.id.blur_solid})
 	public void onBlurStyle(View v) {
-		switch (v.getId()) {
-			case R.id.blur_inner:
-				mBlurText.setMaskFilter(BlurMaskFilter.Blur.INNER);
-				mBlurImage.setBlurMode(BlurMaskFilter.Blur.INNER);
-				break;
-			case R.id.blur_outer:
-				mBlurText.setMaskFilter(BlurMaskFilter.Blur.OUTER);
-				mBlurImage.setBlurMode(BlurMaskFilter.Blur.OUTER);
-				break;
-			case R.id.blur_normal:
-				mBlurText.setMaskFilter(BlurMaskFilter.Blur.NORMAL);
-				mBlurImage.setBlurMode(BlurMaskFilter.Blur.NORMAL);
-				break;
-			case R.id.blur_solid:
-				mBlurText.setMaskFilter(BlurMaskFilter.Blur.SOLID);
-				mBlurImage.setBlurMode(BlurMaskFilter.Blur.SOLID);
-				break;
+		if (v.getId() == R.id.blur_inner) {
+			mBlurText.setMaskFilter(BlurMaskFilter.Blur.INNER);
+			mBlurImage.setBlurMode(BlurMaskFilter.Blur.INNER);
+		} else if (v.getId() == R.id.blur_outer) {
+			mBlurText.setMaskFilter(BlurMaskFilter.Blur.OUTER);
+			mBlurImage.setBlurMode(BlurMaskFilter.Blur.OUTER);
+		} else if (v.getId() == R.id.blur_normal) {
+			mBlurText.setMaskFilter(BlurMaskFilter.Blur.NORMAL);
+			mBlurImage.setBlurMode(BlurMaskFilter.Blur.NORMAL);
+		} else if (v.getId() == R.id.blur_solid) {
+			mBlurText.setMaskFilter(BlurMaskFilter.Blur.SOLID);
+			mBlurImage.setBlurMode(BlurMaskFilter.Blur.SOLID);
 		}
-
 	}
 
-	@OnClick({R.id.xfermode_clear, R.id.xfermode_src, R.id.xfermode_dst, R.id.xfermode_srcover, R.id.xfermode_dstover, R.id.xfermode_srcin, R.id.xfermode_dstin, R.id.xfermode_srcout, R.id.xfermode_dstout, R.id.xfermode_srcatop, R.id.xfermode_dstatop, R.id.xfermode_xor, R.id.xfermode_darken, R.id.xfermode_lighten, R.id.xfermode_multiply, R.id.xfermode_screen})
 	public void onXfermodeClicked(View view) {
-		switch (view.getId()) {
-			case R.id.xfermode_clear:
-				mXfermode.setXfermode(PorterDuff.Mode.CLEAR);
-				break;
-			case R.id.xfermode_src:
-				mXfermode.setXfermode(PorterDuff.Mode.SRC);
-				break;
-			case R.id.xfermode_dst:
-				mXfermode.setXfermode(PorterDuff.Mode.DST);
-				break;
-			case R.id.xfermode_srcover:
-				mXfermode.setXfermode(PorterDuff.Mode.SRC_OVER);
-				break;
-			case R.id.xfermode_dstover:
-				mXfermode.setXfermode(PorterDuff.Mode.DST_OVER);
-				break;
-			case R.id.xfermode_srcin:
-				mXfermode.setXfermode(PorterDuff.Mode.SRC_IN);
-				break;
-			case R.id.xfermode_dstin:
-				mXfermode.setXfermode(PorterDuff.Mode.DST_IN);
-				break;
-			case R.id.xfermode_srcout:
-				mXfermode.setXfermode(PorterDuff.Mode.SRC_OUT);
-				break;
-			case R.id.xfermode_dstout:
-				mXfermode.setXfermode(PorterDuff.Mode.DST_OUT);
-				break;
-			case R.id.xfermode_srcatop:
-				mXfermode.setXfermode(PorterDuff.Mode.SRC_ATOP);
-				break;
-			case R.id.xfermode_dstatop:
-				mXfermode.setXfermode(PorterDuff.Mode.DST_ATOP);
-				break;
-			case R.id.xfermode_xor:
-				mXfermode.setXfermode(PorterDuff.Mode.XOR);
-				break;
-			case R.id.xfermode_darken:
-				mXfermode.setXfermode(PorterDuff.Mode.DARKEN);
-				break;
-			case R.id.xfermode_lighten:
-				mXfermode.setXfermode(PorterDuff.Mode.LIGHTEN);
-				break;
-			case R.id.xfermode_multiply:
-				mXfermode.setXfermode(PorterDuff.Mode.MULTIPLY);
-				break;
-			case R.id.xfermode_screen:
-				mXfermode.setXfermode(PorterDuff.Mode.SCREEN);
-				break;
+		if (view.getId() == R.id.xfermode_clear) {
+			mXfermode.setXfermode(PorterDuff.Mode.CLEAR);
+		} else if (view.getId() == R.id.xfermode_src) {
+			mXfermode.setXfermode(PorterDuff.Mode.SRC);
+		} else if (view.getId() == R.id.xfermode_dst) {
+			mXfermode.setXfermode(PorterDuff.Mode.DST);
+		} else if (view.getId() == R.id.xfermode_srcover) {
+			mXfermode.setXfermode(PorterDuff.Mode.SRC_OVER);
+		} else if (view.getId() == R.id.xfermode_dstover) {
+			mXfermode.setXfermode(PorterDuff.Mode.DST_OVER);
+		} else if (view.getId() == R.id.xfermode_srcin) {
+			mXfermode.setXfermode(PorterDuff.Mode.SRC_IN);
+		} else if (view.getId() == R.id.xfermode_dstin) {
+			mXfermode.setXfermode(PorterDuff.Mode.DST_IN);
+		} else if (view.getId() == R.id.xfermode_srcout) {
+			mXfermode.setXfermode(PorterDuff.Mode.SRC_OUT);
+		} else if (view.getId() == R.id.xfermode_dstout) {
+			mXfermode.setXfermode(PorterDuff.Mode.DST_OUT);
+		} else if (view.getId() == R.id.xfermode_srcatop) {
+			mXfermode.setXfermode(PorterDuff.Mode.SRC_ATOP);
+		} else if (view.getId() == R.id.xfermode_dstatop) {
+			mXfermode.setXfermode(PorterDuff.Mode.DST_ATOP);
+		} else if (view.getId() == R.id.xfermode_xor) {
+			mXfermode.setXfermode(PorterDuff.Mode.XOR);
+		} else if (view.getId() == R.id.xfermode_darken) {
+			mXfermode.setXfermode(PorterDuff.Mode.DARKEN);
+		} else if (view.getId() == R.id.xfermode_lighten) {
+			mXfermode.setXfermode(PorterDuff.Mode.LIGHTEN);
+		} else if (view.getId() == R.id.xfermode_multiply) {
+			mXfermode.setXfermode(PorterDuff.Mode.MULTIPLY);
+		} else if (view.getId() == R.id.xfermode_screen) {
+			mXfermode.setXfermode(PorterDuff.Mode.SCREEN);
 		}
 	}
 

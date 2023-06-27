@@ -1,6 +1,6 @@
 package com.ilifesmart.ui
 
-import android.app.Activity
+import androidx.appcompat.app.AppCompatActivity
 import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Color
@@ -69,7 +69,7 @@ class MIUILayoutRightToLeave @JvmOverloads constructor(
 
         if (event.action == MotionEvent.ACTION_UP) {
             if (distanceX >= MAX_RIGHT_DISTANCE) {
-                (context as? Activity)?.finish()
+                (context as? AppCompatActivity)?.finish()
             } else if(distanceX <= -MAX_RIGHT_DISTANCE) {
               // println("HAHA ============= TODO ")
             } else {

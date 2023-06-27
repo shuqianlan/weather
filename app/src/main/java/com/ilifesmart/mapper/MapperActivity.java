@@ -3,6 +3,7 @@ package com.ilifesmart.mapper;
 import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 
 import com.ilifesmart.listener.INotiListener;
@@ -11,14 +12,10 @@ import com.ilifesmart.weather.R;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 public class MapperActivity extends AppCompatActivity {
 
 	public static final String TAG = "MapperActivity";
-	@BindView(R.id.button3)
 	Button mButton3;
 	private MOBase mo;
 	private MOBase alias;
@@ -28,13 +25,12 @@ public class MapperActivity extends AppCompatActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_mapper);
-		ButterKnife.bind(this);
 
+		mButton3 = findViewById(R.id.button3);
 		mo = new MOBase();
 	}
 
-	@OnClick(R.id.button3)
-	public void onViewClicked() {
+	public void onViewClicked(View v) {
 		setRegister(mo, new INotiListener() {
 			@Override
 			public void onChg(MOBase mo) {

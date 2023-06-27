@@ -1,17 +1,23 @@
 package com.imou.ui;
 
-import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import android.util.Log;
-import android.view.*;
+import android.view.Gravity;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.PopupWindow;
 import android.widget.TextView;
-import butterknife.ButterKnife;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.ilifesmart.utils.DensityUtils;
 import com.ilifesmart.weather.R;
 import com.imou.ChannelInfo;
@@ -22,14 +28,15 @@ import com.imou.json.BindDeviceLiveM3U8Response;
 import com.imou.json.DeviceSnapResponse;
 import com.imou.json.LeChengResponse;
 import com.imou.json.RecoverSDCardResponse;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import io.reactivex.Flowable;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class PopupCategoryWindow extends PopupWindow {
 
@@ -84,7 +91,6 @@ public class PopupCategoryWindow extends PopupWindow {
         mContView = (RecyclerView) LayoutInflater.from(context).inflate(R.layout.popup_lecheng_category, null, false);
         setContentView(mContView);
 
-        ButterKnife.bind(this, mContView);
         initialize();
     }
 
@@ -102,17 +108,17 @@ public class PopupCategoryWindow extends PopupWindow {
     }
 
     public void show() {
-        if (mContext instanceof Activity) {
-            ViewGroup group = ((Activity) mContext).findViewById(Window.ID_ANDROID_CONTENT);
+        if (mContext instanceof AppCompatActivity) {
+            ViewGroup group = ((AppCompatActivity) mContext).findViewById(Window.ID_ANDROID_CONTENT);
             darkenBackground(0.6f);
             showAsDropDown(group, 0, -mWindowHeight, Gravity.START);
         }
     }
 
     private void darkenBackground(float alpha) {
-        WindowManager.LayoutParams lp = ((Activity)mContext).getWindow().getAttributes();
+        WindowManager.LayoutParams lp = ((AppCompatActivity)mContext).getWindow().getAttributes();
         lp.alpha = alpha;
-        ((Activity)mContext).getWindow().setAttributes(lp);
+        ((AppCompatActivity)mContext).getWindow().setAttributes(lp);
     }
 
 //    private void onDismiss(String code) {

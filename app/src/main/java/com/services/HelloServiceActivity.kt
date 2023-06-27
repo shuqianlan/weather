@@ -2,16 +2,16 @@ package com.services
 
 import android.content.Intent
 import android.os.Bundle
+import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import com.ilifesmart.weather.R
-import kotlinx.android.synthetic.main.activity_hello_service.*
 
 class HelloServiceActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_hello_service)
 
-        start_service.setOnClickListener {
+        findViewById<Button>(R.id.start_service).setOnClickListener {
             Intent(this, HelloService::class.java).also {
                 it.putExtra(HelloService.EXTRA_KEY, "Hello,World!")
                 it.putExtra(HelloService.EXTRA_AUTO_CLOSE, false)
@@ -20,7 +20,7 @@ class HelloServiceActivity : AppCompatActivity() {
 
         }
 
-        stop_service.setOnClickListener {
+        findViewById<Button>(R.id.stop_service).setOnClickListener {
             Intent(this, HelloService::class.java).also {
                 it.putExtra(HelloService.EXTRA_KEY, "Hello,World!")
                 it.putExtra(HelloService.EXTRA_AUTO_CLOSE, true)
@@ -30,7 +30,7 @@ class HelloServiceActivity : AppCompatActivity() {
         }
 
 
-        start_fround_service.setOnClickListener {
+        findViewById<Button>(R.id.start_fround_service).setOnClickListener {
             Intent(this, HelloService::class.java).also {
                 it.putExtra(HelloService.EXTRA_KEY, "Hello,World!")
                 it.putExtra(HelloService.EXTRA_AUTO_CLOSE, false)
@@ -40,7 +40,7 @@ class HelloServiceActivity : AppCompatActivity() {
         }
 
 
-        stop_fround_service.setOnClickListener {
+        findViewById<Button>(R.id.stop_fround_service).setOnClickListener {
             Intent(this, HelloService::class.java).also {
                 it.putExtra(HelloService.EXTRA_KEY, "Hello,World!")
                 it.putExtra(HelloService.EXTRA_AUTO_CLOSE, false)

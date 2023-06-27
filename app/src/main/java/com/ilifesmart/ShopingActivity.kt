@@ -4,9 +4,9 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
+import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import com.ilifesmart.weather.R
-import kotlinx.android.synthetic.main.activity_shoping.*
 import java.util.regex.Pattern
 
 class ShopingActivity : AppCompatActivity() {
@@ -14,14 +14,14 @@ class ShopingActivity : AppCompatActivity() {
 		super.onCreate(savedInstanceState)
 		setContentView(R.layout.activity_shoping)
 		
-		tobao_product_detail.setOnClickListener {
+		findViewById<Button>(R.id.tobao_product_detail).setOnClickListener {
 			Intent(Intent.ACTION_VIEW, Uri.parse("https://item.taobao.com/item.htm?id=615676811592")).apply {
 				this.setClassName("com.taobao.taobao", "com.taobao.tao.detail.activity.DetailActivity")
 				startActivity(this)
 			}
 		}
 		
-		tobao_shop.setOnClickListener {
+		findViewById<Button>(R.id.tobao_shop).setOnClickListener {
 			
 			val shopUrl= "https://lifesmart.tmall.com/?shop_id=111046982"
 			Intent(Intent.ACTION_VIEW, Uri.parse(shopUrl)).apply {
@@ -31,7 +31,7 @@ class ShopingActivity : AppCompatActivity() {
 		}
 		
 		// 京东。
-		jd_product_detail.setOnClickListener {
+		findViewById<Button>(R.id.jd_product_detail).setOnClickListener {
 			var detail_url = "https://item.jd.com/10574296249.html"
 			var target_url:String? = null
 			val m = Pattern.compile("\\D*(\\d*).*").matcher(detail_url)
@@ -44,7 +44,7 @@ class ShopingActivity : AppCompatActivity() {
 			}
 		}
 		
-		jd_shop.setOnClickListener {
+		findViewById<Button>(R.id.jd_shop).setOnClickListener {
 			val JDShopId = "192933"
 			val url = """openApp.jdMobile://virtual?params={"category":"jump","des":"jshopMain","shopId":"$JDShopId","sourceType":"M_sourceFrom","sourceValue":"dp"}""";
 			Intent(Intent.ACTION_VIEW,Uri.parse(url)).apply {

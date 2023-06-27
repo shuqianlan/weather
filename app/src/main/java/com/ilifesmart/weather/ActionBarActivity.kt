@@ -9,10 +9,9 @@ import android.text.style.ForegroundColorSpan
 import android.text.style.UnderlineSpan
 import android.util.Log
 import android.view.MenuItem
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.spannableText.MyClickableSpan
-import com.spannableText.SpannableActivity
-import kotlinx.android.synthetic.main.activity_action_bar.*
 
 class ActionBarActivity : AppCompatActivity() {
 	
@@ -56,10 +55,10 @@ class ActionBarActivity : AppCompatActivity() {
 		val underlineSpanSpan = UnderlineSpan()
 		string.setSpan(underlineSpanSpan, prefix_policy.length, policy_text.length, Spanned.SPAN_INCLUSIVE_INCLUSIVE)
 		
-		policy.movementMethod = LinkMovementMethod.getInstance()
-		policy.text = string
-		
-		policy.setOnClickListener {
+		findViewById<TextView>(R.id.policy).movementMethod = LinkMovementMethod.getInstance()
+		findViewById<TextView>(R.id.policy).text = string
+
+		findViewById<TextView>(R.id.policy).setOnClickListener {
 			Log.d(TAG, "initView: clicked policy")
 		}
 	}

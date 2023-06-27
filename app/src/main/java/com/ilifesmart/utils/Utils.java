@@ -1,17 +1,20 @@
 package com.ilifesmart.utils;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
 import android.graphics.Bitmap;
-import androidx.appcompat.app.AlertDialog;
-
 import android.os.Build;
 import android.text.TextUtils;
 import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Toast;
+
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.biometric.BiometricManager;
 
 import com.ilifesmart.weather.R;
 
@@ -33,7 +36,6 @@ import javax.crypto.NoSuchPaddingException;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 
-import androidx.biometric.BiometricManager;
 import wseemann.media.FFmpegMediaMetadataRetriever;
 
 public class Utils {
@@ -53,11 +55,11 @@ public class Utils {
         return isDoubleClick;
     }
 
-    public static Intent newIntent(Context context, Class<? extends Activity> cls) {
+    public static Intent newIntent(Context context, Class<? extends AppCompatActivity> cls) {
         return new Intent(context, cls);
     }
 
-    public static void startActivity(Context context, Class<? extends Activity> cls) {
+    public static void startActivity(Context context, Class<? extends AppCompatActivity> cls) {
         context.startActivity(newIntent(context, cls));
     }
 
@@ -250,4 +252,27 @@ public class Utils {
 
         return result;
     }
+
+    private static boolean isThirdAPPInstalled(String pkg, Context context) {
+        PackageInfo info = null;
+        try {
+            info = context.getPackageManager().getPackageInfo(pkg, 0);
+        } catch (Exception ex) {
+
+        }
+
+        return info != null;
+    }
+
+    public static void startThirdApp(String pkg, Context context) {
+        if (!isThirdAPPInstalled(pkg, context)) {
+            Toast.makeText(context, "APP未安装", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        Intent intent = context.getPackageManager().getLaunchIntentForPackage(pkg);
+        if (null != intent) { context.startActivity(intent); }
+    }
+
+
 }

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
               android:layout_height="251dp"
               android:orientation="vertical"
               android:background="@android:color/white">
@@ -33,7 +34,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
-                android:src="@drawable/list_btn_deletedevice"/>
+                app:srcCompat="@drawable/list_btn_deletedevice"/>
 
     </RelativeLayout>
 
@@ -56,32 +57,37 @@
                     android:id="@+id/list_device_livevideo"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:onClick="onClick"
                     android:layout_weight="1"
-                    android:src="@drawable/list_btn_livevideo"/>
+                    app:srcCompat="@drawable/list_btn_livevideo"/>
             <ImageView
                     android:id="@+id/list_device_localvideo"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:src="@drawable/list_btn_localvideo"/>
+                android:onClick="onClick"
+                    app:srcCompat="@drawable/list_btn_localvideo"/>
             <ImageView
                     android:id="@+id/list_device_cloudvideo"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:src="@drawable/list_btn_cloudvideo"/>
+                android:onClick="onClick"
+                    app:srcCompat="@drawable/list_btn_cloudvideo"/>
             <ImageView
                     android:id="@+id/list_device_message"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                android:onClick="onClick"
                     android:layout_weight="1"
-                    android:src="@drawable/list_btn_message"/>
+                    app:srcCompat="@drawable/list_btn_message"/>
             <ImageView
                     android:id="@+id/list_device_setting"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:src="@drawable/list_btn_setting"/>
+                android:onClick="onClick"
+                    app:srcCompat="@drawable/list_btn_setting"/>
         </LinearLayout>
 
         <!-- 遮罩 -->
@@ -95,7 +101,7 @@
             <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/list_icon_offline"/>
+                    app:srcCompat="@drawable/list_icon_offline"/>
         </LinearLayout>
     </RelativeLayout>
 
