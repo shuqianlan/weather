@@ -1,6 +1,6 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
-apply plugin: 'com.google.gms.google-services'
+//apply plugin: 'com.google.gms.google-services'
 apply plugin: 'kotlin-parcelize'
 //apply plugin: 'io.github.wurensen.android-aspectjx'
 
@@ -173,6 +173,7 @@ dependencies {
     implementation 'androidx.biometric:biometric:1.2.0-alpha04'
     implementation "com.google.accompanist:accompanist-appcompat-theme:0.28.0"
     implementation("androidx.compose.runtime:runtime:1.4.2")
+    implementation 'org.nanohttpd:nanohttpd:2.3.1'
 
     constraints {
         implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.7.10") {

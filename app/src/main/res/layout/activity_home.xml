@@ -29,6 +29,17 @@
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:background="@drawable/stroke_background"
+                android:id="@+id/nanoHttp"
+                android:text="NanoHttp验证"
+                android:textAllCaps="false"
+                android:layout_gravity="center"
+                android:clickable="true"
+                />
+
+            <Button android:onClick="onClick"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:background="@drawable/stroke_background"
                 android:id="@+id/get_system_android_id"
                 android:text="[ 获取ANDROID ID ] AOP验证"
                 android:textAllCaps="false"

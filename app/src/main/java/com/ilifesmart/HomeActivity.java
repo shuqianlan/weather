@@ -73,6 +73,7 @@ import com.ilifesmart.weather.DeepLinkActivity;
 import com.ilifesmart.weather.JobActivity;
 import com.ilifesmart.weather.MP3Activity;
 import com.ilifesmart.weather.MobileLocationActivity;
+import com.ilifesmart.weather.NanoHttpActivity;
 import com.ilifesmart.weather.NewFragmentActivity;
 import com.ilifesmart.weather.R;
 import com.ilifesmart.weather.ScaleDrawableActivity;
@@ -98,6 +99,7 @@ import com.whitelist.WhiteDemoActivity;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.BitSet;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -116,6 +118,8 @@ public class HomeActivity extends AppCompatActivity {
         mPermissions.add(Manifest.permission.READ_PHONE_STATE);
         mPermissions.add(Manifest.permission.ACCESS_FINE_LOCATION);
         mPermissions.add(Manifest.permission.WRITE_EXTERNAL_STORAGE);
+        mPermissions.add(Manifest.permission.READ_EXTERNAL_STORAGE);
+        mPermissions.add(Manifest.permission.MANAGE_EXTERNAL_STORAGE);
     }
 
     Button mWeather;
@@ -124,6 +128,33 @@ public class HomeActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         MobclickAgent.onPageStart("Home");
+
+        String binary = "11000100111001110011110001010100";
+        int sizeInBits = 32; // 指定位数大小（这里假设为 32）
+
+        BitSet bitset = new BitSet();
+        for (int i = 0; i < sizeInBits; i++) {
+            if (binary.charAt(i) == '1') {
+                bitset.set(sizeInBits - i - 1);
+            } else {
+                bitset.clear(sizeInBits - i - 1);
+            }
+        }
+
+        float result = Float.intBitsToFloat((bitset.toByteArray())[0]);
+        Log.d(TAG, "onResume: result " + result + " ai= " + binaryToFloat(binary));
+    }
+
+    // 将二进制字符串转为无符号浮点数
+    private float binaryToFloat(String binary) {
+        int sizeInBits = 32; // 指定位数大小（这里假设为 32）
+        BitSet bitset = new BitSet();
+        for (int i = 0; i < sizeInBits; i++) {
+            if (binary.charAt(i) == '1') {
+                bitset.set(sizeInBits - i - 1);
+            }
+        }
+        return Float.intBitsToFloat(bitset.toByteArray()[0]);
     }
 
     @Override
@@ -466,8 +497,9 @@ public class HomeActivity extends AppCompatActivity {
         if (v.getId() == R.id.get_system_android_id) {
             String androidid = Settings.System.getString(getContentResolver(), Settings.Secure.ANDROID_ID);
             Log.d(TAG, "onClick: getAndroidID " + androidid);
-        }
-        else if (v.getId() == R.id.lecam_password) {
+        } else if (v.getId() == R.id.nanoHttp) {
+            Utils.startActivity(this, NanoHttpActivity.class);
+        } else if (v.getId() == R.id.lecam_password) {
             try {
 //                    LeCameraUtils.check();
                 A.main(new String[]{});

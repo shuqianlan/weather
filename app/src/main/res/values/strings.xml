@@ -27,7 +27,7 @@
     <string name="video_monitor_sound_close">声音关闭</string>
     <string name="video_monitor_sound_open">声音打开</string>
     <string name="video_monitor_media_record">开始录制</string>
-    <string name="deeplink">"<p>打开LSAPP<a href="lifesmartapp://openapp.com"/></p>"</string>
+    <string name="deeplink">"<p>打开LSAPP<a href="lifesmartapp://openapp.com" /></p>"</string>
 
     <string name="lecheng_login_admin">管理员模式</string>
     <string name="lecheng_login_user">用户模式</string>
