@@ -11,8 +11,8 @@ class MyNanoHttp(port:Int, private var rootPath:String): NanoHTTPD(port) {
 
     override fun serve(session: IHTTPSession?): Response {
         val uri = session?.uri
-        if (uri?.isNotEmpty() == true && uri.startsWith("/mgapkg/")) {
-            return try {
+        return if (uri?.isNotEmpty() == true && uri.startsWith("/mgapkg/")) {
+            try {
                 val filePath = "$rootPath${uri.substring("/mgapkg".length)}"
                 val file = File(filePath)
 
@@ -24,8 +24,8 @@ class MyNanoHttp(port:Int, private var rootPath:String): NanoHTTPD(port) {
             } catch (ex:Throwable) {
                 newFixedLengthResponse(Response.Status.BAD_REQUEST, "application/json", fileNotExisted)
             }
+        } else {
+            newFixedLengthResponse(Response.Status.BAD_REQUEST, "application/json", invalidParams)
         }
-
-        return newFixedLengthResponse(Response.Status.BAD_REQUEST, "application/json", invalidParams)
     }
 }
