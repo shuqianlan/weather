@@ -11,23 +11,25 @@ class NanoHttpActivity : AppCompatActivity() {
     companion object {
         val TAG = "AppCompatActivity"
     }
-    lateinit var nanoHttpClient: MyNanoHttp
+    private var nanoHttpClient: MyNanoHttp? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_nano_http)
 
-        nanoHttpClient = MyNanoHttp(8090, getExternalFilesDir("mgapkg")?.absolutePath)
+        getExternalFilesDir("mgapkg")?.apply {
+            nanoHttpClient = MyNanoHttp(8090, absolutePath)
+        }
     }
 
     override fun onResume() {
         super.onResume()
 
-        nanoHttpClient.start()
+        nanoHttpClient?.start()
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        nanoHttpClient.closeAllConnections()
+        nanoHttpClient?.closeAllConnections()
     }
 }
