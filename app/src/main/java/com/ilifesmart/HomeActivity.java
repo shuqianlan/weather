@@ -23,15 +23,23 @@ import android.os.Environment;
 import android.provider.Settings;
 import android.text.TextUtils;
 import android.util.Base64;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.Toast;
 
 import androidx.core.content.FileProvider;
+import androidx.core.util.Consumer;
+import androidx.window.java.layout.WindowInfoTrackerCallbackAdapter;
+import androidx.window.layout.DisplayFeature;
+import androidx.window.layout.FoldingFeature;
+import androidx.window.layout.WindowInfoTracker;
+import androidx.window.layout.WindowLayoutInfo;
 
 import com.amap.MapLocationActivity;
 import com.db.SqliteActivity;
@@ -70,7 +78,9 @@ import com.ilifesmart.utils.Utils;
 import com.ilifesmart.viewpager.ViewPagerActivity;
 import com.ilifesmart.weather.ActionBarActivity;
 import com.ilifesmart.weather.DeepLinkActivity;
+import com.ilifesmart.weather.ImageViewActivity;
 import com.ilifesmart.weather.JobActivity;
+import com.ilifesmart.weather.LottieViewActivity;
 import com.ilifesmart.weather.MP3Activity;
 import com.ilifesmart.weather.MobileLocationActivity;
 import com.ilifesmart.weather.NanoHttpActivity;
@@ -103,9 +113,17 @@ import java.util.BitSet;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
 
 import static androidx.biometric.BiometricManager.Authenticators.BIOMETRIC_STRONG;
 import static androidx.biometric.BiometricManager.Authenticators.DEVICE_CREDENTIAL;
+
+import kotlin.Unit;
+import kotlin.coroutines.Continuation;
+import kotlin.coroutines.CoroutineContext;
+import kotlinx.coroutines.flow.Flow;
+import kotlinx.coroutines.flow.FlowCollector;
 
 public class HomeActivity extends AppCompatActivity {
 
@@ -113,6 +131,8 @@ public class HomeActivity extends AppCompatActivity {
     private static List<String> mPermissions = new ArrayList<>();
     public static final int REQUEST_PERMISSION_CODE = 100;
     private static final String TEST_MODULE_INFO = "HomeActivity";
+    private WindowInfoTrackerCallbackAdapter windowInfoTrackerCallbackAdapter;
+    private LayoutStateChangeCallback mlayoutChangeCallback = new LayoutStateChangeCallback();
 
     static {
         mPermissions.add(Manifest.permission.READ_PHONE_STATE);
@@ -129,6 +149,7 @@ public class HomeActivity extends AppCompatActivity {
         super.onResume();
         MobclickAgent.onPageStart("Home");
 
+        Log.d(TAG, "onResume: ~~");
         String binary = "11000100111001110011110001010100";
         int sizeInBits = 32; // 指定位数大小（这里假设为 32）
 
@@ -184,17 +205,25 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     private NetChangedBroadcast netChangeReceiver;
+    WindowInfoTracker windowInfoTracker;
+
+    private static Context sContext;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         mWeather = findViewById(R.id.weather);
 
+        sContext = this;
         onClickAuthBySystem();
         Log.d(TAG, "onCreate: Allowed " + isEnabled());
         String string = Settings.Secure.getString(getContentResolver(), "enabled_notification_listeners");
 
         Log.d(TAG, "onCreate: notification " + string);
+
+        windowInfoTrackerCallbackAdapter = new WindowInfoTrackerCallbackAdapter(WindowInfoTracker.getOrCreate(this));
+//        FoldingFeature foldingFeature;
+//       windowInfoTracker = WindowInfoTracker.getOrCreate(getApplicationContext());
 
 //        FirebaseInstanceId.getInstance().getInstanceId().addOnCompleteListener(task -> {
 //            if (!task.isSuccessful()) {
@@ -317,6 +346,8 @@ public class HomeActivity extends AppCompatActivity {
         super.onDestroy();
         JobScheduleHelper.clearAllJobs(getApplicationContext());
         MobclickAgent.onKillProcess(getApplicationContext());
+
+        Log.d(TAG, "onDestroy: ？？？");
 //        unregisterReceiver(netChangeReceiver);
     }
 
@@ -350,8 +381,47 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     @Override
+    protected void onStop() {
+        super.onStop();
+
+        Log.d(TAG, "onStop: ~~");
+        windowInfoTrackerCallbackAdapter.removeWindowLayoutInfoListener(mlayoutChangeCallback);
+    }
+
+    @Override
     protected void onStart() {
         super.onStart();
+
+        Log.d(TAG, "onStart: ~~");
+        windowInfoTrackerCallbackAdapter.addWindowLayoutInfoListener(this, Runnable::run, mlayoutChangeCallback);
+//        Flow<WindowLayoutInfo> flowInfo = windowInfoTracker.windowLayoutInfo(this);
+//
+//        Log.d(TAG, "onStart: isEmpty ?? " + (flowInfo != null));
+//        if (flowInfo != null) {
+//            flowInfo.collect(new FlowCollector<WindowLayoutInfo>() {
+//                @Nullable
+//                @Override
+//                public Object emit(WindowLayoutInfo windowLayoutInfo, @NonNull Continuation<? super Unit> continuation) {
+//                    FoldingFeature feature = (FoldingFeature) windowLayoutInfo.getDisplayFeatures().get(0);
+//                    if (feature != null) {
+//                        Log.d(TAG, "emit: state " + feature.getState() + feature.getOcclusionType() + feature.isSeparating());
+//                        Log.d(TAG, "emit: feature " + feature);
+//                    }
+//                    return null;
+//                }
+//            }, new Continuation<Unit>() {
+//                @NonNull
+//                @Override
+//                public CoroutineContext getContext() {
+//                    return null;
+//                }
+//
+//                @Override
+//                public void resumeWith(@NonNull Object o) {
+//
+//                }
+//            });
+//        }
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             mPermissions.add(Manifest.permission.POST_NOTIFICATIONS);
@@ -494,9 +564,14 @@ public class HomeActivity extends AppCompatActivity {
 
     public void onClick(View v) {
 
+
         if (v.getId() == R.id.get_system_android_id) {
             String androidid = Settings.System.getString(getContentResolver(), Settings.Secure.ANDROID_ID);
             Log.d(TAG, "onClick: getAndroidID " + androidid);
+        } else if (v.getId() == R.id.image_view) {
+            Utils.startActivity(this, ImageViewActivity.class);
+        } else if (v.getId() == R.id.lottie_view) {
+            Utils.startActivity(this, LottieViewActivity.class);
         } else if (v.getId() == R.id.nanoHttp) {
             Utils.startActivity(this, NanoHttpActivity.class);
         } else if (v.getId() == R.id.lecam_password) {
@@ -883,5 +958,38 @@ public class HomeActivity extends AppCompatActivity {
 //            }
 //        }
         return supportvideo;
+    }
+
+    static class LayoutStateChangeCallback implements Consumer<WindowLayoutInfo> {
+        private boolean isExistedFoldingFeature = false;
+
+        @Override
+        public void accept(WindowLayoutInfo windowLayoutInfo) {
+
+            List<DisplayFeature> displayFeatures = windowLayoutInfo.getDisplayFeatures();
+            for (DisplayFeature feature : displayFeatures) {
+                if (feature instanceof FoldingFeature) {
+                    // Use information from the feature object
+                    FoldingFeature foldingFeature = (FoldingFeature) feature;
+                    isExistedFoldingFeature = true;
+                    Log.d(TAG, "accept: isSeparating " + foldingFeature.isSeparating());
+                    Log.d(TAG, "accept: State " + foldingFeature.getState());
+                    Log.d(TAG, "accept: occlusionType  " + foldingFeature.getOcclusionType());
+                }
+            }
+
+            DisplayMetrics displayMetrics = new DisplayMetrics();
+            WindowManager windowManager = (WindowManager) sContext.getSystemService(Context.WINDOW_SERVICE);
+            windowManager.getDefaultDisplay().getMetrics(displayMetrics);
+            int width = displayMetrics.widthPixels;
+            int height = displayMetrics.heightPixels;
+
+            Log.d(TAG, "accept: width " + width + ", height " + height);
+            Log.d(TAG, "accept: features.size " + displayFeatures.size() + " isSeparating " + isExistedFoldingFeature);
+        }
+
+        public boolean isExistedFoldingFeature() {
+            return isExistedFoldingFeature;
+        }
     }
 }

@@ -25,6 +25,29 @@
 
             <include layout="@layout/bottomrefreshlayout" />
 
+            <Button
+                android:onClick="onClick"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:background="@drawable/stroke_background"
+                android:id="@+id/image_view"
+                android:text="图片的拖拽效果"
+                android:textAllCaps="false"
+                android:layout_gravity="center"
+                android:clickable="true"
+                />
+
+            <Button android:onClick="onClick"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:background="@drawable/stroke_background"
+                android:id="@+id/lottie_view"
+                android:text="LottieView"
+                android:textAllCaps="false"
+                android:layout_gravity="center"
+                android:clickable="true"
+                />
+
             <Button android:onClick="onClick"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"

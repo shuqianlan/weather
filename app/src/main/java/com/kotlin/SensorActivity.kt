@@ -22,27 +22,25 @@ class SensorActivity : AppCompatActivity() {
 
         try {
             val mSensorManager = getSystemService(Context.SENSOR_SERVICE) as SensorManager
-            if (null != mSensorManager) {
-                Log.d("BBBB", "onCreate: getSensorList ${mSensorManager.getSensorList(Sensor.TYPE_LIGHT)}")
-                val adcSensor: Sensor = mSensorManager.getDefaultSensor(Sensor.TYPE_LIGHT) // 26: Sensor.TYPE_ADC
-                Log.d("BBBB", "onCreate: adcSensor $adcSensor")
-                if (adcSensor != null) {
-                    val mAdcSensorEventListener = object : SensorEventListener {
-                        override fun onSensorChanged(event: SensorEvent) {
-                            val voltage = event.values[0]
-                            with(findViewById<TextView>(R.id.sensor_value)) {
-                                text = "$text + \n + $voltage"
-                            }
+            Log.d("BBBB", "onCreate: getSensorList ${mSensorManager.getSensorList(Sensor.TYPE_LIGHT)}")
+            val adcSensor: Sensor? = mSensorManager.getDefaultSensor(Sensor.TYPE_LIGHT) // 26: Sensor.TYPE_ADC
+            Log.d("BBBB", "onCreate: adcSensor $adcSensor")
+            if (adcSensor != null) {
+                val mAdcSensorEventListener = object : SensorEventListener {
+                    override fun onSensorChanged(event: SensorEvent) {
+                        val voltage = event.values[0]
+                        with(findViewById<TextView>(R.id.sensor_value)) {
+                            text = "$text + \n + $voltage"
                         }
-
-                        override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {}
                     }
-                    mSensorManager.registerListener(
-                        mAdcSensorEventListener,
-                        adcSensor,
-                        SensorManager.SENSOR_DELAY_NORMAL
-                    )
+
+                    override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {}
                 }
+                mSensorManager.registerListener(
+                    mAdcSensorEventListener,
+                    adcSensor,
+                    SensorManager.SENSOR_DELAY_NORMAL
+                )
             }
 
         } catch (exp:Exception) {

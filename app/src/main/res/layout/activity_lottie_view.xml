@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".LottieViewActivity">
+
+
+    <com.ilifesmart.ui.MyLottieAnimView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/lottie_view_inner"
+        android:layout_gravity="center"
+        android:padding="60dp"
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_gravity="center"
+        >
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/start_lottie"
+            android:text="开始"
+            android:onClick="onClick"
+            />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/stop_lottie"
+            android:text="停止"
+            android:onClick="onClick"
+            />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/start_once"
+            android:text="播放一次"
+            android:onClick="onClick"
+            />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/start_loop"
+            android:text="循环播放"
+            android:onClick="onClick"
+            />
+
+    </LinearLayout>
+</FrameLayout>
